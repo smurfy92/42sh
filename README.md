@@ -1,0 +1,1 @@
+norminette * | grep -v "C++ comment" | grep -v "bad indentation"
