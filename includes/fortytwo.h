@@ -25,10 +25,10 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <sys/ioctl.h>
-# include "hash.h"
 # include "struct.h"
+# include "hash.h"
 # include "libft.h"
-# include "shell.h" 
+# include "shell.h"
 # include "env.h"
 # include "builtin.h"
 # include "parse.h"

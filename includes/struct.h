@@ -13,7 +13,7 @@
 #ifndef STRUCT_H
 # define STRUCT_H
 
-
+# define H_SIZE 5000
 
 typedef struct			s_group
 {

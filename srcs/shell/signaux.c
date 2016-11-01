@@ -30,14 +30,7 @@ void	handler_ctrl_c(int sig)
 
 	grp = get_grp();
 	sig = 0;
-	// if (TERM(cmd_line) == NULL)
-	// {
-	// 	ft_putchar_fd('\n', 2);
-	// 	prompt();
-	// 	return ;
-	// }
-	// else
-	// 	ft_putchar_fd('\n', 2);
+
 	ft_go_end(grp);
 	REMOVE(&TERM(cmd_line));
 	ft_free_parse(grp);
@@ -45,7 +38,7 @@ void	handler_ctrl_c(int sig)
 	TERM(curs_pos) = 0;
 	TERM(cmd_size) = 0;
 	grp->prompt_size = 6;
-	prompt(); 
+	prompt();
 }
 
 void	ft_prompt(int signum)

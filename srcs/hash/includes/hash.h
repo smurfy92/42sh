@@ -13,8 +13,6 @@
 #ifndef HASH_H
 # define HASH_H
 
-# define H_SIZE 5000
-
 typedef	struct		s_hash
 {
 	char			*name;
@@ -33,7 +31,7 @@ char				*get_path(char *cmd, t_hash *hash[H_SIZE]);
 **	hash_init.c
 */
 
-void				clean_hash(t_hash *hash[H_SIZE]);
-int					hash_init(t_hash *my_hash[H_SIZE]);
+void				clean_hash(t_group *grp);
+int					hash_init(t_group *grp);
 
 #endif

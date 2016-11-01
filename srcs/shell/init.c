@@ -94,7 +94,7 @@ t_group		*set_grp(t_group *grp)
 	grp->prompt_size = 6;
 	ft_get_history(grp);
 	init_term(grp);
-	//hash_init(grp->hash);
+	hash_init(grp);
 	return (grp);
 }
 

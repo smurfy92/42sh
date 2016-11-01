@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard_tools.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 19:31:01 by jmontija          #+#    #+#             */
-/*   Updated: 2016/10/31 18:38:07 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/01 16:07:27 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	handling_ctrl_d(t_group *grp)
 	{
 		reset_shell();
 		ft_putstr_fd("\n", 2);
-		exit(0);
+		ft_exit(grp);
 	}
 	else if (TERM(curs_pos) < TERM(cmd_size))
 	{
@@ -109,7 +109,7 @@ void	handling_backspace(t_group *grp)
 	tmp = &TERM(cmd_line)[TERM(curs_pos)];
 	ft_left_arrow(grp);
 	TERM(cmd_size)--;
-	if (TERM(curs_pos) == 0)
+	if (TERM(cmd_size) == 0)
 		ft_strdel(&TERM(cmd_line));
 	else
 	{

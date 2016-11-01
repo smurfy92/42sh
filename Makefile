@@ -44,6 +44,7 @@ SRC	+= srcs/history/hist_lib.c
 
 #free
 SRC	+= srcs/free_mem/free.c
+SRC+= srcs/free_mem/exit.c
 
 #debug
 SRC	+= srcs/debug/debug.c

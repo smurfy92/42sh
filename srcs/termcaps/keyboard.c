@@ -120,9 +120,7 @@ int		check_esc(t_group *grp)
 	{
 		c = TERM(cmd_line)[i];
 		if ((c == '"' || c == '`') && check_last_char(TERM(cmd_line), i) == 0)
-		{
 			ret = check_parentheses(c);
-		}
 		else if (c != '"' && c != '`')
 			ret = check_parentheses(c);
 	}
