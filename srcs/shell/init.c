@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:17:06 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/01 17:53:53 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/02 17:07:23 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ int			init_shell(void)
 	char			*name;
 	struct termios	term;
 	t_group			*grp;
-	int				tmp;
 
-	tmp = 0;
 	grp = get_grp();
 	if ((name = getenv("TERM")) == NULL)
 		name = ft_strdup("xterm-256color");
