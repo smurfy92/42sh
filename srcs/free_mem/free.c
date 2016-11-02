@@ -6,34 +6,19 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:10:07 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/02 13:32:31 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/02 14:04:32 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-void		free_env_tmp(t_group *grp)
+void		free_env(t_group *grp)
 {
-	t_envlst	*tmp;
-	t_envlst	*tmp2;
 	t_envlst	*tmp3;
 	t_envlst	*tmp4;
 
-	grp->env->opt_i = false;
-	grp->env->start_varenv = 0;
-	grp->env->end_varenv = 0;
-	tmp = grp->env->lst_tmp;
 	tmp3 = grp->env->lst;
-	tmp2 = NULL;
 	tmp4 = NULL;
-	while (tmp != NULL)
-	{
-		REMOVE(&tmp->name);
-		REMOVE(&tmp->val);
-		tmp2 = tmp->next;
-		free(tmp);
-		tmp = tmp2;
-	}
 	while (tmp3 != NULL)
 	{
 		REMOVE(&tmp3->name);
@@ -43,6 +28,27 @@ void		free_env_tmp(t_group *grp)
 		tmp3 = tmp4;
 	}
 	grp->env->lst = NULL;
+}
+
+void		free_env_tmp(t_group *grp)
+{
+	t_envlst	*tmp;
+	t_envlst	*tmp2;
+
+	grp->env->opt_i = false;
+	grp->env->start_varenv = 0;
+	grp->env->end_varenv = 0;
+	tmp = grp->env->lst_tmp;
+	tmp2 = NULL;
+	while (tmp != NULL)
+	{
+		REMOVE(&tmp->name);
+		REMOVE(&tmp->val);
+		tmp2 = tmp->next;
+		free(tmp);
+		tmp = tmp2;
+	}
+	free_env(grp);
 	grp->env->lst_tmp = NULL;
 	REMOVE(&ENV(cmd));
 }
