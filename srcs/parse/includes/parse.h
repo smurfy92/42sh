@@ -73,5 +73,6 @@ void					ft_redirection_error(t_parse *parse, int end);
 
 //pre_parse.c
 void					ft_pre_parse(t_group *grp);
+void					ft_escape_parse(t_group *grp, int i);
 
 #endif
