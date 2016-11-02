@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:50:41 by jmontija          #+#    #+#             */
-/*   Updated: 2016/10/30 17:04:16 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/01 19:13:42 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	builtin_setenv(t_group *grp)
 			error = true;
 		}
 	}
-	error ? ft_putendl_fd("setenv: synthax -> key=value or key=", 2) : 0;
+	grp->exit = error ? 1 : 0;
 	return (1);
 }
 
@@ -64,7 +64,7 @@ int	builtin_unsetenv(t_group *grp)
 			error = true;
 		}
 	}
-	error ? ft_putendl_fd("unsetenv: synthax -> key", 2) : 0;
+	grp->exit = error ? 1 : 0;
 	return (1);
 }
 
@@ -76,23 +76,18 @@ int	builtins(t_group *grp)
 	ret = 0;
 	cmd = grp->parselst->cmdsplit;
 	if (ft_strcmp(*cmd, "env") == 0)
-		ret = builtin_env(grp);
+		ret = builtin_env(grp); // exit code done
 	else if (ft_strcmp(*cmd, "cd") == 0)
-		ret = builtin_cd(grp);
+		ret = builtin_cd(grp); // exit code done
 	else if (ft_strcmp(*cmd, "setenv") == 0)
-		ret = builtin_setenv(grp);
+		ret = builtin_setenv(grp); // exit code done
 	else if (ft_strcmp(*cmd, "unsetenv") == 0)
-		ret = builtin_unsetenv(grp);
+		ret = builtin_unsetenv(grp); // exit code done
 	else if (ft_strcmp(*cmd, "history") == 0)
 		ret = builtin_history(grp);
 	else if (ft_strcmp(*cmd, "echo") == 0)
-	{
 		ret = builtin_echo(grp);
-	}
 	else if (ft_strcmp(*cmd, "exit") == 0)
-	{
-		ret = 1;
-		printf("You are locked :D \n");
-	}
+		ft_exit(grp, (cmd[1] != NULL ? ft_atoi(cmd[1]) : grp->exit)); // exit code done
 	return (ret);
 }

@@ -22,6 +22,7 @@ typedef struct			s_group
 	int						inhistory;
 
 	int						prompt_size;
+	int						exit;
 	struct s_parse			*parselst;
 	struct s_window			*window;
 	struct s_term			*term;

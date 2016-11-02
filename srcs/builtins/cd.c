@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:50:41 by jmontija          #+#    #+#             */
-/*   Updated: 2016/10/30 17:28:24 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/01 18:47:45 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ void	cderr_pwd(t_group *grp, char *path, struct stat s_buf)
 	curr_dir = getcwd(buf, 1024);
 	val = (s_buf.st_mode & ~S_IFMT);
 	if (access(path, F_OK) != 0)
-		error_cmd("unknown directory", path);
+		error_cmd("unknown directory", path, 1);
 	else if (!S_ISDIR(s_buf.st_mode) && !S_ISLNK(s_buf.st_mode))
-		error_cmd("this is not a directory", path);
+		error_cmd("this is not a directory", path, 1);
 	else if (!(val & S_IXUSR))
-		error_cmd("Permission denied", path);
+		error_cmd("Permission denied", path, 1);
 	else if (chdir(path) == 0)
 	{
 		old_pwd = JOIN("OLDPWD=", curr_dir);
@@ -36,9 +36,8 @@ void	cderr_pwd(t_group *grp, char *path, struct stat s_buf)
 		insert_env(grp, old_pwd);
 		REMOVE(&old_pwd);
 		REMOVE(&pwd);
+		grp->exit = 0;
 	}
-	else
-		error_cmd("what the fuck you are doing ?", path);
 }
 
 int		builtin_cd(t_group *grp)
