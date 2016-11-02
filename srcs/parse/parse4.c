@@ -36,7 +36,7 @@ void		ft_adddoubleredirection(t_group *grp, t_parse *parse, int i)
 	}
 	start = i - 2;
 	while (parse->cmd[i] && !ft_isalpha(parse->cmd[i]) &&
-	!ft_isdigit(parse->cmd[i]) && parse->cmd[i] != '/')
+	!ft_isdigit(parse->cmd[i]) && !ft_is_quote(parse->cmd[i]) && parse->cmd[i] != '/')
 		i++;
 	end = i;
 	while (parse->cmd[end] && !ft_end_of_red(parse->cmd[end]))
@@ -55,6 +55,7 @@ void		ft_addredirection(t_group *grp, t_parse *parse, int i)
 	int		start;
 	int		end;
 
+	//int test = check_parentheses(parse->cmd[i]);
 	if (!parse->cmd[i])
 	{
 		grp->fail = 1;
@@ -62,10 +63,10 @@ void		ft_addredirection(t_group *grp, t_parse *parse, int i)
 	}
 	start = i - 1;
 	while (parse->cmd[i] && !ft_isalpha(parse->cmd[i]) &&
-	!ft_isdigit(parse->cmd[i]) && parse->cmd[i] != '/')
+	!ft_isdigit(parse->cmd[i]) && !ft_is_quote(parse->cmd[i]) && parse->cmd[i] != '/')
 		i++;
 	end = i;
-	while (parse->cmd[end] && !ft_end_of_red(parse->cmd[end]))
+	while ((parse->cmd[end] && !ft_end_of_red(parse->cmd[end])))
 		end++;
 	if (end == i && (grp->fail = 1))
 	{
@@ -73,6 +74,7 @@ void		ft_addredirection(t_group *grp, t_parse *parse, int i)
 		return ;
 	}
 	parse->sgred = ft_strsub(&parse->cmd[i], 0, end - i);
+	printf("debug -> %s\n",parse->sgred);
 	ft_addredirectionsuite(parse, end, start);
 }
 
@@ -96,10 +98,11 @@ void		ft_addheredoc(t_group *grp, t_parse *parse, int i)
 	char	*tmp;
 
 	start = i - 2;
+	int test = check_parentheses(parse->cmd[i]);
 	while (!ft_isalpha(parse->cmd[i]) && parse->cmd[i])
 		i++;
 	end = i;
-	while (parse->cmd[end] && !ft_end_of_red(parse->cmd[end]))
+	while ((parse->cmd[end] && !ft_end_of_red(parse->cmd[end]) && !ft_is_quote(parse->cmd[i])) || (test == 0 && check_parentheses(parse->cmd[end])))
 		end++;
 	if (end == i)
 	{
