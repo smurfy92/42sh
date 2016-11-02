@@ -78,6 +78,20 @@ void		ft_replace_by_id(t_group *grp, int i)
 	REMOVE(&tmp);
 }
 
+static void		ft_escape_parse(t_group *grp, int i)
+{
+	char	*tmp;
+
+	if (TERM(cmd_line)[i + 2])
+	{
+		tmp = SDUP(&TERM(cmd_line)[i + 2]);
+		TERM(cmd_line)[i + 1] = '\0';
+		TERM(cmd_line) = JOINF(TERM(cmd_line), tmp, 3);
+	}
+	else
+		TERM(cmd_line)[i + 1] = '\0';
+}
+
 void		ft_pre_parse(t_group *grp)
 {
 	int i;
@@ -85,6 +99,15 @@ void		ft_pre_parse(t_group *grp)
 	i = -1;
 	while (TERM(cmd_line) && TERM(cmd_line)[++i])
 	{
+		if (!check_parentheses('\\') && TERM(cmd_line)[i] == '\\' &&
+			TERM(cmd_line)[i + 1] && TERM(cmd_line)[i + 1] == '\\')
+			ft_escape_parse(grp, i);
+		if (i > 0 && TERM(cmd_line)[i] == '\\' &&
+			TERM(cmd_line)[i + 1] && TERM(cmd_line)[i + 1] == '\n')
+		{
+			ft_escape_parse(grp, i - 1);
+			ft_escape_parse(grp, i - 1);
+		}
 		if (TERM(cmd_line)[i] == '!' && TERM(cmd_line)[i + 1] &&
 			TERM(cmd_line)[i + 1] == '!')
 			ft_replace_last_cmd(grp, i);

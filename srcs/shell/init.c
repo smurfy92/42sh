@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:17:06 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/01 17:53:53 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/02 17:07:23 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@ void		init_exec(t_group *grp)
 	ret = builtins(grp);
 	//ret == 0 ? ft_putendl(get_path(CMD(cmdsplit)[0], grp->hash)) : 0;
 	ret == -1 ? printf("ERROR IN BUILTINS\n") : 0;
+
+	int i = -1;
+
+	while (CMD(cmdsplit)[++i])
+	{
+		printf("%s\n", CMD(cmdsplit[i]));
+	}
 }
 
 void		init_env(t_group *grp, char **env)
@@ -36,9 +43,7 @@ int			init_shell(void)
 	char			*name;
 	struct termios	term;
 	t_group			*grp;
-	int				tmp;
 
-	tmp = 0;
 	grp = get_grp();
 	if ((name = getenv("TERM")) == NULL)
 		name = ft_strdup("xterm-256color");

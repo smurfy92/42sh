@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 17:03:39 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/02 13:09:29 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/02 17:08:35 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,6 @@ char	check_operands(char c)
 	}
 	return (-1);
 }
-
-// echo "test\\ntest"
-// test
-// test
-// echo "test\\\ntest"
-// test\ntest
-// echo "test\\\\ntest"
-// test\ntest
-// echo "test\\\\\ntest"
-// test\
-// test
 
 void	check_line(char *arg)
 {

@@ -42,6 +42,11 @@ void		ft_exit(t_group *grp, int exit_code)
 	ft_free_hash(grp);
 	ft_free_parse(grp);
 	free_env(grp);
+	REMOVE(&TERM(cmd_line));
+	free(TERM(window));
+	free(grp->term);
+	free(grp->env);
+	free_history(grp);
 	exit_code ? exit_code : (exit_code = grp->exit);
 	free(grp);
 	exit(exit_code);
