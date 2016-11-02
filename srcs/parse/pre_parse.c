@@ -78,7 +78,7 @@ void		ft_replace_by_id(t_group *grp, int i)
 	REMOVE(&tmp);
 }
 
-static void		ft_escape_parse(t_group *grp, int i)
+void		ft_escape_parse(t_group *grp, int i)
 {
 	char	*tmp;
 
@@ -95,24 +95,10 @@ static void		ft_escape_parse(t_group *grp, int i)
 void		ft_pre_parse(t_group *grp)
 {
 	int i;
-	int test;
-	int ret;
 
 	i = -1;
-	test = 0;
 	while (TERM(cmd_line) && TERM(cmd_line)[++i])
 	{
-		ret = check_parentheses(TERM(cmd_line)[i]);
-		if (test == 0 && ret == 1)
-		{
-			test = 1;
-			ft_escape_parse(grp, i - 1);
-		}
-		else if (test == 1 && ret == 0)
-		{
-			test = 0;
-			ft_escape_parse(grp, i - 1);
-		}
 		if (TERM(cmd_line)[i] == '\\' &&
 			TERM(cmd_line)[i + 1] && TERM(cmd_line)[i + 1] == '\\')
 			ft_escape_parse(grp, i);

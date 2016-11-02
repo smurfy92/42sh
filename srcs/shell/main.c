@@ -48,7 +48,7 @@ void		proccess(t_group *grp)
 	{
 		ft_parse(grp, tabl[i]);
 		//check command -> add flag error
-		//ft_display_parse(grp);
+		ft_display_parse(grp);
 		init_exec(grp); //exec
 		ft_free_parse(grp);
 		ft_strdel(&tabl[i]);

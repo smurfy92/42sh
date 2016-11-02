@@ -25,6 +25,46 @@ int			ft_count_pipes(char *cmd)
 	return (nb);
 }
 
+void		ft_polish_parse(t_parse *parse, int i)
+{
+	char	*tmp;
+
+	if (parse->cmd[i + 2])
+	{
+		tmp = SDUP(&parse->cmd[i + 2]);
+		parse->cmd[i + 1] = '\0';
+		parse->cmd = JOINF(parse->cmd, tmp, 3);
+	}
+	else
+		parse->cmd[i + 1] = '\0';
+}
+
+void		polish(t_parse *parse)
+{
+	int ret;
+	int test;
+	int i;
+
+	test = 0;
+	i = -1;
+	while (parse->cmd[++i])
+	{
+		ret = check_parentheses(parse->cmd[i]);
+		printf("ret = %d\n", ret);
+		if (test == 0 && ret == 1)
+		{
+			test = 1;
+			printf("%c\n", parse->cmd[i]);
+			ft_polish_parse(parse, i - 1);
+		}
+		else if (test == 1 && ret == 0)
+		{
+			test = 0;
+			ft_polish_parse(parse, i - 1);
+		}
+	}
+}
+
 void		ft_create_parse(t_group *grp, char *cmd)
 {
 	t_parse		*tmp;
@@ -34,7 +74,6 @@ void		ft_create_parse(t_group *grp, char *cmd)
 	while (ft_is_space(cmd[0]) && cmd[1])
 		cmd = &cmd[1];
 	tmp->cmd = ft_strdup(cmd);
-	tmp->cmdsplit = ft_spacesplit(cmd);
 	tmp->next = NULL;
 	tmp->heredoc = 0;
 	tmp->dbred = NULL;
@@ -42,8 +81,9 @@ void		ft_create_parse(t_group *grp, char *cmd)
 	tmp->file = NULL;
 	tmp->closefd = 0;
 	tmp->errnb = 0;
-	//tmp->env think about add a tmp env in case of env need to exec cmd with particular ENV
 	ft_parse_redirections(grp, tmp);
+	polish(tmp);
+	tmp->cmdsplit = ft_spacesplit(tmp->cmd);
 	if (!grp->parselst)
 		grp->parselst = tmp;
 	else
@@ -67,6 +107,7 @@ void		ft_parse2(t_group *grp)
 		while (i > 0 && tmp->cmd && tmp->cmd[--i] == ' ')
 			tmp->cmd[i] = '\0';
 		tmp = tmp->next;
+
 	}
 }
 
