@@ -6,22 +6,26 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:10:07 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/02 13:06:09 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/02 13:32:31 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-void		free_env(t_group *grp)
+void		free_env_tmp(t_group *grp)
 {
 	t_envlst	*tmp;
 	t_envlst	*tmp2;
+	t_envlst	*tmp3;
+	t_envlst	*tmp4;
 
 	grp->env->opt_i = false;
 	grp->env->start_varenv = 0;
 	grp->env->end_varenv = 0;
 	tmp = grp->env->lst_tmp;
+	tmp3 = grp->env->lst;
 	tmp2 = NULL;
+	tmp4 = NULL;
 	while (tmp != NULL)
 	{
 		REMOVE(&tmp->name);
@@ -30,6 +34,15 @@ void		free_env(t_group *grp)
 		free(tmp);
 		tmp = tmp2;
 	}
+	while (tmp3 != NULL)
+	{
+		REMOVE(&tmp3->name);
+		REMOVE(&tmp3->val);
+		tmp4 = tmp3->next;
+		free(tmp3);
+		tmp3 = tmp4;
+	}
+	grp->env->lst = NULL;
 	grp->env->lst_tmp = NULL;
 	REMOVE(&ENV(cmd));
 }
@@ -83,5 +96,5 @@ void		ft_free_parse(t_group *grp)
 {
 	free_parselst(grp);
 	free_term(grp);
-	free_env(grp);
+	free_env_tmp(grp);
 }

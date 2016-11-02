@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/01 16:02:54 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/02 13:10:37 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/02 13:27:34 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,6 @@ void		ft_exit(t_group *grp, int exit_code)
 {
 	ft_free_hash(grp);
 	ft_free_parse(grp);
-	grp->fail = 0;
+	//free grp;
 	exit(exit_code ? exit_code : grp->exit);
 }
