@@ -50,7 +50,6 @@ void		free_env_tmp(t_group *grp)
 	}
 	grp->env->lst_tmp = NULL;
 	REMOVE(&ENV(cmd));
-	free(grp->env);
 }
 
 void		free_term(t_group *grp)
@@ -67,11 +66,7 @@ void		free_term(t_group *grp)
 		free(tmp);
 		tmp = tmp2;
 	}
-	REMOVE(&TERM(search));
-	REMOVE(&TERM(cmd_line));
-	free(TERM(window));
 	TERM(cmd_quote) = NULL;
-	free(grp->term);
 }
 
 void		free_history(t_group *grp)
@@ -84,7 +79,7 @@ void		free_history(t_group *grp)
 		REMOVE(&hist->var);
 		hist->prev = NULL;
 		tmp = hist->next;
-		free(tmp);
+		//free(hist);
 		hist = tmp;
 	}
 	free(grp->history);
@@ -123,5 +118,4 @@ void		ft_free_parse(t_group *grp)
 	free_parselst(grp);
 	free_term(grp);
 	free_env_tmp(grp);
-	free_history(grp);
 }
