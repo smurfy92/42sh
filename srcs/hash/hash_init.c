@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hash_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victordanain <victordanain@student.42.fr>  +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 20:13:19 by vdanain           #+#    #+#             */
-/*   Updated: 2016/11/02 18:06:53 by victordanain     ###   ########.fr       */
+/*   Updated: 2016/11/02 18:32:25 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,9 @@ int				tree_filler(t_root **root)
 {
 	char	**path;
 	char	*tmpath;
-	char	*result;
 	int		i;
 	DIR		*cur_d;
 
-	result = NULL;
 	i = -1;
 	if (!(tmpath = getenv("PATH")))
 		return (1);

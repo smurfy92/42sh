@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victordanain <victordanain@student.42.fr>  +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:17:06 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/02 18:05:33 by victordanain     ###   ########.fr       */
+/*   Updated: 2016/11/02 19:57:36 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void		init_env(t_group *grp, char **env)
 	i = -1;
 	while (env && env[++i])
 		insert_env(grp, env[i]);
-	//on parse l'env et incrementer shlvl add env en dur pour env-i
 }
 
 int			init_shell(void)
