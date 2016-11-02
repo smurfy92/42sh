@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 15:25:02 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/01 16:25:02 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/02 13:04:16 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void		ft_create_parse(t_group *grp, char *cmd)
 	while (ft_is_space(cmd[0]) && cmd[1])
 		cmd = &cmd[1];
 	tmp->cmd = ft_strdup(cmd);
-	tmp->cmdsplit = ft_spacesplit(cmd); // use spacesplit to split on all white space;
+	tmp->cmdsplit = ft_spacesplit(cmd);
 	tmp->next = NULL;
 	tmp->heredoc = 0;
 	tmp->dbred = NULL;

@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/01 16:02:54 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/01 18:59:28 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/02 13:10:37 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "fortytwo.h"
 
@@ -32,14 +31,13 @@ void		ft_free_hash(t_group *grp)
 			REMOVE(&tmp->path);
 			free(tmp);
 			tmp = tmp2;
-
 		}
 		grp->hash[i] = NULL;
 		i++;
 	}
 }
 
-void	ft_exit(t_group *grp, int exit_code)
+void		ft_exit(t_group *grp, int exit_code)
 {
 	ft_free_hash(grp);
 	ft_free_parse(grp);

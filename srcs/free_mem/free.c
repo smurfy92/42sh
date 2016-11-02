@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:10:07 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/01 19:48:52 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/02 13:06:09 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void		free_env(t_group *grp)
 	grp->env->end_varenv = 0;
 	tmp = grp->env->lst_tmp;
 	tmp2 = NULL;
-	while(tmp != NULL)
+	while (tmp != NULL)
 	{
 		REMOVE(&tmp->name);
 		REMOVE(&tmp->val);
@@ -41,7 +41,7 @@ void		free_term(t_group *grp)
 
 	tmp = TERM(cmd_quote);
 	tmp2 = NULL;
-	while(tmp != NULL)
+	while (tmp != NULL)
 	{
 		REMOVE(&tmp->line);
 		tmp2 = tmp->next;
