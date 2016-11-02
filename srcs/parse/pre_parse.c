@@ -102,6 +102,12 @@ void		ft_pre_parse(t_group *grp)
 		if (!check_parentheses('\\') && TERM(cmd_line)[i] == '\\' &&
 			TERM(cmd_line)[i + 1] && TERM(cmd_line)[i + 1] == '\\')
 			ft_escape_parse(grp, i);
+		if (i > 0 && TERM(cmd_line)[i] == '\\' &&
+			TERM(cmd_line)[i + 1] && TERM(cmd_line)[i + 1] == '\n')
+		{
+			ft_escape_parse(grp, i - 1);
+			ft_escape_parse(grp, i - 1);
+		}
 		if (TERM(cmd_line)[i] == '!' && TERM(cmd_line)[i + 1] &&
 			TERM(cmd_line)[i + 1] == '!')
 			ft_replace_last_cmd(grp, i);
