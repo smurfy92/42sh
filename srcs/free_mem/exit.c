@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/01 16:02:54 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/01 16:20:24 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/01 18:59:28 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ void		ft_free_hash(t_group *grp)
 	}
 }
 
-void	ft_exit(t_group *grp)
+void	ft_exit(t_group *grp, int exit_code)
 {
 	ft_free_hash(grp);
 	ft_free_parse(grp);
 	grp->fail = 0;
-	exit(0);
+	exit(exit_code ? exit_code : grp->exit);
 }

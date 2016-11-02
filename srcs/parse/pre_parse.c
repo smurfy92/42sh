@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pre_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jtranchi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/31 15:26:52 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/01 16:43:35 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/10/31 15:26:53 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,20 +78,6 @@ void		ft_replace_by_id(t_group *grp, int i)
 	REMOVE(&tmp);
 }
 
-void		ft_escape(t_group *grp, int i)
-{
-	char	*tmp;
-
-	if (TERM(cmd_line)[i + 2])
-	{
-		tmp = SDUP(&TERM(cmd_line)[i + 2]);
-		TERM(cmd_line)[i + 1] = '\0';
-		TERM(cmd_line) = JOINF(TERM(cmd_line), tmp, 3);
-	}
-	else
-		TERM(cmd_line)[i + 1] = '\0';
-}
-
 void		ft_pre_parse(t_group *grp)
 {
 	int i;
@@ -99,9 +85,6 @@ void		ft_pre_parse(t_group *grp)
 	i = -1;
 	while (TERM(cmd_line) && TERM(cmd_line)[++i])
 	{
-		if (!check_parentheses('\\') && TERM(cmd_line)[i] == '\\' &&
-			TERM(cmd_line)[i + 1] && TERM(cmd_line)[i + 1] == '\\')
-			ft_escape(grp, i);
 		if (TERM(cmd_line)[i] == '!' && TERM(cmd_line)[i + 1] &&
 			TERM(cmd_line)[i + 1] == '!')
 			ft_replace_last_cmd(grp, i);

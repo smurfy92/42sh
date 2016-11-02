@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:43:24 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/10/31 19:15:55 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/01 17:53:40 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 typedef struct			s_cmdquote
 {
 	char				*line;
+	int					noeof;
 	struct s_cmdquote	*next;
 }						t_cmdquote;
 
@@ -51,5 +52,7 @@ void					ft_next_word(t_group *grp);
 void					handling_clear_screen(t_group *grp);
 void					remove_line(t_group *grp);
 void					reset_edl(t_group *grp);
+int						ft_escape(t_group *grp);
+void					fill_cmd_line(t_group *grp);
 
 #endif

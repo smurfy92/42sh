@@ -29,6 +29,7 @@ SRC	+= srcs/termcaps/keyboard_lib.c
 SRC	+= srcs/termcaps/keyboard_tools.c
 SRC	+= srcs/termcaps/keyboard_tools2.c
 SRC	+= srcs/termcaps/keyboard_tools3.c
+SRC	+= srcs/termcaps/escape.c
 
 #parse
 SRC	+= srcs/parse/parse.c
@@ -44,7 +45,7 @@ SRC	+= srcs/history/hist_lib.c
 
 #free
 SRC	+= srcs/free_mem/free.c
-SRC+= srcs/free_mem/exit.c
+SRC += srcs/free_mem/exit.c
 
 #debug
 SRC	+= srcs/debug/debug.c

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:10:07 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/01 16:06:56 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/01 19:48:52 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void		free_term(t_group *grp)
 		tmp = tmp2;
 	}
 	TERM(cmd_quote) = NULL;
-	printf("FREE QUOTE\n");
 }
 
 void		free_parselst(t_group *grp)
