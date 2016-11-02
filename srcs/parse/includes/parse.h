@@ -70,6 +70,7 @@ int						ft_is_space(char c);
 void					ft_addfile(t_group *grp, t_parse *parse, int i);
 int						ft_end_of_red(char c);
 void					ft_redirection_error(t_parse *parse, int end);
+int						ft_is_quote(char c);
 
 //pre_parse.c
 void					ft_pre_parse(t_group *grp);
