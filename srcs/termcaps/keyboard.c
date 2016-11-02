@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 17:05:11 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/01 18:59:06 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/02 14:19:11 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,19 +87,15 @@ int		key_selection(t_group *grp, char *order)
 void	get_cmd(t_group *grp, int fd)
 {
 	int		ret;
-	char	*tmp;
 	char	order[BUF_SIZE + 1];
 
-	tmp = NULL;
 	ft_bzero(order, BUF_SIZE + 1);
 	while ((ret = read(fd, order, BUF_SIZE)) > 0)
 	{
 		order[ret] = '\0';
-		tmp = ft_strdup(order);
 		if (key_selection(grp, order) == '\n' && ft_escape(grp) == 0)
 			break ;
 		ft_bzero(order, BUF_SIZE + 1);
-		ft_strdel(&tmp);
 	}
 	if (TERM(cmd_quote) != NULL)
 		fill_cmd_line(grp);
@@ -108,5 +104,4 @@ void	get_cmd(t_group *grp, int fd)
 	ft_putchar_fd('\n', 2);
 	reset_edl(grp);
 	ft_bzero(order, BUF_SIZE + 1);
-	REMOVE(&tmp);
 }

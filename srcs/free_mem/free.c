@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:10:07 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/02 14:04:32 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/02 14:22:09 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void		free_env_tmp(t_group *grp)
 	free_env(grp);
 	grp->env->lst_tmp = NULL;
 	REMOVE(&ENV(cmd));
+	free(grp->env);
 }
 
 void		free_term(t_group *grp)
@@ -67,7 +68,27 @@ void		free_term(t_group *grp)
 		free(tmp);
 		tmp = tmp2;
 	}
+	REMOVE(&TERM(search));
+	REMOVE(&TERM(cmd_line));
+	free(TERM(window));
 	TERM(cmd_quote) = NULL;
+	free(grp->term);
+}
+
+void		free_history(t_group *grp)
+{
+	t_history *hist;
+	t_history *tmp;
+	hist = ft_history_get_first(grp);
+	while (hist)
+	{
+		REMOVE(&hist->var);
+		hist->prev = NULL;
+		tmp = hist->next;
+		free(tmp);
+		hist = tmp;
+	}
+	free(grp->history);
 }
 
 void		free_parselst(t_group *grp)
@@ -103,4 +124,5 @@ void		ft_free_parse(t_group *grp)
 	free_parselst(grp);
 	free_term(grp);
 	free_env_tmp(grp);
+	free_history(grp);
 }
