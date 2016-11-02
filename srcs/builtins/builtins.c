@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:50:41 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/01 19:13:42 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/02 13:10:56 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,6 @@ int	builtins(t_group *grp)
 	else if (ft_strcmp(*cmd, "echo") == 0)
 		ret = builtin_echo(grp);
 	else if (ft_strcmp(*cmd, "exit") == 0)
-		ft_exit(grp, (cmd[1] != NULL ? ft_atoi(cmd[1]) : grp->exit)); // exit code done
+		ft_exit(grp, (cmd[1] != NULL ? ft_atoi(cmd[1]) : grp->exit));
 	return (ret);
 }

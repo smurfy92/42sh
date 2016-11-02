@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:43:44 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/01 16:05:39 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/02 13:03:33 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,8 @@ void		proccess(t_group *grp)
 	while (tabl && tabl[++i])
 	{
 		ft_parse(grp, tabl[i]);
-
 		//check command -> add flag error
 		ft_display_parse(grp);
-
 		init_exec(grp); //exec
 		ft_free_parse(grp);
 		ft_strdel(&tabl[i]);

@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   pre_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/31 15:26:52 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/10/31 15:26:53 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/02 13:03:05 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "fortytwo.h"
 
@@ -36,7 +35,8 @@ void		ft_replace_last_cmd(t_group *grp, int i)
 	}
 }
 
-void		ft_replace_command(t_group *grp, t_history *hist, int start, int end)
+void		ft_replace_command(t_group *grp, t_history *hist, int start,
+int end)
 {
 	char	*tmp2;
 

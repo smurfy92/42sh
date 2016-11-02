@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/29 18:49:38 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/10/29 18:49:39 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/02 13:05:24 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,10 @@ void		ft_add_history(t_group *grp, char *cmd)
 {
 	int			fd;
 	t_history	*tmp;
-	//char		*string;
 
 	fd = open("/tmp/.42sh_history", O_WRONLY | O_APPEND | O_CREAT,
 	S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
-	//string = ft_trim_backslash(cmd);
 	ft_putendl_fd(cmd, fd);
-	//ft_strdel(&string);
 	tmp = (t_history*)malloc(sizeof(t_history));
 	tmp->var = ft_strdup(cmd);
 	tmp->next = NULL;
@@ -45,7 +42,8 @@ void		ft_add_history(t_group *grp, char *cmd)
 
 void		ft_history_prev(t_group *grp)
 {
-	if (!grp->history || (!grp->history && !grp->history->prev && grp->inhistory))
+	if (!grp->history || (!grp->history && !grp->history->prev &&
+	grp->inhistory))
 		return ;
 	if (!grp->history->next && TERM(cmd_line) && LEN(TERM(cmd_line)) > 0
 		&& !grp->inhistory)

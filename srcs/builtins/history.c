@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:55:46 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/10/30 14:55:47 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/02 13:08:03 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	ft_display_history(t_history *hist)
 
 int		builtin_history2(t_group *grp)
 {
-
 	if (ft_atoi(CMD(cmdsplit)[1]) > 0)
 	{
 		if (ft_atoi(CMD(cmdsplit)[1]) > grp->history->i)
@@ -63,10 +62,12 @@ int		builtin_history2(t_group *grp)
 			ft_putendl(grp->history->var);
 		}
 		else
-			ft_display_history(ft_history_get_by_id(grp, ft_atoi(CMD(cmdsplit)[1])));
+			ft_display_history(ft_history_get_by_id(grp,
+			ft_atoi(CMD(cmdsplit)[1])));
 	}
 	else
-		ft_display_history(ft_history_get_by_id(grp, grp->history->i + ft_atoi(CMD(cmdsplit)[1])));
+		ft_display_history(ft_history_get_by_id(grp, grp->history->i +
+		ft_atoi(CMD(cmdsplit)[1])));
 	return (0);
 }
 

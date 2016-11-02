@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 20:13:19 by vdanain           #+#    #+#             */
-/*   Updated: 2016/11/01 16:13:22 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/02 13:05:45 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ static void		init_help(t_group *grp, char *path, DIR *cur_d)
 			&& ft_strcmp("..", cur_e->d_name) != 0)
 		{
 			tmpath = get_fullpath(cur_e->d_name, path);
-			hash_fill(grp->hash[val_tokey(cur_e->d_name)], cur_e->d_name, tmpath);
+			hash_fill(grp->hash[val_tokey(cur_e->d_name)],
+			cur_e->d_name, tmpath);
 			ft_strdel(&tmpath);
 		}
 	}
