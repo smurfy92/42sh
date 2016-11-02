@@ -9,6 +9,8 @@ SRC	+= srcs/shell/signaux.c
 #hash
 SRC += srcs/hash/hash_use.c
 SRC	+= srcs/hash/hash_init.c
+SRC	+= srcs/hash/tree_init.c
+SRC	+= srcs/hash/tree_init2.c
 
 #builtins
 SRC += srcs/builtins/builtins.c

@@ -3,51 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   hash_use.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: victordanain <victordanain@student.42.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 20:13:24 by vdanain           #+#    #+#             */
-/*   Updated: 2016/10/31 23:24:23 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/02 18:06:42 by victordanain     ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
-
-int		val_tokey(char *name)
-{
-	int				i;
-	long long int	res;
-	int				my_res;
-
-	i = 0;
-	res = 0;
-	while (name[i])
-	{
-		res += name[i] * (i * i);
-		i++;
-	}
-	my_res = res % H_SIZE;
-	return (my_res);
-}
 
 /*
 **	get_path : accepte la cmd en argument, renvoie le full path si existe,
 **	NULL sinon
 */
 
-char	*get_path(char *cmd, t_hash *hash[H_SIZE])
+char	*get_path(char *cmd, t_root *root)
 {
-	char	*path;
 	t_hash	*cur;
+	int		i;
+	char	*path;
 
-	//cmd[ft_strlen(cmd) - 1] = '\0';
-	cur = hash[val_tokey(cmd)];
-	while (cur && ft_strncmp(cur->name, cmd, ft_strlen(cur->name)) != 0)
-		cur = cur->next;
-	if (cur)
+	i = 0;
+	cur = root->first;
+	while (cmd[i])
 	{
-		path = ft_strdup(cur->path);
-		return (path);
+		cur = cur->node[val_tokey(root->charlist, cmd[i])];
+		i++;
+		if (cur == NULL)
+			return (NULL);
 	}
-	else
+	if (cur->cmd == NULL)
 		return (NULL);
+	path = ft_strdup(cur->cmd->path);
+	return (path);
 }
