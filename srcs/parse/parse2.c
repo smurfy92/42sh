@@ -100,24 +100,16 @@ void		ft_parse_redirections(t_group *grp, t_parse *parse)
 {
 	int i;
 	int ret;
-	int test;
 
 	i = 0;
-	test = 0;
 	while (parse->cmd[i])
 	{
 		grp->minus = 0;
 		ret = check_parentheses(parse->cmd[i]);
 		if (!ret)
-		{
-			//test = 1;
 			ft_parse_redirections2(grp, parse, i);
-		}
 		else
-		{
-			printf("%c", parse->cmd[i]);
 			i++;
-		}
 		if (grp->fail)
 			break ;
 		if (parse->sgred || parse->dbred)

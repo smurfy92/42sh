@@ -50,7 +50,6 @@ void		polish(t_parse *parse)
 	while (parse->cmd[++i])
 	{
 		ret = check_parentheses(parse->cmd[i]);
-		printf("ret = %d\n", ret);
 		if (test == 0 && ret == 1)
 		{
 			test = 1;

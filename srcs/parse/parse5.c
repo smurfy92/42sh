@@ -12,6 +12,14 @@
 
 #include "fortytwo.h"
 
+int			ft_is_quote(char c)
+{
+	if (c == '{' || c == '[' || c == '(' || c == '\'' || c == '"')
+		return (1);
+	else
+		return (0);
+}
+
 int			ft_is_space(char c)
 {
 	if (c == '\t' || c == ' ' || c == '\v' || c == '\f' || c == '\r'
@@ -28,7 +36,7 @@ void		ft_addfile(t_group *grp, t_parse *parse, int i)
 	char	*tmp;
 
 	start = i - 1;
-	while (!ft_isalpha(parse->cmd[i]) && parse->cmd[i] && parse->cmd[i] != '/')
+	while (!ft_isalpha(parse->cmd[i]) && parse->cmd[i] && !ft_is_quote(parse->cmd[i]) && parse->cmd[i] != '/')
 		i++;
 	end = i;
 	while (parse->cmd[end] && !ft_end_of_red(parse->cmd[end]))
@@ -51,8 +59,8 @@ void		ft_addfile(t_group *grp, t_parse *parse, int i)
 
 int			ft_end_of_red(char c)
 {
-	if (c == '\t' || c == ' ' || c == '\v' || c == '\f' || c == '\r'
-	|| c == '\n' || c == '>' || c == '<' || c == '|')
+	if ((c == '\t' || c == ' ' || c == '\v' || c == '\f' || c == '\r'
+		|| c == '\n' || c == '>' || c == '<' || c == '|') && check_parentheses(c))
 		return (1);
 	else
 		return (0);
