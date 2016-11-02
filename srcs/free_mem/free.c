@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:10:07 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/02 14:22:09 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/02 14:31:13 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void		free_env_tmp(t_group *grp)
 		free(tmp);
 		tmp = tmp2;
 	}
-	free_env(grp);
 	grp->env->lst_tmp = NULL;
 	REMOVE(&ENV(cmd));
 	free(grp->env);
