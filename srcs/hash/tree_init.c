@@ -54,7 +54,15 @@ void			init_cmd(char *cmd, t_root *root, t_path *path)
 		tmp = tmp->node[val_tokey(root->charlist, cmd[i])];
 		i++;
 	}
-	tmp->cmd = path;
+	if (tmp->cmd != NULL)
+		tmp->cmd = path;
+	else
+	{
+		ft_strdel(&path->path);
+		ft_strdel(&path->name);
+		free(path);
+		path = NULL;
+	}
 }
 
 /*
