@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: victordanain <victordanain@student.42.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:17:06 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/02 17:07:23 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/02 18:05:33 by victordanain     ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_group		*set_grp(t_group *grp)
 	grp->exit = 0;
 	ft_get_history(grp);
 	init_term(grp);
-	hash_init(grp);
+	hash_init(&grp->root);
 	return (grp);
 }
 
