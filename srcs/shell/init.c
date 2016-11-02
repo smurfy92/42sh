@@ -19,6 +19,13 @@ void		init_exec(t_group *grp)
 	ret = builtins(grp);
 	//ret == 0 ? ft_putendl(get_path(CMD(cmdsplit)[0], grp->hash)) : 0;
 	ret == -1 ? printf("ERROR IN BUILTINS\n") : 0;
+
+	int i = -1;
+
+	while (CMD(cmdsplit)[++i])
+	{
+		printf("%s\n", CMD(cmdsplit[i]));
+	}
 }
 
 void		init_env(t_group *grp, char **env)
