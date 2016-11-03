@@ -118,4 +118,5 @@ void		ft_free_parse(t_group *grp)
 	free_parselst(grp);
 	free_term(grp);
 	free_env_tmp(grp);
+	check_parentheses(0);
 }
