@@ -6,7 +6,7 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 15:25:02 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/03 19:05:28 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/03 19:28:12 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,17 @@ int			ft_count_pipes(char *cmd)
 {
 	int i;
 	int nb;
+	int	ret;
 
 	nb = 1;
 	i = -1;
+	ret = 0;
 	while (cmd && cmd[++i])
-		if (cmd[i] == '|')
+	{
+		ret = check_parentheses(cmd[i]);
+		if (ret == 0 && cmd[i] == '|')
 			nb++;
+	}
 	return (nb);
 }
 
