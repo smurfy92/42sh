@@ -24,7 +24,7 @@ void		init_exec(t_group *grp)
 
 	while (CMD(cmdsplit)[++i])
 	{
-		printf("%s\n", CMD(cmdsplit[i]));
+		printf("CMDSPLIT(%d): %s\n", i, CMD(cmdsplit[i]));
 	}
 }
 

@@ -47,10 +47,15 @@ void		polish(t_parse *parse)
 
 	test = 0;
 	i = -1;
+	printf("parse->cmd -> %s\n", parse->cmd);
+	check_parentheses(0);
 	while (parse->cmd[++i])
 	{
 		ret = check_parentheses(parse->cmd[i]);
-		if (test == 0 && ret == 1)
+		if (parse->cmd[i] == '\\' &&
+			parse->cmd[i + 1])
+			ft_polish_parse(parse, i - 1);
+		else if (test == 0 && ret == 1)
 		{
 			test = 1;
 			printf("%c\n", parse->cmd[i]);
@@ -126,12 +131,12 @@ void		ft_parse(t_group *grp, char *cmd)
 	}
 	if (tabl)
 		free(tabl);
+	TERM(cmd_size) = 0;
+	cmd = NULL;
 	if (y != i)
 	{
 		grp->fail = 1;
-		return (ft_putendl("Invalid null command"));
+		//return (ft_putendl("Invalid null command"));
 	}
-	TERM(cmd_size) = 0;
-	cmd = NULL;
 	ft_parse2(grp);
 }

@@ -70,9 +70,9 @@ INC += -I srcs/history/includes/
 INC += -I srcs/errors/includes/
 INC += -I ./includes/
 
-#-fsanitize=address
+#-
 OBJ = $(SRC:.c=.o)
-FLAG = -g -Wall -Werror -Wextra
+FLAG = -g -Wall -Werror -Wextra -fsanitize=address
 # -fsanitize=address
 CG = \033[92m
 CY =  \033[93m

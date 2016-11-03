@@ -106,7 +106,7 @@ void		ft_parse_redirections(t_group *grp, t_parse *parse)
 	{
 		grp->minus = 0;
 		ret = check_parentheses(parse->cmd[i]);
-		if (!ret)
+		if (!ret || (i > 0 && parse->cmd[i - 1] != '\\'))
 			ft_parse_redirections2(grp, parse, i);
 		else
 			i++;
