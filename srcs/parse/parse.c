@@ -6,7 +6,7 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 15:25:02 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/02 20:56:14 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/03 18:22:23 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void		polish(t_parse *parse)
 	{
 		ret = check_parentheses(parse->cmd[i]);
 		if (parse->cmd[i] == '\\' &&
-			parse->cmd[i + 1])
+			parse->cmd[i + 1] && ret == 0)
 			ft_polish_parse(parse, i - 1);
 		else if (test == 0 && ret == 1)
 		{

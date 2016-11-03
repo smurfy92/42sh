@@ -6,7 +6,7 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/01 17:35:14 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/02 17:17:41 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/03 18:24:22 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ int		check_esc(t_group *grp)
 	ret = -1;
 	while (TERM(cmd_line) && (c = TERM(cmd_line)[++i]) != '\0')
 	{
-		if ((c == '"' || c == '`') && check_last_char(TERM(cmd_line), i) == 0)
+		if ((c == '"' || c == '`' || c =='\'') && check_last_char(TERM(cmd_line), i) == 0)
 			ret = check_parentheses(c);
-		else if (c != '"' && c != '`')
+		else if (c != '"' && c != '`' && c != '\'')
 			if ((ret = check_parentheses(c)) < 0)
 				return (-1);
 	}
