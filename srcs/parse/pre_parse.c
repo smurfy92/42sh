@@ -92,6 +92,14 @@ void		ft_escape_parse(t_group *grp, int i)
 		TERM(cmd_line)[i + 1] = '\0';
 }
 
+// void		ft_put_quote(t_group *grp, int i)
+// {
+// 	char *tmp;
+
+// 	tmp = TERM(cmd_line)[i + 1];
+
+// }
+
 void		ft_pre_parse(t_group *grp)
 {
 	int i;
@@ -102,7 +110,7 @@ void		ft_pre_parse(t_group *grp)
 		if (TERM(cmd_line)[i] == '\\' &&
 			TERM(cmd_line)[i + 1] && TERM(cmd_line)[i + 1] == '\\')
 			ft_escape_parse(grp, i);
-		if (i > 0 && TERM(cmd_line)[i] == '\\' &&
+		else if (i > 0 && TERM(cmd_line)[i] == '\\' &&
 			TERM(cmd_line)[i + 1] && TERM(cmd_line)[i + 1] == '\n')
 		{
 			ft_escape_parse(grp, i - 1);
@@ -114,4 +122,5 @@ void		ft_pre_parse(t_group *grp)
 		else if (TERM(cmd_line)[i] == '!' && TERM(cmd_line)[i + 1])
 			ft_replace_by_id(grp, i + 1);
 	}
+	printf("cmd ->%s\n",(TERM(cmd_line)));
 }
