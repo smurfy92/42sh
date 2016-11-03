@@ -58,7 +58,6 @@ void		polish(t_parse *parse)
 		else if (test == 0 && ret == 1)
 		{
 			test = 1;
-			printf("%c\n", parse->cmd[i]);
 			ft_polish_parse(parse, i - 1);
 		}
 		else if (test == 1 && ret == 0)
@@ -87,7 +86,8 @@ void		ft_create_parse(t_group *grp, char *cmd)
 	tmp->errnb = 0;
 	ft_parse_redirections(grp, tmp);
 	polish(tmp);
-	tmp->cmdsplit = ft_spacesplit(tmp->cmd);
+	//spacesplit bug
+	tmp->cmdsplit = ft_strsplit(tmp->cmd, ' ');
 	if (!grp->parselst)
 		grp->parselst = tmp;
 	else
@@ -136,7 +136,7 @@ void		ft_parse(t_group *grp, char *cmd)
 	if (y != i)
 	{
 		grp->fail = 1;
-		//return (ft_putendl("Invalid null command"));
+		return (ft_putendl("Invalid null command"));
 	}
 	ft_parse2(grp);
 }
