@@ -46,12 +46,14 @@ void		proccess(t_group *grp)
 	tabl = ft_strsplitquote(TERM(cmd_line), ';');
 	while (tabl && tabl[++i])
 	{
-		ft_parse(grp, tabl[i]);
-		//check command -> add flag error
-		printf("new command\n\n");
-		ft_display_parse(grp);
-		init_exec(grp); //exec
-		ft_free_parse(grp);
+		// boucle pour && et ||
+			ft_parse(grp, tabl[i]);
+			//check command -> add flag error
+			printf("new command\n\n");
+			ft_display_parse(grp);
+			init_exec(grp); //exec
+			ft_free_parse(grp);
+		// fin de boucle
 		ft_strdel(&tabl[i]);
 	}
 	free(tabl);

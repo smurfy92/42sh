@@ -63,7 +63,7 @@ int			ft_end_of_red(char c)
 {
 	if ((c == '\t' || c == ' ' || c == '\v' || c == '\f' || c == '\r'
 		|| c == '\n' || c == '>' || c == '<' || c == '|') &&
-		check_parentheses(c))
+		!check_parentheses(c))
 		return (1);
 	else
 		return (0);
