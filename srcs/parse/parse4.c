@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 15:31:10 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/04 13:29:03 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/04 13:49:43 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,9 @@ void		ft_addheredoc(t_group *grp, t_parse *parse, int i)
 	while (!ft_isalpha(parse->cmd[i]) && parse->cmd[i])
 		i++;
 	end = i;
-	while ((parse->cmd[end] && !ft_end_of_red(parse->cmd[end]) && !ft_is_quote(parse->cmd[i])) || (test == 0 && check_parentheses(parse->cmd[end])))
+	while ((parse->cmd[end] && !ft_end_of_red(parse->cmd[end]) &&
+	!ft_is_quote(parse->cmd[i])) ||
+	(test == 0 && check_parentheses(parse->cmd[end])))
 		end++;
 	if (end == i)
 	{

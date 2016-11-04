@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:50:41 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/04 13:09:50 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/04 13:47:41 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	handler_win(int sig)
 
 	grp = get_grp();
 	if (sig)
-		{}
+	{}
 	ioctl(0, TIOCGWINSZ, &w);
 	TERM(window->width) = w.ws_col;
 	TERM(window->heigth) = w.ws_row;

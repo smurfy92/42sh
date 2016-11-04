@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_init2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victordanain <victordanain@student.42.fr>  +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/02 17:32:31 by victordanain      #+#    #+#             */
-/*   Updated: 2016/11/02 18:06:49 by victordanain     ###   ########.fr       */
+/*   Updated: 2016/11/04 13:55:28 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int		check_charlist(char *lst, char c)
 **	les composant
 */
 
-char		*get_nbchar(DIR *cur_d)
+char			*get_nbchar(DIR *cur_d)
 {
 	struct dirent	*cur_e;
 	static char		*charlist = NULL;
@@ -80,8 +80,6 @@ int				val_tokey(char *charlist, char c)
 	}
 	return (0);
 }
-
-
 // void			display_while(t_root *first, t_hash *cur)
 // {
 // 	t_hash	*tmp;
