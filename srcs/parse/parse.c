@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 15:25:02 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/04 13:04:52 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/04 13:07:44 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ void		ft_parse2(t_group *grp)
 		while (i > 0 && tmp->cmd && tmp->cmd[--i] == ' ')
 			tmp->cmd[i] = '\0';
 		tmp = tmp->next;
-
 	}
 }
 
