@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 15:27:24 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/03 19:04:41 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/04 13:08:08 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,13 @@ void		ft_replace_vars(t_group *grp, t_parse *parse, int i)
 void		ft_parse_redirections2(t_group *grp, t_parse *parse, int i)
 {
 	//a revoir redirection de fd
-	// if (ft_isdigit(parse->cmd[i]) && parse->cmd[i + 1] == '>' && parse->cmd[i + 2]
+	// if (ft_isdigit(parse->cmd[i]) && parse->cmd[i + 1] == '>' &&
+	// parse->cmd[i + 2]
 	// == '&' && parse->cmd[i + 3] && parse->cmd[i + 3] == '-')
 	// 	ft_check_close1(parse, i);
 	// else if (parse->cmd[i] == '2' && parse->cmd[i + 1] == '>' &&
-	// parse->cmd[i + 2] == '&' && parse->cmd[i + 3] && parse->cmd[i + 3] == '-')
+	// parse->cmd[i + 2] == '&' && parse->cmd[i + 3] &&
+	// parse->cmd[i + 3] == '-')
 	// 	ft_check_close2(parse, i);
 	// else
 	if (parse->cmd[i] == '>' && parse->cmd[i + 1] &&
@@ -117,6 +119,5 @@ void		ft_parse_redirections(t_group *grp, t_parse *parse)
 			ft_create_redirections(parse);
 		if (grp->minus)
 			i++;
-		
 	}
 }

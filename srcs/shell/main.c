@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:43:44 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/02 17:07:07 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/04 13:10:04 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ int			main(int argc, char **argv, char **env)
 {
 	t_group *grp;
 
-	if (argc || argv){}
+	if (argc || argv)
+		{}
 	init_shell();
 	grp = get_grp();
 	init_env(grp, env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 15:25:02 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/03 19:28:12 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/04 13:07:44 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ void		polish(t_parse *parse)
 	{
 		ret = check_parentheses(parse->cmd[i]);
 		if (parse->cmd[i] == '\\' &&
-			parse->cmd[i + 1] && ret == 0)
+			parse->cmd[i + 1])
 			ft_polish_parse(parse, i - 1);
-		else if (test == 0 && ret == 1)
+		if (test == 0 && ret == 1)
 		{
 			test = 1;
 			ft_polish_parse(parse, i - 1);
@@ -116,7 +116,6 @@ void		ft_parse2(t_group *grp)
 		while (i > 0 && tmp->cmd && tmp->cmd[--i] == ' ')
 			tmp->cmd[i] = '\0';
 		tmp = tmp->next;
-
 	}
 }
 

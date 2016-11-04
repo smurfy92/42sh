@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/27 13:06:00 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/02/12 10:31:57 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/04 12:57:25 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ static	int			ft_read(int fd, char **rest, char **line)
 		{
 			tmp = ft_strdup(*rest);
 			ft_memdel((void **)rest);
-			*rest = ft_strjoin(tmp, buf);
-			ft_memdel((void **)&tmp);
+			*rest = ft_strjoin_nf(tmp, buf, 1);
 		}
 		else
 			*rest = ft_strdup(buf);

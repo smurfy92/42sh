@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:10:07 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/02 14:31:13 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/04 12:59:44 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,10 @@ void		free_history(t_group *grp)
 		REMOVE(&hist->var);
 		hist->prev = NULL;
 		tmp = hist->next;
-		//free(hist);
+		free(hist);
 		hist = tmp;
 	}
-	free(grp->history);
+	grp->history = NULL;
 }
 
 void		free_parselst(t_group *grp)
