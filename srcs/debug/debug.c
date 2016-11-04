@@ -27,10 +27,8 @@ void		ft_display_parse(t_group *grp)
 	{
 		printf("  command -> %s$\n",tmp->cmd);
 		int i = -1;
-		while (CMD(cmdsplit) && CMD(cmdsplit)[++i])
-		{
-			printf("    cmd->split[%d] %s$\n", i, CMD(cmdsplit[i]));
-		}
+		while (tmp->cmdsplit && tmp->cmdsplit[++i])
+			printf("    cmd->split[%d] %s$\n", i, tmp->cmdsplit[i]);
 		printf("  sgred -> %s$\n",tmp->sgred);
 		printf("  dbred -> %s$\n",tmp->dbred);
 		printf("  file -> %s$\n",tmp->file);
