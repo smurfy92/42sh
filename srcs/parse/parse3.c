@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 15:29:42 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/03 19:03:19 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/04 13:57:18 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,24 @@ void		ft_create_redirections(t_parse *parse)
 	if (parse->dbred)
 		parse->fd = open(parse->dbred, O_WRONLY | O_CREAT |
 		O_APPEND, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
+}
+
+int			ft_count_pipes(char *cmd)
+{
+	int i;
+	int nb;
+	int	ret;
+
+	nb = 1;
+	i = -1;
+	ret = 0;
+	while (cmd && cmd[++i])
+	{
+		ret = check_parentheses(cmd[i]);
+		if (ret == 0 && cmd[i] == '|')
+			nb++;
+	}
+	return (nb);
 }
 
 // void		ft_create_heredoc2(t_group *grp, char *str, int fd, int i)

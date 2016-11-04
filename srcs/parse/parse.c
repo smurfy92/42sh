@@ -6,29 +6,11 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 15:25:02 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/04 13:34:43 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/04 13:59:56 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
-
-int			ft_count_pipes(char *cmd)
-{
-	int i;
-	int nb;
-	int	ret;
-
-	nb = 1;
-	i = -1;
-	ret = 0;
-	while (cmd && cmd[++i])
-	{
-		ret = check_parentheses(cmd[i]);
-		if (ret == 0 && cmd[i] == '|')
-			nb++;
-	}
-	return (nb);
-}
 
 void		ft_polish_parse(t_parse *parse, int i)
 {
@@ -78,9 +60,7 @@ void		ft_create_parse(t_group *grp, char *cmd)
 	t_parse		*tmp2;
 
 	tmp = (t_parse*)malloc(sizeof(t_parse));
-	while (ft_is_space(cmd[0]) && cmd[1])
-		cmd = &cmd[1];
-	tmp->cmd = ft_strdup(cmd);
+	tmp->cmd = ft_strtrim(cmd);
 	tmp->next = NULL;
 	tmp->heredoc = 0;
 	tmp->dbred = NULL;

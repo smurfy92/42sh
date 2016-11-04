@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:10:07 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/04 12:59:44 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/04 13:54:58 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void		free_history(t_group *grp)
 {
 	t_history *hist;
 	t_history *tmp;
+
 	hist = ft_history_get_first(grp);
 	while (hist)
 	{

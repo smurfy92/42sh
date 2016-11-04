@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_quotes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/19 03:11:24 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/03 18:49:19 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/04 13:51:29 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,10 @@ int		check_parentheses(char c)
 	ret = 0;
 	if (malloc_free(&quotes, c) < 0)
 		return (ret);
-	quotes[dquote] == 0 && quotes[par] == 0 ? check_quotes(quotes, c, '\'', squote) : 0;
-	quotes[squote] == 0 && quotes[par] == 0 ? check_quotes(quotes, c, '"', dquote) : 0; 
+	quotes[dquote] == 0 && quotes[par] == 0 ?
+	check_quotes(quotes, c, '\'', squote) : 0;
+	quotes[squote] == 0 && quotes[par] == 0 ?
+	check_quotes(quotes, c, '"', dquote) : 0;
 	if (quotes[squote] == 0 && quotes[dquote] == 0)
 	{
 		check_quotes(quotes, c, '`', bquote);

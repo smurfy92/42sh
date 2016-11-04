@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victordanain <victordanain@student.42.fr>  +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/02 17:29:47 by victordanain      #+#    #+#             */
-/*   Updated: 2016/11/02 18:42:57 by victordanain     ###   ########.fr       */
+/*   Updated: 2016/11/04 13:53:31 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void			fill_tree(t_root *root, DIR *cur_d, char *dir)
 
 	while ((cur_e = readdir(cur_d)))
 	{
-		if (ft_strcmp(cur_e->d_name, ".") != 0 && ft_strcmp(cur_e->d_name, "..") != 0)
+		if (ft_strcmp(cur_e->d_name, ".") != 0 &&
+			ft_strcmp(cur_e->d_name, "..") != 0)
 		{
 			tmpath = get_fullpath(cur_e->d_name, dir);
 			cur_p = init_path(cur_e->d_name, tmpath);
@@ -50,7 +51,8 @@ void			init_cmd(char *cmd, t_root *root, t_path *path)
 	while (cmd[i])
 	{
 		if (tmp->node[val_tokey(root->charlist, cmd[i])] == NULL)
-			tmp->node[val_tokey(root->charlist, cmd[i])] = node_init(cmd[i], ft_strlen(root->charlist));
+			tmp->node[val_tokey(root->charlist, cmd[i])] = node_init(cmd[i],
+			ft_strlen(root->charlist));
 		tmp = tmp->node[val_tokey(root->charlist, cmd[i])];
 		i++;
 	}
