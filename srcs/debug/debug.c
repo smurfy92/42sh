@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:10:41 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/10/28 15:10:41 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/04 13:43:58 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ void		ft_display_parse(t_group *grp)
 	tmp = grp->parselst;
 	while (tmp)
 	{
-		ft_putstr("command -> ");
-		ft_putendl(tmp->cmd);
-		ft_putstr("sgred -> ");
-		ft_putendl(tmp->sgred);
-		ft_putstr("dbred -> ");
-		ft_putendl(tmp->dbred);
-		ft_putstr("file -> ");
-		ft_putendl(tmp->file);
-		ft_putstr("heredoc -> ");
-		ft_putendl(tmp->heredoc);
+		printf("  command -> %s$\n",tmp->cmd);
+		int i = -1;
+		while (CMD(cmdsplit) && CMD(cmdsplit)[++i])
+		{
+			printf("    cmd->split[%d] %s$\n", i, CMD(cmdsplit[i]));
+		}
+		printf("  sgred -> %s$\n",tmp->sgred);
+		printf("  dbred -> %s$\n",tmp->dbred);
+		printf("  file -> %s$\n",tmp->file);
+		printf("  heredoc -> %s$\n\n",tmp->heredoc);
 		tmp = tmp->next;
 	}
 }

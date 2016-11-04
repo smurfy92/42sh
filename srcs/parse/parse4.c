@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 15:31:10 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/03 19:03:22 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/04 13:29:03 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void		ft_adddoubleredirection(t_group *grp, t_parse *parse, int i)
 	}
 	start = i - 2;
 	while (parse->cmd[i] && !ft_isalpha(parse->cmd[i]) &&
-	!ft_isdigit(parse->cmd[i]) && !ft_is_quote(parse->cmd[i]) && parse->cmd[i] != '/')
+	!ft_isdigit(parse->cmd[i]) && !ft_is_quote(parse->cmd[i]) &&
+	parse->cmd[i] != '/')
 		i++;
 	end = i;
 	while (parse->cmd[end] && !ft_end_of_red(parse->cmd[end]))
@@ -55,7 +56,6 @@ void		ft_addredirection(t_group *grp, t_parse *parse, int i)
 	int		start;
 	int		end;
 
-	//int test = check_parentheses(parse->cmd[i]);
 	if (!parse->cmd[i])
 	{
 		grp->fail = 1;
@@ -63,7 +63,8 @@ void		ft_addredirection(t_group *grp, t_parse *parse, int i)
 	}
 	start = i - 1;
 	while (parse->cmd[i] && !ft_isalpha(parse->cmd[i]) &&
-	!ft_isdigit(parse->cmd[i]) && !ft_is_quote(parse->cmd[i]) && parse->cmd[i] != '/')
+	!ft_isdigit(parse->cmd[i]) && !ft_is_quote(parse->cmd[i]) &&
+	parse->cmd[i] != '/')
 		i++;
 	end = i;
 	while ((parse->cmd[end] && !ft_end_of_red(parse->cmd[end])))
@@ -74,11 +75,8 @@ void		ft_addredirection(t_group *grp, t_parse *parse, int i)
 		return ;
 	}
 	parse->sgred = ft_strsub(&parse->cmd[i], 0, end - i);
-	printf("debug -> %s\n",parse->sgred);
 	ft_addredirectionsuite(parse, end, start);
 }
-
-// a revoir
 
 void		ft_addheredoc2(t_parse *parse, int end, int start)
 {
