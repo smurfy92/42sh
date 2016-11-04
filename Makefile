@@ -6,6 +6,9 @@ SRC =  srcs/shell/main.c
 SRC	+= srcs/shell/init.c
 SRC	+= srcs/shell/signaux.c
 
+#exec
+SRC	+= srcs/exec/exec.c
+
 #hash
 SRC += srcs/hash/hash_use.c
 SRC	+= srcs/hash/hash_init.c
