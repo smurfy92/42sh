@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:43:44 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/04 13:42:58 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/05 19:56:07 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ void		prompt(void)
 void		proccess(t_group *grp)
 {
 	int		i;
+	//int		j;
 	char	**tabl;
+	//char	**tabl2;
 
 	i = -1;
 	prompt();
@@ -46,15 +48,20 @@ void		proccess(t_group *grp)
 	tabl = ft_strsplitquote(TERM(cmd_line), ';');
 	while (tabl && tabl[++i])
 	{
-		// boucle pour && et ||
-			ft_parse(grp, tabl[i]);
-			//check command -> add flag error
-			printf("new command\n\n");
-			ft_display_parse(grp);
-			init_exec(grp); //exec
-			ft_free_parse(grp);
-		// fin de boucle
-		ft_strdel(&tabl[i]);
+		// j = -1;
+		ft_putendl(tabl[i]);
+		ft_strsplitandor(tabl[i]);
+		// while (tabl && tabl2[++j])
+		// 	printf("%s\n", tabl[i]);
+		// // boucle pour && et ||
+		// 	ft_parse(grp, tabl[i]);
+		// 	//check command -> add flag error
+		// 	printf("new command\n\n");
+		// 	ft_display_parse(grp);
+		// 	init_exec(grp); //exec
+		// 	ft_free_parse(grp);
+		// // fin de boucle
+		// ft_strdel(&tabl[i]);
 	}
 	free(tabl);
 	ft_strdel(&TERM(cmd_line));

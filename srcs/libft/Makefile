@@ -6,7 +6,7 @@
 #    By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/28 18:42:36 by jtranchi          #+#    #+#              #
-#    Updated: 2016/10/31 15:28:26 by jmontija         ###   ########.fr        #
+#    Updated: 2016/11/05 17:36:30 by jmontija         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,7 @@ SRC= ft_memset.c\
 	 ft_strsub.c\
 	 ft_strjoin.c\
 	 ft_strtrim.c\
+	 ft_strsplitandor.c\
 	 ft_strsplitquote.c\
 	 ft_spacesplit.c\
 	 ft_strsplit.c\
