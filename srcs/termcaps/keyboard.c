@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 17:05:11 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/02 14:19:11 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/06 18:07:10 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int		key_selection(t_group *grp, char *order)
 // {
 // 	int	i;
 
-// 	i = -1;
+// 	i = -1; 
 // 	while (order && order[++i] != '\0')
 // 	{
 // 		if (order[i] != '\n')
@@ -84,12 +84,40 @@ int		key_selection(t_group *grp, char *order)
 // 	grp->exit[0] = true;
 // }
 
+// void	check_heredoc(t_group *grp)
+// {
+// 	int	i;
+// 	char c;
+// 	char *eof;
+
+// 	i = -1;
+// 	n = false;
+// 	while (TERM(cmd_line)[++i] != '\0')
+// 	{
+// 		c = TERM(cmd_line)[i];
+// 		if (TERM(cmd_line)[i + 1] != '\0')
+// 			n = TERM(cmd_line)[i + 1]
+// 		if (c == '<' && n == '<' )
+// 			heredoc = true;
+// 		else if (heredoc == true && c != ' ')
+// 			eof = ft_charjoin(eof, c);
+// 		else if (heredoc == true && c == ' ')
+// 			get_cmd
+// 		REMOVE(&prev_char);
+// 		prev_char = SDUP(order);
+// 	}
+// }
+
 void	get_cmd(t_group *grp, int fd)
 {
 	int		ret;
+	char	*prev_char;
+	int		heredoc;
 	char	order[BUF_SIZE + 1];
 
 	ft_bzero(order, BUF_SIZE + 1);
+	prev_char = NULL;
+	heredoc = false;
 	while ((ret = read(fd, order, BUF_SIZE)) > 0)
 	{
 		order[ret] = '\0';
@@ -100,6 +128,7 @@ void	get_cmd(t_group *grp, int fd)
 	if (TERM(cmd_quote) != NULL)
 		fill_cmd_line(grp);
 	ft_go_end(grp);
+	//check_heredoc(grp);
 	//ret == 0 ? read_fd_in(grp, tmp) :
 	ft_putchar_fd('\n', 2);
 	reset_edl(grp);

@@ -43,6 +43,7 @@ SRC	+= srcs/parse/parse3.c
 SRC	+= srcs/parse/parse4.c
 SRC	+= srcs/parse/parse5.c
 SRC	+= srcs/parse/pre_parse.c
+SRC	+= srcs/parse/heredoc.c
 
 #history
 SRC	+= srcs/history/history.c
