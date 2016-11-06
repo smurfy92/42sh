@@ -64,9 +64,6 @@ void		ft_check_redirection_fd(t_parse *parse, int i)
 	REMOVE(&fd);
 }
 
-//rajouter tilde pour replace vars
-
-
 void		ft_replace_vars(t_group *grp, t_parse *parse, int i)
 {
 	int		start;
@@ -93,10 +90,30 @@ void		ft_replace_vars(t_group *grp, t_parse *parse, int i)
 	}
 }
 
+void		ft_replace_tilde(t_group *grp, t_parse *parse, int i)
+{
+	char	*path;
+	char	*tmp;
+
+	path = ft_getenv(grp, "HOME");
+	if (path == NULL)
+		ft_putendl_fd("Your stupid theres no home", 2);
+	tmp = SDUP(&parse->cmd[i + 1]);
+	parse->cmd[i] = '\0';
+	if (parse->cmd[i + 1])
+	{
+		parse->cmd = ft_strjoin_nf(parse->cmd, path, 1);
+		parse->cmd = ft_strjoin_nf(parse->cmd, tmp, 1);
+	}
+	else
+		parse->cmd = ft_strjoin_nf(parse->cmd, path, 1);
+	REMOVE(&tmp);
+	grp->minus = 1;
+}
+
+
 void		ft_parse_redirections2(t_group *grp, t_parse *parse, int i)
 {
-	//a revoir redirection de fd
-	printf("redfd -> %s\n",parse->redfd);
 	if (ft_isdigit(parse->cmd[i]) && parse->cmd[i + 1] == '>' &&
 	parse->cmd[i + 2] == '&' && parse->cmd[i + 3] && parse->cmd[i + 3] == '-')
 		ft_check_close(parse, i);
@@ -115,6 +132,8 @@ void		ft_parse_redirections2(t_group *grp, t_parse *parse, int i)
 		ft_addfile(grp, parse, i + 1);
 	else if (parse->cmd[i] == '$' && parse->cmd[i + 1])
 		ft_replace_vars(grp, parse, i + 1);
+	else if (parse->cmd[i] == '~')
+		ft_replace_tilde(grp, parse, i);
 	else
 		grp->minus = 1;
 }
