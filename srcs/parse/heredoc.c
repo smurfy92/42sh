@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/06 17:52:49 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/06 18:23:23 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/06 18:34:37 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,18 @@ void		check_heredoc(t_group *grp)
 	t_parse *tmp;
 	char	**hdoc;
 	int		i;
-	int		count;
 
 	hdoc = NULL;
 	tmp = grp->parselst;
-	count = 0;
 	while (tmp)
 	{
 		if (tmp->heredoc != NULL)
 		{
 			i = -1;
-			count++;
+			grp->hdcount += 1;
 			hdoc = ft_strsplit(tmp->heredoc, ';');
 			while (hdoc[++i])
-				heredoc(grp, count, hdoc[i]);
+				heredoc(grp, grp->hdcount, hdoc[i]);
 			ft_freestrtab(&hdoc);
 		}
 		tmp = tmp->next;

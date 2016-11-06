@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:43:44 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/06 17:54:09 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/06 18:34:12 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void		proccess(t_group *grp)
 		{
 			printf("andor->: %s -> %d\n", grp->andor->cmd, grp->andor->type);
 			ft_parse(grp, grp->andor->cmd);
-			
+
 			ft_display_parse(grp);
 			init_exec(grp);
 			ft_free_parse(grp);
@@ -72,6 +72,7 @@ void		proccess(t_group *grp)
 	}
 	free(tabl);
 	ft_strdel(&TERM(cmd_line));
+	grp->hdcount = 0;
 }
 
 int			main(int argc, char **argv, char **env)

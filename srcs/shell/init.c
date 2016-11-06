@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:17:06 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/05 17:14:32 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/06 18:32:29 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ t_group		*set_grp(t_group *grp)
 	grp->env->cmd = NULL;
 	grp->prompt_size = 6;
 	grp->exit = 0;
+	grp->hdcount = 0;
 	grp->andor = NULL;
 	ft_get_history(grp);
 	init_term(grp);
