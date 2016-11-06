@@ -66,7 +66,8 @@ void		ft_create_parse(t_group *grp, char *cmd)
 	tmp->dbred = NULL;
 	tmp->sgred = NULL;
 	tmp->file = NULL;
-	tmp->closefd = 0;
+	tmp->redfd = NULL;
+	tmp->closefd = NULL;
 	tmp->errnb = 0;
 	ft_parse_redirections(grp, tmp);
 	polish(tmp);

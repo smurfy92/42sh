@@ -12,37 +12,60 @@
 
 #include "fortytwo.h"
 
-// void		ft_check_close1(t_parse *parse, int i)
-// {
-// 	char *tmp;
+void		ft_check_close(t_parse *parse, int i)
+{
+	char	*tmp;
+	char	*fd;
 
-// 	if (parse->cmd[i + 4])
-// 	{
-// 		tmp = ft_strdup(&parse->cmd[i + 4]);
-// 		parse->cmd[i] = '\0';
-// 		parse->cmd = ft_strjoin(parse->cmd, tmp);
-// 	}
-// 	else
-// 		parse->cmd[i] = '\0';
-// 	parse->close1 = 1;
-// }
+	fd = ft_strsub(parse->cmd, i, 1);
+	if (parse->cmd[i + 4])
+	{
+		tmp = ft_strdup(&parse->cmd[i + 4]);
+		parse->cmd[i] = '\0';
+		parse->cmd = ft_strjoin_nf(parse->cmd, tmp, 3);
+	}
+	else
+		parse->cmd[i] = '\0';
+	if (parse->closefd)
+	{
+		parse->closefd = ft_strjoin_nf(parse->closefd, ";", 1);
+		parse->closefd = ft_strjoin_nf(parse->closefd, fd, 1);
+	}
+	else
+		parse->closefd = ft_strdup(fd);
+	REMOVE(&fd);
+}
 
-// void		ft_check_close2(t_parse *parse, int i)
-// {
-// 	char *tmp;
+void		ft_check_redirection_fd(t_parse *parse, int i)
+{
+	char	*tmp;
+	char	*fd;
+	char	*fd2;
 
-// 	if (parse->cmd[i + 4])
-// 	{
-// 		tmp = ft_strdup(&parse->cmd[i + 4]);
-// 		parse->cmd[i] = '\0';
-// 		parse->cmd = ft_strjoin(parse->cmd, tmp);
-// 	}
-// 	else
-// 		parse->cmd[i] = '\0';
-// 	parse->close2 = 1;
-// }
+	fd2 = ft_strsub(parse->cmd, i + 3, 1);
+	fd = ft_strsub(parse->cmd, i, 1);
+	if (parse->cmd[i + 4])
+	{
+		tmp = ft_strdup(&parse->cmd[i + 4]);
+		parse->cmd[i] = '\0';
+		parse->cmd = ft_strjoin_nf(parse->cmd, tmp, 3);
+	}
+	else
+		parse->cmd[i] = '\0';
+	fd = ft_strjoin_nf(fd, ">", 1);
+	fd = ft_strjoin_nf(fd, fd2, 3);
+	if (parse->redfd)
+	{
+		parse->redfd = ft_strjoin_nf(parse->redfd, ";", 1);
+		parse->redfd = ft_strjoin_nf(parse->redfd, fd, 1);
+	}
+	else
+		parse->redfd = ft_strdup(fd);
+	REMOVE(&fd);
+}
 
 //rajouter tilde pour replace vars
+
 
 void		ft_replace_vars(t_group *grp, t_parse *parse, int i)
 {
@@ -73,16 +96,14 @@ void		ft_replace_vars(t_group *grp, t_parse *parse, int i)
 void		ft_parse_redirections2(t_group *grp, t_parse *parse, int i)
 {
 	//a revoir redirection de fd
-	// if (ft_isdigit(parse->cmd[i]) && parse->cmd[i + 1] == '>' &&
-	// parse->cmd[i + 2]
-	// == '&' && parse->cmd[i + 3] && parse->cmd[i + 3] == '-')
-	// 	ft_check_close1(parse, i);
-	// else if (parse->cmd[i] == '2' && parse->cmd[i + 1] == '>' &&
-	// parse->cmd[i + 2] == '&' && parse->cmd[i + 3] &&
-	// parse->cmd[i + 3] == '-')
-	// 	ft_check_close2(parse, i);
-	// else
-	if (parse->cmd[i] == '>' && parse->cmd[i + 1] &&
+	printf("redfd -> %s\n",parse->redfd);
+	if (ft_isdigit(parse->cmd[i]) && parse->cmd[i + 1] == '>' &&
+	parse->cmd[i + 2] == '&' && parse->cmd[i + 3] && parse->cmd[i + 3] == '-')
+		ft_check_close(parse, i);
+	else if (ft_isdigit(parse->cmd[i]) && parse->cmd[i + 1] == '>' &&
+	parse->cmd[i + 2] == '&' && parse->cmd[i + 3] && ft_isdigit(parse->cmd[i + 3]))
+		ft_check_redirection_fd(parse, i);
+	else if (parse->cmd[i] == '>' && parse->cmd[i + 1] &&
 	parse->cmd[i + 1] == '>')
 		ft_adddoubleredirection(grp, parse, i + 2);
 	else if (parse->cmd[i] == '>')
