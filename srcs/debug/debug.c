@@ -32,6 +32,8 @@ void		ft_display_parse(t_group *grp)
 		printf("  sgred -> %s$\n",tmp->sgred);
 		printf("  dbred -> %s$\n",tmp->dbred);
 		printf("  file -> %s$\n",tmp->file);
+		printf("  close -> %s$\n",tmp->closefd);
+		printf("  redfd -> %s$\n",tmp->redfd);
 		printf("  heredoc -> %s$\n\n",tmp->heredoc);
 		tmp = tmp->next;
 	}

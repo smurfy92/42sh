@@ -101,6 +101,8 @@ void		free_parselst(t_group *grp)
 		ft_strdel(&(grp->parselst->dbred));
 		ft_strdel(&(grp->parselst->sgred));
 		ft_strdel(&(grp->parselst->file));
+		ft_strdel(&(grp->parselst->closefd));
+		ft_strdel(&(grp->parselst->redfd));
 		(grp->parselst->heredoc) ?
 		ft_strdel(&(grp->parselst->heredoc)) : 0;
 		parse = grp->parselst->next;

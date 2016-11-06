@@ -24,7 +24,8 @@ typedef	struct			s_parse
 	char				*heredoc;
 	char				*file;
 	int					fd;
-	int					closefd;
+	char				*closefd;
+	char				*redfd;
 	int					errnb;
 	struct s_parse		*next;
 }						t_parse;
