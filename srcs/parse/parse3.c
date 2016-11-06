@@ -46,7 +46,7 @@ int			ft_count_pipes(char *cmd)
 	while (cmd && cmd[++i])
 	{
 		ret = check_parentheses(cmd[i]);
-		if (ret == 0 && cmd[i] == '|')
+		if (ret == 0 && cmd[i] == '|' && (i > 0 && cmd[i - 1] != '\\'))
 			nb++;
 	}
 	return (nb);
