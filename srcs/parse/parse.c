@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 15:25:02 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/05 19:16:55 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/06 18:31:35 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,4 +123,5 @@ void		ft_parse(t_group *grp, char *cmd)
 		return (ft_putendl("Invalid null command"));
 	}
 	ft_parse2(grp);
+	check_heredoc(grp);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:42:57 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/04 13:57:34 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/06 18:15:20 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,8 @@ int						ft_is_quote(char c);
 //pre_parse.c
 void					ft_pre_parse(t_group *grp);
 void					ft_escape_parse(t_group *grp, int i);
+
+//heredoc.c
+void					check_heredoc(t_group *grp);
 
 #endif
