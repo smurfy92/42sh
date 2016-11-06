@@ -122,5 +122,5 @@ void		ft_pre_parse(t_group *grp)
 		else if (TERM(cmd_line)[i] == '!' && TERM(cmd_line)[i + 1])
 			ft_replace_by_id(grp, i + 1);
 	}
-	printf("cmd ->%s\n", (TERM(cmd_line)));
+	//printf("cmd ->%s\n", (TERM(cmd_line)));
 }

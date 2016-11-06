@@ -29,7 +29,9 @@ void			insert_part(t_andor **lst, char *cmd, int type)
 
 	new = (t_andor *)malloc(sizeof(t_andor));
 	new->cmd = ft_strtrim(cmd);
+	ft_strdel(&cmd);
 	new->type = type;
+	new->next = NULL;
 	if (!*(lst))
 		*lst = new;
 	else
@@ -41,17 +43,17 @@ void			insert_part(t_andor **lst, char *cmd, int type)
 	}
 }
 
-void			display_lst(t_andor *lst)
-{
-	t_andor *tmp;
+// void			display_lst(t_andor *lst)
+// {
+// 	t_andor *tmp;
 
-	tmp = lst;
-	while (tmp)
-	{
-		printf("cmd: %s -> %d\n", tmp->cmd, tmp->type);
-		tmp = tmp->next;
-	}
-}
+// 	tmp = lst;
+// 	while (tmp)
+// 	{
+// 		printf("cmd: %s -> %d\n", tmp->cmd, tmp->type);
+// 		tmp = tmp->next;
+// 	}
+// }
 
 t_andor			*ft_strsplitandor(char *s)
 {
@@ -77,7 +79,7 @@ t_andor			*ft_strsplitandor(char *s)
 		}
 	}
 	insert_part(&lst, ft_strsub(s, start, i - start), type);
-	display_lst(lst);
+	//display_lst(lst);
 	check_parentheses(0);
 	return (lst);
 }
