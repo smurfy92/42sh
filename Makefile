@@ -50,8 +50,9 @@ SRC	+= srcs/history/history.c
 SRC	+= srcs/history/hist_lib.c
 
 #free
-SRC	+= srcs/free_mem/free.c
 SRC += srcs/free_mem/exit.c
+SRC	+= srcs/free_mem/free.c
+SRC	+= srcs/free_mem/free2.c
 
 #debug
 SRC	+= srcs/debug/debug.c

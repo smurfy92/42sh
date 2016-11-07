@@ -78,6 +78,8 @@ void		ft_addredirection(t_group *grp, t_parse *parse, int i)
 	ft_addredirectionsuite(parse, end, start);
 }
 
+//a revoir
+
 void		ft_addheredoc2(t_parse *parse, int end, int start)
 {
 	char	*tmp;

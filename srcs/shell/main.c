@@ -32,16 +32,6 @@ void		prompt(void)
 	ft_putstr_fd("42sh> ", 2);
 }
 
-void		ft_free_andor(t_group *grp)
-{
-	t_andor *tmp;
-
-	tmp = grp->andor->next;
-	REMOVE(&grp->andor->cmd);
-	free(grp->andor);
-	grp->andor = tmp;
-}
-
 void		proccess(t_group *grp)
 {
 	int		i;
@@ -62,7 +52,6 @@ void		proccess(t_group *grp)
 		{
 			printf("andor->: %s -> %d\n", grp->andor->cmd, grp->andor->type);
 			ft_parse(grp, grp->andor->cmd);
-
 			ft_display_parse(grp);
 			init_exec(grp);
 			ft_free_parse(grp);

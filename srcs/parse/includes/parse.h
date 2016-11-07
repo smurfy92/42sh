@@ -38,8 +38,6 @@ void					ft_parse(t_group *grp, char *cmd);
 
 //parse2.c
 
-void					ft_check_close1(t_parse *parse, int i);
-void					ft_check_close2(t_parse *parse, int i);
 void					ft_replace_vars(t_group *grp, t_parse *parse, int i);
 void					ft_parse_redirections2(t_group *grp, t_parse *parse,
 int i);
@@ -50,6 +48,7 @@ void					ft_parse_redirections(t_group *grp, t_parse *parse);
 void					ft_copy_redirections(t_group *grp, t_parse *parse);
 int						ft_count_pipes(char *cmd);
 void					ft_create_redirections(t_parse *parse);
+void					ft_replace_tilde(t_group *grp, t_parse *parse, int i);
 
 //parse4.c
 
