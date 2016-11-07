@@ -66,8 +66,8 @@ void		ft_replace_by_id(t_group *grp, int i)
 		i++;
 	end = i;
 	tmp = ft_strsub(TERM(cmd_line), start, end);
-	ft_putendl_fd(tmp, 2);
 	hist = ft_history_get_by_id(grp, ft_atoi(tmp));
+	ft_putendl_fd(hist->var, 2);
 	if (hist)
 		ft_replace_command(grp, hist, start, end);
 	else
