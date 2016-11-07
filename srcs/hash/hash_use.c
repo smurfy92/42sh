@@ -37,3 +37,56 @@ char	*get_path(char *cmd, t_root *root)
 	path = ft_strdup(cur->cmd->path);
 	return (path);
 }
+
+/*
+**	return the starting node for auto-comp
+*/
+
+t_hash		*get_startnode(char *cmd, t_root *root)
+{
+	t_hash	*cur;
+	int		i;
+
+	i = 0;
+	cur = root->first;
+	while (cmd[i])
+	{
+		cur = cur->node[val_tokey(root->charlist, cmd[i])];
+		i++;
+		if (cur == NULL)
+			return (NULL);
+	}
+	return (cur);
+}
+
+/*
+**	get all possibilities from a node in the tree : auto-comp
+*/
+
+char		*get_possible(t_hash *start, size_t len)
+{
+	t_hash		*cur;
+	static char	*result = NULL;
+	char		*tmp;
+	char		*tmp2;
+	size_t		i;
+
+	cur = start;
+	i = -1;
+	if (cur->cmd != NULL)
+	{
+		tmp = (result == NULL) ? ft_strdup("") : ft_strdup(result);
+		if (result)
+			ft_strdel(&result);
+		tmp2 = ft_strjoin(tmp, " ");
+		result = ft_strjoin(tmp2, cur->cmd->name);
+		ft_strdel(&tmp);
+		ft_strdel(&tmp2);
+	}
+	while (++i < len)
+	{
+		if (cur->node[i])
+			get_possible(cur->node[i], len);
+	}
+	return (result);
+}
