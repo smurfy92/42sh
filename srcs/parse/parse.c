@@ -3,27 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 15:25:02 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/03 18:22:23 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/06 18:31:35 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
-
-int			ft_count_pipes(char *cmd)
-{
-	int i;
-	int nb;
-
-	nb = 1;
-	i = -1;
-	while (cmd && cmd[++i])
-		if (cmd[i] == '|')
-			nb++;
-	return (nb);
-}
 
 void		ft_polish_parse(t_parse *parse, int i)
 {
@@ -47,18 +34,16 @@ void		polish(t_parse *parse)
 
 	test = 0;
 	i = -1;
-	printf("parse->cmd -> %s\n", parse->cmd);
 	check_parentheses(0);
 	while (parse->cmd[++i])
 	{
 		ret = check_parentheses(parse->cmd[i]);
 		if (parse->cmd[i] == '\\' &&
-			parse->cmd[i + 1] && ret == 0)
+			parse->cmd[i + 1])
 			ft_polish_parse(parse, i - 1);
-		else if (test == 0 && ret == 1)
+		if (test == 0 && ret == 1)
 		{
 			test = 1;
-			printf("%c\n", parse->cmd[i]);
 			ft_polish_parse(parse, i - 1);
 		}
 		else if (test == 1 && ret == 0)
@@ -75,19 +60,19 @@ void		ft_create_parse(t_group *grp, char *cmd)
 	t_parse		*tmp2;
 
 	tmp = (t_parse*)malloc(sizeof(t_parse));
-	while (ft_is_space(cmd[0]) && cmd[1])
-		cmd = &cmd[1];
-	tmp->cmd = ft_strdup(cmd);
+	tmp->cmd = ft_strtrim(cmd);
 	tmp->next = NULL;
 	tmp->heredoc = 0;
 	tmp->dbred = NULL;
 	tmp->sgred = NULL;
 	tmp->file = NULL;
-	tmp->closefd = 0;
+	tmp->redfd = NULL;
+	tmp->closefd = NULL;
 	tmp->errnb = 0;
 	ft_parse_redirections(grp, tmp);
 	polish(tmp);
-	tmp->cmdsplit = ft_spacesplit(tmp->cmd);
+	//spacesplit bug
+	tmp->cmdsplit = ft_strsplit(tmp->cmd, ' ');
 	if (!grp->parselst)
 		grp->parselst = tmp;
 	else
@@ -111,7 +96,6 @@ void		ft_parse2(t_group *grp)
 		while (i > 0 && tmp->cmd && tmp->cmd[--i] == ' ')
 			tmp->cmd[i] = '\0';
 		tmp = tmp->next;
-
 	}
 }
 
@@ -136,7 +120,8 @@ void		ft_parse(t_group *grp, char *cmd)
 	if (y != i)
 	{
 		grp->fail = 1;
-		//return (ft_putendl("Invalid null command"));
+		return (ft_putendl("Invalid null command"));
 	}
 	ft_parse2(grp);
+	check_heredoc(grp);
 }

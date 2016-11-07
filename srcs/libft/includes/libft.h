@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/29 11:49:22 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/10/31 15:30:29 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/05 18:43:43 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@ typedef struct		s_list
 	size_t			content_size;
 	struct s_list	*next;
 }					t_list;
+
+typedef struct		s_andor
+{
+	char			*cmd;
+	int				type;
+	struct s_andor	*next;
+}					t_andor;
 
 int					ft_len_nospace(const char *str);
 int					ft_isspace(int c);
@@ -85,6 +92,7 @@ char				*ft_strrchr(const char *s, int c);
 char				**ft_strsplit(char const *s, char c);
 char				**ft_spacesplit(char const *s);
 char				**ft_strsplitquote(char *s, char c);
+t_andor				*ft_strsplitandor(char *s);
 int					check_parentheses(char c);
 char				*ft_strstr(const char *s1, const char *s2);
 char				*ft_strsub(char const *s, unsigned int start, size_t len);

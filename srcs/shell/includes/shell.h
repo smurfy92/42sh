@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:43:06 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/10/25 15:43:09 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/04 13:30:32 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void					prompt();
 int						ft_getchar(int c);
 void					init_env(t_group *grp, char **env);
 int						init_shell(void);
-void					init_exec(t_group *grp);
 t_group					*set_grp(t_group *grp);
 t_group					*get_grp(void);
 

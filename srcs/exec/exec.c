@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.h                                             :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/25 15:42:48 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/04 13:30:06 by jtranchi         ###   ########.fr       */
+/*   Created: 2016/11/04 13:30:12 by jtranchi          #+#    #+#             */
+/*   Updated: 2016/11/05 17:06:34 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXEC_H
-# define EXEC_H
+#include "fortytwo.h"
 
-void		init_exec(t_group *grp);
+void		init_exec(t_group *grp)
+{
+	int	ret;
 
-#endif
+	ret = builtins(grp);
+	ret == -1 ? printf("ERROR IN BUILTINS\n") : 0;
+}

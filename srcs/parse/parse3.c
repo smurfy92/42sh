@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 15:29:42 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/10/27 15:29:43 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/04 13:57:18 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,45 @@ void		ft_create_redirections(t_parse *parse)
 	if (parse->dbred)
 		parse->fd = open(parse->dbred, O_WRONLY | O_CREAT |
 		O_APPEND, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
+}
+
+int			ft_count_pipes(char *cmd)
+{
+	int i;
+	int nb;
+	int	ret;
+
+	nb = 1;
+	i = -1;
+	ret = 0;
+	while (cmd && cmd[++i])
+	{
+		ret = check_parentheses(cmd[i]);
+		if (ret == 0 && cmd[i] == '|' && (i > 0 && cmd[i - 1] != '\\'))
+			nb++;
+	}
+	return (nb);
+}
+
+void		ft_replace_tilde(t_group *grp, t_parse *parse, int i)
+{
+	char	*path;
+	char	*tmp;
+
+	path = ft_getenv(grp, "HOME");
+	if (path == NULL)
+		ft_putendl_fd("Your stupid theres no home", 2);
+	tmp = SDUP(&parse->cmd[i + 1]);
+	parse->cmd[i] = '\0';
+	if (parse->cmd[i + 1])
+	{
+		parse->cmd = ft_strjoin_nf(parse->cmd, path, 1);
+		parse->cmd = ft_strjoin_nf(parse->cmd, tmp, 1);
+	}
+	else
+		parse->cmd = ft_strjoin_nf(parse->cmd, path, 1);
+	REMOVE(&tmp);
+	grp->minus = 1;
 }
 
 // void		ft_create_heredoc2(t_group *grp, char *str, int fd, int i)

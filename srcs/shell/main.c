@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:43:44 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/02 17:07:07 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/06 18:34:12 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,29 @@ void		proccess(t_group *grp)
 	tabl = ft_strsplitquote(TERM(cmd_line), ';');
 	while (tabl && tabl[++i])
 	{
-		ft_parse(grp, tabl[i]);
-		//check command -> add flag error
-		ft_display_parse(grp);
-		init_exec(grp); //exec
-		ft_free_parse(grp);
-		ft_strdel(&tabl[i]);
+		grp->andor = ft_strsplitandor(tabl[i]);
+		REMOVE(&tabl[i]);
+		while (grp->andor)
+		{
+			printf("andor->: %s -> %d\n", grp->andor->cmd, grp->andor->type);
+			ft_parse(grp, grp->andor->cmd);
+			ft_display_parse(grp);
+			init_exec(grp);
+			ft_free_parse(grp);
+			ft_free_andor(grp);
+		}
 	}
 	free(tabl);
 	ft_strdel(&TERM(cmd_line));
+	grp->hdcount = 0;
 }
 
 int			main(int argc, char **argv, char **env)
 {
 	t_group *grp;
 
-	if (argc || argv){}
+	if (argc || argv)
+		{}
 	init_shell();
 	grp = get_grp();
 	init_env(grp, env);

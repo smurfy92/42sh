@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hash_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 20:13:19 by vdanain           #+#    #+#             */
-/*   Updated: 2016/11/02 18:32:25 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/07 19:46:09 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 **	join le nom de dossier et la commande pour un full path
 */
 
-char		*get_fullpath(char *name, char *dir)
+char			*get_fullpath(char *name, char *dir)
 {
 	char	*tmpath;
 	char	*tmp;
@@ -27,7 +27,7 @@ char		*get_fullpath(char *name, char *dir)
 	return (tmpath);
 }
 
-char			*fill_list()
+char			*fill_list(void)
 {
 	char	**path;
 	char	*tmpath;

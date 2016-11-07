@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hash_use.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victordanain <victordanain@student.42.fr>  +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 20:13:24 by vdanain           #+#    #+#             */
-/*   Updated: 2016/11/02 18:06:42 by victordanain     ###   ########.fr       */
+/*   Updated: 2016/11/07 19:54:12 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ char	*get_path(char *cmd, t_root *root)
 	return (path);
 }
 
+<<<<<<< HEAD
 /*
 **	return the starting node for auto-comp
 */
@@ -90,3 +91,5 @@ char		*get_possible(t_hash *start, size_t len)
 	}
 	return (result);
 }
+=======
+>>>>>>> master

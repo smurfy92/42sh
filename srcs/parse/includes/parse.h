@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:42:57 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/10/25 15:42:58 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/06 18:15:20 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,20 @@ typedef	struct			s_parse
 	char				*heredoc;
 	char				*file;
 	int					fd;
-	int					closefd;
+	char				*closefd;
+	char				*redfd;
 	int					errnb;
 	struct s_parse		*next;
 }						t_parse;
 
 //parse1.c
 
-int						ft_count_pipes(char *cmd);
 void					ft_create_parse(t_group *grp, char *cmd);
 void					ft_parse2(t_group *grp);
 void					ft_parse(t_group *grp, char *cmd);
 
 //parse2.c
 
-void					ft_check_close1(t_parse *parse, int i);
-void					ft_check_close2(t_parse *parse, int i);
 void					ft_replace_vars(t_group *grp, t_parse *parse, int i);
 void					ft_parse_redirections2(t_group *grp, t_parse *parse,
 int i);
@@ -48,11 +46,9 @@ void					ft_parse_redirections(t_group *grp, t_parse *parse);
 //parse3.c
 
 void					ft_copy_redirections(t_group *grp, t_parse *parse);
-void					ft_write_in_tmp(t_group *grp);
+int						ft_count_pipes(char *cmd);
 void					ft_create_redirections(t_parse *parse);
-void					ft_create_heredoc2(t_group *grp, char *str, int fd,
-int i);
-void					ft_create_heredoc(t_group *grp);
+void					ft_replace_tilde(t_group *grp, t_parse *parse, int i);
 
 //parse4.c
 
@@ -75,5 +71,8 @@ int						ft_is_quote(char c);
 //pre_parse.c
 void					ft_pre_parse(t_group *grp);
 void					ft_escape_parse(t_group *grp, int i);
+
+//heredoc.c
+void					check_heredoc(t_group *grp);
 
 #endif

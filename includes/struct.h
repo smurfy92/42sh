@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victordanain <victordanain@student.42.fr>  +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:07:29 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/02 18:04:12 by victordanain     ###   ########.fr       */
+/*   Updated: 2016/11/06 18:34:33 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ typedef struct			s_group
 
 	int						prompt_size;
 	int						exit;
+	int						hdcount;
 	struct s_parse			*parselst;
+	struct s_andor			*andor;
 	struct s_window			*window;
 	struct s_term			*term;
 	struct termios			cpy_term;

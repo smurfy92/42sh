@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/31 15:26:52 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/02 13:03:05 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/04 13:06:17 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void		ft_replace_by_id(t_group *grp, int i)
 		i++;
 	end = i;
 	tmp = ft_strsub(TERM(cmd_line), start, end);
-	ft_putendl_fd(tmp, 2);
 	hist = ft_history_get_by_id(grp, ft_atoi(tmp));
+	ft_putendl_fd(hist->var, 2);
 	if (hist)
 		ft_replace_command(grp, hist, start, end);
 	else
@@ -122,5 +122,5 @@ void		ft_pre_parse(t_group *grp)
 		else if (TERM(cmd_line)[i] == '!' && TERM(cmd_line)[i + 1])
 			ft_replace_by_id(grp, i + 1);
 	}
-	printf("cmd ->%s\n",(TERM(cmd_line)));
+	//printf("cmd ->%s\n", (TERM(cmd_line)));
 }

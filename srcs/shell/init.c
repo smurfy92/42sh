@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:17:06 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/02 19:57:36 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/06 18:32:29 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
-
-void		init_exec(t_group *grp)
-{
-	int	ret;
-
-	ret = builtins(grp);
-	//ret == 0 ? ft_putendl(get_path(CMD(cmdsplit)[0], grp->hash)) : 0;
-	ret == -1 ? printf("ERROR IN BUILTINS\n") : 0;
-
-	int i = -1;
-
-	while (CMD(cmdsplit)[++i])
-	{
-		printf("CMDSPLIT(%d): %s\n", i, CMD(cmdsplit[i]));
-	}
-}
 
 void		init_env(t_group *grp, char **env)
 {
@@ -91,9 +75,11 @@ t_group		*set_grp(t_group *grp)
 	grp->env->cmd = NULL;
 	grp->prompt_size = 6;
 	grp->exit = 0;
+	grp->hdcount = 0;
+	grp->andor = NULL;
 	ft_get_history(grp);
 	init_term(grp);
-	hash_init(&grp->root);
+	//hash_init(&grp->root);
 	return (grp);
 }
 

@@ -52,9 +52,9 @@ void		ft_history_prev(t_group *grp)
 		(grp->history->prev) ? (grp->history = grp->history->prev) : 0;
 	}
 	remove_line(grp);
-	grp->inhistory = 1;
 	if (grp->history->prev && grp->inhistory)
 		grp->history = grp->history->prev;
+	grp->inhistory = 1;
 	if (grp->history->var)
 	{
 		TERM(curs_pos) = ft_strlen(grp->history->var);

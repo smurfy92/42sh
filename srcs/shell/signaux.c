@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signaux.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:50:41 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/02 17:08:19 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/04 13:47:41 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	handler_win(int sig)
 	struct winsize	w;
 
 	grp = get_grp();
-	if (sig){}
+	if (sig)
+	{}
 	ioctl(0, TIOCGWINSZ, &w);
 	TERM(window->width) = w.ws_col;
 	TERM(window->heigth) = w.ws_row;
@@ -29,7 +30,8 @@ void	handler_ctrl_c(int sig)
 	t_group	*grp;
 
 	grp = get_grp();
-	if (sig){}
+	if (sig)
+		{}
 	ft_go_end(grp);
 	REMOVE(&TERM(cmd_line));
 	ft_free_parse(grp);
@@ -45,7 +47,8 @@ void	ft_prompt(int signum)
 {
 	char	order[2];
 
-	if (signum){}
+	if (signum)
+		{}
 	order[0] = 3;
 	order[1] = 0;
 	ioctl(0, TIOCSTI, order);

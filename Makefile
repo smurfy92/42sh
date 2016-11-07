@@ -6,6 +6,9 @@ SRC =  srcs/shell/main.c
 SRC	+= srcs/shell/init.c
 SRC	+= srcs/shell/signaux.c
 
+#exec
+SRC	+= srcs/exec/exec.c
+
 #hash
 SRC += srcs/hash/hash_use.c
 SRC	+= srcs/hash/hash_init.c
@@ -40,14 +43,16 @@ SRC	+= srcs/parse/parse3.c
 SRC	+= srcs/parse/parse4.c
 SRC	+= srcs/parse/parse5.c
 SRC	+= srcs/parse/pre_parse.c
+SRC	+= srcs/parse/heredoc.c
 
 #history
 SRC	+= srcs/history/history.c
 SRC	+= srcs/history/hist_lib.c
 
 #free
-SRC	+= srcs/free_mem/free.c
 SRC += srcs/free_mem/exit.c
+SRC	+= srcs/free_mem/free.c
+SRC	+= srcs/free_mem/free2.c
 
 #debug
 SRC	+= srcs/debug/debug.c
@@ -72,7 +77,7 @@ INC += -I ./includes/
 
 #-
 OBJ = $(SRC:.c=.o)
-FLAG = -g -Wall -Werror -Wextra -fsanitize=address
+FLAG = -g -Wall -Werror -Wextra
 # -fsanitize=address
 CG = \033[92m
 CY =  \033[93m
