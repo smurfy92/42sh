@@ -56,7 +56,6 @@ void		proccess(t_group *grp)
 	tabl = ft_strsplitquote(TERM(cmd_line), ';');
 	while (tabl && tabl[++i])
 	{
-		grp->andor = NULL;
 		grp->andor = ft_strsplitandor(tabl[i]);
 		REMOVE(&tabl[i]);
 		while (grp->andor)
