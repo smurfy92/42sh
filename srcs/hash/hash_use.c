@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hash_use.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 20:13:24 by vdanain           #+#    #+#             */
-/*   Updated: 2016/11/05 16:36:00 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/07 19:54:12 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,3 +37,4 @@ char	*get_path(char *cmd, t_root *root)
 	path = ft_strdup(cur->cmd->path);
 	return (path);
 }
+

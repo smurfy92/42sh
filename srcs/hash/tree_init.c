@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/02 17:29:47 by victordanain      #+#    #+#             */
-/*   Updated: 2016/11/05 16:36:13 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/07 19:56:50 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void			init_cmd(char *cmd, t_root *root, t_path *path)
 		tmp = tmp->node[val_tokey(root->charlist, cmd[i])];
 		i++;
 	}
-	if (tmp->cmd != NULL)
+	if (tmp->cmd == NULL)
 		tmp->cmd = path;
 	else
 	{

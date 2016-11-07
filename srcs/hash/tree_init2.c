@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_init2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/02 17:32:31 by victordanain      #+#    #+#             */
-/*   Updated: 2016/11/04 13:55:28 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/07 19:55:25 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,28 +80,6 @@ int				val_tokey(char *charlist, char c)
 	}
 	return (0);
 }
-
-// void			display_while(t_root *first, t_hash *cur)
-// {
-// 	t_hash	*tmp;
-
-// 	tmp = cur;
-// 	size_t	i = 0;
-// 	if (tmp->cmd != NULL)
-// 	{
-// 		ft_putstr(tmp->cmd->name);
-// 		ft_putstr("->");
-// 		ft_putendl(tmp->cmd->path);
-// 	}
-// 	while (i < ft_strlen(first->charlist))
-// 	{
-// 		if (tmp->node[i] != NULL)
-// 		{
-// 			display_while(first, tmp->node[i]);
-// 		}
-// 		i++;
-// 	}
-// }
 
 /*
 **	cree un t_path pour une commande
