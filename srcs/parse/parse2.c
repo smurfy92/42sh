@@ -90,35 +90,14 @@ void		ft_replace_vars(t_group *grp, t_parse *parse, int i)
 	}
 }
 
-void		ft_replace_tilde(t_group *grp, t_parse *parse, int i)
-{
-	char	*path;
-	char	*tmp;
-
-	path = ft_getenv(grp, "HOME");
-	if (path == NULL)
-		ft_putendl_fd("Your stupid theres no home", 2);
-	tmp = SDUP(&parse->cmd[i + 1]);
-	parse->cmd[i] = '\0';
-	if (parse->cmd[i + 1])
-	{
-		parse->cmd = ft_strjoin_nf(parse->cmd, path, 1);
-		parse->cmd = ft_strjoin_nf(parse->cmd, tmp, 1);
-	}
-	else
-		parse->cmd = ft_strjoin_nf(parse->cmd, path, 1);
-	REMOVE(&tmp);
-	grp->minus = 1;
-}
-
-
 void		ft_parse_redirections2(t_group *grp, t_parse *parse, int i)
 {
 	if (ft_isdigit(parse->cmd[i]) && parse->cmd[i + 1] == '>' &&
 	parse->cmd[i + 2] == '&' && parse->cmd[i + 3] && parse->cmd[i + 3] == '-')
 		ft_check_close(parse, i);
 	else if (ft_isdigit(parse->cmd[i]) && parse->cmd[i + 1] == '>' &&
-	parse->cmd[i + 2] == '&' && parse->cmd[i + 3] && ft_isdigit(parse->cmd[i + 3]))
+	parse->cmd[i + 2] == '&' && parse->cmd[i + 3] &&
+	ft_isdigit(parse->cmd[i + 3]))
 		ft_check_redirection_fd(parse, i);
 	else if (parse->cmd[i] == '>' && parse->cmd[i + 1] &&
 	parse->cmd[i + 1] == '>')

@@ -80,6 +80,7 @@ int				val_tokey(char *charlist, char c)
 	}
 	return (0);
 }
+
 // void			display_while(t_root *first, t_hash *cur)
 // {
 // 	t_hash	*tmp;

@@ -69,23 +69,6 @@ void		free_term(t_group *grp)
 	TERM(cmd_quote) = NULL;
 }
 
-void		free_history(t_group *grp)
-{
-	t_history *hist;
-	t_history *tmp;
-
-	hist = ft_history_get_first(grp);
-	while (hist)
-	{
-		REMOVE(&hist->var);
-		hist->prev = NULL;
-		tmp = hist->next;
-		free(hist);
-		hist = tmp;
-	}
-	grp->history = NULL;
-}
-
 void		free_parselst(t_group *grp)
 {
 	t_parse		*parse;
@@ -109,11 +92,8 @@ void		free_parselst(t_group *grp)
 		free(grp->parselst);
 		grp->parselst = parse;
 	}
-	if (grp->parselst)
-	{
-		free(grp->parselst);
-		grp->parselst = NULL;
-	}
+	grp->parselst ? free(grp->parselst) : 0;
+	grp->parselst = NULL;
 }
 
 void		ft_free_parse(t_group *grp)

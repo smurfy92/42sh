@@ -50,8 +50,6 @@ int		key_selection(t_group *grp, char *order)
 	key = KEY(order[0], order[1], order[2], order[3]);
 	if (key == ENTER)
 		return (key);
-	// if (key != ARROW_U && key != ARROW_D)
-	// 	grp->curr_hist = NULL;
 	if (key == CTRL_D)
 		handling_ctrl_d(grp);
 	else if (key == DEL)
@@ -68,21 +66,6 @@ int		key_selection(t_group *grp, char *order)
 		return (key_selection_next(grp, order, key));
 	return (1);
 }
-
-// void	read_fd_in(t_group *grp, char *order)
-// {
-// 	int	i;
-
-// 	i = -1; 
-// 	while (order && order[++i] != '\0')
-// 	{
-// 		if (order[i] != '\n')
-// 			TERM(cmd_line) = ft_charjoin(TERM(cmd_line), order[i]);
-// 		else if (order[i + 1] != '\0')
-// 			TERM(cmd_line) = JOIN(TERM(cmd_line), " ; ");
-// 	}
-// 	grp->exit[0] = true;
-// }
 
 void	get_cmd(t_group *grp, int fd)
 {
@@ -104,7 +87,6 @@ void	get_cmd(t_group *grp, int fd)
 	if (TERM(cmd_quote) != NULL)
 		fill_cmd_line(grp);
 	ft_go_end(grp);
-	//ret == 0 ? read_fd_in(grp, tmp) :
 	ft_putchar_fd('\n', 2);
 	reset_edl(grp);
 	ft_bzero(order, BUF_SIZE + 1);
