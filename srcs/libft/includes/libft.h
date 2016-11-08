@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/29 11:49:22 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/05 18:43:43 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/08 17:23:42 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct		s_andor
 {
 	char			*cmd;
 	int				type;
+	struct s_parse	*parsing;
 	struct s_andor	*next;
 }					t_andor;
 
@@ -91,7 +92,7 @@ char				*ft_strnstr(const char *s1, const char *s2, size_t n);
 char				*ft_strrchr(const char *s, int c);
 char				**ft_strsplit(char const *s, char c);
 char				**ft_spacesplit(char const *s);
-char				**ft_strsplitquote(char *s, char c);
+t_andor				*ft_strsplitquote(char *s, char c);
 t_andor				*ft_strsplitandor(char *s);
 int					check_parentheses(char c);
 char				*ft_strstr(const char *s1, const char *s2);

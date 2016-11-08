@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 17:05:11 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/06 18:31:27 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/08 16:35:14 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,9 @@ int		key_selection(t_group *grp, char *order)
 void	get_cmd(t_group *grp, int fd)
 {
 	int		ret;
-	char	*prev_char;
-	int		heredoc;
 	char	order[BUF_SIZE + 1];
 
 	ft_bzero(order, BUF_SIZE + 1);
-	prev_char = NULL;
-	heredoc = false;
 	while ((ret = read(fd, order, BUF_SIZE)) > 0)
 	{
 		order[ret] = '\0';
