@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hash_use.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: victordanain <victordanain@student.42.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 20:13:24 by vdanain           #+#    #+#             */
-/*   Updated: 2016/11/07 19:54:12 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/08 19:09:19 by victordanain     ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ char	*get_path(char *cmd, t_root *root)
 	char	*path;
 
 	i = 0;
+	ft_putendl("LALA");
+	if (cmd == NULL || ft_strcmp(cmd, "") == 0)
+		return (NULL);
+	if (root == NULL)
+		return (NULL);
 	cur = root->first;
 	while (cmd[i])
 	{
