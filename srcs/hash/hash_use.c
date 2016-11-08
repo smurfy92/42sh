@@ -38,7 +38,6 @@ char	*get_path(char *cmd, t_root *root)
 	return (path);
 }
 
-<<<<<<< HEAD
 /*
 **	return the starting node for auto-comp
 */
@@ -91,5 +90,3 @@ char		*get_possible(t_hash *start, size_t len)
 	}
 	return (result);
 }
-=======
->>>>>>> master

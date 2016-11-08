@@ -79,7 +79,7 @@ t_group		*set_grp(t_group *grp)
 	grp->andor = NULL;
 	ft_get_history(grp);
 	init_term(grp);
-	//hash_init(&grp->root);
+	hash_init(&grp->root);
 	return (grp);
 }
 
