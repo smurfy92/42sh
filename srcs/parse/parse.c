@@ -120,7 +120,7 @@ void		ft_parse(t_group *grp, char *cmd)
 	if (y != i)
 	{
 		grp->fail = 1;
-		return (ft_putendl("Invalid null command"));
+		return (ft_putendl("Invalid null command."));
 	}
 	ft_parse2(grp);
 	check_heredoc(grp);
