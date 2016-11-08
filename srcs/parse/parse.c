@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 15:25:02 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/06 18:31:35 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/08 17:30:25 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,17 +101,22 @@ void		ft_parse2(t_group *grp)
 
 void		ft_parse(t_group *grp, char *cmd)
 {
-	char		**tabl;
+	t_andor		*tabl;
+	t_andor		*tmp;
 	int			i;
 	int			y;
 
-	i = -1;
+	i = 0;
 	tabl = ft_strsplitquote(cmd, '|');
 	y = ft_count_pipes(cmd);
-	while (tabl && tabl[++i])
+	while (tabl)
 	{
-		ft_create_parse(grp, tabl[i]);
-		ft_strdel(&tabl[i]);
+		ft_create_parse(grp, tabl->cmd);
+		ft_strdel(&tabl->cmd);
+		tmp = tabl->next;
+		free(tabl);
+		tabl = tmp;
+		i++;
 	}
 	if (tabl)
 		free(tabl);

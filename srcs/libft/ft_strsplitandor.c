@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplitandor.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 17:16:37 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/05 19:52:11 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/08 17:24:27 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int				ft_isandor(char *s, int idx)
 	return (0);
 }
 
-void			insert_part(t_andor **lst, char *cmd, int type)
+static void			insert_part(t_andor **lst, char *cmd, int type)
 {
 	t_andor		*tmp;
 	t_andor		*new;
@@ -31,6 +31,7 @@ void			insert_part(t_andor **lst, char *cmd, int type)
 	new->cmd = ft_strtrim(cmd);
 	ft_strdel(&cmd);
 	new->type = type;
+	new->parsing = NULL;
 	new->next = NULL;
 	if (!*(lst))
 		*lst = new;

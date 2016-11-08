@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:43:44 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/06 18:34:12 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/08 17:22:33 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,19 @@ void		prompt(void)
 
 void		proccess(t_group *grp)
 {
-	int		i;
-	char	**tabl;
+	t_andor *tabl;
 
-	i = -1;
 	prompt();
 	get_cmd(grp, 0);
 	ft_pre_parse(grp);
 	if (LEN(TERM(cmd_line)) > 0)
 		ft_add_history(grp, TERM(cmd_line));
-	tabl = ft_strsplitquote(TERM(cmd_line), ';');
-	while (tabl && tabl[++i])
+	grp->allcmd = ft_strsplitquote(TERM(cmd_line), ';');
+	tabl = grp->allcmd;
+	while (tabl)
 	{
-		grp->andor = ft_strsplitandor(tabl[i]);
-		REMOVE(&tabl[i]);
+		grp->andor = ft_strsplitandor(tabl->cmd);
+		REMOVE(&tabl->cmd);
 		while (grp->andor)
 		{
 			printf("andor->: %s -> %d\n", grp->andor->cmd, grp->andor->type);
@@ -57,8 +56,9 @@ void		proccess(t_group *grp)
 			ft_free_parse(grp);
 			ft_free_andor(grp);
 		}
+		tabl = tabl->next;
 	}
-	free(tabl);
+	free(tabl); // free les maillon avant
 	ft_strdel(&TERM(cmd_line));
 	grp->hdcount = 0;
 }

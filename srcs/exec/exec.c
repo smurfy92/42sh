@@ -22,7 +22,7 @@ void		init_exec(t_group *grp)
 	{
 		if (get_path(grp->parselst->cmdsplit[0], grp->root))
 		{
-			execve(get_path(grp->parselst->cmdsplit[0], grp->root), grp->parselst->cmdsplit, NULL);
+			//execve(get_path(grp->parselst->cmdsplit[0], grp->root), grp->parselst->cmdsplit, NULL);
 		}
 	}
 }
