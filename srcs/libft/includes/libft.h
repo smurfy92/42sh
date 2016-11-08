@@ -27,14 +27,6 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
-typedef struct		s_andor
-{
-	char			*cmd;
-	int				type;
-	struct s_parse	*parsing;
-	struct s_andor	*next;
-}					t_andor;
-
 int					ft_len_nospace(const char *str);
 int					ft_isspace(int c);
 int					ft_atoi(char *str);
@@ -92,8 +84,6 @@ char				*ft_strnstr(const char *s1, const char *s2, size_t n);
 char				*ft_strrchr(const char *s, int c);
 char				**ft_strsplit(char const *s, char c);
 char				**ft_spacesplit(char const *s);
-t_andor				*ft_strsplitquote(char *s, char c);
-t_andor				*ft_strsplitandor(char *s);
 int					check_parentheses(char c);
 char				*ft_strstr(const char *s1, const char *s2);
 char				*ft_strsub(char const *s, unsigned int start, size_t len);

@@ -42,7 +42,7 @@ void		check_heredoc(t_group *grp)
 	int		i;
 
 	hdoc = NULL;
-	tmp = grp->parselst;
+	tmp = grp->allcmd->andor->parselst;
 	while (tmp)
 	{
 		if (tmp->heredoc != NULL)

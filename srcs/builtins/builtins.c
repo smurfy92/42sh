@@ -19,7 +19,7 @@ int	builtin_setenv(t_group *grp)
 	int		i;
 
 	i = 0;
-	cmdsplit = grp->parselst->cmdsplit;
+	cmdsplit = CMD(cmdsplit);
 	error = cmdsplit[1] != NULL ? false : true;
 	while (cmdsplit[++i] != NULL)
 	{
@@ -47,7 +47,7 @@ int	builtin_unsetenv(t_group *grp)
 	int		i;
 
 	i = 0;
-	cmdsplit = grp->parselst->cmdsplit;
+	cmdsplit = CMD(cmdsplit);
 	error = cmdsplit[1] != NULL ? false : true;
 	while (cmdsplit[++i] != NULL)
 	{
@@ -74,7 +74,7 @@ int	builtins(t_group *grp)
 	char	**cmd;
 
 	ret = 0;
-	cmd = grp->parselst->cmdsplit;
+	cmd = CMD(cmdsplit);
 	if (!cmd[0])
 		return (0);
 	if (ft_strcmp(cmd[0], "env") == 0)

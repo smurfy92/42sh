@@ -6,7 +6,6 @@
 /*   By: jtranchi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 14:51:15 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/07 14:51:16 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +13,13 @@
 
 void		ft_free_andor(t_group *grp)
 {
-	t_andor *tmp;
+	(void)grp;
+	// t_andor *tmp;
 
-	tmp = grp->andor->next;
-	REMOVE(&grp->andor->cmd);
-	free(grp->andor);
-	grp->andor = tmp;
+	// tmp = grp->andor->next;
+	// REMOVE(&grp->andor->cmd);
+	// free(grp->andor);
+	// grp->andor = tmp;
 }
 
 void		free_history(t_group *grp)

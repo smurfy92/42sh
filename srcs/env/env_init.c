@@ -26,7 +26,6 @@ char	*mac_pathhelp(void)
 {
 	pid_t		father;
 	int			fd;
-	char		*line;
 
 	father = fork();
 	if (father == 0)

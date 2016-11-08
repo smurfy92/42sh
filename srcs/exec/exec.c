@@ -20,9 +20,9 @@ void		init_exec(t_group *grp)
 	ret == -1 ? printf("ERROR IN BUILTINS\n") : 0;
 	if (ret == 0)
 	{
-		if (get_path(grp->parselst->cmdsplit[0], grp->root))
-		{
-			//execve(get_path(grp->parselst->cmdsplit[0], grp->root), grp->parselst->cmdsplit, NULL);
-		}
+		// if (get_path(grp->parselst->cmdsplit[0], grp->root))
+		// {
+		// 	//execve(get_path(grp->parselst->cmdsplit[0], grp->root), grp->parselst->cmdsplit, NULL);
+		// }
 	}
 }

@@ -54,13 +54,13 @@ void		polish(t_parse *parse)
 	}
 }
 
-void		ft_create_parse(t_group *grp, char *cmd)
+void		ft_create_parse(t_group *grp, t_andor *tabl, t_andor *andor)
 {
 	t_parse		*tmp;
 	t_parse		*tmp2;
 
 	tmp = (t_parse*)malloc(sizeof(t_parse));
-	tmp->cmd = ft_strtrim(cmd);
+	tmp->cmd = ft_strtrim(tabl->cmd);
 	tmp->next = NULL;
 	tmp->heredoc = 0;
 	tmp->dbred = NULL;
@@ -73,23 +73,25 @@ void		ft_create_parse(t_group *grp, char *cmd)
 	polish(tmp);
 	//spacesplit bug
 	tmp->cmdsplit = ft_strsplit(tmp->cmd, ' ');
-	if (!grp->parselst)
-		grp->parselst = tmp;
+	if (!andor->parselst)
+	{
+		andor->parselst = tmp;
+	}
 	else
 	{
-		tmp2 = grp->parselst;
+		tmp2 = andor->parselst;
 		while (tmp2 && tmp2->next)
 			tmp2 = tmp2->next;
 		tmp2->next = tmp;
 	}
 }
 
-void		ft_parse2(t_group *grp)
+void		ft_parse2(t_andor *andor)
 {
 	t_parse		*tmp;
 	int			i;
 
-	tmp = grp->parselst;
+	tmp = andor->parselst;
 	while (tmp)
 	{
 		i = ft_strlen(tmp->cmd);
@@ -99,34 +101,27 @@ void		ft_parse2(t_group *grp)
 	}
 }
 
-void		ft_parse(t_group *grp, char *cmd)
+void		ft_parse(t_group *grp, t_andor *andor)
 {
 	t_andor		*tabl;
-	t_andor		*tmp;
 	int			i;
 	int			y;
 
 	i = 0;
-	tabl = ft_strsplitquote(cmd, '|');
-	y = ft_count_pipes(cmd);
+	tabl = ft_strsplitpipe(andor->cmd, '|');
+	y = ft_count_pipes(andor->cmd);
 	while (tabl)
 	{
-		ft_create_parse(grp, tabl->cmd);
-		ft_strdel(&tabl->cmd);
-		tmp = tabl->next;
-		free(tabl);
-		tabl = tmp;
+		ft_create_parse(grp, tabl, andor);
+		tabl = tabl->next;
 		i++;
 	}
-	if (tabl)
-		free(tabl);
 	TERM(cmd_size) = 0;
-	cmd = NULL;
 	if (y != i)
 	{
 		grp->fail = 1;
 		return (ft_putendl("Invalid null command."));
 	}
-	ft_parse2(grp);
-	check_heredoc(grp);
+	ft_parse2(andor);
+	//check_heredoc(grp);
 }

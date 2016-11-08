@@ -50,7 +50,7 @@
 # define STRCHR(a, b)	(ft_strchr(a, b))
 # define REMOVE(x)		(ft_strdel(x))
 # define ENV(x)			((grp->env)->x)
-# define CMD(x)			((grp->parselst)->x)
+# define CMD(x)			((grp->allcmd->andor->parselst)->x)
 # define TERM(x)		((grp->term)->x)
 # define KEY(a, b, c, d) ((d << 24) + (c << 16) + (b << 8) + a)
 # define BUF_SIZE 4096

@@ -34,7 +34,8 @@ void		prompt(void)
 
 void		proccess(t_group *grp)
 {
-	t_andor *tabl;
+	t_allcmd *tabl;
+	t_andor *tmp2;
 
 	prompt();
 	get_cmd(grp, 0);
@@ -45,20 +46,33 @@ void		proccess(t_group *grp)
 	tabl = grp->allcmd;
 	while (tabl)
 	{
-		grp->andor = ft_strsplitandor(tabl->cmd);
-		REMOVE(&tabl->cmd);
-		while (grp->andor)
+		tabl->andor = ft_strsplitandor(tabl->cmd);
+		tmp2 = tabl->andor;
+		while (tmp2)
 		{
-			printf("andor->: %s -> %d\n", grp->andor->cmd, grp->andor->type);
-			ft_parse(grp, grp->andor->cmd);
-			ft_display_parse(grp);
-			init_exec(grp);
-			ft_free_parse(grp);
-			ft_free_andor(grp);
+			ft_parse(grp, tmp2);
+			tmp2 = tmp2->next;
 		}
 		tabl = tabl->next;
 	}
-	free(tabl); // free les maillon avant
+	ft_display_parse(grp);
+	tabl = grp->allcmd;
+	// while (tabl)
+	// {
+	// 	REMOVE(&tabl->cmd);
+	// 	while (tabl->andor)
+	// 	{
+	// 		printf("andor->: %s -> %d\n", tabl->andor->cmd, tabl->andor->type);
+			
+			
+	// 		// init_exec(tabl);
+	// 		// ft_free_parse(tabl);
+	// 		// ft_free_andor(tabl);
+	// 		tabl->andor = tabl->andor->next;
+	// 	}
+	// 	tabl = tabl->next;
+	// }
+	// free(tabl); // free les maillon avant
 	ft_strdel(&TERM(cmd_line));
 	grp->hdcount = 0;
 }

@@ -20,21 +20,41 @@ void		ft_out(char *str)
 
 void		ft_display_parse(t_group *grp)
 {
-	t_parse *tmp;
+	t_allcmd *tmp;
+	t_andor *tmp2;
+	t_parse *tmp3;
 
-	tmp = grp->parselst;
+	tmp = grp->allcmd;
 	while (tmp)
 	{
-		printf("  command -> %s$\n",tmp->cmd);
-		int i = -1;
-		while (tmp->cmdsplit && tmp->cmdsplit[++i])
-			printf("    cmd->split[%d] %s$\n", i, tmp->cmdsplit[i]);
-		printf("  sgred -> %s$\n",tmp->sgred);
-		printf("  dbred -> %s$\n",tmp->dbred);
-		printf("  file -> %s$\n",tmp->file);
-		printf("  close -> %s$\n",tmp->closefd);
-		printf("  redfd -> %s$\n",tmp->redfd);
-		printf("  heredoc -> %s$\n\n",tmp->heredoc);
-		tmp = tmp->next;
+		printf("split ; ->\n");
+		tmp2 = tmp->andor;
+		while (tmp2)
+		{
+			tmp3 = tmp2->parselst;
+			while (tmp3)
+			{
+				
+				printf("      command -> %s$\n",tmp3->cmd);
+				int i = -1;
+				while (tmp3->cmdsplit && tmp3->cmdsplit[++i])
+					printf("      cmd->split[%d] %s$\n", i, tmp3->cmdsplit[i]);
+				printf("      sgred -> %s$\n",tmp3->sgred);
+				printf("      dbred -> %s$\n",tmp3->dbred);
+				printf("      file -> %s$\n",tmp3->file);
+				printf("      close -> %s$\n",tmp3->closefd);
+				printf("      redfd -> %s$\n",tmp3->redfd);
+				printf("      heredoc -> %s$\n\n",tmp3->heredoc);
+				if (tmp3->next)
+					printf("    pipe ->\n\n");
+				tmp3 = tmp3->next;
+			}
+			if (tmp2->type == 1)
+				printf("  andor -> &&\n");
+			else if (tmp2->type == 2)
+				printf("  andor -> ||\n");
+			tmp2 = tmp2->next;
+		}
+	tmp = tmp->next;
 	}
 }

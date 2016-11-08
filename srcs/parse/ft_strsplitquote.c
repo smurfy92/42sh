@@ -10,19 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/libft.h"
+#include "fortytwo.h"
 #include <stdio.h>
 
-static void			insert_part(t_andor **lst, char *cmd)
+static void		insert_part(t_allcmd **lst, char *cmd)
 {
-	t_andor		*tmp;
-	t_andor		*new;
+	t_allcmd		*tmp;
+	t_allcmd		*new;
 
-	new = (t_andor *)malloc(sizeof(t_andor));
+	new = (t_allcmd *)malloc(sizeof(t_allcmd));
 	new->cmd = ft_strtrim(cmd);
 	ft_strdel(&cmd);
-	new->type = 0;
-	new->parsing = NULL;
+	new->andor = NULL;
 	new->next = NULL;
 	if (!*(lst))
 		*lst = new;
@@ -35,24 +34,24 @@ static void			insert_part(t_andor **lst, char *cmd)
 	}
 }
 
-void			display_lst(t_andor *lst)
-{
-	t_andor *tmp;
+// void			display_lst(t_allcmd *lst)
+// {
+// 	t_allcmd *tmp;
 
-	tmp = lst;
-	while (tmp)
-	{
-		printf("cmd: %s\n", tmp->cmd);
-		tmp = tmp->next;
-	}
-}
+// 	tmp = lst;
+// 	while (tmp)
+// 	{
+// 		printf("cmd: %s\n", tmp->cmd);
+// 		tmp = tmp->next;
+// 	}
+// }
 
-t_andor			*ft_strsplitquote(char *s, char c)
+t_allcmd		*ft_strsplitquote(char *s, char c)
 {
 	int		i;
 	int		start;
 	int		synth;
-	t_andor	*lst;
+	t_allcmd	*lst;
 
 	i = -1;
 	start = 0;
@@ -70,7 +69,7 @@ t_andor			*ft_strsplitquote(char *s, char c)
 		}
 	}
 	insert_part(&lst, ft_strsub(s, start, i - start));
-	display_lst(lst);
+	//display_lst(lst);
 	check_parentheses(0);
 	return (lst);
 }
