@@ -97,7 +97,7 @@ t_group		*set_grp(t_group *grp)
 	grp->prompt_size = 6;
 	grp->exit = 0;
 	grp->hdcount = 0;
-	grp->andor = NULL;
+	grp->allcmd = NULL;
 	ft_get_history(grp);
 	init_term(grp);
 	grp->root = NULL;

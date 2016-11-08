@@ -45,6 +45,9 @@ SRC	+= srcs/parse/parse4.c
 SRC	+= srcs/parse/parse5.c
 SRC	+= srcs/parse/pre_parse.c
 SRC	+= srcs/parse/heredoc.c
+SRC	+= srcs/parse/ft_strsplitquote.c
+SRC	+= srcs/parse/ft_strsplitandor.c
+SRC	+= srcs/parse/ft_strsplitpipe.c
 
 #history
 SRC	+= srcs/history/history.c
@@ -78,7 +81,7 @@ INC += -I ./includes/
 
 #-
 OBJ = $(SRC:.c=.o)
-FLAG = -g -Wall -Werror -Wextra
+FLAG = -g -Wall -Werror -Wextra -fsanitize=address
 # -fsanitize=address
 CG = \033[92m
 CY =  \033[93m

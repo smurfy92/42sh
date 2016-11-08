@@ -30,11 +30,26 @@ typedef	struct			s_parse
 	struct s_parse		*next;
 }						t_parse;
 
+typedef struct		s_allcmd
+{
+	char			*cmd; // cmd ;
+	struct s_andor	*andor;
+	struct s_allcmd	*next;
+}					t_allcmd;
+
+typedef struct		s_andor
+{
+	char			*cmd;
+	int				type;
+	struct s_parse	*parselst;
+	struct s_andor	*next;
+}					t_andor;
+
 //parse1.c
 
-void					ft_create_parse(t_group *grp, char *cmd);
-void					ft_parse2(t_group *grp);
-void					ft_parse(t_group *grp, char *cmd);
+void					ft_create_parse(t_group *grp, t_andor *tabl, t_andor *andor);
+void					ft_parse2(t_andor *andor);
+void					ft_parse(t_group *grp, t_andor *andor);
 
 //parse2.c
 
@@ -74,5 +89,10 @@ void					ft_escape_parse(t_group *grp, int i);
 
 //heredoc.c
 void					check_heredoc(t_group *grp);
+
+//split
+t_allcmd				*ft_strsplitquote(char *s, char c);
+t_andor					*ft_strsplitpipe(char *s, char c);
+t_andor					*ft_strsplitandor(char *s);
 
 #endif

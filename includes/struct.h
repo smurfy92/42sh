@@ -22,9 +22,7 @@ typedef struct			s_group
 	int						prompt_size;
 	int						exit;
 	int						hdcount;
-	struct s_andor			*allcmd;
-	struct s_andor			*andor;
-	struct s_parse			*parselst;
+	struct s_allcmd			*allcmd;
 	struct s_window			*window;
 	struct s_term			*term;
 	struct termios			cpy_term;

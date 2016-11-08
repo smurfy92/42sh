@@ -71,29 +71,30 @@ void		free_term(t_group *grp)
 
 void		free_parselst(t_group *grp)
 {
-	t_parse		*parse;
-	int			i;
+	// t_parse		*parse;
+	// int			i;
 
-	while (grp->parselst)
-	{
-		i = -1;
-		ft_strdel(&(grp->parselst->cmd));
-		while (grp->parselst->cmdsplit[++i])
-			ft_strdel(&(grp->parselst->cmdsplit[i]));
-		free(grp->parselst->cmdsplit);
-		ft_strdel(&(grp->parselst->dbred));
-		ft_strdel(&(grp->parselst->sgred));
-		ft_strdel(&(grp->parselst->file));
-		ft_strdel(&(grp->parselst->closefd));
-		ft_strdel(&(grp->parselst->redfd));
-		(grp->parselst->heredoc) ?
-		ft_strdel(&(grp->parselst->heredoc)) : 0;
-		parse = grp->parselst->next;
-		free(grp->parselst);
-		grp->parselst = parse;
-	}
-	grp->parselst ? free(grp->parselst) : 0;
-	grp->parselst = NULL;
+	(void)grp;
+	// while (grp->parselst)
+	// {
+	// 	i = -1;
+	// 	ft_strdel(&(grp->parselst->cmd));
+	// 	while (grp->parselst->cmdsplit[++i])
+	// 		ft_strdel(&(grp->parselst->cmdsplit[i]));
+	// 	free(grp->parselst->cmdsplit);
+	// 	ft_strdel(&(grp->parselst->dbred));
+	// 	ft_strdel(&(grp->parselst->sgred));
+	// 	ft_strdel(&(grp->parselst->file));
+	// 	ft_strdel(&(grp->parselst->closefd));
+	// 	ft_strdel(&(grp->parselst->redfd));
+	// 	(grp->parselst->heredoc) ?
+	// 	ft_strdel(&(grp->parselst->heredoc)) : 0;
+	// 	parse = grp->parselst->next;
+	// 	free(grp->parselst);
+	// 	grp->parselst = parse;
+	// }
+	// grp->parselst ? free(grp->parselst) : 0;
+	// grp->parselst = NULL;
 }
 
 void		ft_free_parse(t_group *grp)
