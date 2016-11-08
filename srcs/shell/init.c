@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: victordanain <victordanain@student.42.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:17:06 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/06 18:32:29 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/08 19:15:04 by victordanain     ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
+
+// #ifdef __APPLE__
+// # define HELP_PATH mac_pathhelp()
 
 void		init_env(t_group *grp, char **env)
 {
@@ -19,6 +22,24 @@ void		init_env(t_group *grp, char **env)
 	i = -1;
 	while (env && env[++i])
 		insert_env(grp, env[i]);
+	if (ft_getenv(grp, "HOME") == NULL)
+		;
+	if (ft_getenv(grp, "PATH") == NULL)
+		HELP_PATH;
+	if (ft_getenv(grp, "HOME") == NULL)
+		;
+	if (ft_getenv(grp, "TERM") == NULL)
+		;
+	if (ft_getenv(grp, "SHLVL") == NULL)
+		;
+	if (ft_getenv(grp, "HOME") == NULL)
+		;
+	if (ft_getenv(grp, "HOME") == NULL)
+		;
+	if (ft_getenv(grp, "HOME") == NULL)
+		;
+	if (ft_getenv(grp, "HOME") == NULL)
+		;
 }
 
 int			init_shell(void)
@@ -79,7 +100,8 @@ t_group		*set_grp(t_group *grp)
 	grp->andor = NULL;
 	ft_get_history(grp);
 	init_term(grp);
-	hash_init(&grp->root);
+	grp->root = NULL;
+	hash_init(&grp->root, grp);
 	return (grp);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: victordanain <victordanain@student.42.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 16:54:18 by jmontija          #+#    #+#             */
-/*   Updated: 2016/10/30 17:29:11 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/08 19:14:43 by victordanain     ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,11 @@ char					*ft_getenv(t_group *grp, char *tofind);
 
 //env_opt.c
 int						env_opt(t_group *grp);
+
+/*
+**	env_init.c
+*/
+
+char					*mac_pathhelp(void);
 
 #endif

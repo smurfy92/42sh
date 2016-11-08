@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fortytwo.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: victordanain <victordanain@student.42.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:42:31 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/08 16:58:19 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/08 19:13:42 by victordanain     ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,9 @@
 # define HOME 4741915
 # define END 4610843
 
+
+#endif
+
+#ifdef __APPLE__
+# define HELP_PATH mac_pathhelp()
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hash_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: victordanain <victordanain@student.42.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 20:13:19 by vdanain           #+#    #+#             */
-/*   Updated: 2016/11/07 19:46:09 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/08 19:08:29 by victordanain     ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char			*get_fullpath(char *name, char *dir)
 	return (tmpath);
 }
 
-char			*fill_list(void)
+char			*fill_list(t_group *grp)
 {
 	char	**path;
 	char	*tmpath;
@@ -37,7 +37,7 @@ char			*fill_list(void)
 
 	result = NULL;
 	i = -1;
-	if (!(tmpath = getenv("PATH")))
+	if (!(tmpath = ft_getenv(grp, "PATH")))
 		return (NULL);
 	if (!(path = ft_strsplit(tmpath, ':')))
 		return (NULL);
@@ -53,7 +53,7 @@ char			*fill_list(void)
 	return (result);
 }
 
-int				tree_filler(t_root **root)
+int				tree_filler(t_root **root, t_group *grp)
 {
 	char	**path;
 	char	*tmpath;
@@ -61,7 +61,7 @@ int				tree_filler(t_root **root)
 	DIR		*cur_d;
 
 	i = -1;
-	if (!(tmpath = getenv("PATH")))
+	if (!(tmpath = ft_getenv(grp, "PATH")))
 		return (1);
 	if (!(path = ft_strsplit(tmpath, ':')))
 		return (1);
@@ -77,14 +77,14 @@ int				tree_filler(t_root **root)
 	return (0);
 }
 
-int				hash_init(t_root **root)
+int				hash_init(t_root **root, t_group *grp)
 {
 	char	*result;
 
-	if (!(result = fill_list()) || ft_strcmp(result, "") == 0)
+	if (!(result = fill_list(grp)) || ft_strcmp(result, "") == 0)
 		return (1);
 	*root = root_init(result);
-	if (tree_filler(root) != 0)
+	if (tree_filler(root, grp) != 0)
 		return (1);
 	return (0);
 }
