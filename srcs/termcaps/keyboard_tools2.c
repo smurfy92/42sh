@@ -45,16 +45,30 @@
 // 	}
 // }
 
+void	ft_place_to_eof(t_group *grp)
+{
+	(void)grp;
+	int i;
+
+	i = TERM(window->width);
+	while (--i > 0)
+		tputs(tgetstr("le", NULL), 0, ft_getchar);
+
+}
+
 void	ft_left_arrow(t_group *grp)
 {
 	int i;
 
-	if (((TERM(curs_pos) + START_POS) % TERM(window->width)) == 0)
+	if ((((TERM(curs_pos) + START_POS) % TERM(window->width)) == 0) || TERM(cmd_line)[TERM(curs_pos) - 1] == '\n')
 	{
 		i = 0;
 		tputs(tgetstr("up", NULL), 0, ft_getchar);
-		while (++i < TERM(window->width))
-			tputs(tgetstr("nd", NULL), 0, ft_getchar);
+		if (TERM(cmd_line)[TERM(curs_pos) - 1] == '\n')
+			ft_place_to_eof(grp);
+		else
+			while (++i < TERM(window->width))
+				tputs(tgetstr("nd", NULL), 0, ft_getchar);
 	}
 	else
 		tputs(tgetstr("le", NULL), 0, ft_getchar);
