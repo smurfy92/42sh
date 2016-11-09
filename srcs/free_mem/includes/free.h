@@ -17,6 +17,7 @@
 void		free_env(t_group *grp);
 void		ft_free_parse(t_group *grp);
 void		ft_exit(t_group *grp, int exit_code);
+void		free_parselst(t_parse *parse);
 
 //free2.c
 void		ft_free_andor(t_group *grp);

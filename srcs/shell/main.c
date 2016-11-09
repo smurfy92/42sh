@@ -56,23 +56,31 @@ void		proccess(t_group *grp)
 		tabl = tabl->next;
 	}
 	ft_display_parse(grp);
-	tabl = grp->allcmd;
-	// while (tabl)
-	// {
-	// 	REMOVE(&tabl->cmd);
-	// 	while (tabl->andor)
-	// 	{
-	// 		printf("andor->: %s -> %d\n", tabl->andor->cmd, tabl->andor->type);
-			
-			
-	// 		// init_exec(tabl);
-	// 		// ft_free_parse(tabl);
-	// 		// ft_free_andor(tabl);
-	// 		tabl->andor = tabl->andor->next;
-	// 	}
-	// 	tabl = tabl->next;
-	// }
-	// free(tabl); // free les maillon avant
+	t_parse *tmp3;
+	while (grp->allcmd)
+	{
+		tabl = grp->allcmd;
+		REMOVE(&tabl->cmd);
+		while (tabl->andor)
+		{
+			tmp2 = tabl->andor;
+			REMOVE(&tabl->andor->cmd);
+			while (tmp2->parselst)
+			{
+				tmp3 = tmp2->parselst;
+				// init_exec(tabl);
+				tmp2->parselst = tmp3->next;
+				free_parselst(tmp3);
+			}
+			tabl->andor = tmp2->next;
+			free(tmp2);
+		}
+		grp->allcmd = tabl->next;
+		free(tabl);
+		tabl = grp->allcmd;
+	}
+	ft_free_parse(grp);
+	free(tabl); // free les maillon avant
 	ft_strdel(&TERM(cmd_line));
 	grp->hdcount = 0;
 }
