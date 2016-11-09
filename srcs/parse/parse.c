@@ -6,7 +6,7 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 15:25:02 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/09 19:12:31 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/09 19:44:50 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,39 +54,6 @@ void		polish(t_parse *parse)
 	}
 }
 
-// void		ft_escape_parses(char **cmd, int i)
-// {
-// 	char	*tmp;
-
-// 	if (*(cmd[i + 2]))
-// 	{
-// 		tmp = SDUP(cmd[i + 2]);
-// 		*(cmd[i + 1]) = '\0';
-// 		*cmd = JOINF(*cmd, tmp, 3);
-// 	}
-// 	else
-// 		*(cmd[i + 1]) = '\0';
-// }
-
-// char		*escape_cmd(char *s)
-// {
-// 	int	i;
-
-// 	i = -1;
-// 	while (s && s[i] && s[++i] != '\0')
-// 	{
-// 		if (s[i] == '\\' && s[i + 1] && s[i + 1] == '\\')
-// 			ft_escape_parses(&s, i);
-// 		else if (i > 0 && s[i] == '\\' && s[i + 1] && s[i + 1] == '\n')
-// 		{
-// 			ft_escape_parses(&s, i - 1);
-// 			ft_escape_parses(&s, i - 1);
-// 		}
-// 	}
-// 	printf("string escape %s\n", s);
-// 	return (s);
-// }
-
 void		ft_create_parse(t_group *grp, t_andor *tabl, t_andor *andor)
 {
 	t_parse		*tmp;
@@ -104,8 +71,7 @@ void		ft_create_parse(t_group *grp, t_andor *tabl, t_andor *andor)
 	tmp->errnb = 0;
 	ft_parse_redirections(grp, tmp);
 	polish(tmp);
-	//spacesplit bug
-	tmp->cmdsplit = ft_strsplit(tmp->cmd, ' '); // don't forget tab !
+	tmp->cmdsplit = ft_strsplit(tmp->cmd, ' '); // don't forget tab ! 	//spacesplit a update !
 	if (!andor->parselst)
 	{
 		andor->parselst = tmp;
