@@ -6,7 +6,7 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/10 19:59:55 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/09 17:19:36 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/09 19:32:21 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static void			insert_part(t_andor **lst, char *cmd)
 
 	new = (t_andor *)malloc(sizeof(t_andor));
 	new->cmd = ft_strtrim(cmd);
-	//ft_strdel(&cmd);
 	new->type = 0;
 	new->parselst = NULL;
 	new->next = NULL;
@@ -45,7 +44,7 @@ static int		ft_wlen(char *s, int i, char c)
 	while (s[i] != '\0')
 	{
 		synth = check_parentheses(s[i]);
-		if (synth == 0 && s[i] == c && i > 0 && s[i - 1] != '\\')
+		if (synth == 0 && s[i] == c && !check_last_char(s, i))
 			break ;
 		len++;
 		i++;
@@ -68,8 +67,14 @@ t_andor		*ft_strsplitpipe(char *s, char c)
 	len = 0;
 	while (s && s[i] != '\0')
 	{
-		while (s[i] == c)
+		
+
+		while (s[i] == c && !check_last_char(s, i))
+		{
+			if (i == 0)
+				insert_part(&lst, "");
 			i++;
+		}
 		start = i;
 		len = ft_wlen(s, i, c);
 		part = ft_strsub(s, start, len);
