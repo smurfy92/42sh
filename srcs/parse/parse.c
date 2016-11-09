@@ -104,6 +104,7 @@ void		ft_parse2(t_andor *andor)
 void		ft_parse(t_group *grp, t_andor *andor)
 {
 	t_andor		*tabl;
+	t_andor		*tmp;
 	int			i;
 	int			y;
 
@@ -113,7 +114,10 @@ void		ft_parse(t_group *grp, t_andor *andor)
 	while (tabl)
 	{
 		ft_create_parse(grp, tabl, andor);
-		tabl = tabl->next;
+		REMOVE(&tabl->cmd);
+		tmp = tabl->next;
+		free(tabl);
+		tabl = tmp;
 		i++;
 	}
 	TERM(cmd_size) = 0;
