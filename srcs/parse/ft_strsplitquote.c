@@ -6,7 +6,7 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/10 19:59:55 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/08 17:25:13 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/09 17:21:20 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void		insert_part(t_allcmd **lst, char *cmd)
 
 	new = (t_allcmd *)malloc(sizeof(t_allcmd));
 	new->cmd = ft_strtrim(cmd);
-	ft_strdel(&cmd);
+	//ft_strdel(&cmd);
 	new->andor = NULL;
 	new->next = NULL;
 	if (!*(lst))
@@ -46,30 +46,53 @@ static void		insert_part(t_allcmd **lst, char *cmd)
 // 	}
 // }
 
+static int		ft_wlen(char *s, int i, char c)
+{
+	int		len;
+	int		synth;
+
+	len = 0;
+	synth = 0;
+	while (s[i] != '\0')
+	{
+		synth = check_parentheses(s[i]);
+		if (synth == 0 && s[i] == c && i > 0 && s[i - 1] != '\\')
+			break ;
+		len++;
+		i++;
+	}
+	check_parentheses(0);
+	return (len);
+}
+
 t_allcmd		*ft_strsplitquote(char *s, char c)
 {
 	int		i;
 	int		start;
-	int		synth;
 	t_allcmd	*lst;
+	char	*part;
+	int		len;
 
-	i = -1;
+	i = 0;
 	start = 0;
 	lst = NULL;
-	while (s[++i] != '\0')
+	len = 0;
+	while (s && s[i] != '\0')
 	{
-		synth = check_parentheses(s[i]);
-		if (synth == 0 && s[i] == c)
-		{
-			if (i > 0 && s[i - 1] == '\\')
-				continue ;
-			insert_part(&lst, ft_strsub(s, start, i - start));
-			start = i + 2;
+		while (s[i] == c)
 			i++;
-		}
+		start = i;
+		len = ft_wlen(s, i, c);
+		part = ft_strsub(s, start, len);
+		if (part == NULL)
+			return (NULL);
+		else if (part[0] != '\0')
+			insert_part(&lst, part);
+		REMOVE(&part);
+		i += len;
 	}
-	insert_part(&lst, ft_strsub(s, start, i - start));
-	//display_lst(lst);
+	if (i == 0)
+		return (NULL);
 	check_parentheses(0);
 	return (lst);
 }
