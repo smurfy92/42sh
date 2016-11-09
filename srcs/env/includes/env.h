@@ -6,7 +6,7 @@
 /*   By: victordanain <victordanain@student.42.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 16:54:18 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/08 19:14:43 by victordanain     ###   ########.fr       */
+/*   Updated: 2016/11/09 16:04:52 by victordanain     ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int						env_opt(t_group *grp);
 **	env_init.c
 */
 
-char					*mac_pathhelp(void);
+void					init_env(t_group *grp, char **env);
+void					mac_pathhelp(t_group *grp);
+void					help_shlvl(t_group *grp);
 
 #endif

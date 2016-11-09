@@ -6,41 +6,12 @@
 /*   By: victordanain <victordanain@student.42.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:17:06 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/08 19:15:04 by victordanain     ###   ########.fr       */
+/*   Updated: 2016/11/09 16:04:25 by victordanain     ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-// #ifdef __APPLE__
-// # define HELP_PATH mac_pathhelp()
-
-void		init_env(t_group *grp, char **env)
-{
-	int		i;
-
-	i = -1;
-	while (env && env[++i])
-		insert_env(grp, env[i]);
-	if (ft_getenv(grp, "HOME") == NULL)
-		;
-	if (ft_getenv(grp, "PATH") == NULL)
-		HELP_PATH;
-	if (ft_getenv(grp, "HOME") == NULL)
-		;
-	if (ft_getenv(grp, "TERM") == NULL)
-		;
-	if (ft_getenv(grp, "SHLVL") == NULL)
-		;
-	if (ft_getenv(grp, "HOME") == NULL)
-		;
-	if (ft_getenv(grp, "HOME") == NULL)
-		;
-	if (ft_getenv(grp, "HOME") == NULL)
-		;
-	if (ft_getenv(grp, "HOME") == NULL)
-		;
-}
 
 int			init_shell(void)
 {

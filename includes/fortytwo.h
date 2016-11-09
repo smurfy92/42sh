@@ -6,7 +6,7 @@
 /*   By: victordanain <victordanain@student.42.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:42:31 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/08 19:13:42 by victordanain     ###   ########.fr       */
+/*   Updated: 2016/11/08 21:05:57 by victordanain     ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,5 @@
 #endif
 
 #ifdef __APPLE__
-# define HELP_PATH mac_pathhelp()
+# define HELP_PATH(x) mac_pathhelp(x)
 #endif
