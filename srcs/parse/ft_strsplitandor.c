@@ -6,7 +6,7 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 17:16:37 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/09 17:21:11 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/09 19:32:18 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static void			insert_part(t_andor **lst, char *cmd, int type)
 
 	new = (t_andor *)malloc(sizeof(t_andor));
 	new->cmd = ft_strtrim(cmd);
-	//ft_strdel(&cmd);
 	new->type = type;
 	new->parselst = NULL;
 	new->next = NULL;
@@ -54,7 +53,7 @@ static int		ft_wlen(char *s, int i)
 	while (s[i] != '\0')
 	{
 		synth = check_parentheses(s[i]);
-		if (synth == 0 && ft_isandor(s, i) > 0 && i > 0 && s[i - 1] != '\\')
+		if (synth == 0 && ft_isandor(s, i) > 0 && !check_last_char(s, i))
 			break ;
 		len++;
 		i++;
@@ -78,8 +77,12 @@ t_andor		*ft_strsplitandor(char *s)
 	len = 0;
 	while (s && s[i] != '\0')
 	{
-		while (ft_isandor(s, i) > 0)
+		while ((type = (ft_isandor(s, i) > 0)) && !check_last_char(s, i))
+		{
+			if (i == 0)
+				insert_part(&lst, "", type);
 			i += 2;
+		}
 		start = i;
 		len = ft_wlen(s, i);
 		i += len;

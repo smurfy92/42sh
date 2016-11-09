@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   termcaps.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:43:24 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/01 17:53:40 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/09 17:53:10 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void					ft_next_word(t_group *grp);
 void					handling_clear_screen(t_group *grp);
 void					remove_line(t_group *grp);
 void					reset_edl(t_group *grp);
+int						check_last_char(char *line, int i);
 int						ft_escape(t_group *grp);
 void					fill_cmd_line(t_group *grp);
 
