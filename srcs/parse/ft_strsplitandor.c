@@ -6,7 +6,7 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 17:16:37 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/08 17:24:27 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/09 17:21:11 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void			insert_part(t_andor **lst, char *cmd, int type)
 
 	new = (t_andor *)malloc(sizeof(t_andor));
 	new->cmd = ft_strtrim(cmd);
-	ft_strdel(&cmd);
+	//ft_strdel(&cmd);
 	new->type = type;
 	new->parselst = NULL;
 	new->next = NULL;
@@ -44,43 +44,54 @@ static void			insert_part(t_andor **lst, char *cmd, int type)
 	}
 }
 
-// void			display_lst(t_andor *lst)
-// {
-// 	t_andor *tmp;
-
-// 	tmp = lst;
-// 	while (tmp)
-// 	{
-// 		printf("cmd: %s -> %d\n", tmp->cmd, tmp->type);
-// 		tmp = tmp->next;
-// 	}
-// }
-
-t_andor			*ft_strsplitandor(char *s)
+static int		ft_wlen(char *s, int i)
 {
-	int		i;
-	int		type;
-	int		start;
+	int		len;
 	int		synth;
-	t_andor	*lst;
 
-	i = -1;
-	start = 0;
-	lst = NULL;
-	while (s[++i] != '\0')
+	len = 0;
+	synth = 0;
+	while (s[i] != '\0')
 	{
 		synth = check_parentheses(s[i]);
-		if ((type = ft_isandor(s, i)) > 0 && synth == 0)
-		{
-			if (i > 0 && s[i - 1] == '\\')
-				continue ;
-			insert_part(&lst, ft_strsub(s, start, i - start), type);
-			start = i + 2;
-			i++;
-		}
+		if (synth == 0 && ft_isandor(s, i) > 0 && i > 0 && s[i - 1] != '\\')
+			break ;
+		len++;
+		i++;
 	}
-	insert_part(&lst, ft_strsub(s, start, i - start), type);
-	//display_lst(lst);
+	check_parentheses(0);
+	return (len);
+}
+
+t_andor		*ft_strsplitandor(char *s)
+{
+	int		i;
+	int		start;
+	t_andor	*lst;
+	char	*part;
+	int		len;
+	int		type;
+
+	i = 0;
+	start = 0;
+	lst = NULL;
+	len = 0;
+	while (s && s[i] != '\0')
+	{
+		while (ft_isandor(s, i) > 0)
+			i += 2;
+		start = i;
+		len = ft_wlen(s, i);
+		i += len;
+		part = ft_strsub(s, start, len);
+		if (part == NULL)
+			return (NULL);
+		type = ft_isandor(s, i);
+		insert_part(&lst, part, type);
+		REMOVE(&part);
+	}
+	if (i == 0)
+		return (NULL);
 	check_parentheses(0);
 	return (lst);
 }
