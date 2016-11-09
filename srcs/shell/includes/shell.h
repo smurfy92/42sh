@@ -25,7 +25,6 @@ int						reset_shell(void);
 // shell.c
 void					prompt();
 int						ft_getchar(int c);
-void					init_env(t_group *grp, char **env);
 int						init_shell(void);
 t_group					*set_grp(t_group *grp);
 t_group					*get_grp(void);

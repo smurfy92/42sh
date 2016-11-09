@@ -68,7 +68,7 @@ void		proccess(t_group *grp)
 			while (tmp2->parselst)
 			{
 				tmp3 = tmp2->parselst;
-				// init_exec(tabl);
+				init_exec(grp);
 				tmp2->parselst = tmp3->next;
 				free_parselst(tmp3);
 			}

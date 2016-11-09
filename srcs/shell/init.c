@@ -15,32 +15,32 @@
 // #ifdef __APPLE__
 // # define HELP_PATH mac_pathhelp()
 
-void		init_env(t_group *grp, char **env)
-{
-	int		i;
+// void		init_env(t_group *grp, char **env)
+// {
+// 	int		i;
 
-	i = -1;
-	while (env && env[++i])
-		insert_env(grp, env[i]);
-	if (ft_getenv(grp, "HOME") == NULL)
-		;
-	if (ft_getenv(grp, "PATH") == NULL)
-		HELP_PATH;
-	if (ft_getenv(grp, "HOME") == NULL)
-		;
-	if (ft_getenv(grp, "TERM") == NULL)
-		;
-	if (ft_getenv(grp, "SHLVL") == NULL)
-		;
-	if (ft_getenv(grp, "HOME") == NULL)
-		;
-	if (ft_getenv(grp, "HOME") == NULL)
-		;
-	if (ft_getenv(grp, "HOME") == NULL)
-		;
-	if (ft_getenv(grp, "HOME") == NULL)
-		;
-}
+// 	i = -1;
+// 	while (env && env[++i])
+// 		insert_env(grp, env[i]);
+// 	if (ft_getenv(grp, "HOME") == NULL)
+// 		;
+// 	if (ft_getenv(grp, "PATH") == NULL)
+// 		HELP_PATH(grp);
+// 	if (ft_getenv(grp, "HOME") == NULL)
+// 		;
+// 	if (ft_getenv(grp, "TERM") == NULL)
+// 		;
+// 	if (ft_getenv(grp, "SHLVL") == NULL)
+// 		;
+// 	if (ft_getenv(grp, "HOME") == NULL)
+// 		;
+// 	if (ft_getenv(grp, "HOME") == NULL)
+// 		;
+// 	if (ft_getenv(grp, "HOME") == NULL)
+// 		;
+// 	if (ft_getenv(grp, "HOME") == NULL)
+// 		;
+// }
 
 int			init_shell(void)
 {
