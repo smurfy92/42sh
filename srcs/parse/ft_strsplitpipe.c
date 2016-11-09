@@ -45,7 +45,7 @@ static int		ft_wlen(char *s, int i, char c)
 	while (s[i] != '\0')
 	{
 		synth = check_parentheses(s[i]);
-		if (synth == 0 && s[i] == c && i > 0 && s[i - 1] != '\\')
+		if (synth == 0 && s[i] == c && (i > 0 && s[i - 1] != '\\'))
 			break ;
 		len++;
 		i++;
