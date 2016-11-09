@@ -50,7 +50,8 @@ int						env_opt(t_group *grp);
 /*
 **	env_init.c
 */
-
-char					*mac_pathhelp(void);
+void					init_env(t_group *grp, char **env);
+void					help_shlvl(t_group *grp);
+void					mac_pathhelp(t_group *grp);
 
 #endif

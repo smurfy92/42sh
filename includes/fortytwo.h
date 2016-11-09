@@ -80,5 +80,5 @@
 #endif
 
 #ifdef __APPLE__
-# define HELP_PATH mac_pathhelp()
+# define HELP_PATH(x) (mac_pathhelp(x))
 #endif
