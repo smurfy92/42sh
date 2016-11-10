@@ -6,7 +6,7 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 15:27:24 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/09 19:44:05 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/10 23:47:28 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,8 @@ void		ft_check_redirection_fd(t_parse *parse, int i)
 	fd = ft_strjoin_nf(fd, ">", 1);
 	fd = ft_strjoin_nf(fd, fd2, 3);
 	if (parse->redfd)
-	{
-		parse->redfd = ft_strjoin_nf(parse->redfd, ";", 1);
-		parse->redfd = ft_strjoin_nf(parse->redfd, fd, 1);
-	}
-	else
-		parse->redfd = ft_strdup(fd);
+		REMOVE(&parse->redfd);
+	parse->redfd = ft_strdup(fd);
 	REMOVE(&fd);
 }
 

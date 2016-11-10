@@ -6,23 +6,11 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 15:29:42 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/09 19:44:04 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/10 23:11:05 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
-
-void		ft_copy_redirections(t_group *grp, t_parse *parse)
-{
-	int		fd;
-
-	grp = (void*)grp;
-	if (parse->sgred)
-		fd = open(parse->sgred, O_WRONLY, S_IRUSR);
-	if (parse->dbred)
-		fd = open(parse->dbred, O_WRONLY, S_IRUSR);
-	close(fd);
-}
 
 void		ft_create_redirections(t_parse *parse)
 {

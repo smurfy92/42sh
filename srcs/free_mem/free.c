@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:10:07 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/06 18:34:02 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/10 23:11:14 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void		free_parselst(t_parse *parse)
 	ft_strdel(&(parse->redfd));
 	(parse->heredoc) ?
 	ft_strdel(&(parse->heredoc)) : 0;
+	parse->fd = -1;
 	free(parse);
 	parse = NULL;
 }
