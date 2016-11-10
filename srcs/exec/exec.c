@@ -27,6 +27,30 @@ void		exec(t_group *grp)
 	}
 }
 
+void		ft_dup_redirection(t_parse *parse)
+{
+	char	**tmp;
+
+	if (parse->redfd)
+	{
+		tmp = ft_strsplit(parse->redfd, '>');
+		parse->fd = dup2(ft_atoi(tmp[0]), ft_atoi(tmp[1]));
+		REMOVE(&tmp[0]);
+		REMOVE(&tmp[1]);
+	}
+	if (parse->closefd)
+	{
+		tmp = ft_strsplit(parse->closefd, ';');
+		int i = -1;
+		while (tmp[++i])
+		{
+			close(ft_atoi(tmp[i]));
+			REMOVE(&tmp[i]);
+		}
+		free(tmp);
+	}
+}
+
 void		exec_child(t_group *grp, t_parse *parse)
 {
 	int		fd;
@@ -36,6 +60,7 @@ void		exec_child(t_group *grp, t_parse *parse)
 	// faire les redirections;
 	if (parse->fd > 0)
 		dup2(parse->fd, STDOUT_FILENO);
+	ft_dup_redirection(parse);
 	if (get_path(parse->cmdsplit[0], grp->root))
 		execve(get_path(parse->cmdsplit[0], grp->root), parse->cmdsplit, NULL);
 }
@@ -48,14 +73,17 @@ void		ft_fork_pipe(t_group *grp)
 	int		fd;
 
 	pipe(tabl);
-
 	parse = grp->allcmd->andor->parselst;
 	pid = fork();
 	if (pid == 0)
 	{
 		if (parse->file && (fd = open(parse->file, O_RDONLY)))
 			dup2(fd, STDIN_FILENO);
-		dup2(tabl[1], STDOUT_FILENO);
+		ft_dup_redirection(parse);
+		if (parse->fd > 0)
+			dup2(tabl[1], parse->fd);
+		else
+			dup2(tabl[1], STDOUT_FILENO);
 		close(tabl[0]);
 		if (get_path(parse->cmdsplit[0], grp->root))
 			execve(get_path(parse->cmdsplit[0], grp->root), parse->cmdsplit, NULL);
@@ -73,8 +101,6 @@ void		pipe_exec(t_group *grp)
 	while (grp->allcmd->andor->parselst)
 	{
 		parse = grp->allcmd->andor->parselst;
-		// check si ya parse->file;
-
 		if (parse->next)
 			ft_fork_pipe(grp);
 		else
