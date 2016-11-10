@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pre_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/31 15:26:52 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/04 13:06:17 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/09 19:41:39 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,6 @@ void		ft_escape_parse(t_group *grp, int i)
 		TERM(cmd_line)[i + 1] = '\0';
 }
 
-// void		ft_put_quote(t_group *grp, int i)
-// {
-// 	char *tmp;
-
-// 	tmp = TERM(cmd_line)[i + 1];
-
-// }
-
 void		ft_pre_parse(t_group *grp)
 {
 	int i;
@@ -107,10 +99,7 @@ void		ft_pre_parse(t_group *grp)
 	i = -1;
 	while (TERM(cmd_line) && TERM(cmd_line)[++i])
 	{
-		if (TERM(cmd_line)[i] == '\\' &&
-			TERM(cmd_line)[i + 1] && TERM(cmd_line)[i + 1] == '\\')
-			ft_escape_parse(grp, i);
-		else if (i > 0 && TERM(cmd_line)[i] == '\\' &&
+		if (i > 0 && TERM(cmd_line)[i] == '\\' &&
 			TERM(cmd_line)[i + 1] && TERM(cmd_line)[i + 1] == '\n')
 		{
 			ft_escape_parse(grp, i - 1);
