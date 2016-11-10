@@ -52,10 +52,6 @@ void		ft_init_parse(t_group *grp)
 
 void		proccess(t_group *grp)
 {
-	t_allcmd *tabl;
-	t_andor *tmp2;
-	t_parse *tmp3;
-
 	prompt();
 	get_cmd(grp, 0);
 	ft_pre_parse(grp);
@@ -63,31 +59,10 @@ void		proccess(t_group *grp)
 		ft_add_history(grp, TERM(cmd_line));
 	grp->allcmd = ft_strsplitquote(TERM(cmd_line), ';');
 	ft_init_parse(grp);
-	ft_display_parse(grp);
-	while (grp->allcmd)
-	{
-		tabl = grp->allcmd;
-		REMOVE(&tabl->cmd);
-		while (tabl->andor)
-		{
-			tmp2 = tabl->andor;
-			REMOVE(&tabl->andor->cmd);
-			while (tmp2->parselst)
-			{
-				tmp3 = tmp2->parselst;
-				init_exec(grp);
-				tmp2->parselst = tmp3->next;
-				free_parselst(tmp3);
-			}
-			tabl->andor = tmp2->next;
-			free(tmp2);
-		}
-		grp->allcmd = tabl->next;
-		free(tabl);
-		tabl = grp->allcmd;
-	}
+	//ft_display_parse(grp);
+	init_exec(grp);
 	ft_free_parse(grp);
-	free(tabl); // free les maillon avant
+	free(grp->allcmd);
 	ft_strdel(&TERM(cmd_line));
 	grp->hdcount = 0;
 }
@@ -101,6 +76,7 @@ int			main(int argc, char **argv, char **env)
 	init_shell();
 	grp = get_grp();
 	init_env(grp, env);
+	hash_init(&grp->root, grp);
 	sig_handler();
 	while (42)
 		proccess(grp);
