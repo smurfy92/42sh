@@ -31,18 +31,11 @@ void		prompt(void)
 {
 	ft_putstr_fd("42sh> ", 2);
 }
-
-void		proccess(t_group *grp)
+void		ft_init_parse(t_group *grp)
 {
 	t_allcmd *tabl;
 	t_andor *tmp2;
 
-	prompt();
-	get_cmd(grp, 0);
-	ft_pre_parse(grp);
-	if (LEN(TERM(cmd_line)) > 0)
-		ft_add_history(grp, TERM(cmd_line));
-	grp->allcmd = ft_strsplitquote(TERM(cmd_line), ';');
 	tabl = grp->allcmd;
 	while (tabl)
 	{
@@ -55,8 +48,22 @@ void		proccess(t_group *grp)
 		}
 		tabl = tabl->next;
 	}
-	ft_display_parse(grp);
+}
+
+void		proccess(t_group *grp)
+{
+	t_allcmd *tabl;
+	t_andor *tmp2;
 	t_parse *tmp3;
+
+	prompt();
+	get_cmd(grp, 0);
+	ft_pre_parse(grp);
+	if (LEN(TERM(cmd_line)) > 0)
+		ft_add_history(grp, TERM(cmd_line));
+	grp->allcmd = ft_strsplitquote(TERM(cmd_line), ';');
+	ft_init_parse(grp);
+	ft_display_parse(grp);
 	while (grp->allcmd)
 	{
 		tabl = grp->allcmd;
