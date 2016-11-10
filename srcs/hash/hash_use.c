@@ -24,7 +24,6 @@ char	*get_path(char *cmd, t_root *root)
 	char	*path;
 
 	i = 0;
-	ft_putendl("LALA");
 	if (cmd == NULL || ft_strcmp(cmd, "") == 0)
 		return (NULL);
 	if (root == NULL)

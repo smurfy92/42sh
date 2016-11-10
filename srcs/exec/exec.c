@@ -27,11 +27,23 @@ void		exec(t_group *grp)
 	}
 }
 
+void		exec_child(t_group *grp, t_parse *parse)
+{
+	int		fd;
+	
+	if (parse->file && (fd = open(parse->file, O_RDONLY)))
+		dup2(fd, STDIN_FILENO);
+	// faire les redirections;
+	if (get_path(parse->cmdsplit[0], grp->root))
+		execve(get_path(parse->cmdsplit[0], grp->root), parse->cmdsplit, NULL);
+}
+
 void		ft_fork_pipe(t_group *grp)
 {
 	int		tabl[2];
-	pid_t pid;
-	t_parse *parse;
+	pid_t	pid;
+	t_parse	*parse;
+	int		fd;
 
 	pipe(tabl);
 
@@ -39,6 +51,8 @@ void		ft_fork_pipe(t_group *grp)
 	pid = fork();
 	if (pid == 0)
 	{
+		if (parse->file && (fd = open(parse->file, O_RDONLY)))
+			dup2(fd, STDIN_FILENO);
 		dup2(tabl[1], STDOUT_FILENO);
 		close(tabl[0]);
 		if (get_path(parse->cmdsplit[0], grp->root))
@@ -57,13 +71,12 @@ void		pipe_exec(t_group *grp)
 	while (grp->allcmd->andor->parselst)
 	{
 		parse = grp->allcmd->andor->parselst;
+		// check si ya parse->file;
+
 		if (parse->next)
 			ft_fork_pipe(grp);
 		else
-		{
-			if (get_path(parse->cmdsplit[0], grp->root))
-				execve(get_path(parse->cmdsplit[0], grp->root), parse->cmdsplit, NULL);
-		}
+			exec_child(grp, parse);
 		tmp3 = parse;
 		grp->allcmd->andor->parselst = tmp3->next;
 		free_parselst(tmp3);
