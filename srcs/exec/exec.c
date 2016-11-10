@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 13:30:12 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/05 17:06:34 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/10 23:13:07 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void		exec_child(t_group *grp, t_parse *parse)
 	if (parse->file && (fd = open(parse->file, O_RDONLY)))
 		dup2(fd, STDIN_FILENO);
 	// faire les redirections;
+	if (parse->fd > 0)
+		dup2(parse->fd, STDOUT_FILENO);
 	if (get_path(parse->cmdsplit[0], grp->root))
 		execve(get_path(parse->cmdsplit[0], grp->root), parse->cmdsplit, NULL);
 }

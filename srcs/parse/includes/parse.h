@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:42:57 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/06 18:15:20 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/10 23:10:55 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void					ft_parse_redirections(t_group *grp, t_parse *parse);
 
 //parse3.c
 
-void					ft_copy_redirections(t_group *grp, t_parse *parse);
 int						ft_count_pipes(char *cmd);
 void					ft_create_redirections(t_parse *parse);
 void					ft_replace_tilde(t_group *grp, t_parse *parse, int i);

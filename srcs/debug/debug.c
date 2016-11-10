@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:10:41 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/04 13:43:58 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/10 23:30:15 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void		ft_display_parse(t_group *grp)
 				printf("      close -> %s$\n",tmp3->closefd);
 				printf("      redfd -> %s$\n",tmp3->redfd);
 				printf("      heredoc -> %s$\n\n",tmp3->heredoc);
+				printf("      fd -> %d$\n\n",tmp3->fd);
 				if (tmp3->next)
 					printf("    pipe ->\n\n");
 				tmp3 = tmp3->next;
