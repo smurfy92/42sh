@@ -101,7 +101,6 @@ t_group		*set_grp(t_group *grp)
 	ft_get_history(grp);
 	init_term(grp);
 	grp->root = NULL;
-	hash_init(&grp->root, grp);
 	return (grp);
 }
 
