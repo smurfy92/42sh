@@ -98,6 +98,8 @@ t_group		*set_grp(t_group *grp)
 	grp->exit = 0;
 	grp->hdcount = 0;
 	grp->allcmd = NULL;
+	grp->quit = false;
+	grp->father = -1;
 	ft_get_history(grp);
 	init_term(grp);
 	grp->root = NULL;

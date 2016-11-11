@@ -12,6 +12,27 @@
 
 #include "fortytwo.h"
 
+int	is_builtins(char **cmd)
+{
+	if (!cmd[0])
+		return (0);
+	if (ft_strcmp(cmd[0], "env") == 0)
+		return (1); // exit code done
+	else if (ft_strcmp(cmd[0], "cd") == 0)
+		return (1); // exit code done
+	else if (ft_strcmp(cmd[0], "setenv") == 0)
+		return (1);
+	else if (ft_strcmp(cmd[0], "unsetenv") == 0)
+		return (1); // exit code done
+	else if (ft_strcmp(cmd[0], "history") == 0)
+		return (1); // exit code done
+	else if (ft_strcmp(cmd[0], "echo") == 0)
+		return (1); // exit code done
+	else if (ft_strcmp(cmd[0], "exit") == 0)
+		return (1); // exit code done
+	return (0);
+}
+
 int	builtin_setenv(t_group *grp)
 {
 	char	**cmdsplit;

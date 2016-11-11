@@ -21,6 +21,7 @@ typedef struct			s_group
 
 	int						prompt_size;
 	int						exit;
+	int						quit;
 	int						hdcount;
 	pid_t					father;
 	struct s_allcmd			*allcmd;
