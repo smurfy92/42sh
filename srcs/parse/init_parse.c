@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   init_parse.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/27 15:25:02 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/10 23:11:50 by julio            ###   ########.fr       */
+/*   Created: 2016/11/11 15:59:55 by jtranchi          #+#    #+#             */
+/*   Updated: 2016/11/11 16:08:40 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-void		ft_polish_parse(t_parse *parse, int i)
+static void		ft_polish_parse(t_parse *parse, int i)
 {
 	char	*tmp;
 
@@ -26,7 +26,7 @@ void		ft_polish_parse(t_parse *parse, int i)
 		parse->cmd[i + 1] = '\0';
 }
 
-void		polish(t_parse *parse)
+static void		polish(t_parse *parse)
 {
 	int ret;
 	int test;
@@ -54,7 +54,7 @@ void		polish(t_parse *parse)
 	}
 }
 
-void		ft_create_parse(t_group *grp, t_andor *tabl, t_andor *andor)
+static void		ft_create_parse(t_group *grp, t_andor *tabl, t_andor *andor)
 {
 	t_parse		*tmp;
 	t_parse		*tmp2;
@@ -86,22 +86,7 @@ void		ft_create_parse(t_group *grp, t_andor *tabl, t_andor *andor)
 	}
 }
 
-void		ft_parse2(t_andor *andor)
-{
-	t_parse		*tmp;
-	int			i;
-
-	tmp = andor->parselst;
-	while (tmp)
-	{
-		i = ft_strlen(tmp->cmd);
-		while (i > 0 && tmp->cmd && tmp->cmd[--i] == ' ')
-			tmp->cmd[i] = '\0';
-		tmp = tmp->next;
-	}
-}
-
-void		ft_parse(t_group *grp, t_andor *andor)
+static void		ft_parse(t_group *grp, t_andor *andor)
 {
 	t_andor		*tabl;
 	t_andor		*tmp;
@@ -126,6 +111,24 @@ void		ft_parse(t_group *grp, t_andor *andor)
 		grp->fail = 1;
 		return (ft_putendl("Invalid null command."));
 	}
-	ft_parse2(andor);
 	//check_heredoc(grp);
+}
+
+void		ft_init_parse(t_group *grp)
+{
+	t_allcmd *tabl;
+	t_andor *tmp2;
+
+	tabl = grp->allcmd;
+	while (tabl)
+	{
+		tabl->andor = ft_strsplitandor(tabl->cmd);
+		tmp2 = tabl->andor;
+		while (tmp2)
+		{
+			ft_parse(grp, tmp2);
+			tmp2 = tmp2->next;
+		}
+		tabl = tabl->next;
+	}
 }

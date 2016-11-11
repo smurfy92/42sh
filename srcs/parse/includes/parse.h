@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:42:57 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/10 23:10:55 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/11 16:23:15 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,42 +45,32 @@ typedef struct		s_andor
 	struct s_andor	*next;
 }					t_andor;
 
-//parse1.c
+//init_parse.c
 
-void					ft_create_parse(t_group *grp, t_andor *tabl, t_andor *andor);
-void					ft_parse2(t_andor *andor);
-void					ft_parse(t_group *grp, t_andor *andor);
+void					ft_init_parse(t_group *grp);
+//redirections.c
 
-//parse2.c
-
-void					ft_replace_vars(t_group *grp, t_parse *parse, int i);
-void					ft_parse_redirections2(t_group *grp, t_parse *parse,
-int i);
 void					ft_parse_redirections(t_group *grp, t_parse *parse);
 
-//parse3.c
+//redirections2.c
 
-int						ft_count_pipes(char *cmd);
-void					ft_create_redirections(t_parse *parse);
-void					ft_replace_tilde(t_group *grp, t_parse *parse, int i);
-
-//parse4.c
-
-void					ft_addredirectionsuite(t_parse *parse, int end,
-int start);
-void					ft_adddoubleredirection(t_group *grp, t_parse *parse,
-int i);
-void					ft_addredirection(t_group *grp, t_parse *parse, int i);
-void					ft_addheredoc2(t_parse *parse, int end, int start);
 void					ft_addheredoc(t_group *grp, t_parse *parse, int i);
-
-//parse5.c
-
-int						ft_is_space(char c);
 void					ft_addfile(t_group *grp, t_parse *parse, int i);
+void					ft_check_close(t_parse *parse, int i);
+void					ft_check_redirection_fd(t_parse *parse, int i);
+
+//parse_lib.c.c
+
+void					ft_replace_vars(t_group *grp, t_parse *parse, int i);
+void					ft_create_redirections(t_parse *parse);
+int						ft_count_pipes(char *cmd);
+void					ft_replace_tilde(t_group *grp, t_parse *parse, int i);
+//parse_lib2.c
+
+int						ft_is_quote(char c);
+int						ft_is_space(char c);
 int						ft_end_of_red(char c);
 void					ft_redirection_error(t_parse *parse, int end);
-int						ft_is_quote(char c);
 
 //pre_parse.c
 void					ft_pre_parse(t_group *grp);

@@ -38,11 +38,11 @@ SRC	+= srcs/termcaps/keyboard_tools3.c
 SRC	+= srcs/termcaps/escape.c
 
 #parse
-SRC	+= srcs/parse/parse.c
-SRC	+= srcs/parse/parse2.c
-SRC	+= srcs/parse/parse3.c
-SRC	+= srcs/parse/parse4.c
-SRC	+= srcs/parse/parse5.c
+SRC	+= srcs/parse/init_parse.c
+SRC	+= srcs/parse/redirections.c
+SRC	+= srcs/parse/redirections2.c
+SRC	+= srcs/parse/parse_lib.c
+SRC	+= srcs/parse/parse_lib2.c
 SRC	+= srcs/parse/pre_parse.c
 SRC	+= srcs/parse/heredoc.c
 SRC	+= srcs/parse/ft_strsplitquote.c
