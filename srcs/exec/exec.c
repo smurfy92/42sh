@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 13:30:12 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/10 23:13:07 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/11 17:00:35 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,55 +95,56 @@ void		ft_fork_pipe(t_group *grp)
 
 void		pipe_exec(t_group *grp)
 {
-	t_parse *tmp3;
-	t_parse *parse;
+	t_parse *tmp;
 
 	while (grp->allcmd->andor->parselst)
 	{
-		parse = grp->allcmd->andor->parselst;
-		if (parse->next)
+		tmp = grp->allcmd->andor->parselst;
+		if (tmp->next)
 			ft_fork_pipe(grp);
 		else
-			exec_child(grp, parse);
-		tmp3 = parse;
-		grp->allcmd->andor->parselst = tmp3->next;
-		free_parselst(tmp3);
+			exec_child(grp, tmp);
+		grp->allcmd->andor->parselst = tmp->next;
+		free_parselst(tmp);
 	}
 }
 
 void		andor_exec(t_group *grp)
 {
-	t_andor *tmp2;
+	t_andor *tmp;
+	int 	sig;
 
 	//si un executable
-	pid_t pid = fork();
-	if (pid == 0)
+	grp->father = fork();
+	if (grp->father == 0)
 	{
+		printf("grp->father : %d\n", grp->father);
 		while (grp->allcmd->andor)
 		{
-			tmp2 = grp->allcmd->andor;
+			tmp = grp->allcmd->andor;
 			REMOVE(&grp->allcmd->andor->cmd);
 			pipe_exec(grp);
-			grp->allcmd->andor = tmp2->next;
-			free(tmp2);
+			grp->allcmd->andor = tmp->next;
+			free(tmp);
 		}
 		//tmp exit
 		exit(0);
 	}
-	wait(0);
+	waitpid(grp->father, &sig, 0);
+	printf("grp->father : %d sig : %d\n", grp->father, sig);
 }
 
 void		init_exec(t_group *grp)
 {
-	t_allcmd *tabl;
+	t_allcmd *tmp;
 
 	while (grp->allcmd)
 	{
-		tabl = grp->allcmd;
-		REMOVE(&tabl->cmd);
+		tmp = grp->allcmd;
+		REMOVE(&tmp->cmd);
 		andor_exec(grp);
-		grp->allcmd = tabl->next;
-		free(tabl);
-		tabl = grp->allcmd;
+		grp->allcmd = tmp->next;
+		free(tmp);
+		tmp = grp->allcmd;
 	}
 }
