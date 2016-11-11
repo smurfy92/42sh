@@ -41,11 +41,13 @@ void		proccess(t_group *grp)
 		ft_add_history(grp, TERM(cmd_line));
 	grp->allcmd = ft_strsplitquote(TERM(cmd_line), ';');
 	ft_init_parse(grp);
-	ft_display_parse(grp);
+	//ft_display_parse(grp);
 	init_exec(grp);
 	ft_free_parse(grp);
 	free(grp->allcmd);
 	ft_strdel(&TERM(cmd_line));
+	if (grp->quit)
+		ft_exit(grp, grp->exit);
 	grp->hdcount = 0;
 }
 

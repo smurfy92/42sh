@@ -54,14 +54,16 @@ void		ft_dup_redirection(t_parse *parse)
 void		exec_child(t_group *grp, t_parse *parse)
 {
 	int		fd;
-	
+	int		ret;
+
 	if (parse->file && (fd = open(parse->file, O_RDONLY)))
 		dup2(fd, STDIN_FILENO);
 	// faire les redirections;
 	if (parse->fd > 0)
 		dup2(parse->fd, STDOUT_FILENO);
 	ft_dup_redirection(parse);
-	if (get_path(parse->cmdsplit[0], grp->root))
+	ret = is_builtins(parse->cmdsplit);
+	if (get_path(parse->cmdsplit[0], grp->root) && ret == 0)
 		execve(get_path(parse->cmdsplit[0], grp->root), parse->cmdsplit, NULL);
 }
 
@@ -71,6 +73,7 @@ void		ft_fork_pipe(t_group *grp)
 	pid_t	pid;
 	t_parse	*parse;
 	int		fd;
+	int ret;
 
 	pipe(tabl);
 	parse = grp->allcmd->andor->parselst;
@@ -85,53 +88,67 @@ void		ft_fork_pipe(t_group *grp)
 		else
 			dup2(tabl[1], STDOUT_FILENO);
 		close(tabl[0]);
-		if (get_path(parse->cmdsplit[0], grp->root))
+		ret = is_builtins(parse->cmdsplit);
+		if (get_path(parse->cmdsplit[0], grp->root) && ret == 0)
 			execve(get_path(parse->cmdsplit[0], grp->root), parse->cmdsplit, NULL);
+		else if (ret == 1)
+			builtins(grp);
 		exit(0);
 	}
 	dup2(tabl[0], STDIN_FILENO);
 	close(tabl[1]);
 }
 
-void		pipe_exec(t_group *grp)
+void		check_lastcmd(t_group *grp)
 {
 	t_parse *tmp;
 
-	while (grp->allcmd->andor->parselst)
+	tmp = grp->allcmd->andor->parselst;
+	while (tmp->next)
+		tmp = tmp->next;
+	if (is_builtins(tmp->cmdsplit))
 	{
-		tmp = grp->allcmd->andor->parselst;
-		if (tmp->next)
-			ft_fork_pipe(grp);
-		else
-			exec_child(grp, tmp);
-		grp->allcmd->andor->parselst = tmp->next;
-		free_parselst(tmp);
+		CMD(cmdsplit) = tmp->cmdsplit;
+		builtins(grp);
 	}
+}
+
+void		pipe_exec(t_group *grp)
+{
+	t_parse *tmp;
+	int 	sig;
+
+	grp->father = fork();
+	if (grp->father == 0)
+	{
+		while (grp->allcmd->andor->parselst)
+		{
+			tmp = grp->allcmd->andor->parselst;
+			if (tmp->next)
+				ft_fork_pipe(grp);
+			else
+				exec_child(grp, tmp);
+			grp->allcmd->andor->parselst = tmp->next;
+			free_parselst(tmp);
+		}
+		exit(0);
+	}
+	waitpid(grp->father, &sig, 0);
+	check_lastcmd(grp);
 }
 
 void		andor_exec(t_group *grp)
 {
 	t_andor *tmp;
-	int 	sig;
 
-	//si un executable
-	grp->father = fork();
-	if (grp->father == 0)
+	while (grp->allcmd->andor)
 	{
-		printf("grp->father : %d\n", grp->father);
-		while (grp->allcmd->andor)
-		{
-			tmp = grp->allcmd->andor;
-			REMOVE(&grp->allcmd->andor->cmd);
-			pipe_exec(grp);
-			grp->allcmd->andor = tmp->next;
-			free(tmp);
-		}
-		//tmp exit
-		exit(0);
+		tmp = grp->allcmd->andor;
+		REMOVE(&grp->allcmd->andor->cmd);
+		pipe_exec(grp);
+		grp->allcmd->andor = tmp->next;
+		free(tmp);
 	}
-	waitpid(grp->father, &sig, 0);
-	printf("grp->father : %d sig : %d\n", grp->father, sig);
 }
 
 void		init_exec(t_group *grp)

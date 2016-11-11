@@ -19,9 +19,10 @@ void	show_env(int choice, t_group *grp)
 	tmp = choice == 0 ? ENV(lst) : ENV(lst_tmp);
 	while (tmp)
 	{
-		ft_putstr_fd(tmp->name, 2);
-		ft_putstr_fd("=", 2);
-		ft_putendl_fd(tmp->val, 2);
+		ft_putstr(tmp->name);
+		ft_putstr("="
+			);
+		ft_putendl(tmp->val);
 		tmp = tmp->next;
 	}
 }

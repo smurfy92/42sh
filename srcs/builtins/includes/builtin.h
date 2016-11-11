@@ -17,6 +17,7 @@
 int		builtins(t_group *grp);
 int		builtin_cd(t_group *grp);
 int		builtin_echo(t_group *grp);
+int		is_builtins(char **cmd);
 
 //history.c
 int		builtin_history(t_group *grp);
