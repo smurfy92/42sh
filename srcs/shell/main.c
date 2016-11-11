@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:43:44 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/10 23:16:45 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/11 16:10:51 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,6 @@ int			reset_shell(void)
 void		prompt(void)
 {
 	ft_putstr_fd("42sh> ", 2);
-}
-void		ft_init_parse(t_group *grp)
-{
-	t_allcmd *tabl;
-	t_andor *tmp2;
-
-	tabl = grp->allcmd;
-	while (tabl)
-	{
-		tabl->andor = ft_strsplitandor(tabl->cmd);
-		tmp2 = tabl->andor;
-		while (tmp2)
-		{
-			ft_parse(grp, tmp2);
-			tmp2 = tmp2->next;
-		}
-		tabl = tabl->next;
-	}
 }
 
 void		proccess(t_group *grp)

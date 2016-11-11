@@ -1,92 +1,84 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse2.c                                           :+:      :+:    :+:   */
+/*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/27 15:27:24 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/10 23:47:28 by julio            ###   ########.fr       */
+/*   Created: 2016/11/11 16:10:01 by jtranchi          #+#    #+#             */
+/*   Updated: 2016/11/11 16:12:38 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-void		ft_check_close(t_parse *parse, int i)
+static void		ft_addredirectionsuite(t_parse *parse, int end, int start)
 {
-	char	*tmp;
-	char	*fd;
+	char *tmp;
 
-	fd = ft_strsub(parse->cmd, i, 1);
-	if (parse->cmd[i + 4])
-	{
-		tmp = ft_strdup(&parse->cmd[i + 4]);
-		parse->cmd[i] = '\0';
-		parse->cmd = ft_strjoin_nf(parse->cmd, tmp, 3);
-	}
-	else
-		parse->cmd[i] = '\0';
-	if (parse->closefd)
-	{
-		parse->closefd = ft_strjoin_nf(parse->closefd, ";", 1);
-		parse->closefd = ft_strjoin_nf(parse->closefd, fd, 1);
-	}
-	else
-		parse->closefd = ft_strdup(fd);
-	REMOVE(&fd);
+	while (ft_is_space(parse->cmd[end]) && parse->cmd[end])
+		end++;
+	tmp = ft_strdup(&parse->cmd[end]);
+	parse->cmd[start] = '\0';
+	parse->cmd = ft_strjoin_nf(parse->cmd, tmp, 1);
+	ft_strdel(&tmp);
 }
 
-void		ft_check_redirection_fd(t_parse *parse, int i)
-{
-	char	*tmp;
-	char	*fd;
-	char	*fd2;
-
-	fd2 = ft_strsub(parse->cmd, i + 3, 1);
-	fd = ft_strsub(parse->cmd, i, 1);
-	if (parse->cmd[i + 4])
-	{
-		tmp = ft_strdup(&parse->cmd[i + 4]);
-		parse->cmd[i] = '\0';
-		parse->cmd = ft_strjoin_nf(parse->cmd, tmp, 3);
-	}
-	else
-		parse->cmd[i] = '\0';
-	fd = ft_strjoin_nf(fd, ">", 1);
-	fd = ft_strjoin_nf(fd, fd2, 3);
-	if (parse->redfd)
-		REMOVE(&parse->redfd);
-	parse->redfd = ft_strdup(fd);
-	REMOVE(&fd);
-}
-
-void		ft_replace_vars(t_group *grp, t_parse *parse, int i)
+static void		ft_adddoubleredirection(t_group *grp, t_parse *parse, int i)
 {
 	int		start;
-	char	*tmp;
-	char	*tmp2;
+	int		end;
 
-	start = i;
-	while (parse->cmd[i] && ft_isalpha(parse->cmd[i]))
-		i++;
-	tmp = ft_strsub(&parse->cmd[start], 0, i - start);
-	if (ft_getenv(grp, tmp) == NULL)
-		grp->minus = 1;
-	else
+	if (!parse->cmd[i])
 	{
-		tmp2 = ft_strdup(&parse->cmd[i]);
-		parse->cmd[start - 1] = '\0';
-		if (!parse->cmd[start + 1])
-			parse->cmd = ft_strjoin_nf(parse->cmd, ft_getenv(grp, tmp), 1);
-		else
-			parse->cmd = JOINF(JOINF(parse->cmd,
-			ft_getenv(grp, tmp), 1), tmp2, 1);
-		ft_strdel(&tmp2);
-		ft_strdel(&tmp);
+		grp->fail = 1;
+		return (ft_putendl_fd("42sh : parse error near `\\n", 2));
 	}
+	start = i - 2;
+	while (parse->cmd[i] && !ft_isalpha(parse->cmd[i]) &&
+	!ft_isdigit(parse->cmd[i]) && !ft_is_quote(parse->cmd[i]) &&
+	parse->cmd[i] != '/')
+		i++;
+	end = i;
+	while (parse->cmd[end] && !ft_end_of_red(parse->cmd[end]))
+		end++;
+	if (end == i && (grp->fail = 1))
+	{
+		ft_redirection_error(parse, end);
+		return ;
+	}
+	parse->dbred = ft_strsub(&parse->cmd[i], 0, end - i);
+	ft_addredirectionsuite(parse, end, start);
 }
 
-void		ft_parse_redirections2(t_group *grp, t_parse *parse, int i)
+static void		ft_addredirection(t_group *grp, t_parse *parse, int i)
+{
+	int		start;
+	int		end;
+
+	if (!parse->cmd[i])
+	{
+		grp->fail = 1;
+		return (ft_putendl_fd("42sh : parse error near `\\n'", 2));
+	}
+	start = i - 1;
+	while (parse->cmd[i] && !ft_isalpha(parse->cmd[i]) &&
+	!ft_isdigit(parse->cmd[i]) && !ft_is_quote(parse->cmd[i]) &&
+	parse->cmd[i] != '/')
+		i++;
+	end = i;
+	while ((parse->cmd[end] && !ft_end_of_red(parse->cmd[end])))
+		end++;
+	if (end == i && (grp->fail = 1))
+	{
+		ft_redirection_error(parse, end);
+		return ;
+	}
+	parse->sgred = ft_strsub(&parse->cmd[i], 0, end - i);
+	ft_addredirectionsuite(parse, end, start);
+}
+
+static void		ft_parse_redirections2(t_group *grp, t_parse *parse, int i)
 {
 	if (ft_isdigit(parse->cmd[i]) && parse->cmd[i + 1] == '>' &&
 	parse->cmd[i + 2] == '&' && parse->cmd[i + 3] && parse->cmd[i + 3] == '-')

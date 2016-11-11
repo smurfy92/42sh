@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse5.c                                           :+:      :+:    :+:   */
+/*   parse_lib2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/28 15:15:11 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/09 19:44:01 by julio            ###   ########.fr       */
+/*   Created: 2016/11/11 16:18:21 by jtranchi          #+#    #+#             */
+/*   Updated: 2016/11/11 16:22:45 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,34 +30,7 @@ int			ft_is_space(char c)
 		return (0);
 }
 
-void		ft_addfile(t_group *grp, t_parse *parse, int i)
-{
-	int		start;
-	int		end;
-	char	*tmp;
 
-	start = i - 1;
-	while (!ft_isalpha(parse->cmd[i]) && parse->cmd[i] &&
-	!ft_is_quote(parse->cmd[i]) && parse->cmd[i] != '/')
-		i++;
-	end = i;
-	while (parse->cmd[end] && !ft_end_of_red(parse->cmd[end]))
-		end++;
-	if (end == i)
-	{
-		grp->fail = 1;
-		return (ft_putendl_fd("jush : parse error near `\\n'", 2));
-	}
-	tmp = ft_strsub(&parse->cmd[i], 0, end - i);
-	parse->file = ft_strdup(tmp);
-	parse->sgred = NULL;
-	parse->dbred = NULL;
-	while (ft_is_space(parse->cmd[end]) && parse->cmd[end])
-		end++;
-	tmp = ft_strdup(&parse->cmd[end]);
-	parse->cmd[start] = '\0';
-	parse->cmd = ft_strjoin(parse->cmd, tmp);
-}
 
 int			ft_end_of_red(char c)
 {
