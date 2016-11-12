@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:42:57 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/12 18:39:54 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/12 20:09:53 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,22 @@ typedef struct			s_andor
 //init_parse.c
 
 void					ft_init_parse(t_group *grp);
+
 //redirections.c
 
 void					ft_parse_redirections(t_group *grp, t_parse *parse);
 
 //redirections2.c
 
-void					ft_addheredoc(t_parse *parse, int i);
-void					ft_addfile(t_group *grp, t_parse *parse, int i);
+void					ft_addheredoc(t_group *grp, t_parse *parse, int i);
 void					ft_check_close(t_parse *parse, int i);
 void					ft_check_redirection_fd(t_parse *parse, int i);
 
 //redirections_lib.c
-int						check_rights(t_parse *parse, char **file);
+
+char					*get_redirection(t_group *grp, t_parse *parse, int i, int start);
+int						check_rights(t_parse *parse, char **file, int i);
+void					ft_redirection_error(t_parse *parse, int end);
 
 //parse_lib.c.c
 
