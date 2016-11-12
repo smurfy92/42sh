@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:42:57 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/11 16:23:15 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/12 17:34:14 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,24 @@ typedef	struct			s_parse
 	char				*closefd;
 	char				*redfd;
 	int					errnb;
+	int					fail;
 	struct s_parse		*next;
 }						t_parse;
 
-typedef struct		s_allcmd
+typedef struct			s_allcmd
 {
-	char			*cmd; // cmd ;
-	struct s_andor	*andor;
-	struct s_allcmd	*next;
-}					t_allcmd;
+	char				*cmd; // cmd ;
+	struct s_andor		*andor;
+	struct s_allcmd		*next;
+}						t_allcmd;
 
-typedef struct		s_andor
+typedef struct			s_andor
 {
-	char			*cmd;
-	int				type;
-	struct s_parse	*parselst;
-	struct s_andor	*next;
-}					t_andor;
+	char				*cmd;
+	int					type;
+	struct s_parse		*parselst;
+	struct s_andor		*next;
+}						t_andor;
 
 //init_parse.c
 
@@ -54,10 +55,13 @@ void					ft_parse_redirections(t_group *grp, t_parse *parse);
 
 //redirections2.c
 
-void					ft_addheredoc(t_group *grp, t_parse *parse, int i);
-void					ft_addfile(t_group *grp, t_parse *parse, int i);
+void					ft_addheredoc(t_parse *parse, int i);
+void					ft_addfile(t_parse *parse, int i);
 void					ft_check_close(t_parse *parse, int i);
 void					ft_check_redirection_fd(t_parse *parse, int i);
+
+//redirections_lib.c
+int						check_rights(t_parse *parse, char **file);
 
 //parse_lib.c.c
 
