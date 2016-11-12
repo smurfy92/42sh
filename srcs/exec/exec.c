@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 13:30:12 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/12 17:33:52 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/12 18:43:13 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,13 +184,17 @@ void		init_exec(t_group *grp)
 {
 	t_allcmd *tmp;
 
-	while (grp->allcmd)
+	if (!grp->fail)
 	{
-		tmp = grp->allcmd;
-		REMOVE(&tmp->cmd);
-		andor_exec(grp);
-		grp->allcmd = tmp->next;
-		free(tmp);
-		tmp = grp->allcmd;
+		while (grp->allcmd)
+		{
+			tmp = grp->allcmd;
+			REMOVE(&tmp->cmd);
+			andor_exec(grp);
+			grp->allcmd = tmp->next;
+			free(tmp);
+			tmp = grp->allcmd;
+		}
 	}
+	grp->fail = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:10:01 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/11 16:12:38 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/12 18:47:21 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ static void		ft_addredirectionsuite(t_parse *parse, int end, int start)
 	ft_strdel(&tmp);
 }
 
-static void		ft_adddoubleredirection(t_parse *parse, int i)
+static void		ft_adddoubleredirection(t_group *grp, t_parse *parse, int i)
 {
 	int		start;
 	int		end;
 
 	if (!parse->cmd[i])
 	{
-		parse->fail = 1;
+		grp->fail  = 1;
 		return (ft_putendl_fd("42sh : parse error near `\\n", 2));
 	}
 	start = i - 2;
@@ -42,7 +42,7 @@ static void		ft_adddoubleredirection(t_parse *parse, int i)
 	end = i;
 	while (parse->cmd[end] && !ft_end_of_red(parse->cmd[end]))
 		end++;
-	if (end == i && (parse->fail = 1))
+	if (end == i && (grp->fail = 1))
 	{
 		ft_redirection_error(parse, end);
 		return ;
@@ -51,14 +51,14 @@ static void		ft_adddoubleredirection(t_parse *parse, int i)
 	ft_addredirectionsuite(parse, end, start);
 }
 
-static void		ft_addredirection(t_parse *parse, int i)
+static void		ft_addredirection(t_group *grp, t_parse *parse, int i)
 {
 	int		start;
 	int		end;
 
 	if (!parse->cmd[i])
 	{
-		parse->fail = 1;
+		grp->fail = 1;
 		return (ft_putendl_fd("42sh : parse error near `\\n'", 2));
 	}
 	start = i - 1;
@@ -69,7 +69,7 @@ static void		ft_addredirection(t_parse *parse, int i)
 	end = i;
 	while ((parse->cmd[end] && !ft_end_of_red(parse->cmd[end])))
 		end++;
-	if (end == i && (parse->fail = 1))
+	if (end == i && (grp->fail = 1))
 	{
 		ft_redirection_error(parse, end);
 		return ;
@@ -89,14 +89,14 @@ static void		ft_parse_redirections2(t_group *grp, t_parse *parse, int i)
 		ft_check_redirection_fd(parse, i);
 	else if (parse->cmd[i] == '>' && parse->cmd[i + 1] &&
 	parse->cmd[i + 1] == '>')
-		ft_adddoubleredirection(parse, i + 2);
+		ft_adddoubleredirection(grp, parse, i + 2);
 	else if (parse->cmd[i] == '>')
-		ft_addredirection(parse, i + 1);
+		ft_addredirection(grp, parse, i + 1);
 	else if (parse->cmd[i] == '<' && parse->cmd[i + 1] &&
 	parse->cmd[i + 1] == '<')
 		ft_addheredoc(parse, i + 2);
 	else if (parse->cmd[i] == '<')
-		ft_addfile(parse, i + 1);
+		ft_addfile(grp, parse, i + 1);
 	else if (parse->cmd[i] == '$' && parse->cmd[i + 1])
 		ft_replace_vars(grp, parse, i + 1);
 	else if (parse->cmd[i] == '~')
@@ -120,7 +120,7 @@ void		ft_parse_redirections(t_group *grp, t_parse *parse)
 			ft_parse_redirections2(grp, parse, i);
 		else
 			i++;
-		if (parse->fail)
+		if (grp->fail || parse->fail)
 			break ;
 		if (parse->sgred || parse->dbred)
 			ft_create_redirections(parse);
