@@ -75,9 +75,7 @@ static void		ft_create_parse(t_group *grp, t_andor *tabl, t_andor *andor)
 	polish(tmp);
 	tmp->cmdsplit = ft_strsplit(tmp->cmd, ' '); // don't forget tab ! 	//spacesplit a update !
 	if (!andor->parselst)
-	{
 		andor->parselst = tmp;
-	}
 	else
 	{
 		tmp2 = andor->parselst;

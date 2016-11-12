@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:14:56 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/11 16:16:18 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/12 18:42:50 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void		ft_addheredoc(t_parse *parse, int i)
 	ft_addheredoc2(parse, end, start);
 }
 
-void		ft_addfile(t_parse *parse, int i)
+void		ft_addfile(t_group *grp, t_parse *parse, int i)
 {
 	int		start;
 	int		end;
@@ -70,7 +70,8 @@ void		ft_addfile(t_parse *parse, int i)
 		end++;
 	if (end == i)
 	{
-		parse->fail = 1;
+		grp->fail = 1;
+		grp->minus = 1;
 		return (ft_putendl_fd("42sh : parse error near `\\n'", 2));
 	}
 	tmp = ft_strsub(&parse->cmd[i], 0, end - i);
