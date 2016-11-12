@@ -3,105 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 13:30:12 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/11 17:00:35 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/12 03:30:46 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
-
-void		exec(t_group *grp)
-{
-	int	ret;
-
-	ret = builtins(grp);
-	ret == -1 ? printf("ERROR IN BUILTINS\n") : 0;
-	if (ret == 0)
-	{
-		// if (get_path(grp->parselst->cmdsplit[0], grp->root))
-		// {
-		// 	//execve(get_path(grp->parselst->cmdsplit[0], grp->root), grp->parselst->cmdsplit, NULL);
-		// }
-	}
-}
-
-void		ft_dup_redirection(t_parse *parse)
-{
-	char	**tmp;
-
-	if (parse->redfd)
-	{
-		tmp = ft_strsplit(parse->redfd, '>');
-		parse->fd = dup2(ft_atoi(tmp[0]), ft_atoi(tmp[1]));
-		REMOVE(&tmp[0]);
-		REMOVE(&tmp[1]);
-	}
-	if (parse->closefd)
-	{
-		tmp = ft_strsplit(parse->closefd, ';');
-		int i = -1;
-		while (tmp[++i])
-		{
-			close(ft_atoi(tmp[i]));
-			REMOVE(&tmp[i]);
-		}
-		free(tmp);
-	}
-}
-
-void		exec_child(t_group *grp, t_parse *parse)
-{
-	int		fd;
-	int		ret;
-
-	if (parse->file && (fd = open(parse->file, O_RDONLY)))
-		dup2(fd, STDIN_FILENO);
-	// faire les redirections;
-	if (parse->fd > 0)
-		dup2(parse->fd, STDOUT_FILENO);
-	ft_dup_redirection(parse);
-	ret = is_builtins(parse->cmdsplit);
-	if (get_path(parse->cmdsplit[0], grp->root) && ret == 0)
-		execve(get_path(parse->cmdsplit[0], grp->root), parse->cmdsplit, NULL);
-	else if (ret != 1)
-		exit(EXIT_FAILURE);
-}
-
-void		ft_fork_pipe(t_group *grp)
-{
-	int		tabl[2];
-	pid_t	pid;
-	t_parse	*parse;
-	int		fd;
-	int ret;
-
-	pipe(tabl);
-	parse = grp->allcmd->andor->parselst;
-	pid = fork();
-	if (pid == 0)
-	{
-		if (parse->file && (fd = open(parse->file, O_RDONLY)))
-			dup2(fd, STDIN_FILENO);
-		ft_dup_redirection(parse);
-		if (parse->fd > 0)
-			dup2(tabl[1], parse->fd);
-		else
-			dup2(tabl[1], STDOUT_FILENO);
-		close(tabl[0]);
-		ret = is_builtins(parse->cmdsplit);
-		if (get_path(parse->cmdsplit[0], grp->root) && ret == 0)
-			execve(get_path(parse->cmdsplit[0], grp->root), parse->cmdsplit, NULL);
-		else if (ret == 1)
-			builtins(grp);
-		else
-			exit(EXIT_FAILURE);
-		exit(ret);
-	}
-	dup2(tabl[0], STDIN_FILENO);
-	close(tabl[1]);
-}
 
 void		check_lastcmd(t_group *grp)
 {
@@ -117,11 +26,10 @@ void		check_lastcmd(t_group *grp)
 	}
 }
 
-int		pipe_exec(t_group *grp)
+void		pipe_exec(t_group *grp)
 {
 	t_parse *tmp;
-	int 	ret;
-
+	int			ret;
 	grp->father = fork();
 	if (grp->father == 0)
 	{
@@ -138,9 +46,9 @@ int		pipe_exec(t_group *grp)
 		exit(EXIT_FAILURE);
 	}
 	waitpid(grp->father, &ret, 0);
-	printf("pid : %d\n", ret);
 	check_lastcmd(grp);
-	return (ret);
+	if (ret > 0)
+		grp->exit = 1;
 }
 
 void		andor_exec(t_group *grp)
@@ -153,10 +61,16 @@ void		andor_exec(t_group *grp)
 	{
 		tmp = grp->allcmd->andor;
 		REMOVE(&grp->allcmd->andor->cmd);
-		ret = pipe_exec(grp);
-		// faire les andors
-		printf("tu as ton ret -> %d\n", ret);
+		pipe_exec(grp);
+		if ((tmp->type == 1 && grp->exit != 0) ||
+			(tmp->type == 2 && grp->exit == 0))
+		{
+			free(tmp);
+			grp->exit = 0;
+			break ;
+		}
 		grp->allcmd->andor = tmp->next;
+		grp->exit = 0;
 		free(tmp);
 	}
 }

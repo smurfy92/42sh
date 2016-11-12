@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hash_use.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victordanain <victordanain@student.42.fr>  +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 20:13:24 by vdanain           #+#    #+#             */
-/*   Updated: 2016/11/08 19:09:19 by victordanain     ###   ########.fr       */
+/*   Updated: 2016/11/12 03:06:31 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 **	NULL sinon
 */
 
-char	*get_path(char *cmd, t_root *root)
+char	*get_underpath(char *cmd, t_root *root)
 {
 	t_hash	*cur;
 	int		i;
@@ -40,6 +40,24 @@ char	*get_path(char *cmd, t_root *root)
 		return (NULL);
 	path = ft_strdup(cur->cmd->path);
 	return (path);
+}
+
+char	*get_path(char *cmd, t_root *root)
+{
+	char		*tmpath;
+
+	if (ft_strchr(cmd, '/'))
+	{
+		if (ft_strcmp((tmpath = get_underpath(ft_strrchr(cmd, '/') + 1, root)), cmd) == 0)
+			return (tmpath);
+		else
+		{
+			ft_strdel(&tmpath);
+			return (NULL);
+		}
+	}
+	else
+		return (get_underpath(cmd, root));
 }
 
 /*

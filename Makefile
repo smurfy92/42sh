@@ -8,6 +8,7 @@ SRC	+= srcs/shell/signaux.c
 
 #exec
 SRC	+= srcs/exec/exec.c
+SRC	+= srcs/exec/execve.c
 
 #hash
 SRC += srcs/hash/hash_use.c

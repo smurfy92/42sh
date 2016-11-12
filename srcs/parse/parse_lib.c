@@ -3,14 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   parse_lib.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:17:44 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/11 16:17:57 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/12 03:42:11 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
+
+// int		check_file(t_group *grp, char *name)
+// {
+// 	struct stat	s_buf;
+// 	mode_t		val;
+// 	int			ret;
+
+// 	ret = lstat(name, &s_buf);
+// 	val = (s_buf.st_mode & ~S_IFMT);
+// 	if (ret != 0)
+// 		error_cmd("unknown file", name);
+// 	else if (!(val & S_IRUSR))
+// 		error_cmd("Permission denied", name);
+// 	else if (!S_ISREG(s_buf.st_mode))
+// 		error_cmd("file required", name);
+// 	else
+// 		return (0);
+// 	return (-1);
+// }
 
 void		ft_replace_vars(t_group *grp, t_parse *parse, int i)
 {
