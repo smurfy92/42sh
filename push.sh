@@ -1,5 +1,5 @@
-# make fclean;
-# sh clean.sh;
+make fclean;
+sh clean.sh;
 if [ -n "$1" ]
 then
 	git add -A;
