@@ -71,13 +71,11 @@ void	get_cmd(t_group *grp, int fd)
 {
 	int		ret;
 	char	order[BUF_SIZE + 1];
-	char	*tmp;
 
 	ft_bzero(order, BUF_SIZE + 1);
 	while ((ret = read(fd, order, BUF_SIZE)) > 0)
 	{
 		order[ret] = '\0';
-		tmp = ft_strdup(order);
 		if (key_selection(grp, order) == '\n' && ft_escape(grp) == 0)
 			break ;
 		ft_bzero(order, BUF_SIZE + 1);

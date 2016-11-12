@@ -94,7 +94,7 @@ void		ft_fork_pipe(t_group *grp)
 		if (get_path(parse->cmdsplit[0], grp->root) && ret == 0)
 			execve(get_path(parse->cmdsplit[0], grp->root), parse->cmdsplit, NULL);
 		else if (ret == 1)
-			builtins(grp);
+			ret = builtins(grp);
 		else
 			exit(EXIT_FAILURE);
 		exit(ret);
@@ -103,18 +103,32 @@ void		ft_fork_pipe(t_group *grp)
 	close(tabl[1]);
 }
 
-void		check_lastcmd(t_group *grp)
+int		check_lastcmd(t_group *grp)
 {
 	t_parse *tmp;
+	t_parse *tmp2;
+	int 	ret;
 
+	ret = 0;
 	tmp = grp->allcmd->andor->parselst;
 	while (tmp->next)
+	{
+		tmp2 = tmp;
 		tmp = tmp->next;
+		free_parselst(tmp2);
+	}
 	if (is_builtins(tmp->cmdsplit))
 	{
-		CMD(cmdsplit) = tmp->cmdsplit;
-		builtins(grp);
+		//CMD(cmdsplit) = tmp->cmdsplit;
+		ret = builtins(grp);
+		free_parselst(tmp);
+		if (ret != 1)
+			return (EXIT_FAILURE);
+		else
+			return (EXIT_SUCCESS);
 	}
+	free_parselst(tmp);
+	return (EXIT_FAILURE);
 }
 
 int		pipe_exec(t_group *grp)
@@ -132,13 +146,12 @@ int		pipe_exec(t_group *grp)
 				ft_fork_pipe(grp);
 			else
 				exec_child(grp, tmp);
-			grp->allcmd->andor->parselst = tmp->next;
 			free_parselst(tmp);
+			grp->allcmd->andor->parselst = tmp->next;
 		}
 		exit(EXIT_FAILURE);
 	}
 	waitpid(grp->father, &ret, 0);
-	printf("pid : %d\n", ret);
 	check_lastcmd(grp);
 	return (ret);
 }
@@ -154,8 +167,11 @@ void		andor_exec(t_group *grp)
 		tmp = grp->allcmd->andor;
 		REMOVE(&grp->allcmd->andor->cmd);
 		ret = pipe_exec(grp);
-		// faire les andors
 		printf("tu as ton ret -> %d\n", ret);
+		if (ret != 0 && tmp->type == 1)
+			break;
+		else if (ret == 0 && tmp->type == 2)
+			break;
 		grp->allcmd->andor = tmp->next;
 		free(tmp);
 	}
