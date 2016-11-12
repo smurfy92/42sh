@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/06 17:52:49 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/06 18:34:37 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/12 20:16:21 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void		check_heredoc(t_group *grp)
 			while (hdoc[++i])
 				heredoc(grp, grp->hdcount, hdoc[i]);
 			ft_freestrtab(&hdoc);
+			tmp->file = SDUP("hdoc_1");
 		}
 		tmp = tmp->next;
 	}

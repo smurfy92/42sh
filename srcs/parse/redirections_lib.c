@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_lib.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 17:24:49 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/12 20:10:27 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/12 22:14:01 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,9 @@ int			check_rights(t_parse *parse, char **file, int i)
 	else if (i == 1 && (access(*file, F_OK) < 0 || access(*file, R_OK) < 0))
 	{
 		if (access(*file, F_OK) < 0)
-			ft_putstr_fd("42sh: no such file or directory: ",2);
+			error_cmd("42sh: no such file or directory: ", *file, 1);
 		else if (access(*file, R_OK) < 0)
-			ft_putstr_fd("42sh: permission denied: ",2);
-		ft_putendl_fd(*file, 2);
+			error_cmd("42sh: permission denied: ", *file, 1);
 		parse->fail = 1;
 		REMOVE(file);
 		return (1);

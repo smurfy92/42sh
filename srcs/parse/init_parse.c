@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_parse.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 15:59:55 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/12 17:34:29 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/12 20:06:46 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ static void		ft_parse(t_group *grp, t_andor *andor)
 		grp->fail = 1;
 		return (ft_putendl("Invalid null command."));
 	}
-	//check_heredoc(grp);
+	check_heredoc(grp);
 }
 
 void		ft_init_parse(t_group *grp)

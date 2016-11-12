@@ -17,7 +17,6 @@ void	error_cmd(char *what, char *who, int exit_code)
 	t_group		*grp;
 
 	grp = get_grp();
-	prompt();
 	ft_putstr_fd(what, 2);
 	ft_putstr_fd(" -> ", 2);
 	ft_putendl_fd(who, 2);
