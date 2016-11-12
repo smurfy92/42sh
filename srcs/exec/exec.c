@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 13:30:12 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/11 17:00:35 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/12 04:36:21 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ void		andor_exec(t_group *grp)
 		tmp = grp->allcmd->andor;
 		REMOVE(&grp->allcmd->andor->cmd);
 		ret = pipe_exec(grp);
-		printf("tu as ton ret -> %d\n", ret);
+		//printf("tu as ton ret -> %d\n", ret);
 		if (ret != 0 && tmp->type == 1)
 			break;
 		else if (ret == 0 && tmp->type == 2)
