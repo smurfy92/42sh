@@ -41,13 +41,3 @@ int			ft_end_of_red(char c)
 	else
 		return (0);
 }
-
-void		ft_redirection_error(t_parse *parse, int end)
-{
-	char *tmp;
-
-	tmp = ft_strjoin_nf(ft_strjoin("42sh : parse error near `",
-	&parse->cmd[end - 1]), "'", 1);
-	ft_putendl_fd(tmp, 2);
-	ft_strdel(&tmp);
-}

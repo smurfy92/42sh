@@ -6,44 +6,17 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:14:56 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/12 18:42:50 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/12 20:10:01 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-static void		ft_addheredoc2(t_parse *parse, int end, int start)
+void		ft_addheredoc(t_group *grp, t_parse *parse, int i)
 {
 	char	*tmp;
 
-	while (ft_is_space(parse->cmd[end]) && parse->cmd[end])
-		end++;
-	tmp = ft_strdup(&parse->cmd[end]);
-	parse->cmd[start] = '\0';
-	parse->cmd = ft_strjoin_nf(parse->cmd, tmp, 3);
-}
-
-void		ft_addheredoc(t_parse *parse, int i)
-{
-	int		start;
-	int		end;
-	char	*tmp;
-
-	start = i - 2;
-	int test = check_parentheses(parse->cmd[i]);
-	while (!ft_isalpha(parse->cmd[i]) && parse->cmd[i])
-		i++;
-	end = i;
-	while ((parse->cmd[end] && !ft_end_of_red(parse->cmd[end]) &&
-	!ft_is_quote(parse->cmd[i])) ||
-	(test == 0 && check_parentheses(parse->cmd[end])))
-		end++;
-	if (end == i)
-	{
-		parse->fail = 1;
-		return (ft_putendl_fd("42sh: parse error near `\\n'", 2));
-	}
-	tmp = ft_strsub(&parse->cmd[i], 0, end - i);
+	tmp = get_redirection(grp, parse, i,  i - 2);
 	if (!parse->heredoc)
 	{
 		parse->heredoc = ft_strdup(tmp);
@@ -52,40 +25,6 @@ void		ft_addheredoc(t_parse *parse, int i)
 	else
 		parse->heredoc = ft_strjoin_nf(parse->heredoc,
 		ft_strjoin_nf(";", tmp, 2), 3);
-	ft_addheredoc2(parse, end, start);
-}
-
-void		ft_addfile(t_group *grp, t_parse *parse, int i)
-{
-	int		start;
-	int		end;
-	char	*tmp;
-
-	start = i - 1;
-	while (!ft_isalpha(parse->cmd[i]) && parse->cmd[i] &&
-	!ft_is_quote(parse->cmd[i]) && parse->cmd[i] != '/')
-		i++;
-	end = i;
-	while (parse->cmd[end] && !ft_end_of_red(parse->cmd[end]))
-		end++;
-	if (end == i)
-	{
-		grp->fail = 1;
-		grp->minus = 1;
-		return (ft_putendl_fd("42sh : parse error near `\\n'", 2));
-	}
-	tmp = ft_strsub(&parse->cmd[i], 0, end - i);
-	//faire une fonction
-	if (check_rights(parse, &tmp))
-		return;
-	parse->file = ft_strdup(tmp);
-	parse->sgred = NULL;
-	parse->dbred = NULL;
-	while (ft_is_space(parse->cmd[end]) && parse->cmd[end])
-		end++;
-	tmp = ft_strdup(&parse->cmd[end]);
-	parse->cmd[start] = '\0';
-	parse->cmd = ft_strjoin_nf(parse->cmd, tmp, 3);
 }
 
 void		ft_check_close(t_parse *parse, int i)
