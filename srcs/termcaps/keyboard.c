@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 17:05:11 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/08 16:35:14 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/12 21:57:51 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,37 @@ int		key_selection(t_group *grp, char *order)
 	return (1);
 }
 
+void read_fd_in(t_group *grp, char *order)
+{
+	int i;
+	char str[2];
+
+	i = -1;
+	TERM(cmd_line) = NEW(0);
+	while (order && order[++i] != '\0')
+	{
+		ft_bzero(str, 2);
+		str[0] = order[i];
+		if (order[i] != '\n')
+			TERM(cmd_line) = JOINF(TERM(cmd_line), str, 1);
+		else if (order[i + 1] != '\0')
+			TERM(cmd_line) = JOINF(TERM(cmd_line), " ; ", 1);
+	}
+	grp->quit = true;
+}
+
 void	get_cmd(t_group *grp, int fd)
 {
 	int		ret;
 	char	order[BUF_SIZE + 1];
+	char	*tmp;
 
 	ft_bzero(order, BUF_SIZE + 1);
+	tmp = NULL;
 	while ((ret = read(fd, order, BUF_SIZE)) > 0)
 	{
 		order[ret] = '\0';
+		tmp = SDUP(order);
 		if (key_selection(grp, order) == '\n' && ft_escape(grp) == 0)
 			break ;
 		ft_bzero(order, BUF_SIZE + 1);
@@ -83,7 +105,7 @@ void	get_cmd(t_group *grp, int fd)
 	if (TERM(cmd_quote) != NULL)
 		fill_cmd_line(grp);
 	ft_go_end(grp);
-	ret == 0 ? grp->quit = true : ft_putchar_fd('\n', 2);
+	ret == 0 ? read_fd_in(grp, tmp) : ft_putchar_fd('\n', 2);
 	reset_edl(grp);
 	ft_bzero(order, BUF_SIZE + 1);
 }

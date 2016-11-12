@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fortytwo.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:42:31 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/10 23:04:58 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/12 22:07:40 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@
 # include "debug.h"
 # include "errors.h"
 
-# define BUFFSIZE 6
 # define KEY(a, b, c, d) ((d << 24) + (c << 16) + (b << 8) + a)
 # define NEW(x)			(ft_strnew(x))
 # define LEN(x)			(ft_strlen(x))
@@ -54,7 +53,7 @@
 # define CMD(x)			((grp->allcmd->andor->parselst)->x)
 # define TERM(x)		((grp->term)->x)
 # define KEY(a, b, c, d) ((d << 24) + (c << 16) + (b << 8) + a)
-# define BUF_SIZE 4096
+# define BUF_SIZE 4096// attention buffsize 1/2 bug
 # define START_POS grp->prompt_size
 # define ENTER 10
 # define SPACE 32

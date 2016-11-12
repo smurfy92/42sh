@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:43:06 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/04 13:30:32 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/12 21:29:32 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,11 @@ typedef	struct			s_window
 	int					heigth;
 }						t_window;
 
-//main.c
-int						reset_shell(void);
-
 // shell.c
 void					prompt();
 int						ft_getchar(int c);
 int						init_shell(void);
+int						reset_shell(void);
 t_group					*set_grp(t_group *grp);
 t_group					*get_grp(void);
 

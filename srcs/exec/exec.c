@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 13:30:12 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/12 19:51:33 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/12 21:58:17 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void		pipe_exec(t_group *grp)
 	grp->father = fork();
 	if (grp->father == 0)
 	{
+
 		while (grp->allcmd->andor->parselst)
 		{
 			tmp = grp->allcmd->andor->parselst;
@@ -65,7 +66,9 @@ void		andor_exec(t_group *grp)
 	{
 		tmp = grp->allcmd->andor;
 		REMOVE(&grp->allcmd->andor->cmd);
+		reset_shell();
 		pipe_exec(grp);
+		init_shell();
 		if ((tmp->type == 1 && grp->exit != 0) ||
 			(tmp->type == 2 && grp->exit == 0))
 		{

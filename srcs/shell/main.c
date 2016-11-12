@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:43:44 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/12 19:09:34 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/12 22:08:02 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,15 @@ int			ft_getchar(int c)
 	return (write(2, &c, 1));
 }
 
-int			reset_shell(void)
-{
-	t_group			*grp;
-
-	grp = get_grp();
-	if (tcsetattr(0, 0, &grp->cpy_term) == -1)
-		return (-1);
-	return (0);
-}
-
 void		prompt(void)
 {
-	ft_putstr_fd("42sh> ", 2);
+	char	order[512];
+
+	ft_bzero(order, 513);
+	fcntl(0, F_GETPATH, order);
+	if (ft_strstr(order, "/dev/ttys") != NULL) // leaks
+		ft_putstr_fd("42sh> ", 2);
+	ft_bzero(order, 513);
 }
 
 void		proccess(t_group *grp)
@@ -41,7 +37,7 @@ void		proccess(t_group *grp)
 		ft_add_history(grp, TERM(cmd_line));
 	grp->allcmd = ft_strsplitquote(TERM(cmd_line), ';');
 	ft_init_parse(grp);
-	ft_display_parse(grp);
+	//ft_display_parse(grp);
 	init_exec(grp);
 	ft_free_parse(grp);
 	free(grp->allcmd);
