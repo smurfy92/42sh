@@ -1,0 +1,1 @@
+env | grep -v "SHELL" | grep -v "TERM" | grep -v "SHLVL" | grep -v "COLORFGBG" | grep -v "_" && ls
