@@ -67,7 +67,7 @@ t_andor		*ft_strsplitpipe(char *s, char c)
 	len = 0;
 	while (s && s[i] != '\0')
 	{
-		
+
 
 		while (s[i] == c && !check_last_char(s, i))
 		{

@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 13:30:12 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/12 04:36:21 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/12 17:33:52 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,10 +142,13 @@ int		pipe_exec(t_group *grp)
 		while (grp->allcmd->andor->parselst)
 		{
 			tmp = grp->allcmd->andor->parselst;
-			if (tmp->next)
-				ft_fork_pipe(grp);
-			else
-				exec_child(grp, tmp);
+			if (!tmp->fail)
+			{
+				if (tmp->next)
+					ft_fork_pipe(grp);
+				else
+					exec_child(grp, tmp);
+			}
 			free_parselst(tmp);
 			grp->allcmd->andor->parselst = tmp->next;
 		}

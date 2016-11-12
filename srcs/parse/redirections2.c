@@ -23,7 +23,7 @@ static void		ft_addheredoc2(t_parse *parse, int end, int start)
 	parse->cmd = ft_strjoin_nf(parse->cmd, tmp, 3);
 }
 
-void		ft_addheredoc(t_group *grp, t_parse *parse, int i)
+void		ft_addheredoc(t_parse *parse, int i)
 {
 	int		start;
 	int		end;
@@ -40,7 +40,7 @@ void		ft_addheredoc(t_group *grp, t_parse *parse, int i)
 		end++;
 	if (end == i)
 	{
-		grp->fail = 1;
+		parse->fail = 1;
 		return (ft_putendl_fd("42sh: parse error near `\\n'", 2));
 	}
 	tmp = ft_strsub(&parse->cmd[i], 0, end - i);
@@ -55,7 +55,7 @@ void		ft_addheredoc(t_group *grp, t_parse *parse, int i)
 	ft_addheredoc2(parse, end, start);
 }
 
-void		ft_addfile(t_group *grp, t_parse *parse, int i)
+void		ft_addfile(t_parse *parse, int i)
 {
 	int		start;
 	int		end;
@@ -70,10 +70,13 @@ void		ft_addfile(t_group *grp, t_parse *parse, int i)
 		end++;
 	if (end == i)
 	{
-		grp->fail = 1;
-		return (ft_putendl_fd("jush : parse error near `\\n'", 2));
+		parse->fail = 1;
+		return (ft_putendl_fd("42sh : parse error near `\\n'", 2));
 	}
 	tmp = ft_strsub(&parse->cmd[i], 0, end - i);
+	//faire une fonction
+	if (check_rights(parse, &tmp))
+		return;
 	parse->file = ft_strdup(tmp);
 	parse->sgred = NULL;
 	parse->dbred = NULL;
@@ -81,7 +84,7 @@ void		ft_addfile(t_group *grp, t_parse *parse, int i)
 		end++;
 	tmp = ft_strdup(&parse->cmd[end]);
 	parse->cmd[start] = '\0';
-	parse->cmd = ft_strjoin(parse->cmd, tmp);
+	parse->cmd = ft_strjoin_nf(parse->cmd, tmp, 3);
 }
 
 void		ft_check_close(t_parse *parse, int i)
