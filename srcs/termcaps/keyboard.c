@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 17:05:11 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/13 20:44:58 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/13 22:18:48 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void	get_cmd(t_group *grp, int fd)
 	int		ret;
 	char	order[BUF_SIZE + 1];
 	int		is_stdout;
+	char	*tmp;
 
 	//tmp = SDUP("");
 	is_stdout = true;
@@ -111,9 +112,11 @@ void	get_cmd(t_group *grp, int fd)
 	if (ft_strstr(order, "/dev/ttys") == NULL) // leaks
 		is_stdout = false;
 	ft_bzero(order, BUF_SIZE + 1);
+	tmp = SDUP("");
 	while ((ret = read(fd, order, BUF_SIZE)) > 0)
 	{
 		order[ret] = '\0';
+		tmp = JOIN(tmp, order);
 		// if (is_stdout == false)
 		// 	read_fd_in(grp, order);
 		// else 
@@ -124,7 +127,7 @@ void	get_cmd(t_group *grp, int fd)
 	if (TERM(cmd_quote) != NULL)
 		fill_cmd_line(grp);
 	ft_go_end(grp);
-	ret == 0 ? grp->quit = true : ft_putchar_fd('\n', 2);
+	ret == 0 ? read_fd_in(grp, tmp) : ft_putchar_fd('\n', 2);
 	reset_edl(grp);
 	ft_bzero(order, BUF_SIZE + 1);
 }
