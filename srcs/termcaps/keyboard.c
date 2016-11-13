@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 17:05:11 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/12 21:57:51 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/13 01:36:28 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@ int		key_selection(t_group *grp, char *order)
 	int	key;
 
 	key = KEY(order[0], order[1], order[2], order[3]);
+	if (key == TAB)
+		comp_init(grp, &grp->comp);
+	else if (grp->comp)
+		comp_free(grp, &grp->comp);
 	if (key == ENTER)
 		return (key);
 	if (key == CTRL_D)

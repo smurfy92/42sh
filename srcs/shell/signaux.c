@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signaux.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:50:41 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/04 13:47:41 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/13 01:51:03 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	handler_ctrl_c(int sig)
 	grp = get_grp();
 	if (sig)
 		{}
+	if (grp->comp)
+		comp_free(grp, &grp->comp);
 	ft_go_end(grp);
 	REMOVE(&TERM(cmd_line));
 	ft_free_parse(grp);

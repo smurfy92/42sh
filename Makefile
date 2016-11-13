@@ -15,6 +15,7 @@ SRC += srcs/hash/hash_use.c
 SRC	+= srcs/hash/hash_init.c
 SRC	+= srcs/hash/tree_init.c
 SRC	+= srcs/hash/tree_init2.c
+SRC	+= srcs/hash/hash_free.c
 
 #builtins
 SRC += srcs/builtins/builtins.c
@@ -63,6 +64,13 @@ SRC	+= srcs/free_mem/free2.c
 #debug
 SRC	+= srcs/debug/debug.c
 
+#auto_comp
+SRC	+= srcs/auto_comp/comp_init.c
+SRC += srcs/auto_comp/comp_list.c
+SRC += srcs/auto_comp/comp_use.c
+SRC += srcs/auto_comp/comp_lib.c
+SRC += srcs/auto_comp/comp_finder.c
+
 #errors
 SRC	+= srcs/errors/errors.c
 
@@ -72,6 +80,7 @@ INC += -I srcs/shell/includes/
 INC += -I srcs/hash/includes/
 INC += -I srcs/parse/includes/
 INC += -I srcs/termcaps/includes/
+INC += -I srcs/auto_comp/includes/
 INC += -I srcs/builtins/includes/
 INC += -I srcs/env/includes/
 INC += -I srcs/exec/includes/
