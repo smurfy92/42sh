@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/13 23:30:30 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/13 23:32:45 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/13 23:39:38 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,43 @@ void		free_parselst(t_parse *parse)
 	parse = NULL;
 }
 
+void	free_allandor(t_andor **to_free)
+{
+	t_andor	*tmp;
+	t_andor	*tmp2;
+
+	tmp = *to_free;
+	while (tmp)
+	{
+		tmp2 = tmp->next;
+		ft_strdel(&tmp->cmd);
+		if (tmp->parselst)
+			free_allparse(tmp);
+		tmp->parselst = NULL;
+		free(tmp);
+		tmp = tmp2;
+	}
+	*to_free = NULL;
+}
+
+void	free_allcmd(t_allcmd **to_free)
+{
+	t_allcmd	*tmp;
+	t_allcmd	*tmp2;
+
+	tmp = *to_free;
+	while (tmp)
+	{
+		tmp2 = tmp->next;
+		ft_strdel(&tmp->cmd);
+		if (tmp->andor)
+			free_allandor(&tmp->andor);
+		free(tmp);
+		tmp = tmp2;
+	}
+	*to_free = NULL;
+}
+
 void		ft_free_parse(t_group *grp)
 {
 	char	*file;
@@ -123,6 +160,8 @@ void		ft_free_parse(t_group *grp)
 	free_term(grp);
 	free_env_tmp(grp);
 	check_parentheses(0);
+	if (grp->allcmd)
+		free_allcmd(&grp->allcmd);
 	while (grp->hdcount > 0)
 	{
 		file = JOINF("hdoc_", ft_itoa(grp->hdcount), 2);

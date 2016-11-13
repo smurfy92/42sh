@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 02:28:21 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/13 05:11:26 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/13 23:33:22 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ void		exec_child(t_group *grp, t_parse *parse)
 		ft_freestrtab(&env);
 	}
 	else if (ret == 0)
-		exit(EXIT_FAILURE);
-	exit(0);
+		ft_exit(grp, EXIT_FAILURE);
+	ft_exit(grp, 0);
 }
 
 // attention on peut pas catch les segflt entre les pipes
@@ -117,8 +117,8 @@ void		ft_fork_pipe(t_group *grp)
 		else if (ret == 1)
 			builtins(grp);
 		else
-			exit(EXIT_FAILURE);
-		exit(grp->exit);
+			ft_exit(grp, EXIT_FAILURE);
+		ft_exit(grp, grp->exit);
 	}
 	dup2(tabl[0], STDIN_FILENO);
 	close(tabl[1]);
