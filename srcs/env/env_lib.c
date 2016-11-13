@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:50:41 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/13 01:45:57 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/13 19:54:13 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char		**list_to_tab(t_envlst *envlst)
 
 	pos = 0;
 	env = envlst;
-	env_tab = (char **)malloc(sizeof(char *) * ft_lstlen(envlst));
+	env_tab = (char **)malloc(sizeof(char *) * ft_lstlen(envlst) + 1 );
 	while (env != NULL)
 	{
 		tmp = JOIN(env->name, "=");

@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/13 20:08:18 by jmontija          #+#    #+#             */
-/*   Updated: 2016/10/31 18:38:03 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/13 20:44:56 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,6 @@ void	remove_line(t_group *grp)
 
 void	reset_edl(t_group *grp)
 {
-	// if (grp->is_search == true)
-	// {
-	// 	TERM(cmd_line) = SDUP(TERM(search));
-	// 	TERM(cmd_line) == NULL ? (TERM(cmd_line) = ft_strnew(0)) : 0;
-	// 	grp->is_search = false;
-	// 	REMOVE(&TERM(search));
-	// 	REMOVE(&TERM(cmd_save));
-	// }
 	TERM(curs_pos) = 0;
 	TERM(cmd_size) = 0;
 }

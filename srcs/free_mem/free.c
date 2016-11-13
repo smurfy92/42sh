@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:10:07 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/13 04:38:28 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/13 20:42:41 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ void		ft_free_parse(t_group *grp)
 	free_term(grp);
 	free_env_tmp(grp);
 	check_parentheses(0);
-	printf("hdcount: %d\n", grp->hdcount);
 	while (grp->hdcount > 0)
 	{
 		file = JOINF("hdoc_", ft_itoa(grp->hdcount), 2);
