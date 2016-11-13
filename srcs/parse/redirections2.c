@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:14:56 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/12 20:10:01 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/13 01:09:15 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void		ft_addheredoc(t_group *grp, t_parse *parse, int i)
 	else
 		parse->heredoc = ft_strjoin_nf(parse->heredoc,
 		ft_strjoin_nf(";", tmp, 2), 3);
+	if (parse->file)
+		REMOVE(&parse->file);
 }
 
 void		ft_check_close(t_parse *parse, int i)
