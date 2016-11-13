@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 13:30:12 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/13 22:50:01 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/13 23:32:37 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void		pipe_exec(t_group *grp)
 			free_parselst(tmp);
 			grp->allcmd->andor->parselst = tmp->next;
 		}
-		exit(EXIT_FAILURE);
+		ft_exit(grp, EXIT_FAILURE);
 	}
 	waitpid(grp->father, &ret, 0);
 	error_process_check(ret);
