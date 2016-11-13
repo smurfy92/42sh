@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 20:13:24 by vdanain           #+#    #+#             */
-/*   Updated: 2016/11/12 23:23:27 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/13 02:29:15 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,6 @@ char	*get_underpath(char *cmd, t_root *root)
 	char	*path;
 
 	i = 0;
-	if (cmd == NULL || ft_strcmp(cmd, "") == 0)
-		return (NULL);
-	if (root == NULL)
-		return (NULL);
 	cur = root->first;
 	while (cmd[i])
 	{
@@ -46,6 +42,10 @@ char	*get_path(char *cmd, t_root *root)
 {
 	char		*tmpath;
 
+	if (cmd == NULL || ft_strcmp(cmd, "") == 0)
+		return (NULL);
+	if (root == NULL || !root->first)
+		return (NULL);
 	if (ft_strchr(cmd, '/'))
 	{
 		if (ft_strcmp((tmpath = get_underpath(ft_strrchr(cmd, '/') + 1, root)), cmd) == 0)
@@ -85,7 +85,7 @@ t_hash		*get_startnode(char *cmd, t_root *root)
 **	get all possibilities from a node in the tree : auto-comp
 */
 
-char		*get_possible(t_hash *start, size_t len)
+char		*get_possible(t_hash *start, size_t len, int comp_free)
 {
 	t_hash		*cur;
 	static char	*result = NULL;
@@ -93,6 +93,8 @@ char		*get_possible(t_hash *start, size_t len)
 	char		*tmp2;
 	size_t		i;
 
+	if (comp_free == 1)
+		ft_strdel(&result);
 	cur = start;
 	i = -1;
 	if (cur->cmd != NULL)
@@ -108,7 +110,7 @@ char		*get_possible(t_hash *start, size_t len)
 	while (++i < len)
 	{
 		if (cur->node[i])
-			get_possible(cur->node[i], len);
+			get_possible(cur->node[i], len, 0);
 	}
 	return (result);
 }

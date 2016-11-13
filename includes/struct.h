@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:07:29 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/11 16:38:46 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/13 01:35:42 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 typedef struct			s_group
 {
+	char					*program_name;
+	
 	//history
 	struct s_history		*history;
 	int						inhistory;
@@ -30,6 +32,7 @@ typedef struct			s_group
 	struct termios			cpy_term;
 	struct s_env			*env;
 	struct s_root			*root;
+	struct s_comp			*comp;
 
 	//pas sur
 	int						fail;

@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:43:44 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/13 01:11:10 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/13 03:11:21 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int			main(int argc, char **argv, char **env)
 		{}
 	init_shell();
 	grp = get_grp();
+	grp->program_name = SDUP(argv[0]);
 	init_env(grp, env);
 	hash_init(&grp->root, grp, NULL);
 	sig_handler();

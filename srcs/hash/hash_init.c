@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 20:13:19 by vdanain           #+#    #+#             */
-/*   Updated: 2016/11/13 01:53:58 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/13 02:21:04 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ char			*fill_list(t_group *grp, char *cus_p)
 		return (NULL);
 	while (path[++i])
 	{
-		ft_putendl(path[i]);
 		if ((cur_d = opendir(path[i])))
 		{
 			result = get_nbchar(cur_d);

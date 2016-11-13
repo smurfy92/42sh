@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 17:24:49 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/12 22:14:01 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/13 02:12:13 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,28 @@ char			*get_redirection(t_group *grp, t_parse *parse, int i, int start)
 	return (tmp);
 }
 
+int			check_stat(t_parse *parse, char **file)
+{
+	struct stat buf;
+	char *tmp = NULL;
+
+	tmp = getwd(tmp);
+	tmp = ft_strjoin_nf(tmp, "/", 1);
+	tmp = ft_strjoin_nf(tmp, *file, 1);
+	stat(tmp, &buf);
+	if (S_ISDIR(buf.st_mode))
+	{
+		error_cmd("42sh: is a directory: ", *file, 1);
+		REMOVE(file);
+		parse->fail = 1;
+		return (1);
+	}
+	return (0);
+}
+
 int			check_rights(t_parse *parse, char **file, int i)
 {
+
 	if (i == 0 && access(*file, F_OK) == 0 && access(*file, W_OK) < 0)
 	{
 		ft_putstr_fd("42sh: permission denied: ",2);
@@ -61,11 +81,12 @@ int			check_rights(t_parse *parse, char **file, int i)
 			error_cmd("42sh: no such file or directory: ", *file, 1);
 		else if (access(*file, R_OK) < 0)
 			error_cmd("42sh: permission denied: ", *file, 1);
-		//to check if that's a file
 		parse->fail = 1;
 		REMOVE(file);
 		return (1);
 	}
+	if (check_stat(parse, file))
+		return (1);
 	return (0);
 }
 

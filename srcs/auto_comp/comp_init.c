@@ -3,145 +3,86 @@
 /*                                                        :::      ::::::::   */
 /*   comp_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victordanain <victordanain@student.42.fr>  +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 18:40:40 by victordanain      #+#    #+#             */
-/*   Updated: 2016/11/04 13:02:32 by victordanain     ###   ########.fr       */
+/*   Updated: 2016/11/13 01:49:43 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
-#include "termcaps.h"
 
-char		*get_last_word(char *cmd)
+/*
+**	init le centre de la liste
+*/
+
+t_comp		*rtcomp_init(int start, char *val)
 {
-		return ((!ft_strrchr(cmd, ' ')) ? cmd : ft_strrchr(cmd, ' '));
+	t_comp		*begin;
+
+	begin = (t_comp *)malloc(sizeof(t_comp));
+	begin->val = ft_strdup(val);
+	begin->c_type = 0;
+	begin->start = start;
+	begin->next = begin;
+	begin->prev = begin;
+
+	return (begin);
+
 }
 
 
-void	new_possible(char *value, t_comp *root, int is_d)
+/*
+**	free la liste comp a chaque fois quun autre char que TAB est tape
+*/
+
+void		comp_free(t_group *grp, t_comp **begin)
 {
-	t_comp	*new;
+	t_comp	*tmp;
+	t_comp	*tmp2;
 
-	new = (t_comp *)malloc(sizeof(t_comp));
-	new->val = ft_strdup(value);
-	new->next = root->next;
-	new->is_d =  is_d;
-	new->prev = root;
-	root->next = new;
-	new->next->prev = new;
-}
-
-int		rundir(char *to_open, t_comp *root)
-{
-	struct dirent	*cur_e;
-	DIR				*dir;
-	int				i;
-
-	i = 0;
-	if (!(dir = opendir(to_open)))
-		return (1);
-	while ((cur_e = readdir(dir)))
+	tmp = (*begin)->next;
+	grp->comp->c_type = 0;
+	grp->comp->start = 0;
+	while (tmp != (*begin))
 	{
-		if (cur_e->d_name[0] != '.')
-		{
-			if (ft_strlen(root->val) == 1 || ft_strncmp(root->val + 1, cur_e->d_name, ft_strlen(root->val) - 1) == 0)
-				new_possible(cur_e->d_name, root, ((cur_e->d_type & DT_DIR) == DT_DIR) ? 1 : 0);
-			i++;
-		}
+		ft_strdel(&tmp->val);
+		tmp2 = tmp->next;
+		free(tmp);
+		tmp = tmp2;
 	}
-	root->size = i;
-	return (0);
+	ft_strdel(&tmp->val);
+	free(*begin);
+	*begin = NULL;
+	display_next(grp, 1);
 }
 
-int		complete_val(t_comp *root)
+/*
+**	initialise la compleion selon cmd/path ou la display seulement si elle est initialisee
+*/
+
+void		comp_init(t_group *grp, t_comp **comp)
 {
-	if (ft_strncmp(root->val, " /", 2) == 0)
-		;
-	else
-		rundir(".", root);
-	return (0);
-}
+	char	*tmp;
 
-int		get_possible(char *go, t_comp *root)
-{
-	int		ret;
-
-	ret = 0;
-	if (ft_strcmp(go, " ") == 0)
-		ret = rundir(".", root);
-	else if (ft_strlen(go) > 1)
-	{
-		// ft_putendl("popopo");
-		complete_val(root);
-	}
-	return (ret);
-}
-
-
-
-void		display_possible(t_comp *curr, t_group *grp, t_comp *root)
-{
-	char *tmp;
-	char *tmp2;
-	static int	index = 0;
-
-	if (root == curr)
-		return;
-	index = (index == 0) ? TERM(curs_pos) : index;
-	tmp2 = ft_strsub(TERM(cmd_line), 0, index);
-	tmp = ft_strjoin(tmp2, curr->val);
-	// ft_strdel(&TERM(cmd_line));
-	remove_line(grp);
-	TERM(cmd_line) = ft_strdup(tmp);
-	TERM(curs_pos) = ft_strlen(TERM(cmd_line));
-	TERM(cmd_size) = ft_strlen(TERM(cmd_line));
-	ft_putstr_fd(TERM(cmd_line), 2);
-	ft_strdel(&tmp);
-}
-
-
-void		root_display(t_comp *root, t_group *grp, int key)
-{
-	static t_comp	*tmp = NULL;
-	char			buff[5];
-
-	ft_bzero(buff, 5);
-	tmp = (tmp == NULL) ? root->next : tmp->next;
-	if (key)
-		;
-	while (read(0, buff, 5))
-	{
-		display_possible(tmp, grp, root);
-		tmp = tmp->next;
-		if (BUFF(buff) != TAB)
-		{
-			grp->comp = NULL;
-			if (key_selection(grp, buff) == '\n' && ft_escape(grp) == 0)
-				break ;
-		}
-		// ft_putstr("P : ");
-		// ft_putnbr(tmp->is_d);
-		// ft_putendl(tmp->val);
-	}
-}
-
-t_comp		*new_root(char *cmd)
-{
-	t_comp	*root;
-
-	root = (t_comp *)malloc(sizeof(t_comp));
-	root->val = ft_strdup(get_last_word(cmd));
-	root->size = 0;
-	root->next = root;
-	root->prev = root;
-	get_possible(root->val, root);
-	return (root);
-}
-
-void comp_init(t_group *grp, int key)
-{
-
-	grp->comp = (grp->comp == NULL) ? new_root(TERM(cmd_line)) : grp->comp;
-	root_display(grp->comp, grp, key);
+	tmp = NULL;
+	if (TERM(curs_pos) != TERM(cmd_size))
+		return ;
+	if (grp->comp != NULL)
+		return (display_next(grp, 0));
+	else if (TERM(cmd_line) == NULL || ft_strcmp(TERM(cmd_line), "") == 0)
+		return ;
+	else if (!ft_strchr(TERM(cmd_line), '/') && ft_strcmp(get_last_word(TERM(cmd_line)), TERM(cmd_line)) == 0)
+		cmd_finder(grp, comp);
+	else if (ft_strcmp(get_last_word(TERM(cmd_line)), " ") == 0 ||
+		(ft_strlen(get_last_word(TERM(cmd_line))) > 1 && !ft_strchr(get_last_word(TERM(cmd_line)), '/')))
+		file_finder(grp, ".", comp);
+	else if (ft_strchr(get_last_word(TERM(cmd_line)), '/'))
+		file_finder(grp, (tmp = get_dirtop(TERM(cmd_line))), comp);
+	if (grp->comp && grp->comp->c_type > 0)
+		display_next(grp, 0);
+	if (grp->comp && grp->comp->c_type == 1)
+		comp_free(grp, &grp->comp);
+	if (tmp)
+		ft_strdel(&tmp);
 }

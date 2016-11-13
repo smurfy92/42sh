@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:42:31 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/12 23:38:05 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/13 02:12:30 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include "libft.h"
 # include "struct.h"
 # include "hash.h"
+# include "comp.h"
 # include "shell.h"
 # include "env.h"
 # include "builtin.h"

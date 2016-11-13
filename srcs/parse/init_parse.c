@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 15:59:55 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/12 23:38:42 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/13 02:13:27 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void		ft_create_parse(t_group *grp, t_andor *tabl, t_andor *andor)
 	tmp->fail = 0;
 	ft_parse_redirections(grp, tmp);
 	polish(tmp);
-	tmp->cmdsplit = ft_strsplit(tmp->cmd, ' '); // don't forget tab ! 	//spacesplit a update !
+	tmp->cmdsplit = ft_strsplit(tmp->cmd, ' ');
 	if (!andor->parselst)
 		andor->parselst = tmp;
 	else
@@ -97,7 +97,13 @@ static void		ft_parse(t_group *grp, t_andor *andor)
 	y = ft_count_pipes(andor->cmd);
 	while (tabl)
 	{
-		ft_create_parse(grp, tabl, andor);
+		if (tabl->cmd[0] == '\0' && !grp->fail)
+		{
+			grp->fail = 1;
+			ft_putendl("Invalid null command.");
+		}
+		if (!grp->fail)
+			ft_create_parse(grp, tabl, andor);
 		REMOVE(&tabl->cmd);
 		tmp = tabl->next;
 		free(tabl);
@@ -105,11 +111,6 @@ static void		ft_parse(t_group *grp, t_andor *andor)
 		i++;
 	}
 	TERM(cmd_size) = 0;
-	if (y != i)
-	{
-		grp->fail = 1;
-		return (ft_putendl("Invalid null command."));
-	}
 	check_heredoc(grp);
 }
 

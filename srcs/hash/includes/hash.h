@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 20:16:14 by vdanain           #+#    #+#             */
-/*   Updated: 2016/11/12 23:25:35 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/13 02:13:37 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ typedef struct		s_root
 /*
 **	hash_use.c
 */
+
 char				*get_path(char *cmd, t_root *root);
+char				*get_possible(t_hash *start, size_t len, int comp_free);
+t_hash				*get_startnode(char *cmd, t_root *root);
 
 /*
 **	hash_init.c
@@ -61,4 +64,9 @@ t_path				*init_path(char *name, char *path);
 int					val_tokey(char *charlist, char c);
 char				*get_nbchar(DIR *cur_d);
 
+/*
+**	hash_free.c
+*/
+
+void				root_hfree(t_root **root);
 #endif
