@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 02:28:21 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/13 01:07:28 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/13 03:59:30 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ int		check_cmd(char **path, char *cmd)
 	ret = lstat(*path, &s_buf);
 	val = (s_buf.st_mode & ~S_IFMT);
 	if (ret != 0)
-		error_cmd("unknown command", cmd, 1);
+		error_cmd("42sh: unknown command", cmd, 1);
 	else if (s_buf.st_size <= 0)
-		error_cmd("executable format error", cmd, 1);
+		error_cmd("42sh: executable format error", cmd, 1);
 	else if (!(val & S_IXUSR) || S_ISDIR(s_buf.st_mode))
-		error_cmd("Permission denied", cmd, 1);
+		error_cmd("42sh: Permission denied", cmd, 1);
 	else
 		return (0);
 	return (-1);
@@ -62,7 +62,9 @@ void		exec_child(t_group *grp, t_parse *parse)
 	int		fd;
 	int		ret;
 	char	*path;
+	char	**env;
 
+	printf("file %s\n", parse->file);
 	if (parse->file && (fd = open(parse->file, O_RDONLY)))
 		dup2(fd, STDIN_FILENO);
 	if (parse->fd > 0)
@@ -71,11 +73,17 @@ void		exec_child(t_group *grp, t_parse *parse)
 	ret = is_builtins(parse->cmdsplit);
 	path = get_path(parse->cmdsplit[0], grp->root);
 	if (ret == 0 && check_cmd(&path, parse->cmdsplit[0]) == 0 && path)
-		execve(path, parse->cmdsplit, NULL); // add ENV char **
+	{
+		env = list_to_tab(ENV(lst));
+		execve(path, parse->cmdsplit, env);
+		ft_freestrtab(&env);
+	}
 	else if (ret == 0)
 		exit(EXIT_FAILURE);
 	exit(0);
 }
+
+// attention on peut pas catch les segflt entre les pipes
 
 void		ft_fork_pipe(t_group *grp)
 {
@@ -85,6 +93,7 @@ void		ft_fork_pipe(t_group *grp)
 	int		fd;
 	int 	ret;
 	char	*path;
+	char	**env;
 
 	pipe(tabl);
 	parse = grp->allcmd->andor->parselst;
@@ -102,7 +111,10 @@ void		ft_fork_pipe(t_group *grp)
 		ret = is_builtins(parse->cmdsplit);
 		path = get_path(parse->cmdsplit[0], grp->root);
 		if (ret == 0 && check_cmd(&path, parse->cmdsplit[0]) == 0 && path)
-			execve(path, parse->cmdsplit, NULL); // add ENV char **
+		{
+			env = list_to_tab(ENV(lst));
+			execve(path, parse->cmdsplit, env);
+		}
 		else if (ret == 1)
 			builtins(grp);
 		else

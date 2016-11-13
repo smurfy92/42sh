@@ -30,8 +30,6 @@ int			ft_is_space(char c)
 		return (0);
 }
 
-
-
 int			ft_end_of_red(char c)
 {
 	if ((c == '\t' || c == ' ' || c == '\v' || c == '\f' || c == '\r'

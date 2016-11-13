@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 15:59:55 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/13 02:13:27 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/13 04:27:49 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ static void		ft_parse(t_group *grp, t_andor *andor)
 		i++;
 	}
 	TERM(cmd_size) = 0;
-	check_heredoc(grp);
 }
 
 void		ft_init_parse(t_group *grp)
@@ -131,4 +130,5 @@ void		ft_init_parse(t_group *grp)
 		}
 		tabl = tabl->next;
 	}
+	check_heredoc(grp);
 }
