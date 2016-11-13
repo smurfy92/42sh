@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 17:05:11 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/13 01:36:28 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/13 20:44:58 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,21 +87,36 @@ void read_fd_in(t_group *grp, char *order)
 		else if (order[i + 1] != '\0')
 			TERM(cmd_line) = JOINF(TERM(cmd_line), " ; ", 1);
 	}
+	printf("LINE: %s\n", TERM(cmd_line));
 	grp->quit = true;
 }
+
+// void	read_fd_in(t_group *grp, char *order)
+// {
+// 	if (order != '\n')
+// 		TERM(cmd_line) = JOINF(TERM(cmd_line), order, 1);
+// 	else if (order[i + 1] != '\0')
+// 		TERM(cmd_line) = JOINF(TERM(cmd_line), " ; ", 1);
+// }
 
 void	get_cmd(t_group *grp, int fd)
 {
 	int		ret;
 	char	order[BUF_SIZE + 1];
-	char	*tmp;
+	int		is_stdout;
 
+	//tmp = SDUP("");
+	is_stdout = true;
+	fcntl(0, F_GETPATH, order);
+	if (ft_strstr(order, "/dev/ttys") == NULL) // leaks
+		is_stdout = false;
 	ft_bzero(order, BUF_SIZE + 1);
-	tmp = NULL;
 	while ((ret = read(fd, order, BUF_SIZE)) > 0)
 	{
 		order[ret] = '\0';
-		tmp = SDUP(order);
+		// if (is_stdout == false)
+		// 	read_fd_in(grp, order);
+		// else 
 		if (key_selection(grp, order) == '\n' && ft_escape(grp) == 0)
 			break ;
 		ft_bzero(order, BUF_SIZE + 1);
@@ -109,7 +124,7 @@ void	get_cmd(t_group *grp, int fd)
 	if (TERM(cmd_quote) != NULL)
 		fill_cmd_line(grp);
 	ft_go_end(grp);
-	ret == 0 ? read_fd_in(grp, tmp) : ft_putchar_fd('\n', 2);
+	ret == 0 ? grp->quit = true : ft_putchar_fd('\n', 2);
 	reset_edl(grp);
 	ft_bzero(order, BUF_SIZE + 1);
 }

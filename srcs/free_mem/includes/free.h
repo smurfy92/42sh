@@ -22,5 +22,6 @@ void		free_parselst(t_parse *parse);
 //free2.c
 void		ft_free_andor(t_group *grp);
 void		free_history(t_group *grp);
+void		free_term(t_group *grp);
 
 #endif

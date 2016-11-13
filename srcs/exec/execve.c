@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 02:28:21 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/13 03:59:30 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/13 05:11:26 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void		exec_child(t_group *grp, t_parse *parse)
 	char	*path;
 	char	**env;
 
-	printf("file %s\n", parse->file);
 	if (parse->file && (fd = open(parse->file, O_RDONLY)))
 		dup2(fd, STDIN_FILENO);
 	if (parse->fd > 0)

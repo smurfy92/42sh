@@ -3,11 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:10:07 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/13 16:09:07 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/13 21:07:36 by jmontija         ###   ########.fr       */
 /*                                                                            */
+/* ************************************************************************** */
+                                                                   */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
@@ -98,7 +100,6 @@ void		ft_free_parse(t_group *grp)
 	free_term(grp);
 	free_env_tmp(grp);
 	check_parentheses(0);
-	//printf("hdcount: %d\n", grp->hdcount);
 	while (grp->hdcount > 0)
 	{
 		file = JOINF("hdoc_", ft_itoa(grp->hdcount), 2);
