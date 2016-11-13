@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hash.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victordanain <victordanain@student.42.fr>  +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 20:16:14 by vdanain           #+#    #+#             */
-/*   Updated: 2016/11/08 19:04:36 by victordanain     ###   ########.fr       */
+/*   Updated: 2016/11/13 01:33:08 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ typedef struct		s_root
 /*
 **	hash_use.c
 */
+
 char				*get_path(char *cmd, t_root *root);
+char				*get_possible(t_hash *start, size_t len, int comp_free);
+t_hash				*get_startnode(char *cmd, t_root *root);
 
 /*
 **	hash_init.c
