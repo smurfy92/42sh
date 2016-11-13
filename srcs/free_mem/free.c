@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:10:07 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/10 23:11:14 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/13 01:31:59 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void		free_env_tmp(t_group *grp)
 		tmp = tmp2;
 	}
 	grp->env->lst_tmp = NULL;
+	REMOVE(&ENV(path_tmp));
 	REMOVE(&ENV(cmd));
 }
 

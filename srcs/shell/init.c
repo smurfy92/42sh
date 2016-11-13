@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:17:06 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/12 21:32:31 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/13 01:34:59 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ t_group		*set_grp(t_group *grp)
 	grp->env->start_varenv = 0;
 	grp->env->end_varenv = 0;
 	grp->env->cmd = NULL;
+	grp->env->path_tmp = NULL;
 	grp->prompt_size = 6;
 	grp->exit = 0;
 	grp->hdcount = 0;

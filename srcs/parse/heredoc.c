@@ -6,18 +6,16 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/06 17:52:49 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/12 20:16:21 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/12 22:25:39 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-void		heredoc(t_group *grp, int count, char *eof)
+void		heredoc(t_group *grp, char *file, char *eof)
 {
 	int		fd;
-	char	*file;
 
-	file = JOIN("hdoc_", ft_itoa(count));
 	fd = open(file, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	TERM(curs_pos) = 0;
 	TERM(cmd_size) = 0;
@@ -39,6 +37,7 @@ void		check_heredoc(t_group *grp)
 {
 	t_parse *tmp;
 	char	**hdoc;
+	char	*file;
 	int		i;
 
 	hdoc = NULL;
@@ -49,11 +48,12 @@ void		check_heredoc(t_group *grp)
 		{
 			i = -1;
 			grp->hdcount += 1;
+			file = JOINF("hdoc_", ft_itoa(grp->hdcount), 2);
 			hdoc = ft_strsplit(tmp->heredoc, ';');
 			while (hdoc[++i])
-				heredoc(grp, grp->hdcount, hdoc[i]);
+				heredoc(grp, file, hdoc[i]);
 			ft_freestrtab(&hdoc);
-			tmp->file = SDUP("hdoc_1");
+			tmp->file = file;
 		}
 		tmp = tmp->next;
 	}

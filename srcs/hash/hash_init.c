@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hash_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victordanain <victordanain@student.42.fr>  +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 20:13:19 by vdanain           #+#    #+#             */
-/*   Updated: 2016/11/08 19:08:29 by victordanain     ###   ########.fr       */
+/*   Updated: 2016/11/13 01:53:58 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char			*get_fullpath(char *name, char *dir)
 	return (tmpath);
 }
 
-char			*fill_list(t_group *grp)
+char			*fill_list(t_group *grp, char *cus_p)
 {
 	char	**path;
 	char	*tmpath;
@@ -37,12 +37,13 @@ char			*fill_list(t_group *grp)
 
 	result = NULL;
 	i = -1;
-	if (!(tmpath = ft_getenv(grp, "PATH")))
+	if (!(tmpath = ft_getenv(grp, "PATH")) && cus_p == NULL)
 		return (NULL);
-	if (!(path = ft_strsplit(tmpath, ':')))
+	if (!(path = (cus_p == NULL) ? ft_strsplit(tmpath, ':') : ft_strsplit(cus_p, ':')))
 		return (NULL);
 	while (path[++i])
 	{
+		ft_putendl(path[i]);
 		if ((cur_d = opendir(path[i])))
 		{
 			result = get_nbchar(cur_d);
@@ -53,7 +54,7 @@ char			*fill_list(t_group *grp)
 	return (result);
 }
 
-int				tree_filler(t_root **root, t_group *grp)
+int				tree_filler(t_root **root, t_group *grp, char *cus_p)
 {
 	char	**path;
 	char	*tmpath;
@@ -61,9 +62,9 @@ int				tree_filler(t_root **root, t_group *grp)
 	DIR		*cur_d;
 
 	i = -1;
-	if (!(tmpath = ft_getenv(grp, "PATH")))
+	if (!(tmpath = ft_getenv(grp, "PATH")) && cus_p == NULL)
 		return (1);
-	if (!(path = ft_strsplit(tmpath, ':')))
+	if (!(path = (cus_p == NULL) ? ft_strsplit(tmpath, ':') : ft_strsplit(cus_p, ':')))
 		return (1);
 	while (path[++i])
 	{
@@ -77,14 +78,14 @@ int				tree_filler(t_root **root, t_group *grp)
 	return (0);
 }
 
-int				hash_init(t_root **root, t_group *grp)
+int				hash_init(t_root **root, t_group *grp, char *cus_p)
 {
 	char	*result;
 
-	if (!(result = fill_list(grp)) || ft_strcmp(result, "") == 0)
+	if (!(result = fill_list(grp, cus_p)) || ft_strcmp(result, "") == 0)
 		return (1);
 	*root = root_init(result);
-	if (tree_filler(root, grp) != 0)
+	if (tree_filler(root, grp, cus_p) != 0)
 		return (1);
 	return (0);
 }

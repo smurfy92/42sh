@@ -61,6 +61,7 @@ int			check_rights(t_parse *parse, char **file, int i)
 			error_cmd("42sh: no such file or directory: ", *file, 1);
 		else if (access(*file, R_OK) < 0)
 			error_cmd("42sh: permission denied: ", *file, 1);
+		//to check if that's a file
 		parse->fail = 1;
 		REMOVE(file);
 		return (1);

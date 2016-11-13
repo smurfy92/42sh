@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hash.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victordanain <victordanain@student.42.fr>  +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 20:16:14 by vdanain           #+#    #+#             */
-/*   Updated: 2016/11/08 19:04:36 by victordanain     ###   ########.fr       */
+/*   Updated: 2016/11/12 23:25:35 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char				*get_path(char *cmd, t_root *root);
 */
 
 int					val_tokey(char *charlist, char c);
-int					hash_init(t_root **root, t_group *grp);
+int					hash_init(t_root **root, t_group *grp, char *cus_p);
 char				*get_fullpath(char *name, char *dir);
 
 /*

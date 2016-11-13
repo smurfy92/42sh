@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 13:30:12 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/12 21:58:17 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/13 01:07:18 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void		pipe_exec(t_group *grp)
 			}
 			free_parselst(tmp);
 			grp->allcmd->andor->parselst = tmp->next;
-				
 		}
 		exit(EXIT_FAILURE);
 	}
@@ -77,7 +76,8 @@ void		andor_exec(t_group *grp)
 			break ;
 		}
 		grp->allcmd->andor = tmp->next;
-		grp->exit = 0;
+		if (tmp->next)
+			grp->exit = 0;
 		free(tmp);
 	}
 }

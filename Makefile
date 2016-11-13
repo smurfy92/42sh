@@ -29,6 +29,7 @@ SRC	+= srcs/env/env_opt.c
 SRC	+= srcs/env/set_unset.c
 SRC	+= srcs/env/set_unset_tmp.c
 SRC	+= srcs/env/env_init.c
+SRC	+= srcs/env/env_exec.c
 
 #termcaps
 SRC	+= srcs/termcaps/keyboard.c
