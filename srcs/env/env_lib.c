@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_lib.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:50:41 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/13 19:54:13 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/13 22:56:00 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char		**list_to_tab(t_envlst *envlst)
 
 	pos = 0;
 	env = envlst;
-	env_tab = (char **)malloc(sizeof(char *) * ft_lstlen(envlst) + 1 );
+	env_tab = (char **)malloc(sizeof(char *) * (ft_lstlen(envlst) + 1));
 	while (env != NULL)
 	{
 		tmp = JOIN(env->name, "=");

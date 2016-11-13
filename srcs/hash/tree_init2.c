@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/02 17:32:31 by victordanain      #+#    #+#             */
-/*   Updated: 2016/11/07 19:55:25 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/13 23:02:57 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int		check_charlist(char *lst, char c)
 **	les composant
 */
 
-char			*get_nbchar(DIR *cur_d)
+char			*get_nbchar(DIR *cur_d, int free)
 {
 	struct dirent	*cur_e;
 	static char		*charlist = NULL;
@@ -44,6 +44,11 @@ char			*get_nbchar(DIR *cur_d)
 	char			*tmp;
 
 	ft_bzero(c, 2);
+	if (free == 1)
+	{
+		ft_strdel(&charlist);
+		return (NULL);
+	}
 	while ((cur_e = readdir(cur_d)))
 	{
 		i = 0;
