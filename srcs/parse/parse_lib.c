@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:17:44 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/11 16:17:57 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/13 01:14:30 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int			ft_count_pipes(char *cmd)
 	nb = 1;
 	i = -1;
 	ret = 0;
+	check_parentheses(0);
 	while (cmd && cmd[++i])
 	{
 		ret = check_parentheses(cmd[i]);
