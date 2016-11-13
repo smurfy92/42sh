@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signaux.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:50:41 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/13 01:51:03 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/13 22:52:46 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	handler_ctrl_c(int sig)
 	TERM(cmd_size) = 0;
 	grp->prompt_size = 6;
 	ft_putchar_fd('\n', 2);
+	init_shell();
 	prompt();
 }
 
