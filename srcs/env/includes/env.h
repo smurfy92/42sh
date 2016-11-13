@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 16:54:18 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/13 01:44:46 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/13 04:01:21 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int						env_opt(t_group *grp);
 void					init_env(t_group *grp, char **env);
 void					help_shlvl(t_group *grp);
 void					mac_pathhelp(t_group *grp);
+void					help_pwd(t_group *grp);
 
 //env exec
 void					init_exec_env(t_group *grp);
