@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 20:16:14 by vdanain           #+#    #+#             */
-/*   Updated: 2016/11/13 01:33:08 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/13 01:58:11 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,9 @@ t_path				*init_path(char *name, char *path);
 int					val_tokey(char *charlist, char c);
 char				*get_nbchar(DIR *cur_d);
 
+/*
+**	hash_free.c
+*/
+
+void				root_hfree(t_root **root);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fortytwo.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:42:31 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/12 22:07:40 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/13 01:35:32 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include "libft.h"
 # include "struct.h"
 # include "hash.h"
+# include "comp.h"
 # include "shell.h"
 # include "env.h"
 # include "builtin.h"
