@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 15:44:38 by jmontija          #+#    #+#             */
-/*   Updated: 2016/10/30 16:55:04 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/13 01:49:48 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ static t_envlst	*create_env_line(t_group *grp, char *env, int i)
 	new->val = SUB(env, i + 1, LEN(env));
 	while (curr_env != NULL)
 	{
+		if (ft_strcmp(new->name , "PATH") == 0)
+			ENV(path_tmp) = SDUP(new->val);
 		if (ft_strcmp(new->name, curr_env->name) == 0)
 		{
 			new->exist = true;

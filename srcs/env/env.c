@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 16:51:54 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/02 19:54:16 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/13 01:29:36 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,6 @@ void	create_tmp_env(t_group *grp)
 	}
 }
 
-void	change_cmd(t_group *grp)
-{
-	int	i;
-
-	i = -1;
-	REMOVE(&CMD(cmd));
-	CMD(cmd) = SDUP(ENV(cmd));
-	while (CMD(cmdsplit)[++i])
-		REMOVE(&(CMD(cmdsplit)[i]));
-	free(CMD(cmdsplit));
-	CMD(cmdsplit) = ft_strsplit(CMD(cmd), ' ');
-	REMOVE(&ENV(cmd));
-	printf("curr command to exec: %s\n", CMD(cmd));
-}
-
 int		builtin_env(t_group *grp)
 {
 	char	**cmdsplit;
@@ -80,7 +65,7 @@ int		builtin_env(t_group *grp)
 			insert_env_tmp(grp, cmdsplit[start]);
 			start++;
 		}
-		ENV(cmd) == NULL ? show_env(1, grp) : change_cmd(grp);
+		ENV(cmd) == NULL ? show_env(1, grp) : init_exec_env(grp);
 	}
 	return (1);
 }

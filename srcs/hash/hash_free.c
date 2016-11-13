@@ -44,5 +44,5 @@ void		root_hfree(t_root **root)
 	hash_free(root, ft_strlen((*root)->charlist), (*root)->first);
 	ft_strdel(&(*root)->charlist);
 	free(*root);
-	root = NULL;
+	*root = NULL;
 }

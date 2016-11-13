@@ -6,11 +6,47 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:50:41 by jmontija          #+#    #+#             */
-/*   Updated: 2016/10/30 18:44:11 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/13 01:45:57 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
+
+int			ft_lstlen(t_envlst * envlst)
+{
+	int			i;
+	t_envlst	*env;
+
+	i = 0;
+	env = envlst;
+	while (env != NULL)
+	{
+		i++;
+		env = env->next;
+	}
+	return (i);
+}
+
+char		**list_to_tab(t_envlst *envlst)
+{
+	char		**env_tab;
+	char		*tmp;
+	int			pos;
+	t_envlst	*env;
+
+	pos = 0;
+	env = envlst;
+	env_tab = (char **)malloc(sizeof(char *) * ft_lstlen(envlst));
+	while (env != NULL)
+	{
+		tmp = JOIN(env->name, "=");
+		env_tab[pos] = JOIN(tmp, env->val);
+		pos++;
+		env = env->next;
+	}
+	env_tab[pos] = NULL;
+	return (env_tab);
+}
 
 char	*ft_getenv(t_group *grp, char *tofind)
 {

@@ -15,6 +15,8 @@
 
 typedef struct			s_group
 {
+	char					*program_name;
+	
 	//history
 	struct s_history		*history;
 	int						inhistory;

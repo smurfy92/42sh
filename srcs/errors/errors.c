@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/02 12:56:35 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/02 13:07:14 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/13 03:07:30 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,12 @@ int		error_env_opt(char opt, char *what)
 "usage: env [-i] [name=value] [utility [argument]", 2);
 	grp->exit = 1;
 	return (-1);
+}
+
+void	error_process_check(int error_code)
+{
+	t_group		*grp;
+
+	grp = get_grp();
+	error_code == SIGSEGV ? error_cmd("segmentation fault", grp->program_name , 1) : 0;
 }

@@ -16,5 +16,7 @@
 void		init_exec(t_group *grp);
 void		exec_child(t_group *grp, t_parse *parse);
 void		ft_fork_pipe(t_group *grp);
+void		ft_dup_redirection(t_parse *parse);
+int			check_cmd(char **path, char *cmd);
 
 #endif

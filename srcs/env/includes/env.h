@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victordanain <victordanain@student.42.fr>  +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 16:54:18 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/08 19:14:43 by victordanain     ###   ########.fr       */
+/*   Updated: 2016/11/13 01:44:46 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct			s_env
 	int					start_varenv;
 	int					end_varenv;
 	char				*cmd;
+	char				*path_tmp;
 }						t_env;
 
 //env .c
@@ -43,6 +44,7 @@ int						insert_env_tmp(t_group *grp, char *env);
 int						unset_env(t_group *grp, char *todel);
 int						unset_env_tmp(t_group *grp, char *todel);
 char					*ft_getenv(t_group *grp, char *tofind);
+char					**list_to_tab(t_envlst *envlst);
 
 //env_opt.c
 int						env_opt(t_group *grp);
@@ -53,5 +55,8 @@ int						env_opt(t_group *grp);
 void					init_env(t_group *grp, char **env);
 void					help_shlvl(t_group *grp);
 void					mac_pathhelp(t_group *grp);
+
+//env exec
+void					init_exec_env(t_group *grp);
 
 #endif
