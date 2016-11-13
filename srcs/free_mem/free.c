@@ -3,13 +3,11 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:10:07 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/13 21:07:36 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/13 22:47:20 by vdanain          ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
-                                                                   */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
@@ -70,6 +68,31 @@ void		free_term(t_group *grp)
 		tmp = tmp2;
 	}
 	TERM(cmd_quote) = NULL;
+}
+
+void		free_allparse(t_andor *begin)
+{
+	t_parse		*tmp;
+	t_parse		*tmp2;
+
+	tmp = begin->parselst;
+	while (tmp)
+	{
+		tmp2 = tmp->next;
+		ft_strdel(&(tmp->cmd));
+		ft_freestrtab(&tmp->cmdsplit);
+		ft_strdel(&(tmp->dbred));
+		ft_strdel(&(tmp->sgred));
+		ft_strdel(&(tmp->file));
+		ft_strdel(&(tmp->closefd));
+		ft_strdel(&(tmp->redfd));
+		(tmp->heredoc) ?
+		ft_strdel(&(tmp->heredoc)) : 0;
+		tmp->fd = -1;
+		free(tmp);
+		tmp = tmp2;
+	}
+	begin->parselst = NULL;
 }
 
 void		free_parselst(t_parse *parse)

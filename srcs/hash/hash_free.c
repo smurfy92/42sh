@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/13 01:57:20 by vdanain           #+#    #+#             */
-/*   Updated: 2016/11/13 01:57:38 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/13 23:04:29 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void		root_hfree(t_root **root)
 {
 	hash_free(root, ft_strlen((*root)->charlist), (*root)->first);
 	ft_strdel(&(*root)->charlist);
+	get_nbchar(NULL, 1);
 	free(*root);
 	*root = NULL;
 }

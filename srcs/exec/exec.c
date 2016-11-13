@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 13:30:12 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/13 03:23:27 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/13 22:50:01 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void		andor_exec(t_group *grp)
 		grp->allcmd->andor = tmp->next;
 		if (tmp->next)
 			grp->exit = 0;
+		free_allparse(tmp);
 		free(tmp);
 	}
 }
