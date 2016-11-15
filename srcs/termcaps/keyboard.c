@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 17:05:11 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/13 22:18:48 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/15 11:37:53 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	get_cmd(t_group *grp, int fd)
 	while ((ret = read(fd, order, BUF_SIZE)) > 0)
 	{
 		order[ret] = '\0';
-		tmp = JOIN(tmp, order);
+		tmp = JOINF(tmp, order, 1);
 		// if (is_stdout == false)
 		// 	read_fd_in(grp, order);
 		// else 
@@ -128,6 +128,8 @@ void	get_cmd(t_group *grp, int fd)
 		fill_cmd_line(grp);
 	ft_go_end(grp);
 	ret == 0 ? read_fd_in(grp, tmp) : ft_putchar_fd('\n', 2);
+	if (tmp)
+		ft_strdel(&tmp);
 	reset_edl(grp);
 	ft_bzero(order, BUF_SIZE + 1);
 }

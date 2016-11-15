@@ -1,0 +1,1 @@
+ls lala 2>&1 | cat > toto && ls 1>&- | cat >> toto && ls 1>&2 | cat >> toto
