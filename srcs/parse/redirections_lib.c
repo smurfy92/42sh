@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_lib.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 17:24:49 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/13 03:35:29 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/15 15:33:43 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void		ft_del_red_from_cmd(t_parse *parse, int end, int start)
 		end++;
 	tmp = ft_strdup(&parse->cmd[end]);
 	parse->cmd[start] = '\0';
-	parse->cmd = ft_strjoin_nf(parse->cmd, tmp, 1);
+	parse->cmd = ft_strjoin_nf(parse->cmd, tmp, 3);
 }
 
 
@@ -54,6 +54,7 @@ int			check_stat(t_parse *parse, char **file)
 	tmp = ft_strjoin_nf(tmp, "/", 1);
 	tmp = ft_strjoin_nf(tmp, *file, 1);
 	stat(tmp, &buf);
+	REMOVE(&tmp);
 	if (S_ISDIR(buf.st_mode))
 	{
 		error_cmd("42sh: is a directory: ", *file, 1);
