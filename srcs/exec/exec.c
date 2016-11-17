@@ -5,25 +5,22 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/17 17:00:17 by julio             #+#    #+#             */
-/*   Updated: 2016/11/17 17:01:20 by julio            ###   ########.fr       */
+/*   Created: 2016/11/04 13:30:12 by jtranchi          #+#    #+#             */
+/*   Updated: 2016/11/17 17:49:16 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-void		check_lastcmd(t_group *grp)
+void		check_lastcmd(t_group *grp, t_parse *parse)
 {
 	t_parse *tmp;
 
-	tmp = grp->allcmd->andor->parselst;
+	tmp = parse;
 	while (tmp && tmp->next)
 		tmp = tmp->next;
 	if (is_builtins(tmp->cmdsplit))
-	{
-		CMD(cmdsplit) = tmp->cmdsplit;
-		builtins(grp);
-	}
+		builtins(grp, tmp);
 }
 
 void		pipe_exec(t_group *grp, t_parse *parse)
@@ -33,7 +30,6 @@ void		pipe_exec(t_group *grp, t_parse *parse)
 
 	tmp = parse;
 	grp->father = fork();
-	grp->program_pid = grp->father;
 	if (grp->father == 0)
 	{
 		while (tmp)
@@ -41,7 +37,7 @@ void		pipe_exec(t_group *grp, t_parse *parse)
 			if (!tmp->fail)
 			{
 				if (tmp->next)
-					ft_fork_pipe(grp);
+					ft_fork_pipe(grp, tmp);
 				else
 					exec_child(grp, tmp);
 			}
@@ -50,9 +46,8 @@ void		pipe_exec(t_group *grp, t_parse *parse)
 		ft_exit(grp, EXIT_FAILURE);
 	}
 	waitpid(grp->father, &ret, 0);
-	grp->program_pid = getpid();
 	error_process_check(ret);
-	check_lastcmd(grp);
+	check_lastcmd(grp, tmp);
 	if (ret > 0)
 		grp->exit = 1;
 }
