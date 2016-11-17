@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signaux.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:50:41 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/16 20:41:50 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/17 16:22:31 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	sig_handler(void)
 	memset (&act, '\0', sizeof(act));
 	act.sa_flags = SA_SIGINFO;
 	act.sa_sigaction = &sighandler;
-
     //sigaction(SIGINT, &act, NULL); // not working yet
     signal(SIGINT, handler_ctrl_c);
 

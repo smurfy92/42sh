@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/13 23:30:30 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/17 00:23:04 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/17 16:36:56 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,89 +70,71 @@ void		free_term(t_group *grp)
 	TERM(cmd_quote) = NULL;
 }
 
-void		free_allparse(t_andor *begin)
-{
-	t_parse		*tmp;
-	t_parse		*tmp2;
-
-	tmp = begin->parselst;
-	while (tmp)
-	{
-		tmp2 = tmp->next;
-		ft_strdel(&(tmp->cmd));
-		ft_freestrtab(&tmp->cmdsplit);
-		ft_strdel(&(tmp->dbred));
-		ft_strdel(&(tmp->sgred));
-		ft_strdel(&(tmp->file));
-		ft_strdel(&(tmp->closefd));
-		ft_strdel(&(tmp->redfd));
-		ft_strdel(&(tmp->bquotes));
-		(tmp->heredoc) ?
-		ft_strdel(&(tmp->heredoc)) : 0;
-		tmp->fd = -1;
-		free(tmp);
-		tmp = tmp2;
-	}
-	begin->parselst = NULL;
-}
-
 void		free_parselst(t_parse *parse)
 {
 	int			i;
 
 	i = -1;
-	ft_strdel(&(parse->cmd));
+	REMOVE(&(parse->cmd));
 	while (parse->cmdsplit[++i])
-		ft_strdel(&(parse->cmdsplit[i]));
+		REMOVE(&(parse->cmdsplit[i]));
 	free(parse->cmdsplit);
-	ft_strdel(&(parse->dbred));
-	ft_strdel(&(parse->sgred));
-	ft_strdel(&(parse->file));
-	ft_strdel(&(parse->closefd));
-	ft_strdel(&(parse->redfd));
-	ft_strdel(&(parse->bquotes));
-	(parse->heredoc) ?
-	ft_strdel(&(parse->heredoc)) : 0;
+	REMOVE(&(parse->dbred));
+	REMOVE(&(parse->sgred));
+	REMOVE(&(parse->file));
+	REMOVE(&(parse->closefd));
+	REMOVE(&(parse->redfd));
+	REMOVE(&(parse->bquotes));
+	REMOVE(&(parse->heredoc));
 	parse->fd = -1;
-	free(parse);
-	parse = NULL;
 }
 
-void	free_allandor(t_andor **to_free)
+void		free_allparse(t_andor *andor)
+{
+	t_parse		*tmp;
+	t_parse		*tmp2;
+
+	tmp = andor->parselst;
+	while (tmp)
+	{
+		tmp2 = tmp->next;
+		free_parselst(tmp);
+		free(tmp);
+		tmp = tmp2;
+	}
+}
+
+void	free_allandor(t_andor *andor)
 {
 	t_andor	*tmp;
 	t_andor	*tmp2;
 
-	tmp = *to_free;
+	tmp = andor;
 	while (tmp)
 	{
 		tmp2 = tmp->next;
-		ft_strdel(&tmp->cmd);
-		if (tmp->parselst)
-			free_allparse(tmp);
-		tmp->parselst = NULL;
+		REMOVE(&tmp->cmd);
+		free_allparse(tmp);
 		free(tmp);
 		tmp = tmp2;
 	}
-	*to_free = NULL;
 }
 
-void	free_allcmd(t_allcmd **to_free)
+void	free_allcmd(t_group *grp)
 {
 	t_allcmd	*tmp;
 	t_allcmd	*tmp2;
 
-	tmp = *to_free;
+	tmp = grp->allcmd;
 	while (tmp)
 	{
 		tmp2 = tmp->next;
-		//ft_strdel(&tmp->cmd);
-		if (tmp->andor)
-			free_allandor(&tmp->andor);
+		REMOVE(&tmp->cmd);
+		free_allandor(tmp->andor);
 		free(tmp);
 		tmp = tmp2;
 	}
-	*to_free = NULL;
+	grp->allcmd = NULL;
 }
 
 void		ft_free_parse(t_group *grp)
@@ -162,8 +144,7 @@ void		ft_free_parse(t_group *grp)
 	free_term(grp);
 	free_env_tmp(grp);
 	check_parentheses(0);
-	if (grp->allcmd)
-		free_allcmd(&grp->allcmd);
+	free_allcmd(grp);
 	while (grp->hdcount > 0)
 	{
 		file = JOINF("hdoc_", ft_itoa(grp->hdcount), 2);

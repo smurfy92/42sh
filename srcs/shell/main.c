@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:43:44 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/16 23:02:05 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/17 16:34:11 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void		proccess(t_group *grp)
 		ft_add_history(grp, TERM(cmd_line));
 	grp->allcmd = ft_strsplitquote(TERM(cmd_line), ';');
 	ft_init_parse(grp);
-	//ft_display_parse(grp);
 	init_exec(grp);
 	ft_free_parse(grp);
 	free(grp->allcmd);
