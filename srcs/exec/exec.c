@@ -30,6 +30,7 @@ void		pipe_exec(t_group *grp, t_parse *parse)
 
 	tmp = parse;
 	grp->father = fork();
+	grp->program_pid = grp->father;
 	if (grp->father == 0)
 	{
 		while (tmp)
@@ -46,6 +47,7 @@ void		pipe_exec(t_group *grp, t_parse *parse)
 		ft_exit(grp, EXIT_FAILURE);
 	}
 	waitpid(grp->father, &ret, 0);
+	grp->program_pid = getpid();
 	error_process_check(ret);
 	check_lastcmd(grp, tmp);
 	if (ret > 0)

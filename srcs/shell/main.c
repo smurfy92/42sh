@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:43:44 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/17 16:34:11 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/17 17:59:41 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void		proccess(t_group *grp)
 {
 	prompt();
 	get_cmd(grp, 0);
+	TERM(other_read) = false;
 	ft_pre_parse(grp);
 	if (LEN(TERM(cmd_line)) > 0)
 		ft_add_history(grp, TERM(cmd_line));
