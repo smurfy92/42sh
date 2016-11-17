@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard_tools.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 19:31:01 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/13 20:44:42 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/16 18:43:56 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	print_cmd(t_group *grp, char *order)
 void	handling_ctrl_d(t_group *grp)
 {
 	char	*tmp;
-
+	
 	if (TERM(cmd_size) == 0)
 	{
 		reset_shell();

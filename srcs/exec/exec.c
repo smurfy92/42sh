@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 13:30:12 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/13 23:32:37 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/16 19:27:59 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void		check_lastcmd(t_group *grp)
 	t_parse *tmp;
 
 	tmp = grp->allcmd->andor->parselst;
-	while (tmp->next)
+	while (tmp && tmp->next)
 		tmp = tmp->next;
 	if (is_builtins(tmp->cmdsplit))
 	{
@@ -58,10 +58,8 @@ void		pipe_exec(t_group *grp)
 void		andor_exec(t_group *grp)
 {
 	t_andor *tmp;
-	int 	ret;
 
-	ret = 0;
-	while (grp->allcmd->andor)
+	while (grp->allcmd && grp->allcmd->andor)
 	{
 		tmp = grp->allcmd->andor;
 		REMOVE(&grp->allcmd->andor->cmd);

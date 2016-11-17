@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:17:06 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/13 22:44:29 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/16 19:37:37 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,19 @@ int			init_shell(void)
 	if (getenv("TERM") == NULL)
 		ft_strdel(&name);
 	if (tcgetattr(0, &term) == -1)
-		return (-1);
+	{
+		grp->quit = true;
+		return (1);
+	}
 	grp->cpy_term = term;
 	term.c_lflag = term.c_lflag & (~ICANON & ~ECHO);
 	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
 	if (tcsetattr(0, 0, &term))
+	{
+		ft_putendl("could not set termcaps's attributes");
 		exit(-1);
+	}
 	return (1);
 }
 
@@ -81,6 +87,8 @@ t_group		*set_grp(t_group *grp)
 	grp->allcmd = NULL;
 	grp->quit = false;
 	grp->father = -1;
+	grp->program_name = NULL;
+	grp->program_pid = -1;
 	ft_get_history(grp);
 	init_term(grp);
 	grp->root = NULL;

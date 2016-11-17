@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/13 23:30:30 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/13 23:39:38 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/17 00:23:04 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void		free_allparse(t_andor *begin)
 		ft_strdel(&(tmp->file));
 		ft_strdel(&(tmp->closefd));
 		ft_strdel(&(tmp->redfd));
+		ft_strdel(&(tmp->bquotes));
 		(tmp->heredoc) ?
 		ft_strdel(&(tmp->heredoc)) : 0;
 		tmp->fd = -1;
@@ -109,6 +110,7 @@ void		free_parselst(t_parse *parse)
 	ft_strdel(&(parse->file));
 	ft_strdel(&(parse->closefd));
 	ft_strdel(&(parse->redfd));
+	ft_strdel(&(parse->bquotes));
 	(parse->heredoc) ?
 	ft_strdel(&(parse->heredoc)) : 0;
 	parse->fd = -1;
@@ -144,7 +146,7 @@ void	free_allcmd(t_allcmd **to_free)
 	while (tmp)
 	{
 		tmp2 = tmp->next;
-		ft_strdel(&tmp->cmd);
+		//ft_strdel(&tmp->cmd);
 		if (tmp->andor)
 			free_allandor(&tmp->andor);
 		free(tmp);

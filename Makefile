@@ -92,7 +92,8 @@ INC += -I srcs/errors/includes/
 INC += -I ./includes/
 
 OBJ = $(SRC:.c=.o)
-FLAG = -g -Wall -Werror -Wextra
+FLAG = -g 
+#-Wall -Werror -Wextra
 #-fsanitize=address
 CG = \033[92m
 CY =  \033[93m

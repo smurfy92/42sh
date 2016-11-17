@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/08 18:39:35 by victordanain      #+#    #+#             */
-/*   Updated: 2016/11/13 04:38:59 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/16 22:16:36 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,33 +63,33 @@ void		path_help(t_group *grp)
 ** recupere le path avec env-i
 */
 
-void		mac_pathhelp(t_group *grp)
-{
-	pid_t		father;
-	int			fd[2];
-	char		line[4096 + 1];
-	int			ret;
-	char		**result;
+// void		mac_pathhelp(t_group *grp)
+// {
+// 	pid_t		father;
+// 	int			fd[2];
+// 	char		line[4096 + 1];
+// 	int			ret;
+// 	char		**result;
 
-	pipe(fd);
-	father = fork();
-	ret = -1;
-	ft_bzero(line, 4096);
-	if (father == 0)
-	{
-		dup2(fd[1], 1);
-		execve("/usr/libexec/path_helper", NULL, NULL);
-		exit(EXIT_FAILURE);
-	}
-	waitpid(father, &ret, 0);
-	if (ret == 0 && (ret = read(fd[0], line, 4096)) > 0)
-	{
-		line[ret] = '\0';
-		result = ft_strsplit(line, ';');
-		insert_env(grp, result[0]);
-		ft_freestrtab(&result);
-	}
-}
+// 	pipe(fd);
+// 	father = fork();
+// 	ret = -1;
+// 	ft_bzero(line, 4096);
+// 	if (father == 0)
+// 	{
+// 		dup2(fd[1], 1);
+// 		execve("/usr/libexec/path_helper", NULL, NULL);
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	waitpid(father, &ret, 0);
+// 	if (ret == 0 && (ret = read(fd[0], line, 4096)) > 0)
+// 	{
+// 		line[ret] = '\0';
+// 		result = ft_strsplit(line, ';');
+// 		insert_env(grp, result[0]);
+// 		ft_freestrtab(&result);
+// 	}
+// }
 
 void		home_helper(t_group *grp)
 {

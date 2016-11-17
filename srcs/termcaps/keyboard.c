@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 17:05:11 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/15 11:37:53 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/16 19:27:53 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,55 +71,34 @@ int		key_selection(t_group *grp, char *order)
 	return (1);
 }
 
-void read_fd_in(t_group *grp, char *order)
+void read_fd_in(t_group *grp)
 {
-	int i;
-	char str[2];
+	char *order;
 
-	i = -1;
 	TERM(cmd_line) = NEW(0);
-	while (order && order[++i] != '\0')
+	order = NEW(0);
+	while (get_next_line(0, &order) > 0)
 	{
-		ft_bzero(str, 2);
-		str[0] = order[i];
-		if (order[i] != '\n')
-			TERM(cmd_line) = JOINF(TERM(cmd_line), str, 1);
-		else if (order[i + 1] != '\0')
-			TERM(cmd_line) = JOINF(TERM(cmd_line), " ; ", 1);
+		TERM(cmd_line) = JOINF(TERM(cmd_line), order, 1);
 	}
-	printf("LINE: %s\n", TERM(cmd_line));
-	grp->quit = true;
+	REMOVE(&order);
 }
-
-// void	read_fd_in(t_group *grp, char *order)
-// {
-// 	if (order != '\n')
-// 		TERM(cmd_line) = JOINF(TERM(cmd_line), order, 1);
-// 	else if (order[i + 1] != '\0')
-// 		TERM(cmd_line) = JOINF(TERM(cmd_line), " ; ", 1);
-// }
 
 void	get_cmd(t_group *grp, int fd)
 {
 	int		ret;
 	char	order[BUF_SIZE + 1];
-	int		is_stdout;
-	char	*tmp;
 
-	//tmp = SDUP("");
-	is_stdout = true;
-	fcntl(0, F_GETPATH, order);
-	if (ft_strstr(order, "/dev/ttys") == NULL) // leaks
-		is_stdout = false;
+	
+	if (grp->quit == true)
+	{
+		read_fd_in(grp);
+		return ;
+	}
 	ft_bzero(order, BUF_SIZE + 1);
-	tmp = SDUP("");
 	while ((ret = read(fd, order, BUF_SIZE)) > 0)
 	{
 		order[ret] = '\0';
-		tmp = JOINF(tmp, order, 1);
-		// if (is_stdout == false)
-		// 	read_fd_in(grp, order);
-		// else 
 		if (key_selection(grp, order) == '\n' && ft_escape(grp) == 0)
 			break ;
 		ft_bzero(order, BUF_SIZE + 1);
@@ -127,9 +106,7 @@ void	get_cmd(t_group *grp, int fd)
 	if (TERM(cmd_quote) != NULL)
 		fill_cmd_line(grp);
 	ft_go_end(grp);
-	ret == 0 ? read_fd_in(grp, tmp) : ft_putchar_fd('\n', 2);
-	if (tmp)
-		ft_strdel(&tmp);
+	ft_putchar_fd('\n', 2);
 	reset_edl(grp);
 	ft_bzero(order, BUF_SIZE + 1);
 }

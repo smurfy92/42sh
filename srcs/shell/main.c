@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:43:44 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/13 22:58:31 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/16 23:02:05 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,11 @@ int			ft_getchar(int c)
 
 void		prompt(void)
 {
-	char	order[512];
+	t_group *grp;
 
-	ft_bzero(order, 513);
-	fcntl(0, F_GETPATH, order);
-	if (ft_strstr(order, "/dev/ttys") != NULL) // leaks
+	grp = get_grp();
+	if (grp->quit == false)
 		ft_putstr_fd("42sh> ", 2);
-	ft_bzero(order, 513);
 }
 
 void		proccess(t_group *grp)
@@ -42,7 +40,7 @@ void		proccess(t_group *grp)
 	ft_free_parse(grp);
 	free(grp->allcmd);
 	ft_strdel(&TERM(cmd_line));
-	if (grp->quit)
+	if (grp->quit == true)
 		ft_exit(grp, grp->exit);
 	grp->hdcount = 0;
 }
@@ -56,6 +54,7 @@ int			main(int argc, char **argv, char **env)
 	init_shell();
 	grp = get_grp();
 	grp->program_name = SDUP(argv[0]);
+	grp->program_pid = getpid();
 	init_env(grp, env);
 	hash_init(&grp->root, grp, NULL);
 	sig_handler();
