@@ -6,7 +6,7 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:17:06 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/17 18:13:02 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/17 20:12:21 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,10 @@ t_group		*set_grp(t_group *grp)
 	grp->env->path_tmp = NULL;
 	grp->prompt_size = 6;
 	grp->exit = 0;
+	grp->quit = false;
+	grp->err_parse = false;
 	grp->hdcount = 0;
 	grp->allcmd = NULL;
-	grp->quit = false;
 	grp->father = -1;
 	grp->program_name = NULL;
 	grp->program_pid = -1;

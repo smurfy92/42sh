@@ -6,7 +6,7 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 17:05:11 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/17 17:58:54 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/17 20:19:52 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,26 +87,36 @@ void read_fd_in(t_group *grp)
 void	get_cmd(t_group *grp, int fd)
 {
 	int		ret;
+	int		ret_quote;
 	char	order[BUF_SIZE + 1];
 
-	
+	ret_quote = 0;
 	if (grp->quit == true)
 	{
 		read_fd_in(grp);
 		return ;
 	}
 	ft_bzero(order, BUF_SIZE + 1);
+	grp->err_parse = 0;
 	while ((ret = read(fd, order, BUF_SIZE)) > 0)
 	{
 		order[ret] = '\0';
-		if (key_selection(grp, order) == '\n' && ft_escape(grp) == 0)
+		if (key_selection(grp, order) == '\n' && (ret_quote = ft_escape(grp)) == 0)
+			break ;
+		if (ret_quote < 0)
 			break ;
 		ft_bzero(order, BUF_SIZE + 1);
 	}
-	if (TERM(cmd_quote) != NULL)
-		fill_cmd_line(grp);
 	ft_go_end(grp);
 	ft_putchar_fd('\n', 2);
-	reset_edl(grp);
+	if (TERM(cmd_quote) != NULL)
+		fill_cmd_line(grp);
+	if (ret_quote < 0)
+	{
+		grp->err_parse = 1;
+		error_cmd("42sh: parse error", "parenthese closed too soon", 1);
+	}
 	ft_bzero(order, BUF_SIZE + 1);
+	check_parentheses(0);
+	reset_edl(grp);
 }
