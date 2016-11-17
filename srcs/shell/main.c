@@ -6,7 +6,7 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:43:44 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/16 23:02:05 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/17 17:41:14 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ void		proccess(t_group *grp)
 {
 	prompt();
 	get_cmd(grp, 0);
+	TERM(other_read) = false;
 	ft_pre_parse(grp);
 	if (LEN(TERM(cmd_line)) > 0)
 		ft_add_history(grp, TERM(cmd_line));
 	grp->allcmd = ft_strsplitquote(TERM(cmd_line), ';');
 	ft_init_parse(grp);
-	//ft_display_parse(grp);
 	init_exec(grp);
 	ft_free_parse(grp);
 	free(grp->allcmd);

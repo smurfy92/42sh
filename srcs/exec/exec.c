@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/04 13:30:12 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/17 15:55:36 by julio            ###   ########.fr       */
+/*   Created: 2016/11/17 17:00:17 by julio             #+#    #+#             */
+/*   Updated: 2016/11/17 17:01:20 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,18 @@ void		check_lastcmd(t_group *grp)
 	}
 }
 
-void		pipe_exec(t_group *grp)
+void		pipe_exec(t_group *grp, t_parse *parse)
 {
 	t_parse *tmp;
 	int			ret;
+
+	tmp = parse;
 	grp->father = fork();
 	grp->program_pid = grp->father;
 	if (grp->father == 0)
 	{
-		while (grp->allcmd->andor->parselst)
+		while (tmp)
 		{
-			tmp = grp->allcmd->andor->parselst;
 			if (!tmp->fail)
 			{
 				if (tmp->next)
@@ -44,8 +45,7 @@ void		pipe_exec(t_group *grp)
 				else
 					exec_child(grp, tmp);
 			}
-			free_parselst(tmp);
-			grp->allcmd->andor->parselst = tmp->next;
+			tmp = tmp->next;
 		}
 		ft_exit(grp, EXIT_FAILURE);
 	}
@@ -57,29 +57,25 @@ void		pipe_exec(t_group *grp)
 		grp->exit = 1;
 }
 
-void		andor_exec(t_group *grp)
+void		andor_exec(t_group *grp, t_andor *andor)
 {
 	t_andor *tmp;
 
-	while (grp->allcmd && grp->allcmd->andor)
+	tmp = andor;
+	while (tmp)
 	{
-		tmp = grp->allcmd->andor;
-		REMOVE(&grp->allcmd->andor->cmd);
 		reset_shell();
-		pipe_exec(grp);
+		pipe_exec(grp, tmp->parselst);
 		init_shell();
 		if ((tmp->type == 1 && grp->exit != 0) ||
 			(tmp->type == 2 && grp->exit == 0))
 		{
-			free(tmp);
 			grp->exit = 0;
 			break ;
 		}
-		grp->allcmd->andor = tmp->next;
 		if (tmp->next)
 			grp->exit = 0;
-		free_allparse(tmp);
-		free(tmp);
+		tmp = tmp->next;
 	}
 }
 
@@ -87,17 +83,15 @@ void		init_exec(t_group *grp)
 {
 	t_allcmd *tmp;
 
+	tmp = grp->allcmd;
 	if (!grp->fail)
 	{
-		while (grp->allcmd)
+		while (tmp)
 		{
-			tmp = grp->allcmd;
-			REMOVE(&tmp->cmd);
-			andor_exec(grp);
-			grp->allcmd = tmp->next;
-			free(tmp);
-			tmp = grp->allcmd;
+			andor_exec(grp, tmp->andor);
+			tmp = tmp->next;
 		}
 	}
+	free_allcmd(grp);
 	grp->fail = 0;
 }
