@@ -6,7 +6,7 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/06 17:52:49 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/17 17:54:58 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/17 18:12:01 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,4 @@ void		check_heredoc(t_group *grp)
 		tmp = tmp->next;
 	}
 }
-
-// think to remove file on ctrl+d, ctrl+c and all possibilty to quit the hdoc prematurly
 // afficher erreur parse after heredoc 

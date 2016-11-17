@@ -6,18 +6,29 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/08 18:39:35 by victordanain      #+#    #+#             */
-/*   Updated: 2016/11/16 22:16:36 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/17 18:21:32 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
-
 
 void		help_shlvl(t_group *grp)
 {
 	insert_env(grp, "SHLVL=1");
 }
 
+void	shlvl(t_group *grp)
+{
+	char	*shlvl;
+	int		lvl;
+
+	lvl = ft_atoi(ft_getenv(grp, "SHLVL"));
+	lvl++;
+	shlvl = ft_itoa(lvl);
+	shlvl = JOINF("SHLVL=", shlvl, 2);
+	insert_env(grp, shlvl);
+	REMOVE(&shlvl);
+}
 
 void		help_pwd(t_group *grp)
 {
@@ -125,14 +136,12 @@ void		init_env(t_group *grp, char **env)
 	i = -1;
 	while (env && env[++i])
 		insert_env(grp, env[i]);
+	ft_getenv(grp, "SHLVL") == NULL ? help_shlvl(grp) : shlvl(grp);
 	if (ft_getenv(grp, "HOME") == NULL)
 		home_helper(grp);
 	if (ft_getenv(grp, "PATH") == NULL)
 		path_help(grp);
-	// if (ft_getenv(grp, "TERM") == NULL)
-	// {}
-	if (ft_getenv(grp, "SHLVL") == NULL)
-		help_shlvl(grp);
+	if (ft_getenv(grp, "TERM") == NULL) {}
 	if (ft_getenv(grp, "PWD") == NULL)
 		help_pwd(grp);
 }

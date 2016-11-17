@@ -6,7 +6,7 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:17:06 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/16 19:37:37 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/17 18:13:02 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void		init_term(t_group *grp)
 	grp->term->curs_pos = 0;
 	grp->term->line = 0;
 	grp->term->cmd_size = 0;
-	grp->term->other_read = 0;
+	grp->term->other_read = false;
 	grp->term->cmd_line = NULL;
 	grp->term->cmd_quote = NULL;
 	grp->term->search = NULL;
