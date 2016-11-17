@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:50:41 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/02 14:30:40 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/17 16:58:46 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,17 @@ void	cderr_pwd(t_group *grp, char *path, struct stat s_buf)
 	}
 }
 
-int		builtin_cd(t_group *grp)
+int		builtin_cd(t_group *grp, t_parse *parse)
 {
 	struct stat	s_buf;
 	char		*path;
 
-	if (CMD(cmdsplit)[1] == NULL)
+	if (parse->cmdsplit[1] == NULL)
 	{
 		path = ft_getenv(grp, "HOME") ? SDUP(ft_getenv(grp, "HOME")) :
 		SDUP("HOME has been unset from environnement !");
 	}
-	else if (CMD(cmdsplit)[1][0] == '-' && CMD(cmdsplit)[1][1] == false)
+	else if (parse->cmdsplit[1][0] == '-' && parse->cmdsplit[1][1] == false)
 	{
 		if (ft_getenv(grp, "OLDPWD") != NULL)
 		{
@@ -62,7 +62,7 @@ int		builtin_cd(t_group *grp)
 			path = SDUP("OLDPWD has been unset from environnement !");
 	}
 	else
-		path = SDUP(CMD(cmdsplit)[1]);
+		path = SDUP(parse->cmdsplit[1]);
 	lstat(path, &s_buf);
 	cderr_pwd(grp, path, s_buf);
 	REMOVE(&path);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 17:03:39 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/02 17:08:35 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/17 16:58:16 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,13 @@ void	check_line(char *arg)
 	ft_putstr(new);
 }
 
-int		builtin_echo(t_group *grp)
+int		builtin_echo(t_group *grp, t_parse *parse)
 {
 	int	i;
 
 	i = 0;
-	while (CMD(cmdsplit)[++i])
-		check_line(CMD(cmdsplit)[i]);
+	while (parse->cmdsplit[++i])
+		check_line(parse->cmdsplit[i]);
 	ft_putchar('\n');
 	return (1);
 }
