@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/06 17:52:49 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/13 21:02:10 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/17 16:48:38 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void		heredoc(t_group *grp, char *file, char *eof)
 	check_parentheses(0);
 	while (42)
 	{
+		TERM(other_read) = true;
 		grp->prompt_size = 6;
 		ft_putstr("hdocs>");
 		get_cmd(grp, 0);

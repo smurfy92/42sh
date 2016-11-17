@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   escape.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/01 17:35:14 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/13 20:42:42 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/17 16:50:19 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	fill_cmdquote(t_group *grp)
 	TERM(curs_pos) = 0;
 	TERM(line) = 0;
 	TERM(cmd_size) = 0;
-	TERM(other_read) = 0;
+	TERM(other_read) = true;
 	REMOVE(&TERM(cmd_line));
 }
 
@@ -106,6 +106,7 @@ int		ft_escape(t_group *grp)
 	if ((ret = check_esc(grp)) == 0)
 	{
 		grp->prompt_size = 6;
+		TERM(other_read) = false;
 		return (0);
 	}
 	// else if (ret < 0)

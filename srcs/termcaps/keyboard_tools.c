@@ -6,7 +6,7 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 19:31:01 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/16 18:43:56 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/17 16:56:41 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ void	handling_ctrl_d(t_group *grp)
 	char	*tmp;
 	
 	if (TERM(cmd_size) == 0)
+		ft_strdel(&TERM(cmd_line));
+	if (TERM(cmd_size) == 0 && TERM(other_read) == false)
 	{
 		reset_shell();
 		ft_putstr_fd("\n", 2);

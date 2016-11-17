@@ -6,7 +6,7 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/13 23:30:30 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/17 00:23:04 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/17 16:57:13 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,7 @@ void		free_parselst(t_parse *parse)
 	ft_strdel(&(parse->closefd));
 	ft_strdel(&(parse->redfd));
 	ft_strdel(&(parse->bquotes));
-	(parse->heredoc) ?
-	ft_strdel(&(parse->heredoc)) : 0;
+	ft_strdel(&(parse->heredoc));
 	parse->fd = -1;
 	free(parse);
 	parse = NULL;

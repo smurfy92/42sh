@@ -6,7 +6,7 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 13:30:12 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/16 19:27:59 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/17 15:55:36 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void		pipe_exec(t_group *grp)
 	t_parse *tmp;
 	int			ret;
 	grp->father = fork();
+	grp->program_pid = grp->father;
 	if (grp->father == 0)
 	{
 		while (grp->allcmd->andor->parselst)
@@ -49,6 +50,7 @@ void		pipe_exec(t_group *grp)
 		ft_exit(grp, EXIT_FAILURE);
 	}
 	waitpid(grp->father, &ret, 0);
+	grp->program_pid = getpid();
 	error_process_check(ret);
 	check_lastcmd(grp);
 	if (ret > 0)

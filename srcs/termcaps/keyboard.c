@@ -6,7 +6,7 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 17:05:11 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/16 19:27:53 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/17 16:49:13 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,7 @@ void read_fd_in(t_group *grp)
 	TERM(cmd_line) = NEW(0);
 	order = NEW(0);
 	while (get_next_line(0, &order) > 0)
-	{
 		TERM(cmd_line) = JOINF(TERM(cmd_line), order, 1);
-	}
 	REMOVE(&order);
 }
 
