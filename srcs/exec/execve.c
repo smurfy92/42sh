@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 02:28:21 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/13 23:33:22 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/16 19:27:57 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void		exec_child(t_group *grp, t_parse *parse)
 	ft_exit(grp, 0);
 }
 
-// attention on peut pas catch les segflt entre les pipes
+// attention on peut pas catch les segflt entre les pipes verifier ce que fait bash sur un segflt en plein milieu d'un pipe
 
 void		ft_fork_pipe(t_group *grp)
 {

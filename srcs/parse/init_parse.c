@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_parse.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 15:59:55 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/13 21:00:02 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/17 00:23:44 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ static void		ft_create_parse(t_group *grp, t_andor *tabl, t_andor *andor)
 	tmp->file = NULL;
 	tmp->redfd = NULL;
 	tmp->closefd = NULL;
+	tmp->bquotes = NULL;
 	tmp->errnb = 0;
 	tmp->fd = -1;
 	tmp->fail = 0;
@@ -90,11 +91,11 @@ static void		ft_parse(t_group *grp, t_andor *andor)
 	t_andor		*tabl;
 	t_andor		*tmp;
 	int			i;
-	int			y;
+	//int			y;
 
 	i = 0;
 	tabl = ft_strsplitpipe(andor->cmd, '|');
-	y = ft_count_pipes(andor->cmd);
+	//y = ft_count_pipes(andor->cmd);
 	while (tabl)
 	{
 		if (tabl->cmd[0] == '\0' && !grp->fail)
@@ -115,8 +116,8 @@ static void		ft_parse(t_group *grp, t_andor *andor)
 
 void		ft_init_parse(t_group *grp)
 {
-	t_allcmd *tabl;
-	t_andor *tmp2;
+	t_allcmd	*tabl;
+	t_andor		*tmp2;
 
 	tabl = grp->allcmd;
 	while (tabl)

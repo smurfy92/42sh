@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_lib.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:17:44 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/13 01:14:30 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/17 00:23:15 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,34 @@ void		ft_replace_tilde(t_group *grp, t_parse *parse, int i)
 		parse->cmd = ft_strjoin_nf(parse->cmd, path, 1);
 	REMOVE(&tmp);
 	grp->minus = 1;
+}
+
+void		ft_replace_bquote(t_parse *parse, int i)
+{
+	int		start;
+	int		end;
+	char	*bquote;
+	char	*begin;
+
+	start = i + 1;
+	i = start;
+	end = 0;
+	while (parse->cmd[i] != '`')
+	{
+		end++;
+		i++;
+	}
+	bquote = SUB(parse->cmd, start, end);
+	if (parse->bquotes != NULL)
+	{
+		parse->bquotes = JOINF(parse->bquotes, ";", 1);
+		parse->bquotes = JOINF(parse->bquotes, bquote, 2);
+	}
+	else
+	{
+		parse->bquotes = SDUP(bquote);
+		REMOVE(&bquote);
+	}
+	begin = SUB(parse->cmd, 0, start - 1);
+	parse->cmd = JOINF(begin, SUB(parse->cmd, start + end + 1, LEN(parse->cmd)), 2);
 }

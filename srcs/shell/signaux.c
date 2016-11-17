@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   signaux.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:50:41 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/13 22:52:46 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/16 20:41:50 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
+
+static void sighandler(int signum, siginfo_t *info, void *ptr)
+{
+	printf("\nprocess_signal: %lu\n", 
+		(unsigned long)getpid());
+    printf("Received signal %d\n", signum);
+    printf ("Sending PID: %lu, UID: %ld\n",
+			(unsigned long)info->si_pid, (long)info->si_uid);
+}
 
 void	handler_win(int sig)
 {
@@ -42,8 +51,8 @@ void	handler_ctrl_c(int sig)
 	TERM(cmd_size) = 0;
 	grp->prompt_size = 6;
 	ft_putchar_fd('\n', 2);
-	init_shell();
 	prompt();
+
 }
 
 void	ft_prompt(int signum)
@@ -59,8 +68,17 @@ void	ft_prompt(int signum)
 
 void	sig_handler(void)
 {
+	struct sigaction act;
+
+	memset (&act, '\0', sizeof(act));
+	act.sa_flags = SA_SIGINFO;
+	act.sa_sigaction = &sighandler;
+
+    //sigaction(SIGINT, &act, NULL); // not working yet
+    signal(SIGINT, handler_ctrl_c);
+
 	signal(SIGTSTP, ft_prompt);
 	signal(SIGQUIT, handler_ctrl_c);
-	signal(SIGINT, handler_ctrl_c);
 	signal(SIGWINCH, handler_win);
+
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:10:01 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/15 15:35:46 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/17 00:25:47 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ static void		ft_parse_redirections2(t_group *grp, t_parse *parse, int i)
 		ft_replace_vars(grp, parse, i + 1);
 	else if (parse->cmd[i] == '~')
 		ft_replace_tilde(grp, parse, i);
+	else if (parse->cmd[i] == '`')
+		ft_replace_bquote(parse, i);
 	else
 		grp->minus = 1;
 }

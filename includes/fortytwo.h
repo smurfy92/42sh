@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fortytwo.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:42:31 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/13 20:30:57 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/16 19:49:17 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@
 # include "free.h"
 # include "debug.h"
 # include "errors.h"
+# include <string.h>
+
 
 # define KEY(a, b, c, d) ((d << 24) + (c << 16) + (b << 8) + a)
 # define NEW(x)			(ft_strnew(x))
