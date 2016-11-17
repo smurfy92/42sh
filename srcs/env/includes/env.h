@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 16:54:18 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/13 04:01:21 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/17 17:01:20 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct			s_env
 }						t_env;
 
 //env .c
-int						builtin_env(t_group *grp);
+int						builtin_env(t_group *grp, t_parse *parse);
 
 //env_lib.c
 int						is_env(char *env);

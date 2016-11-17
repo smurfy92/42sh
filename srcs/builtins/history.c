@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:55:46 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/02 13:08:03 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/17 17:03:15 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,17 @@ void	ft_display_history(t_history *hist)
 	}
 }
 
-int		builtin_history2(t_group *grp)
+int		builtin_history2(t_group *grp, t_parse *parse)
 {
-	if (ft_atoi(CMD(cmdsplit)[1]) > 0)
+
+	if (ft_atoi(parse->cmdsplit[1]) > 0)
 	{
-		if (ft_atoi(CMD(cmdsplit)[1]) > grp->history->i)
+		if (ft_atoi(parse->cmdsplit[1]) > grp->history->i)
 		{
 			ft_putendl("42sh: history: invalid parameter");
 			return (1);
 		}
-		if (ft_atoi(CMD(cmdsplit)[1]) == grp->history->i)
+		if (ft_atoi(parse->cmdsplit[1]) == grp->history->i)
 		{
 			(grp->history->i < 1000) ? ft_putchar_fd(' ', 2) : 0;
 			(grp->history->i < 100) ? ft_putchar_fd(' ', 2) : 0;
@@ -63,30 +64,32 @@ int		builtin_history2(t_group *grp)
 		}
 		else
 			ft_display_history(ft_history_get_by_id(grp,
-			ft_atoi(CMD(cmdsplit)[1])));
+			ft_atoi(parse->cmdsplit[1])));
 	}
 	else
 		ft_display_history(ft_history_get_by_id(grp, grp->history->i +
-		ft_atoi(CMD(cmdsplit)[1])));
+		ft_atoi(parse->cmdsplit[1])));
 	return (0);
 }
 
-int		builtin_history(t_group *grp)
+int		builtin_history(t_group *grp, t_parse *parse)
 {
+	char	**cmdsplit;
 	grp->history = ft_history_get_last(grp);
-	if (!CMD(cmdsplit)[1])
+	cmdsplit = parse->cmdsplit;
+	if (!cmdsplit[1])
 		if (grp->history->i > 16)
 			ft_display_history(ft_history_get_by_id(grp, grp->history->i - 16));
 		else
 			ft_display_history(ft_history_get_first(grp));
 	else
 	{
-		if (!ft_strisdigit(CMD(cmdsplit)[1]))
+		if (!ft_strisdigit(cmdsplit[1]))
 		{
 			ft_putendl("42sh: history: invalid parameter");
 			return (1);
 		}
-		if (builtin_history2(grp))
+		if (builtin_history2(grp, parse))
 			return (1);
 	}
 	return (0);

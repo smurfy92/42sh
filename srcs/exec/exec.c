@@ -6,24 +6,21 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 13:30:12 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/17 16:39:21 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/17 17:09:17 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-void		check_lastcmd(t_group *grp)
+void		check_lastcmd(t_group *grp, t_parse *parse)
 {
 	t_parse *tmp;
 
-	tmp = grp->allcmd->andor->parselst;
+	tmp = parse;
 	while (tmp && tmp->next)
 		tmp = tmp->next;
 	if (is_builtins(tmp->cmdsplit))
-	{
-		CMD(cmdsplit) = tmp->cmdsplit;
-		builtins(grp);
-	}
+		builtins(grp, tmp);
 }
 
 void		pipe_exec(t_group *grp, t_parse *parse)
@@ -40,7 +37,7 @@ void		pipe_exec(t_group *grp, t_parse *parse)
 			if (!tmp->fail)
 			{
 				if (tmp->next)
-					ft_fork_pipe(grp);
+					ft_fork_pipe(grp, tmp);
 				else
 					exec_child(grp, tmp);
 			}
@@ -50,7 +47,7 @@ void		pipe_exec(t_group *grp, t_parse *parse)
 	}
 	waitpid(grp->father, &ret, 0);
 	error_process_check(ret);
-	check_lastcmd(grp);
+	check_lastcmd(grp, tmp);
 	if (ret > 0)
 		grp->exit = 1;
 }

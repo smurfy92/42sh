@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 16:51:54 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/16 22:16:43 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/17 17:01:39 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ void	create_tmp_env(t_group *grp)
 	}
 }
 
-int		builtin_env(t_group *grp)
+int		builtin_env(t_group *grp, t_parse *parse)
 {
 	char	**cmdsplit;
 	int		start;
 	int		end;
 
-	cmdsplit = CMD(cmdsplit);
+	cmdsplit = parse->cmdsplit;
 	if (env_opt(grp) < 0)
 		return (-1);
 	if (ENV(opt_i) == false && ENV(start_varenv) == false && ENV(cmd) == NULL)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 02:28:21 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/16 19:27:57 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/17 17:08:21 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,18 +84,16 @@ void		exec_child(t_group *grp, t_parse *parse)
 
 // attention on peut pas catch les segflt entre les pipes verifier ce que fait bash sur un segflt en plein milieu d'un pipe
 
-void		ft_fork_pipe(t_group *grp)
+void		ft_fork_pipe(t_group *grp, t_parse *parse)
 {
 	int		tabl[2];
 	pid_t	pid;
-	t_parse	*parse;
 	int		fd;
 	int 	ret;
 	char	*path;
 	char	**env;
 
 	pipe(tabl);
-	parse = grp->allcmd->andor->parselst;
 	pid = fork();
 	if (pid == 0)
 	{
@@ -115,7 +113,7 @@ void		ft_fork_pipe(t_group *grp)
 			execve(path, parse->cmdsplit, env);
 		}
 		else if (ret == 1)
-			builtins(grp);
+			builtins(grp, parse);
 		else
 			ft_exit(grp, EXIT_FAILURE);
 		ft_exit(grp, grp->exit);
