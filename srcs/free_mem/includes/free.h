@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:09:57 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/13 22:48:16 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/17 14:32:01 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void		ft_free_parse(t_group *grp);
 void		ft_exit(t_group *grp, int exit_code);
 void		free_parselst(t_parse *parse);
 void		free_allparse(t_andor *begin);
+void		free_allcmd(t_group *grp);
 
 //free2.c
 void		ft_free_andor(t_group *grp);
