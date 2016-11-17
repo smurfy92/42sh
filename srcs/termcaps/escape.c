@@ -6,7 +6,7 @@
 /*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/01 17:35:14 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/17 17:59:08 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/17 19:52:04 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		check_esc(t_group *grp)
 	char	c;
 
 	i = -1;
-	ret = -1;
+	ret = -2;
 	while (TERM(cmd_line) && (c = TERM(cmd_line)[++i]) != '\0')
 	{
 		if (ft_is_quote(c) && check_last_char(TERM(cmd_line), i) == 0)
@@ -53,7 +53,7 @@ int		check_esc(t_group *grp)
 	}
 	if (TERM(cmd_line) && c == '\0' && check_last_char(TERM(cmd_line), i) == 1)
 		return (1);
-	else if (ret == -1 && TERM(cmd_quote) != NULL &&
+	else if (ret == -2 && TERM(cmd_quote) != NULL &&
 		check_parentheses('o') == 0)
 		return (0);
 	else if (TERM(cmd_line) == NULL && TERM(cmd_quote) == NULL)
@@ -103,13 +103,11 @@ int		ft_escape(t_group *grp)
 {
 	int	ret;
 
+	grp->prompt_size = 6;
 	if ((ret = check_esc(grp)) == 0)
-	{
-		grp->prompt_size = 6;
 		return (0);
-	}
-	// else if (ret < 0)
-	// 	return (ret);
+	if (ret == -1)
+		return (-1);
 	fill_cmdquote(grp);
 	ft_putstr("\n$>");
 	grp->prompt_size = 2;
