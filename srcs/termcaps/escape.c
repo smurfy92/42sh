@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   escape.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/01 17:35:14 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/17 19:52:04 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/18 17:09:47 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int		check_last_char(char *line, int i)
 	int		count;
 
 	if (i == 0)
+		return (0);
+	if (line[i] == '\'')
 		return (0);
 	tmp = &line[i - 1];
 	count = 0;

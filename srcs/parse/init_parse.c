@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_parse.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 15:59:55 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/18 15:27:33 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/18 17:07:11 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,10 @@ static void		ft_polish_parse(t_parse *parse, int i)
 
 static void		polish(t_parse *parse)
 {
-	int ret;
-	int test;
-	int i;
+	int		ret;
+	int		test;
+	int		i;
+	char	q;
 
 	test = 0;
 	i = -1;
@@ -49,11 +50,19 @@ static void		polish(t_parse *parse)
 		ret = check_parentheses(parse->cmd[i]);
 		if (parse->cmd[i] == '\\' &&
 			parse->cmd[i + 1])
+		{
 			ft_polish_parse(parse, i - 1);
+		}
 		if (test == 0 && ret == 1)
 		{
-			test = 1;
+			q = parse->cmd[i];
 			ft_polish_parse(parse, i - 1);
+			test = 1;
+			if (q == '\'')
+			{
+				while ((ret = check_parentheses(parse->cmd[i])) == 1 && parse->cmd[i + 1] != '\'')
+					i++;
+			}
 		}
 		else if (test == 1 && ret == 0)
 		{
