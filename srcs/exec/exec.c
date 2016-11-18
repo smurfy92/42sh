@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 13:30:12 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/17 17:09:17 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/18 21:28:39 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void		check_lastcmd(t_group *grp, t_parse *parse)
 
 void		pipe_exec(t_group *grp, t_parse *parse)
 {
-	t_parse *tmp;
+	t_parse		*tmp;
 	int			ret;
 
 	tmp = parse;
@@ -37,10 +37,7 @@ void		pipe_exec(t_group *grp, t_parse *parse)
 		{
 			if (!tmp->fail)
 			{
-				if (tmp->next)
-					ft_fork_pipe(grp, tmp);
-				else
-					exec_child(grp, tmp);
+				(tmp->next) ? ft_fork_pipe(grp, tmp) : exec_child(grp, tmp);
 			}
 			tmp = tmp->next;
 		}
