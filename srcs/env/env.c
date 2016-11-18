@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 16:51:54 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/17 17:01:39 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/18 18:28:15 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ void	show_env(int choice, t_group *grp)
 	while (tmp)
 	{
 		ft_putstr(tmp->name);
-		ft_putstr("="
-			);
+		ft_putstr("=");
 		ft_putendl(tmp->val);
 		tmp = tmp->next;
 	}
@@ -68,4 +67,20 @@ int		builtin_env(t_group *grp, t_parse *parse)
 		ENV(cmd) == NULL ? show_env(1, grp) : init_exec_env(grp);
 	}
 	return (1);
+}
+
+void	init_env(t_group *grp, char **env)
+{
+	int		i;
+
+	i = -1;
+	while (env && env[++i])
+		insert_env(grp, env[i]);
+	ft_getenv(grp, "SHLVL") == NULL ? help_shlvl(grp) : shlvl(grp);
+	if (ft_getenv(grp, "HOME") == NULL)
+		home_helper(grp);
+	if (ft_getenv(grp, "PATH") == NULL)
+		path_help(grp);
+	if (ft_getenv(grp, "PWD") == NULL)
+		help_pwd(grp);
 }

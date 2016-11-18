@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_unset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 15:44:41 by jmontija          #+#    #+#             */
-/*   Updated: 2016/10/31 18:45:12 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/18 18:10:20 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,13 @@ static t_envlst	*create_env_line(t_group *grp, char *env, int i)
 	return (new);
 }
 
-static int		free_and_return(t_envlst *new)
+static int		free_and_return(t_envlst *new, t_group *grp)
 {
+	if (ft_strcmp(new->name, "PATH") == 0)
+	{
+		root_hfree(&grp->root);
+		hash_init(&grp->root, grp, NULL);
+	}
 	REMOVE(&new->val);
 	REMOVE(&new->name);
 	free(new);
@@ -93,7 +98,7 @@ int				insert_env(t_group *grp, char *env)
 	if (new == NULL)
 		return (-1);
 	if (new->exist == true)
-		return (free_and_return(new));
+		return (free_and_return(new, grp));
 	while (tmp && tmp->next)
 		tmp = tmp->next;
 	if (tmp)

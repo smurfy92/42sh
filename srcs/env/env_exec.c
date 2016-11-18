@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   env_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 22:59:42 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/13 03:24:26 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/18 18:29:38 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
+
+/*
+**	ret = is_builtins(cmd_split);
+**	ici cest les binaire qui sont exec pas les builtins
+**	to check if we need to exec builtin
+*/
 
 void		create_exec_env(t_group *grp, char **cmd_split)
 {
@@ -23,19 +29,16 @@ void		create_exec_env(t_group *grp, char **cmd_split)
 	if (CMD(fd) > 0)
 		dup2(CMD(fd), STDOUT_FILENO);
 	ft_dup_redirection(grp->allcmd->andor->parselst);
-	/*
-	ret = is_builtins(cmd_split); 
-	ici cest les binaire qui sont exec pas les builtins to check if we need to exec builtin
-	*/
 	if (ENV(path_tmp) != NULL)
 	{
 		root_hfree(&grp->root);
-		hash_init(&grp->root, grp, ENV(path_tmp)); // leaks
+		hash_init(&grp->root, grp, ENV(path_tmp));
 	}
 	path = get_path(cmd_split[0], grp->root);
 	if (check_cmd(&path, cmd_split[0]) == 0 && path)
 	{
-		env = ENV(lst_tmp) ? list_to_tab(ENV(lst_tmp)) : list_to_tab(ENV(lst));
+		env = ENV(lst_tmp) ? list_to_tab(ENV(lst_tmp)) :
+			list_to_tab(ENV(lst));
 		execve(path, cmd_split, env);
 	}
 	exit(EXIT_FAILURE);
