@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 22:59:42 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/18 18:29:38 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/18 22:18:18 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,12 @@ void		init_exec_env(t_group *grp)
 
 	cmd_split = ft_strsplit(ENV(cmd), ' ');
 	pid = fork();
+	grp->program_pid = pid;
 	pid == -1 ? exit(270) : 0;
 	if (pid == 0)
 		create_exec_env(grp, cmd_split);
 	waitpid(pid, &ret, 0);
+	grp->program_pid = getpid();
 	error_process_check(ret);
 	if (ret > 0)
 		grp->exit = 1;
