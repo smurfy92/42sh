@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_lib.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:17:44 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/18 15:30:20 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/18 20:21:32 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,22 @@ void		ft_replace_vars(t_group *grp, t_parse *parse, int i)
 	char	*tmp2;
 
 	start = i;
-	while (parse->cmd[i] && ft_isalpha(parse->cmd[i]))
+	while (parse->cmd[i] && (ft_isalpha(parse->cmd[i]) || parse->cmd[i] == '?'))
 		i++;
 	tmp = ft_strsub(&parse->cmd[start], 0, i - start);
-	if (ft_getenv(grp, tmp) == NULL)
+	if (ft_strlen(tmp) == 1 && tmp[0] == '?')
+	{
+		tmp2 = ft_strdup(&parse->cmd[i]);
+		parse->cmd[start - 1] = '\0';
+		if (!parse->cmd[start + 1])
+			parse->cmd = ft_strjoin_nf(parse->cmd, ft_itoa(grp->exit), 3);
+		else
+			parse->cmd = JOINF(JOINF(parse->cmd,
+			ft_itoa(grp->exit), 3), tmp2, 1);
+		ft_strdel(&tmp2);
+		ft_strdel(&tmp);
+	}
+	else if (ft_getenv(grp, tmp) == NULL)
 		grp->minus = 1;
 	else
 	{
