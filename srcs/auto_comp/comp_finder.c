@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/13 01:45:04 by vdanain           #+#    #+#             */
-/*   Updated: 2016/11/13 01:48:58 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/18 17:32:59 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*
 **	cherche toutes les possibilites et remplis une list comp
-**	pour les commandes 
+**	pour les commandes
 */
 
 void		cmd_finder(t_group *grp, t_comp **comp)
@@ -45,6 +45,25 @@ void		cmd_finder(t_group *grp, t_comp **comp)
 }
 
 /*
+**	effectue derniers checks sur lajout a la liste et ajoute si OK
+*/
+
+void		create_comp(struct dirent *cur_e, char *lw, t_group *grp)
+{
+	if (ft_strcmp(cur_e->d_name, ".") != 0 &&
+		ft_strcmp(cur_e->d_name, "..") != 0)
+	{
+		if ((lw[1] == '.') ? cur_e->d_name[0] == '.' :
+			cur_e->d_name[0] != '.')
+		{
+			grp->comp->c_type++;
+			new_comp(cur_e->d_name, &grp->comp,
+				CIS_D(cur_e->d_type), ft_strlen(lw) - 1);
+		}
+	}
+}
+
+/*
 **	ouvre un dossier donne en parametre et compare son contenu avec last
 **	word pour afficher les posssibles
 */
@@ -62,17 +81,9 @@ int			file_finder(t_group *grp, char *dir, t_comp **comp)
 	*comp = rtcomp_init(ft_strlen(TERM(cmd_line)), TERM(cmd_line));
 	while ((cur_e = readdir(o_dir)))
 	{
-		if (ft_strlen(lw) <= 1 || ft_strncmp(cur_e->d_name, lw + 1, ft_strlen(lw) - 1 ) == 0)
-		{
-			if (ft_strcmp(cur_e->d_name, ".") != 0 && ft_strcmp(cur_e->d_name, "..") != 0)
-			{
-				if ((lw[1] == '.') ? cur_e->d_name[0] == '.' : cur_e->d_name[0] != '.')
-				{
-					grp->comp->c_type++;
-					new_comp(cur_e->d_name, &grp->comp, CIS_D(cur_e->d_type), ft_strlen(lw) - 1);
-				}
-			}
-		}
+		if (ft_strlen(lw) <= 1 ||
+			ft_strncmp(cur_e->d_name, lw + 1, ft_strlen(lw) - 1) == 0)
+			create_comp(cur_e, lw, grp);
 	}
 	closedir(o_dir);
 	return (0);

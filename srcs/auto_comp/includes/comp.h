@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 18:40:45 by victordanain      #+#    #+#             */
-/*   Updated: 2016/11/13 01:49:37 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/18 17:57:37 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct		s_comp
 char				*get_last_word(char *cmd);
 void				point_onlast(char **lw);
 char				*get_dirtop(char *cmd);
-void				update_name(t_group *grp, char **name, t_comp **last, int comp_free);
+void				update_name(t_group *gp, char **na, t_comp **la, int c);
 
 /*
 **	comp_init.c
@@ -51,7 +51,6 @@ void				update_name(t_group *grp, char **name, t_comp **last, int comp_free);
 void				comp_init(t_group *grp, t_comp **comp);
 void				comp_free(t_group *grp, t_comp **begin);
 t_comp				*rtcomp_init(int start, char *val);
-
 
 /*
 **	comp_list.c

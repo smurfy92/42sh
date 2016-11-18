@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/13 01:39:57 by vdanain           #+#    #+#             */
-/*   Updated: 2016/11/13 01:49:40 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/18 17:55:45 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,16 @@ char		*get_dirtop(char *cmd)
 	int		stop;
 	char	*tmp;
 
-	if (cmd[0] == '/' && ft_strcmp(get_last_word(cmd), cmd) == 0 && (ft_strchr(cmd, '/') == ft_strrchr(cmd, '/')))
+	if (cmd[0] == '/' && ft_strcmp(get_last_word(cmd), cmd) == 0 &&
+		(ft_strchr(cmd, '/') == ft_strrchr(cmd, '/')))
 	{
 		tmp = ft_strdup("/");
 		return (tmp);
 	}
 	stop = ft_strlen(ft_strrchr(cmd, '/'));
-	tmp = ft_strsub(get_last_word(cmd), (ft_strcmp(get_last_word(cmd), cmd) == 0) ? 0 : 1, ft_strlen(get_last_word(cmd)) - stop);
+	tmp = ft_strsub(get_last_word(cmd),
+		(ft_strcmp(get_last_word(cmd), cmd) == 0) ? 0 : 1,
+		ft_strlen(get_last_word(cmd)) - stop);
 	return (tmp);
 }
 
