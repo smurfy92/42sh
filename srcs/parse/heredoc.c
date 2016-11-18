@@ -3,16 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/06 17:52:49 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/17 18:12:01 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/18 15:21:55 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-static void		ft_polish_parse(t_group *grp, int i)
+/*
+** deletes char in cmd_line at given indice
+*/
+
+static void		ft_polish_cmd_line(t_group *grp, int i)
 {
 	char	*tmp;
 
@@ -25,6 +29,11 @@ static void		ft_polish_parse(t_group *grp, int i)
 	else
 		TERM(cmd_line)[i + 1] = '\0';
 }
+
+/*
+** polishing cmd_line by deleting unwanted charateres
+** ex : escaped chars, separators
+*/
 
 static void		polish(t_group *grp)
 {
@@ -41,19 +50,23 @@ static void		polish(t_group *grp)
 		ret = check_parentheses(TERM(cmd_line)[i]);
 		if (TERM(cmd_line)[i] == '\\' &&
 			TERM(cmd_line)[i + 1])
-			ft_polish_parse(grp, i - 1);
+			ft_polish_cmd_line(grp, i - 1);
 		if (test == 0 && ret == 1)
 		{
 			test = 1;
-			ft_polish_parse(grp, i - 1);
+			ft_polish_cmd_line(grp, i - 1);
 		}
 		else if (test == 1 && ret == 0)
 		{
 			test = 0;
-			ft_polish_parse(grp, i - 1);
+			ft_polish_cmd_line(grp, i - 1);
 		}
 	}
 }
+
+/*
+** printing prompt for heredoc if has one or more
+*/
 
 void		heredoc(t_group *grp, char *file, char *eof)
 {
@@ -66,8 +79,8 @@ void		heredoc(t_group *grp, char *file, char *eof)
 	TERM(other_read) = true;
 	while (TERM(other_read) == true)
 	{
-		grp->prompt_size = 6;
-		ft_putstr("hdocs>");
+		grp->prompt_size = 7;
+		ft_putstr("hdocs> ");
 		get_cmd(grp, 0);
 		polish(grp);
 		if (TERM(cmd_line) && ft_strcmp(TERM(cmd_line), eof) == 0)
@@ -79,6 +92,10 @@ void		heredoc(t_group *grp, char *file, char *eof)
 	close(fd);
 	TERM(other_read) = false;
 }
+
+/*
+** checking if command has heredocs and activates heredoc prompt
+*/
 
 void		check_heredoc(t_group *grp)
 {

@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:10:01 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/17 00:25:47 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/18 15:40:41 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
+
+/*
+** parsing for '<'
+** format char*
+** replacing if existed
+*/
 
 static void		ft_addfile(t_group *grp, t_parse *parse, int i)
 {
@@ -19,6 +25,12 @@ static void		ft_addfile(t_group *grp, t_parse *parse, int i)
 	parse->file = get_redirection(grp, parse, i,  i - 1);
 	check_rights(parse, &parse->file, 1);
 }
+
+/*
+** parsing for '>>'
+** format char*
+** replacing if existed
+*/
 
 static void		ft_adddoubleredirection(t_group *grp, t_parse *parse, int i)
 {
@@ -29,6 +41,12 @@ static void		ft_adddoubleredirection(t_group *grp, t_parse *parse, int i)
 		grp->fail = 1;
 }
 
+/*
+** parsing for '>'
+** format char*
+** replacing if existed
+*/
+
 static void		ft_addredirection(t_group *grp, t_parse *parse, int i)
 {
 	if (parse->sgred)
@@ -37,6 +55,11 @@ static void		ft_addredirection(t_group *grp, t_parse *parse, int i)
 	if (check_rights(parse, &parse->sgred, 0))
 		grp->fail = 1;
 }
+
+/*
+** checking if it is a redirection at given indice
+** and sending to correct function if true
+*/
 
 static void		ft_parse_redirections2(t_group *grp, t_parse *parse, int i)
 {
@@ -66,6 +89,10 @@ static void		ft_parse_redirections2(t_group *grp, t_parse *parse, int i)
 	else
 		grp->minus = 1;
 }
+
+/*
+** checking parse cmd char by char to parse redirections
+*/
 
 void		ft_parse_redirections(t_group *grp, t_parse *parse)
 {

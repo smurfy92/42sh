@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:42:57 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/17 00:22:52 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/18 15:28:03 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void					ft_redirection_error(t_parse *parse, int end);
 
 void					ft_replace_vars(t_group *grp, t_parse *parse, int i);
 void					ft_create_redirections(t_parse *parse);
-int						ft_count_pipes(char *cmd);
+//int						ft_count_pipes(char *cmd);
 void					ft_replace_tilde(t_group *grp, t_parse *parse, int i);
 void					ft_replace_bquote(t_parse *parse, int i);
 //parse_lib2.c

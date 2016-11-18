@@ -6,11 +6,15 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 17:24:49 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/15 15:33:43 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/18 15:46:50 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
+
+/*
+** removing parsed redirection from parse cmd
+*/
 
 static void		ft_del_red_from_cmd(t_parse *parse, int end, int start)
 {
@@ -23,6 +27,10 @@ static void		ft_del_red_from_cmd(t_parse *parse, int end, int start)
 	parse->cmd = ft_strjoin_nf(parse->cmd, tmp, 3);
 }
 
+/*
+** returning redirection file if found
+** else returning null and printing error
+*/
 
 char			*get_redirection(t_group *grp, t_parse *parse, int i, int start)
 {
@@ -45,6 +53,11 @@ char			*get_redirection(t_group *grp, t_parse *parse, int i, int start)
 	return (tmp);
 }
 
+/*
+** check if redirection file is not a directory
+** printing error if it is a directory
+*/
+
 int			check_stat(t_parse *parse, char **file)
 {
 	struct stat buf;
@@ -64,6 +77,11 @@ int			check_stat(t_parse *parse, char **file)
 	}
 	return (0);
 }
+
+/*
+** checking rights on rediretions files
+** printing error if rights are not ok
+*/
 
 int			check_rights(t_parse *parse, char **file, int i)
 {
@@ -90,6 +108,10 @@ int			check_rights(t_parse *parse, char **file, int i)
 		return (1);
 	return (0);
 }
+
+/*
+** printing error if wrong parse format
+*/
 
 void		ft_redirection_error(t_parse *parse, int end)
 {
