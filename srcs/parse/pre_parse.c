@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   pre_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/31 15:26:52 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/16 22:01:50 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/18 15:37:31 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
+
+/*
+** builtin history :
+** replacing !! by last command in history
+*/
 
 void		ft_replace_last_cmd(t_group *grp, int i)
 {
@@ -35,6 +40,11 @@ void		ft_replace_last_cmd(t_group *grp, int i)
 	}
 }
 
+/*
+** builtin history :
+** replacing the hisotry result in cmd_line
+*/
+
 void		ft_replace_command(t_group *grp, t_history *hist, int start,
 int end)
 {
@@ -53,6 +63,11 @@ int end)
 		TERM(cmd_line) = JOINF(TERM(cmd_line), hist->var, 1);
 	}
 }
+
+/*
+** builtin history
+** replacing command with given history id
+*/
 
 void		ft_replace_by_id(t_group *grp, int i)
 {
@@ -78,6 +93,11 @@ void		ft_replace_by_id(t_group *grp, int i)
 	REMOVE(&tmp);
 }
 
+/*
+** builtin history :
+** deleting unwanted chars
+*/
+
 void		ft_escape_parse(t_group *grp, int i)
 {
 	char	*tmp;
@@ -91,6 +111,12 @@ void		ft_escape_parse(t_group *grp, int i)
 	else
 		TERM(cmd_line)[i + 1] = '\0';
 }
+
+/*
+** preparsing command for insertting in history
+** replacing builtin hisotry result
+** replace escaped chars
+*/
 
 void		ft_pre_parse(t_group *grp)
 {
@@ -111,5 +137,4 @@ void		ft_pre_parse(t_group *grp)
 		else if (TERM(cmd_line)[i] == '!' && TERM(cmd_line)[i + 1])
 			ft_replace_by_id(grp, i + 1);
 	}
-	//printf("cmd ->%s\n", (TERM(cmd_line)));
 }

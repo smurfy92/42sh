@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   init_parse.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 15:59:55 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/17 00:23:44 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/18 15:27:33 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
+
+/*
+** deletes char in parse cmd at given indice
+*/
 
 static void		ft_polish_parse(t_parse *parse, int i)
 {
@@ -25,6 +29,11 @@ static void		ft_polish_parse(t_parse *parse, int i)
 	else
 		parse->cmd[i + 1] = '\0';
 }
+
+/*
+** polishing parse by deleting unwanted charateres
+** ex : escaped chars, separators
+*/
 
 static void		polish(t_parse *parse)
 {
@@ -53,6 +62,10 @@ static void		polish(t_parse *parse)
 		}
 	}
 }
+
+/*
+** creates new parse  node
+*/
 
 static void		ft_create_parse(t_group *grp, t_andor *tabl, t_andor *andor)
 {
@@ -86,6 +99,10 @@ static void		ft_create_parse(t_group *grp, t_andor *tabl, t_andor *andor)
 	}
 }
 
+/*
+** spliting on andor node and creating parses nodes
+*/
+
 static void		ft_parse(t_group *grp, t_andor *andor)
 {
 	t_andor		*tabl;
@@ -95,7 +112,6 @@ static void		ft_parse(t_group *grp, t_andor *andor)
 
 	i = 0;
 	tabl = ft_strsplitpipe(andor->cmd, '|');
-	//y = ft_count_pipes(andor->cmd);
 	while (tabl)
 	{
 		if (tabl->cmd[0] == '\0' && !grp->fail)
@@ -113,6 +129,10 @@ static void		ft_parse(t_group *grp, t_andor *andor)
 	}
 	TERM(cmd_size) = 0;
 }
+
+/*
+** spliting on allcmd nodes and creating andor nodes
+*/
 
 void		ft_init_parse(t_group *grp)
 {

@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parse_lib.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:17:44 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/17 00:23:15 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/18 15:30:20 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
+
+/*
+** replacing environment variables in parse cmd
+*/
 
 void		ft_replace_vars(t_group *grp, t_parse *parse, int i)
 {
@@ -38,6 +42,10 @@ void		ft_replace_vars(t_group *grp, t_parse *parse, int i)
 	}
 }
 
+/*
+** creating files for redirections
+*/
+
 void		ft_create_redirections(t_parse *parse)
 {
 	if (parse->sgred)
@@ -48,24 +56,32 @@ void		ft_create_redirections(t_parse *parse)
 		O_APPEND, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
 }
 
-int			ft_count_pipes(char *cmd)
-{
-	int i;
-	int nb;
-	int	ret;
+/*
+** counting pipes for errors doest seem to be usefull anymore
+*/
 
-	nb = 1;
-	i = -1;
-	ret = 0;
-	check_parentheses(0);
-	while (cmd && cmd[++i])
-	{
-		ret = check_parentheses(cmd[i]);
-		if (ret == 0 && cmd[i] == '|' && (i > 0 && cmd[i - 1] != '\\'))
-			nb++;
-	}
-	return (nb);
-}
+// int			ft_count_pipes(char *cmd)
+// {
+// 	int i;
+// 	int nb;
+// 	int	ret;
+
+// 	nb = 1;
+// 	i = -1;
+// 	ret = 0;
+// 	check_parentheses(0);
+// 	while (cmd && cmd[++i])
+// 	{
+// 		ret = check_parentheses(cmd[i]);
+// 		if (ret == 0 && cmd[i] == '|' && (i > 0 && cmd[i - 1] != '\\'))
+// 			nb++;
+// 	}
+// 	return (nb);
+// }
+
+/*
+** replacing tilde in parse cmd
+*/
 
 void		ft_replace_tilde(t_group *grp, t_parse *parse, int i)
 {
@@ -87,6 +103,10 @@ void		ft_replace_tilde(t_group *grp, t_parse *parse, int i)
 	REMOVE(&tmp);
 	grp->minus = 1;
 }
+
+/*
+** replacing backquotes in parse cmd
+*/
 
 void		ft_replace_bquote(t_parse *parse, int i)
 {
