@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 02:28:21 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/17 20:10:28 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/18 14:42:36 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,12 @@ void		ft_dup_redirection(t_parse *parse)
 	if (parse->redfd)
 	{
 		tmp = ft_strsplit(parse->redfd, '>');
-		parse->fd = dup2(ft_atoi(tmp[0]), ft_atoi(tmp[1]));
+		printf("fd before-> %d\n", parse->fd);
+		parse->fd = dup2(ft_atoi(tmp[1]), ft_atoi(tmp[0]));
+		printf("fd after -> %d\n", parse->fd);
 		REMOVE(&tmp[0]);
 		REMOVE(&tmp[1]);
+		free(tmp);
 	}
 	if (parse->closefd)
 	{
@@ -99,11 +102,11 @@ void		ft_fork_pipe(t_group *grp, t_parse *parse)
 	{
 		if (parse->file && (fd = open(parse->file, O_RDONLY)))
 			dup2(fd, STDIN_FILENO);
-		ft_dup_redirection(parse);
 		if (parse->fd > 0)
 			dup2(tabl[1], parse->fd);
 		else
 			dup2(tabl[1], STDOUT_FILENO);
+		ft_dup_redirection(parse);
 		close(tabl[0]);
 		ret = is_builtins(parse->cmdsplit);
 		path = get_path(parse->cmdsplit[0], grp->root);
