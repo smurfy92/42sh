@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_unset_tmp.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 15:44:38 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/13 01:49:48 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/18 21:14:51 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,14 @@ int				unset_env_tmp(t_group *grp, char *todel)
 	return (-1);
 }
 
+void			new_helper(t_envlst *new, char *env, int i)
+{
+	new->exist = false;
+	new->name = SUB(env, 0, i);
+	new->val = SUB(env, i + 1, LEN(env));
+	new->next = NULL;
+}
+
 static t_envlst	*create_env_line(t_group *grp, char *env, int i)
 {
 	t_envlst *new;
@@ -47,17 +55,16 @@ static t_envlst	*create_env_line(t_group *grp, char *env, int i)
 
 	curr_env = grp->env->lst_tmp;
 	new = (t_envlst *)malloc(sizeof(t_envlst));
-	if (!(new) || !(env))
+	if (!(new) || !(env) || (i = is_env(env)) == false)
 		return (NULL);
-	if ((i = is_env(env)) == false)
-		return (NULL);
-	new->exist = false;
-	new->name = SUB(env, 0, i);
-	new->val = SUB(env, i + 1, LEN(env));
+	new_helper(new, env, i);
+	if (ft_strcmp(new->name, "PATH") == 0)
+	{
+		REMOVE(&ENV(path_tmp));
+		ENV(path_tmp) = SDUP(new->val);
+	}
 	while (curr_env != NULL)
 	{
-		if (ft_strcmp(new->name , "PATH") == 0)
-			ENV(path_tmp) = SDUP(new->val);
 		if (ft_strcmp(new->name, curr_env->name) == 0)
 		{
 			new->exist = true;
@@ -67,7 +74,6 @@ static t_envlst	*create_env_line(t_group *grp, char *env, int i)
 		}
 		curr_env = curr_env->next;
 	}
-	new->next = NULL;
 	return (new);
 }
 
