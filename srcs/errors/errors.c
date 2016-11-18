@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/02 12:56:35 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/13 03:07:30 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/18 21:25:14 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ void	error_process_check(int error_code)
 	t_group		*grp;
 
 	grp = get_grp();
-	error_code == SIGSEGV ? error_cmd("segmentation fault", grp->program_name , 1) : 0;
+	error_code == SIGSEGV ? error_cmd("segmentation fault",
+		grp->program_name, 1) : 0;
 }
