@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/13 01:57:20 by vdanain           #+#    #+#             */
-/*   Updated: 2016/11/13 23:04:29 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/18 22:41:18 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void		free_hashcmd(t_path **cmd)
 {
-	t_path *tmp = *cmd;
+	t_path *tmp;
+
+	tmp = *cmd;
 	ft_strdel(&tmp->path);
 	ft_strdel(&tmp->name);
 	free(*cmd);
