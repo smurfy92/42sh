@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 17:03:39 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/18 23:17:50 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/19 16:44:32 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		replace_ascii(char c, char *str, char **ptr)
 			if (ft_atoi(&str[i]) < 8)
 			{
 				octal_char = ft_charjoin(octal_char, str[i]);
-				//i++;
+				i++;
 			}
 			break ;
 		}
@@ -35,8 +35,7 @@ int		replace_ascii(char c, char *str, char **ptr)
 		i++;
 	}
 	decimal_int = octal_to_decimal(ft_atoi(octal_char));
-	printf("o_char: %s d_int: %d\n", octal_char, decimal_int);
-	(*ptr) += i + 1;
+	(*ptr) += i;
 	REMOVE(&octal_char);
 	return (decimal_int);
 }

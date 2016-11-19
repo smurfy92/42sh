@@ -11,9 +11,10 @@
 /* ************************************************************************** */
 
 #include "fortytwo.h"
-
+#include "math.h"
 /*
 **	could be put in libft !
+**	a revoir ft_power ne marche pas comme il faut !
 */
 
 char	*ft_charjoin(char *s1, char c)
@@ -59,7 +60,7 @@ int octal_to_decimal(int octalNumber)
 	decimalNumber = 0;
 	while(octalNumber != 0)
 	{
-		decimalNumber += (octalNumber%10) * ft_power(8,i);
+		decimalNumber += (octalNumber%10) * pow(8,i);
 		++i;
 		octalNumber/=10;
 	}
