@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 15:43:58 by julio             #+#    #+#             */
-/*   Updated: 2016/11/19 21:42:31 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/19 22:08:33 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void		ft_go_down(t_group *grp)
 		ft_right_arrow(grp);
 }
 
-int		ft_is_printable(char *order)
+int			ft_is_printable(char *order)
 {
 	int	i;
 
