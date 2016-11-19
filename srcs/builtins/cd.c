@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 20:23:03 by julio             #+#    #+#             */
-/*   Updated: 2016/11/19 16:59:56 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/19 21:05:18 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,37 @@ static char		*join_path(t_group *grp, char *path)
 		tmp = JOINF(tmp, "/", 1);
 	result = JOIN(tmp, path);
 	return (result);
+}
+
+void			update_env_pwd(t_group *grp, char *path, int opt, char *curr_dir)
+{
+	char	*pwd;
+	char	*old_pwd;
+	char	buf[1024 + 1];
+	char	*tp;
+
+	ft_bzero(buf, 1025);
+	old_pwd = JOIN("OLDPWD=", curr_dir);
+	tp = (ft_getenv(grp, "PWD")) ? ft_getenv(grp, "PWD") : getcwd(buf, 1024);
+	if (opt)
+		pwd = JOIN("PWD=", getcwd(buf, 1024));
+	else if (ft_strncmp(path, "..", 2) != 0 && ft_strncmp(path, ".", 1) != 0)
+		pwd = (path[0] == '/') ? JOIN("PWD=", path) : join_path(grp, path);
+	else if (ft_strcmp(path, "..") == 0)
+	{
+		curr_dir = ft_strsub(tp, 0, ft_strlen(tp) - (ft_strlen(ft_strrchr(tp, '/')) - 1));
+		if (curr_dir[ft_strlen(curr_dir) - 1] == '/' && ft_strlen(curr_dir) > 1)
+			curr_dir[ft_strlen(curr_dir) - 1] = '\0';
+		pwd = JOIN("PWD=", curr_dir);
+		ft_strdel(&curr_dir);
+	}
+	else if (ft_strncmp(path, "..", 2))
+		pwd = JOIN("PWD=", getcwd(buf, 1024));
+	insert_env(grp, pwd);
+	insert_env(grp, old_pwd);
+	REMOVE(&old_pwd);
+	REMOVE(&pwd);
+	grp->exit = 0;
 }
 
 void			cderr_pwd(t_group *grp, char *path, struct stat s_buf, int opt)
@@ -44,27 +75,25 @@ void			cderr_pwd(t_group *grp, char *path, struct stat s_buf, int opt)
 		error_cmd("Permission denied", path, 1);
 	else if (chdir(path) == 0)
 	{
-		old_pwd = JOIN("OLDPWD=", curr_dir);
-		if (opt)
-			pwd = JOIN("PWD=", getcwd(buf, 1024));
-		else if (ft_strcmp(path, "..") != 0 && ft_strcmp(path, ".") != 0)
-			pwd = (path[0] == '/') ? JOIN("PWD=", path) : join_path(grp, path);
-		else if (ft_strcmp(path, "..") == 0)
-		{
-			ft_putendl("ICI--->");
-			ft_putnbr(ft_strlen((ft_getenv(grp, "PWD")) ? ft_getenv(grp, "PWD") : getcwd(buf, 1024)) - (ft_strlen(ft_strrchr((ft_getenv(grp, "PWD")) ? ft_getenv(grp, "PWD") : getcwd(buf, 1024), '/')) - 1));
-			ft_putendl("");
-			curr_dir = ft_strsub((ft_getenv(grp, "PWD")) ? ft_getenv(grp, "PWD") : getcwd(buf, 1024), 0, ft_strlen((ft_getenv(grp, "PWD")) ? ft_getenv(grp, "PWD") : getcwd(buf, 1024)) - (ft_strlen(ft_strrchr((ft_getenv(grp, "PWD")) ? ft_getenv(grp, "PWD") : getcwd(buf, 1024), '/')) - 1));
-			if (curr_dir[ft_strlen(curr_dir) - 1] == '/' && ft_strlen(curr_dir) > 1)
-				curr_dir[ft_strlen(curr_dir) - 1] = '\0';
-			pwd = JOIN("PWD=", curr_dir);
-			ft_strdel(&curr_dir);
-		}
-		insert_env(grp, pwd);
-		insert_env(grp, old_pwd);
-		REMOVE(&old_pwd);
-		REMOVE(&pwd);
-		grp->exit = 0;
+		update_env_pwd(grp, path,opt, curr_dir);
+		// old_pwd = JOIN("OLDPWD=", curr_dir);
+		// if (opt)
+		// 	pwd = JOIN("PWD=", getcwd(buf, 1024));
+		// else if (ft_strcmp(path, "..") != 0 && ft_strcmp(path, ".") != 0)
+		// 	pwd = (path[0] == '/') ? JOIN("PWD=", path) : join_path(grp, path);
+		// else if (ft_strcmp(path, "..") == 0)
+		// {
+		// 	curr_dir = ft_strsub((ft_getenv(grp, "PWD")) ? ft_getenv(grp, "PWD") : getcwd(buf, 1024), 0, ft_strlen((ft_getenv(grp, "PWD")) ? ft_getenv(grp, "PWD") : getcwd(buf, 1024)) - (ft_strlen(ft_strrchr((ft_getenv(grp, "PWD")) ? ft_getenv(grp, "PWD") : getcwd(buf, 1024), '/')) - 1));
+		// 	if (curr_dir[ft_strlen(curr_dir) - 1] == '/' && ft_strlen(curr_dir) > 1)
+		// 		curr_dir[ft_strlen(curr_dir) - 1] = '\0';
+		// 	pwd = JOIN("PWD=", curr_dir);
+		// 	ft_strdel(&curr_dir);
+		// }
+		// insert_env(grp, pwd);
+		// insert_env(grp, old_pwd);
+		// REMOVE(&old_pwd);
+		// REMOVE(&pwd);
+		// grp->exit = 0;
 	}
 }
 
@@ -104,7 +133,7 @@ int		builtin_cd(t_group *grp, t_parse *parse)
 			path = SDUP(parse->cmdsplit[2]);
 		opt = (parse->cmdsplit[1][1] == 'P') ? 1 : 0;
 	}
-	else if (ft_strcmp(parse->cmdsplit[1], "..") != 0)
+	else if (ft_strncmp(parse->cmdsplit[1], "..", 2) != 0)
 		path = SDUP(parse->cmdsplit[1]);
 	else
 	{
