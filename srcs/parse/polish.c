@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/19 21:49:53 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/19 22:39:57 by jmontija         ###   ########.fr       */
+/*   Created: 2016/11/19 22:41:30 by jmontija          #+#    #+#             */
+/*   Updated: 2016/11/19 22:41:51 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,9 @@ void		ft_polish_parse(t_parse *parse, int i)
 {
 	char	*tmp;
 
+	parse->cmd[i + 1] = '\0';
 	if (parse->cmd[i + 2])
-	{
-		tmp = SDUP(&parse->cmd[i + 2]);
-		parse->cmd[i + 1] = '\0';
-		parse->cmd = JOINF(parse->cmd, tmp, 3);
-	}
-	else
-		parse->cmd[i + 1] = '\0';
+		parse->cmd = JOINF(parse->cmd, SDUP(&parse->cmd[i + 2]), 3);
 }
 
 /*
@@ -55,7 +50,7 @@ void		polish(t_parse *parse)
 		{
 			q = parse->cmd[i];
 			ft_polish_parse(parse, i - 1);
-			while ((q == '\'') &&(ret = check_parentheses(parse->cmd[i]))
+			while ((q == '\'') &&(ret = check_parentheses(parse->cmd[i])) 
 			== 1 && parse->cmd[i + 1] != '\'')
 				i++;
 			test = 1;
