@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 20:23:03 by julio             #+#    #+#             */
-/*   Updated: 2016/11/19 15:12:54 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/19 16:59:56 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,10 @@ int		builtin_cd(t_group *grp, t_parse *parse)
 	struct stat	s_buf;
 	char		*path;
 	int			opt;
+	char		buf[1024 + 1];
 
 	opt = 0;
+	ft_bzero(buf, 1024);
 	if (parse->cmdsplit[1] == NULL)
 	{
 		path = ft_getenv(grp, "HOME") ? SDUP(ft_getenv(grp, "HOME")) :
@@ -102,8 +104,14 @@ int		builtin_cd(t_group *grp, t_parse *parse)
 			path = SDUP(parse->cmdsplit[2]);
 		opt = (parse->cmdsplit[1][1] == 'P') ? 1 : 0;
 	}
-	else
+	else if (ft_strcmp(parse->cmdsplit[1], "..") != 0)
 		path = SDUP(parse->cmdsplit[1]);
+	else
+	{
+		path = ft_strsub((ft_getenv(grp, "PWD")) ? ft_getenv(grp, "PWD") : getcwd(buf, 1024), 0, ft_strlen((ft_getenv(grp, "PWD")) ? ft_getenv(grp, "PWD") : getcwd(buf, 1024)) - (ft_strlen(ft_strrchr((ft_getenv(grp, "PWD")) ? ft_getenv(grp, "PWD") : getcwd(buf, 1024), '/')) - 1));
+		if (path[ft_strlen(path) - 1] == '/' && ft_strlen(path) > 1)
+			path[ft_strlen(path) - 1] = '\0';
+	}
 	lstat(path, &s_buf);
 	cderr_pwd(grp, path, s_buf, opt);
 	REMOVE(&path);
