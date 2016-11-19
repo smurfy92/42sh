@@ -41,21 +41,3 @@ void		ft_go_down(t_group *grp)
 	while (++i < TERM(window->width) && TERM(curs_pos) < TERM(cmd_size))
 		ft_right_arrow(grp);
 }
-
-/*
-** void		insert_hist(t_group *grp, char *name)
-** {
-** 	t_hist	*new;
-** 	grp->curr_hist = NULL;
-** 	if (ft_strcmp("", name) == 0 ||
-** 		(grp->hist && ft_strcmp(grp->hist->name, name) == 0))
-** 		return ;
-** 	new = (t_hist *)malloc(sizeof(t_hist));
-** 	new->name = SDUP(name);
-** 	new->next = grp->hist;
-** 	new->prev = NULL;
-** 	if (grp->hist != NULL)
-** 		grp->hist->prev = new;
-** 	grp->hist = new;
-** }
-*/
