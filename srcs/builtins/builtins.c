@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:50:41 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/19 20:00:10 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/20 00:21:19 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,11 @@ int	builtins(t_group *grp, t_parse *parse)
 	if (ft_strcmp(cmd[0], "env") == 0)
 		ret = builtin_env(grp, parse);
 	else if (ft_strcmp(cmd[0], "cd") == 0)
+	{
+		if ((cmd[1] && ft_strcmp(cmd[1], ".") == 0) || (cmd[1] && ft_strcmp(cmd[1], ".") == 0))
+			return ((ret = 0));
 		ret = builtin_cd(grp, parse);
+	}
 	else if (ft_strcmp(cmd[0], "setenv") == 0)
 		ret = builtin_setenv(grp, parse);
 	else if (ft_strcmp(cmd[0], "unsetenv") == 0)
