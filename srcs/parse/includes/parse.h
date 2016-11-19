@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:42:57 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/19 20:35:38 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/19 21:51:43 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,13 @@ typedef struct			s_andor
 */
 
 void					ft_init_parse(t_group *grp);
+
+/*
+**	polish.c
+*/
+
+void					ft_polish_parse(t_parse *parse, int i);
+void					polish(t_parse *parse);
 
 /*
 **	redirections.c

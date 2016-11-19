@@ -43,6 +43,7 @@ SRC	+= srcs/termcaps/escape.c
 
 #parse
 SRC	+= srcs/parse/init_parse.c
+SRC	+= srcs/parse/polish.c
 SRC	+= srcs/parse/redirections.c
 SRC	+= srcs/parse/redirections2.c
 SRC	+= srcs/parse/redirections_lib.c
