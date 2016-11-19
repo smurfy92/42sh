@@ -6,12 +6,13 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/18 22:57:57 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/18 23:03:04 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/19 16:55:43 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 #include "math.h"
+
 /*
 **	could be put in libft !
 **	a revoir ft_power ne marche pas comme il faut !
@@ -33,7 +34,7 @@ char	*ft_charjoin(char *s1, char c)
 
 int		ft_power(int nb, int power)
 {
-	int total;
+	int	total;
 
 	total = nb;
 	if (power > 1)
@@ -51,18 +52,18 @@ int		ft_power(int nb, int power)
 	return (total);
 }
 
-int octal_to_decimal(int octalNumber)
+int		octal_to_decimal(int octal_nb)
 {
-	int	decimalNumber;
+	int	decimal_nb;
 	int	i;
 
 	i = 0;
-	decimalNumber = 0;
-	while(octalNumber != 0)
+	decimal_nb = 0;
+	while (octal_nb != 0)
 	{
-		decimalNumber += (octalNumber%10) * pow(8,i);
+		decimal_nb += (octal_nb % 10) * pow(8, i);
 		++i;
-		octalNumber/=10;
+		octal_nb /= 10;
 	}
-	return decimalNumber;
+	return (decimal_nb);
 }

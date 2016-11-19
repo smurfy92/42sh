@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:55:46 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/17 17:03:15 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/19 16:56:42 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	ft_display_history(t_history *hist)
 
 int		builtin_history2(t_group *grp, t_parse *parse)
 {
-
 	if (ft_atoi(parse->cmdsplit[1]) > 0)
 	{
 		if (ft_atoi(parse->cmdsplit[1]) > grp->history->i)
@@ -75,6 +74,7 @@ int		builtin_history2(t_group *grp, t_parse *parse)
 int		builtin_history(t_group *grp, t_parse *parse)
 {
 	char	**cmdsplit;
+
 	grp->history = ft_history_get_last(grp);
 	cmdsplit = parse->cmdsplit;
 	if (!cmdsplit[1])
