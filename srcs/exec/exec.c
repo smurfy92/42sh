@@ -36,9 +36,7 @@ void		pipe_exec(t_group *grp, t_parse *parse)
 		while (tmp)
 		{
 			if (!tmp->fail)
-			{
 				(tmp->next) ? ft_fork_pipe(grp, tmp) : exec_child(grp, tmp);
-			}
 			tmp = tmp->next;
 		}
 		ft_exit(grp, EXIT_FAILURE);
