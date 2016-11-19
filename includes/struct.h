@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:07:29 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/17 20:06:39 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/19 22:03:55 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,8 @@ typedef struct			s_group
 {
 	char					*program_name;
 	pid_t					program_pid;
-	
-	//history
 	struct s_history		*history;
 	int						inhistory;
-
 	int						prompt_size;
 	int						exit;
 	int						quit;
@@ -35,8 +32,6 @@ typedef struct			s_group
 	struct s_env			*env;
 	struct s_root			*root;
 	struct s_comp			*comp;
-
-	//pas sur
 	int						fail;
 	int						minus;
 }						t_group;
