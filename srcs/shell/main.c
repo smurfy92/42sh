@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:43:44 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/17 20:11:03 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/19 17:57:55 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int			main(int argc, char **argv, char **env)
 	t_group *grp;
 
 	if (argc || argv)
-		{}
+		;
 	init_shell();
 	grp = get_grp();
 	grp->program_name = SDUP(argv[0]);
