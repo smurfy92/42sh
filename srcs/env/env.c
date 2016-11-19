@@ -6,11 +6,15 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 16:51:54 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/18 18:28:15 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/18 23:14:03 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
+
+/*
+**	print l'env
+*/
 
 void	show_env(int choice, t_group *grp)
 {
@@ -25,6 +29,10 @@ void	show_env(int choice, t_group *grp)
 		tmp = tmp->next;
 	}
 }
+
+/*
+**	initialise l'env tmp avec les value du current
+*/
 
 void	create_tmp_env(t_group *grp)
 {
@@ -42,6 +50,11 @@ void	create_tmp_env(t_group *grp)
 		tmp = tmp->next;
 	}
 }
+
+/*
+**	gestion de la builtin env -->
+**	execute si necessaire && cree le tmp modifie
+*/
 
 int		builtin_env(t_group *grp, t_parse *parse)
 {
@@ -68,6 +81,10 @@ int		builtin_env(t_group *grp, t_parse *parse)
 	}
 	return (1);
 }
+
+/*
+**	initialise l'environement si env -i 
+*/
 
 void	init_env(t_group *grp, char **env)
 {

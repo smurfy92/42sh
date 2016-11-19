@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplitquote.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/10 19:59:55 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/09 19:32:22 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/18 22:57:44 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static void		insert_part(t_allcmd **lst, char *cmd)
 
 	new = (t_allcmd *)malloc(sizeof(t_allcmd));
 	new->cmd = ft_strtrim(cmd);
-	//ft_strdel(&cmd);
 	new->andor = NULL;
 	new->next = NULL;
 	if (!*(lst))

@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 17:03:39 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/18 18:16:28 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/18 21:16:51 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ int		replace_ascii(char c, char *str, char **ptr)
 		octal_char = ft_charjoin(octal_char, str[i]);
 		i++;
 	}
-	printf("YO %s\n", octal_char);
 	decimal_int = convertOctalToDecimal(ft_atoi(octal_char));
 	(*ptr) += i;
 	return (decimal_int);
@@ -111,10 +110,7 @@ char	check_operands(char c, char *str, char **ptr)
 	else if (c == 'v')
 		return ('\v');
 	else if (c == '\\')
-	{
-		(*ptr) += 1;
-		return (c);
-	}
+		return ('\\');
 	else if (c == '0')
 		return (replace_ascii(c, str, ptr));
 	return (-1);
@@ -128,29 +124,24 @@ void	check_line(char *arg)
 	char	*tmp;
 
 	i = -1;
-	new = NEW(0);
+	printf("cmd: %s\n", arg);
 	while (arg[++i] != '\0')
 	{
-		if (arg[i] == '\\' && arg[i + 1] != '\0' && (operand = check_operands(arg[i + 1], &arg[i + 2], &arg)) >= 0)
+		if (arg[i] == '\\' && arg[i + 1] != '\0' && check_last_char(arg, i) == 0 &&
+			(operand = check_operands(arg[i + 1], &arg[i + 2], &arg)) >= 0)
 		{
 			if (operand == '\0')
 				break ;
 			if (operand != 'a')
 			{
-				tmp = new;
-				new = ft_charjoin(tmp, operand);
-				REMOVE(&tmp);
+				ft_putchar(operand);
 			}
-			i++;
-			// if (operand != '\\')
-			// 	i++;
-			// else
-			// 	i += 2;
 		}
 		else
-			new = ft_charjoin(new, arg[i]);
+		{
+			ft_putchar(arg[i]);
+		}
 	}
-	ft_putstr(new);
 }
 
 int		builtin_echo(t_group *grp, t_parse *parse)
