@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:50:41 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/19 20:00:45 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/19 22:46:49 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,14 @@ int		builtins(t_group *grp, t_parse *parse);
 int		builtin_cd(t_group *grp, t_parse *parse);
 int		builtin_echo(t_group *grp, t_parse *parse);
 int		is_builtins(char **cmd);
+
+/*
+**	cd_lib.c
+*/
+
+char	*clean_pwd(char **to_change);
+char	*join_path(t_group *grp, char *path);
+void	update_pwd(t_group *grp, char *pth, int opt, char *curr_dir);
 
 /*
 **	history.c

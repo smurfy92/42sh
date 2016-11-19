@@ -20,6 +20,7 @@ SRC	+= srcs/hash/hash_free.c
 #builtins
 SRC += srcs/builtins/builtins.c
 SRC += srcs/builtins/cd.c
+SRC += srcs/builtins/cd_lib.c
 SRC += srcs/builtins/echo.c
 SRC += srcs/builtins/echo_lib.c
 SRC += srcs/builtins/history.c
@@ -95,9 +96,8 @@ INC += -I srcs/errors/includes/
 INC += -I ./includes/
 
 OBJ = $(SRC:.c=.o)
-FLAG = -g 
+FLAG = -g -fsanitize=address
 #-Wall -Werror -Wextra
-#-fsanitize=address
 CG = \033[92m
 CY =  \033[93m
 CE = \033[0m
