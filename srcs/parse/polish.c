@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   polish.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 21:49:53 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/19 21:53:02 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/19 22:39:57 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,19 @@ void		polish(t_parse *parse)
 		if (parse->cmd[i] == '\\' &&
 			parse->cmd[i + 1])
 			ft_polish_parse(parse, i - 1);
-		if (test == 0 && ret == 1 && (test = 1))
+		if (test == 0 && ret == 1)
 		{
 			q = parse->cmd[i];
 			ft_polish_parse(parse, i - 1);
 			while ((q == '\'') &&(ret = check_parentheses(parse->cmd[i]))
 			== 1 && parse->cmd[i + 1] != '\'')
 				i++;
+			test = 1;
 		}
-		else if (test == 1 && ret == 0 && (test = 0))
+		else if (test == 1 && ret == 0)
+		{
 			ft_polish_parse(parse, i - 1);
+			test = 0;
+		}
 	}
 }

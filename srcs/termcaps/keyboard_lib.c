@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard_lib.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 15:43:58 by julio             #+#    #+#             */
-/*   Updated: 2016/11/19 19:09:56 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/19 22:12:51 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,15 @@ void		ft_go_down(t_group *grp)
 	i = -1;
 	while (++i < TERM(window->width) && TERM(curs_pos) < TERM(cmd_size))
 		ft_right_arrow(grp);
+}
+
+int			ft_is_printable(char *order)
+{
+	int	i;
+
+	i = -1;
+	while (order[++i] != '\0')
+		if (ft_isprint(order[i]) == false)
+			return (0);
+	return (1);
 }
