@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signaux.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:50:41 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/17 20:01:38 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/19 19:57:43 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,7 @@ void	handler_ctrl_c(int sig)
 	TERM(other_read) = false;
 	REMOVE(&TERM(cmd_line));
 	grp->prompt_size = 6;
-	ft_putchar_fd('\n', 2);
-	prompt();
-
+	ioctl(0, TIOCSTI, "\n");
 }
 
 void	ft_prompt(int signum)

@@ -6,14 +6,14 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/10 19:59:55 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/13 01:16:42 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/19 18:00:43 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 #include <stdio.h>
 
-static void			insert_part(t_andor **lst, char *cmd)
+static void					insert_part(t_andor **lst, char *cmd)
 {
 	t_andor		*tmp;
 	t_andor		*new;
@@ -34,7 +34,7 @@ static void			insert_part(t_andor **lst, char *cmd)
 	}
 }
 
-static int		ft_wlen(char *s, int i, char c)
+static int					ft_wlen(char *s, int i, char c)
 {
 	int		len;
 	int		synth;
@@ -53,7 +53,32 @@ static int		ft_wlen(char *s, int i, char c)
 	return (len);
 }
 
-t_andor		*ft_strsplitpipe(char *s, char c)
+static int					split_part(t_andor **lst, char *s, char c, int i)
+{
+	int		len;
+	int		start;
+	char	*part;
+
+	start = 0;
+	len = 0;
+	while (s[i] == c && !check_last_char(s, i))
+	{
+		if (i == 0)
+			insert_part(lst, "");
+		i++;
+	}
+	start = i;
+	len = ft_wlen(s, i, c);
+	part = ft_strsub(s, start, len);
+	if (part == NULL)
+		return (-1);
+	insert_part(lst, part);
+	REMOVE(&part);
+	i += len;
+	return (i);
+}
+
+t_andor						*ft_strsplitpipe(char *s, char c)
 {
 	int		i;
 	int		start;
@@ -67,22 +92,9 @@ t_andor		*ft_strsplitpipe(char *s, char c)
 	len = 0;
 	while (s && s[i] != '\0')
 	{
-
-
-		while (s[i] == c && !check_last_char(s, i))
-		{
-			if (i == 0)
-				insert_part(&lst, "");
-			i++;
-		}
-		start = i;
-		len = ft_wlen(s, i, c);
-		part = ft_strsub(s, start, len);
-		if (part == NULL)
+		i = split_part(&lst, s, c, i);
+		if (i < 0)
 			return (NULL);
-		insert_part(&lst, part);
-		REMOVE(&part);
-		i += len;
 	}
 	if (i == 0)
 		return (NULL);

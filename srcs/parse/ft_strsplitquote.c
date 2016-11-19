@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplitquote.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/10 19:59:55 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/18 22:57:44 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/19 19:04:50 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 #include <stdio.h>
 
-static void		insert_part(t_allcmd **lst, char *cmd)
+static void					insert_part(t_allcmd **lst, char *cmd)
 {
 	t_allcmd		*tmp;
 	t_allcmd		*new;
@@ -33,7 +33,7 @@ static void		insert_part(t_allcmd **lst, char *cmd)
 	}
 }
 
-static int		ft_wlen(char *s, int i, char c)
+static int					ft_wlen(char *s, int i, char c)
 {
 	int		len;
 	int		synth;
@@ -44,7 +44,7 @@ static int		ft_wlen(char *s, int i, char c)
 	{
 		synth = check_parentheses(s[i]);
 		if (synth == 0 && s[i] == c && !check_last_char(s, i))
-				break ;
+			break ;
 		len++;
 		i++;
 	}
@@ -52,31 +52,43 @@ static int		ft_wlen(char *s, int i, char c)
 	return (len);
 }
 
-t_allcmd		*ft_strsplitquote(char *s, char c)
+static int					split_part(t_allcmd **lst, char *s, char c, int i)
 {
-	int		i;
-	int		start;
-	t_allcmd	*lst;
-	char	*part;
 	int		len;
+	int		start;
+	char	*part;
+
+	start = 0;
+	len = 0;
+	while (s[i] == c && !check_last_char(s, i))
+		i++;
+	start = i;
+	len = ft_wlen(s, i, c);
+	part = ft_strsub(s, start, len);
+	if (part == NULL)
+		return (-1);
+	else if (part[0] != '\0')
+		insert_part(lst, part);
+	REMOVE(&part);
+	i += len;
+	return (i);
+}
+
+t_allcmd					*ft_strsplitquote(char *s, char c)
+{
+	int			i;
+	t_allcmd	*lst;
+	char		*part;
+	int			len;
 
 	i = 0;
-	start = 0;
 	lst = NULL;
 	len = 0;
 	while (s && s[i] != '\0')
 	{
-		while (s[i] == c && !check_last_char(s, i))
-			i++;
-		start = i;
-		len = ft_wlen(s, i, c);
-		part = ft_strsub(s, start, len);
-		if (part == NULL)
+		i = split_part(&lst, s, c, i);
+		if (i < 0)
 			return (NULL);
-		else if (part[0] != '\0')
-			insert_part(&lst, part);
-		REMOVE(&part);
-		i += len;
 	}
 	if (i == 0)
 		return (NULL);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pre_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/31 15:26:52 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/18 15:37:31 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/19 18:11:23 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void		ft_replace_by_id(t_group *grp, int i)
 	t_history	*hist;
 
 	start = i;
+	/* segflt sur ./42sh < srcs/shell/init.c */
 	while (ft_isdigit(TERM(cmd_line)[i]))
 		i++;
 	end = i;
