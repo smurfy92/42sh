@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 16:51:54 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/18 23:14:03 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/19 17:33:16 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int		builtin_env(t_group *grp, t_parse *parse)
 }
 
 /*
-**	initialise l'environement si env -i 
+**	initialise l'environement si env -i
 */
 
 void	init_env(t_group *grp, char **env)

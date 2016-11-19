@@ -6,22 +6,11 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 14:51:15 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/19 15:57:43 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/19 17:30:06 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
-
-void		ft_free_andor(t_group *grp)
-{
-	(void)grp;
-	// t_andor *tmp;
-
-	// tmp = grp->andor->next;
-	// REMOVE(&grp->andor->cmd);
-	// free(grp->andor);
-	// grp->andor = tmp;
-}
 
 void		free_history(t_group *grp)
 {
@@ -40,7 +29,7 @@ void		free_history(t_group *grp)
 	grp->history = NULL;
 }
 
-void	free_allandor(t_andor *andor)
+void		free_allandor(t_andor *andor)
 {
 	t_andor	*tmp;
 	t_andor	*tmp2;
@@ -56,7 +45,7 @@ void	free_allandor(t_andor *andor)
 	}
 }
 
-void	free_allcmd(t_group *grp)
+void		free_allcmd(t_group *grp)
 {
 	t_allcmd	*tmp;
 	t_allcmd	*tmp2;
