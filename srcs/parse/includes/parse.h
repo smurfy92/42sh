@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:42:57 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/18 23:03:22 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/19 20:35:38 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,13 @@ void					ft_escape_parse(t_group *grp, int i);
 */
 
 void					check_heredoc(t_group *grp);
+
+/*
+**	heredoc_lib.c
+*/
+
+void					ft_polish_hd_line(t_group *grp, int i);
+void					polish_hd(t_group *grp);
 
 /*
 **	split

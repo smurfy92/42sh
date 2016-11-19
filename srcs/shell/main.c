@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/25 15:43:44 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/19 17:57:55 by vdanain          ###   ########.fr       */
+/*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
+/*   Updated: 2016/11/19 20:58:10 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void		proccess(t_group *grp)
 	{
 		grp->allcmd = ft_strsplitquote(TERM(cmd_line), ';');
 		ft_init_parse(grp);
-		init_exec(grp);
+		if (grp->err_parse == false)
+			init_exec(grp);
 		ft_free_parse(grp);
 		free(grp->allcmd);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 14:51:15 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/19 17:30:06 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/19 18:16:07 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ void		free_history(t_group *grp)
 	grp->history = NULL;
 }
 
-void		free_allandor(t_andor *andor)
+void		free_allandor(t_andor **andor)
 {
 	t_andor	*tmp;
 	t_andor	*tmp2;
 
-	tmp = andor;
+	tmp = *andor;
 	while (tmp)
 	{
 		tmp2 = tmp->next;
@@ -43,6 +43,7 @@ void		free_allandor(t_andor *andor)
 		free(tmp);
 		tmp = tmp2;
 	}
+	*andor = NULL;
 }
 
 void		free_allcmd(t_group *grp)
@@ -55,7 +56,7 @@ void		free_allcmd(t_group *grp)
 	{
 		tmp2 = tmp->next;
 		REMOVE(&tmp->cmd);
-		free_allandor(tmp->andor);
+		free_allandor(&tmp->andor);
 		free(tmp);
 		tmp = tmp2;
 	}

@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplitandor.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 17:16:37 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/18 23:10:01 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/19 18:00:57 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 #include <stdio.h>
 
-int				ft_isandor(char *s, int idx)
+int							ft_isandor(char *s, int idx)
 {
 	if (s[idx] == '&' && s[idx + 1] != '\0' && s[idx + 1] == '&')
 		return (1);
@@ -22,7 +22,7 @@ int				ft_isandor(char *s, int idx)
 	return (0);
 }
 
-static void			insert_part(t_andor **lst, char *cmd, int type)
+static void					insert_part(t_andor **lst, char *cmd, int type)
 {
 	t_andor		*tmp;
 	t_andor		*new;
@@ -43,7 +43,7 @@ static void			insert_part(t_andor **lst, char *cmd, int type)
 	}
 }
 
-static int		ft_wlen(char *s, int i)
+static int					ft_wlen(char *s, int i)
 {
 	int		len;
 	int		synth;
@@ -62,40 +62,45 @@ static int		ft_wlen(char *s, int i)
 	return (len);
 }
 
-/*
-**	split la commande sur les && || pour fill grp->allcmd->andor
-*/
-
-t_andor		*ft_strsplitandor(char *s)
+static int					split_part(t_andor **lst, char *s, int i)
 {
-	int		i;
-	int		start;
-	t_andor	*lst;
-	char	*part;
-	int		len;
 	int		type;
+	int		len;
+	int		start;
+	char	*part;
 
-	i = 0;
 	start = 0;
-	lst = NULL;
 	len = 0;
+	while ((type = (ft_isandor(s, i) > 0)) && !check_last_char(s, i))
+	{
+		if (i == 0)
+			insert_part(lst, "", type);
+		i += 2;
+	}
+	start = i;
+	len = ft_wlen(s, i);
+	i += len;
+	part = ft_strsub(s, start, len);
+	if (part == NULL)
+		return (-1);
+	type = ft_isandor(s, i);
+	insert_part(lst, part, type);
+	REMOVE(&part);
+	return (i);
+}
+
+t_andor						*ft_strsplitandor(char *s)
+{
+	t_andor	*lst;
+	int		i;
+
+	lst = NULL;
+	i = 0;
 	while (s && s[i] != '\0')
 	{
-		while ((type = (ft_isandor(s, i) > 0)) && !check_last_char(s, i))
-		{
-			if (i == 0)
-				insert_part(&lst, "", type);
-			i += 2;
-		}
-		start = i;
-		len = ft_wlen(s, i);
-		i += len;
-		part = ft_strsub(s, start, len);
-		if (part == NULL)
+		i = split_part(&lst, s, i);
+		if (i < 0)
 			return (NULL);
-		type = ft_isandor(s, i);
-		insert_part(&lst, part, type);
-		REMOVE(&part);
 	}
 	if (i == 0)
 		return (NULL);

@@ -50,6 +50,7 @@ SRC	+= srcs/parse/parse_lib.c
 SRC	+= srcs/parse/parse_lib2.c
 SRC	+= srcs/parse/pre_parse.c
 SRC	+= srcs/parse/heredoc.c
+SRC	+= srcs/parse/heredoc_lib.c
 SRC	+= srcs/parse/ft_strsplitquote.c
 SRC	+= srcs/parse/ft_strsplitandor.c
 SRC	+= srcs/parse/ft_strsplitpipe.c
