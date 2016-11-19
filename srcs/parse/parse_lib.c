@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_lib.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:17:44 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/18 23:01:01 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/19 21:47:16 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,29 +67,6 @@ void		ft_create_redirections(t_parse *parse)
 		parse->fd = open(parse->dbred, O_WRONLY | O_CREAT |
 		O_APPEND, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
 }
-
-/*
-** counting pipes for errors doest seem to be usefull anymore
-
-**int			ft_count_pipes(char *cmd)
-**{
-**	int i;
-**	int nb;
-**	int	ret;
-**
-**	nb = 1;
-**	i = -1;
-**	ret = 0;
-**	check_parentheses(0);
-**	while (cmd && cmd[++i])
-**	{
-**		ret = check_parentheses(cmd[i]);
-**		if (ret == 0 && cmd[i] == '|' && (i > 0 && cmd[i - 1] != '\\'))
-**			nb++;
-**	}
-**	return (nb);
-**}
-*/
 
 /*
 ** replacing tilde in parse cmd
