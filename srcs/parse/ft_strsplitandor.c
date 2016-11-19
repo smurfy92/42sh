@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplitandor.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 17:16:37 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/09 19:32:18 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/18 23:10:01 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,10 @@ static int		ft_wlen(char *s, int i)
 	check_parentheses(0);
 	return (len);
 }
+
+/*
+**	split la commande sur les && || pour fill grp->allcmd->andor
+*/
 
 t_andor		*ft_strsplitandor(char *s)
 {

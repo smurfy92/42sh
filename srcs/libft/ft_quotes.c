@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_quotes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/19 03:11:24 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/16 22:50:35 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/18 22:49:22 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,10 @@ int		malloc_free(int **quotes, char c)
 	return (0);
 }
 
+/*
+**	ADD FOR 21SH ==>> check_quotes(quotes, c, '`', bquote);
+*/
+
 int		check_parentheses(char c)
 {
 	int			ret;
@@ -74,7 +78,6 @@ int		check_parentheses(char c)
 	check_quotes(quotes, c, '"', dquote) : 0;
 	if (quotes[squote] == 0 && quotes[dquote] == 0)
 	{
-		//check_quotes(quotes, c, '`', bquote);
 		check_quotes(quotes, c, '{', acc);
 		check_quotes(quotes, c, '}', acc);
 		check_quotes(quotes, c, '[', cro);

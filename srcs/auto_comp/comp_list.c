@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   comp_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victordanain <victordanain@student.42.fr>  +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/09 16:26:46 by victordanain      #+#    #+#             */
-/*   Updated: 2016/11/09 16:47:02 by victordanain     ###   ########.fr       */
+/*   Updated: 2016/11/18 17:56:46 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -1,8 +1,8 @@
 touch result result2 total
 for element in TESTS/*
 do
-	./42sh < $element 1>result2 2>&-;
-	bash < $element 1>result 2>&-
+	echo $element | ./42sh 1>result2;
+	echo $elemnt | bash 1>result;
 	diff result result2 > total
 	if [ -s "total" ]
 	then

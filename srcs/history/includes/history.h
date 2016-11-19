@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/29 18:49:31 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/02 14:21:07 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/18 22:44:10 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,19 @@ typedef	struct			s_history
 	struct s_history	*prev;
 }						t_history;
 
-//history.c
+/*
+**	history.c
+*/
+
 void					ft_add_history(t_group *grp, char *cmd);
 void					ft_history_prev(t_group *grp);
 void					ft_history_next(t_group *grp);
 void					ft_get_history(t_group *grp);
 
-//hist_lib.c
+/*
+**	hist_lib.c
+*/
+
 t_history				*ft_history_get_last(t_group *grp);
 t_history				*ft_history_get_first(t_group *grp);
 t_history				*ft_history_get_by_id(t_group *grp, int nb);

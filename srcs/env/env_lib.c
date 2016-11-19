@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env_lib.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:50:41 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/16 22:16:40 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/18 20:24:12 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-int			ft_lstlen(t_envlst * envlst)
+int			ft_lstlen(t_envlst *envlst)
 {
 	int			i;
 	t_envlst	*env;
@@ -48,7 +48,7 @@ char		**list_to_tab(t_envlst *envlst)
 	return (env_tab);
 }
 
-char	*ft_getenv(t_group *grp, char *tofind)
+char		*ft_getenv(t_group *grp, char *tofind)
 {
 	t_envlst	*env;
 
@@ -64,7 +64,7 @@ char	*ft_getenv(t_group *grp, char *tofind)
 	return (NULL);
 }
 
-int		is_env(char *env)
+int			is_env(char *env)
 {
 	int i;
 

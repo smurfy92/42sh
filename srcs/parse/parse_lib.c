@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_lib.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:17:44 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/18 15:30:20 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/18 23:01:01 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,22 @@ void		ft_replace_vars(t_group *grp, t_parse *parse, int i)
 	char	*tmp2;
 
 	start = i;
-	while (parse->cmd[i] && ft_isalpha(parse->cmd[i]))
+	while (parse->cmd[i] && (ft_isalpha(parse->cmd[i]) || parse->cmd[i] == '?'))
 		i++;
 	tmp = ft_strsub(&parse->cmd[start], 0, i - start);
-	if (ft_getenv(grp, tmp) == NULL)
+	if (ft_strlen(tmp) == 1 && tmp[0] == '?')
+	{
+		tmp2 = ft_strdup(&parse->cmd[i]);
+		parse->cmd[start - 1] = '\0';
+		if (!parse->cmd[start + 1])
+			parse->cmd = ft_strjoin_nf(parse->cmd, ft_itoa(grp->exit), 3);
+		else
+			parse->cmd = JOINF(JOINF(parse->cmd,
+			ft_itoa(grp->exit), 3), tmp2, 1);
+		ft_strdel(&tmp2);
+		ft_strdel(&tmp);
+	}
+	else if (ft_getenv(grp, tmp) == NULL)
 		grp->minus = 1;
 	else
 	{
@@ -58,26 +70,26 @@ void		ft_create_redirections(t_parse *parse)
 
 /*
 ** counting pipes for errors doest seem to be usefull anymore
+
+**int			ft_count_pipes(char *cmd)
+**{
+**	int i;
+**	int nb;
+**	int	ret;
+**
+**	nb = 1;
+**	i = -1;
+**	ret = 0;
+**	check_parentheses(0);
+**	while (cmd && cmd[++i])
+**	{
+**		ret = check_parentheses(cmd[i]);
+**		if (ret == 0 && cmd[i] == '|' && (i > 0 && cmd[i - 1] != '\\'))
+**			nb++;
+**	}
+**	return (nb);
+**}
 */
-
-// int			ft_count_pipes(char *cmd)
-// {
-// 	int i;
-// 	int nb;
-// 	int	ret;
-
-// 	nb = 1;
-// 	i = -1;
-// 	ret = 0;
-// 	check_parentheses(0);
-// 	while (cmd && cmd[++i])
-// 	{
-// 		ret = check_parentheses(cmd[i]);
-// 		if (ret == 0 && cmd[i] == '|' && (i > 0 && cmd[i - 1] != '\\'))
-// 			nb++;
-// 	}
-// 	return (nb);
-// }
 
 /*
 ** replacing tilde in parse cmd

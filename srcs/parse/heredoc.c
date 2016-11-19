@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/06 17:52:49 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/18 15:21:55 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/18 22:58:19 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void		ft_polish_cmd_line(t_group *grp, int i)
 /*
 ** polishing cmd_line by deleting unwanted charateres
 ** ex : escaped chars, separators
+** checker l'utility des ! dans preparse sinon faire une fonction a part !
 */
 
 static void		polish(t_group *grp)
@@ -43,7 +44,7 @@ static void		polish(t_group *grp)
 
 	test = 0;
 	i = -1;
-	ft_pre_parse(grp); // checker l'utility des ! dans preparse sinon faire une fonction a part !
+	ft_pre_parse(grp);
 	check_parentheses(0);
 	while (TERM(cmd_line) && TERM(cmd_line)[++i])
 	{
