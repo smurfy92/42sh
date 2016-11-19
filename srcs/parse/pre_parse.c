@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pre_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/31 15:26:52 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/18 15:37:31 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/19 19:53:04 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,11 @@ void		ft_replace_by_id(t_group *grp, int i)
 	end = i;
 	tmp = ft_strsub(TERM(cmd_line), start, end);
 	hist = ft_history_get_by_id(grp, ft_atoi(tmp));
-	ft_putendl_fd(hist->var, 2);
 	if (hist)
+	{
+		ft_putendl_fd(hist->var, 2);
 		ft_replace_command(grp, hist, start, end);
+	}
 	else
 	{
 		ft_putstr_fd("42sh: no historic at indice: ", 2);
@@ -133,7 +135,9 @@ void		ft_pre_parse(t_group *grp)
 		}
 		if (TERM(cmd_line)[i] == '!' && TERM(cmd_line)[i + 1] &&
 			TERM(cmd_line)[i + 1] == '!')
+		{
 			ft_replace_last_cmd(grp, i);
+		}
 		else if (TERM(cmd_line)[i] == '!' && TERM(cmd_line)[i + 1])
 			ft_replace_by_id(grp, i + 1);
 	}
