@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/04/29 17:05:11 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/19 19:57:41 by jmontija         ###   ########.fr       */
+/*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
+/*   Updated: 2016/11/19 20:56:31 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int		key_selection(t_group *grp, char *order)
 	return (1);
 }
 
-void read_fd_in(t_group *grp)
+void	read_fd_in(t_group *grp)
 {
 	char *order;
 
@@ -87,23 +87,18 @@ void read_fd_in(t_group *grp)
 void	get_cmd(t_group *grp, int fd)
 {
 	int		ret;
-	int		ret_quote;
+	int		ret_q;
 	char	order[BUF_SIZE + 1];
 
-	ret_quote = 0;
+	ret_q = 0;
 	if (grp->quit == true)
-	{
-		read_fd_in(grp);
-		return ;
-	}
+		return (read_fd_in(grp));
 	ft_bzero(order, BUF_SIZE + 1);
 	grp->err_parse = 0;
 	while ((ret = read(fd, order, BUF_SIZE)) > 0)
 	{
 		order[ret] = '\0';
-		if (key_selection(grp, order) == '\n' && (ret_quote = ft_escape(grp)) == 0)
-			break ;
-		if (ret_quote < 0)
+		if (key_selection(grp, order) == '\n' && (ret_q = ft_escape(grp)) <= 0)
 			break ;
 		ft_bzero(order, BUF_SIZE + 1);
 	}
@@ -111,12 +106,11 @@ void	get_cmd(t_group *grp, int fd)
 	ft_putchar_fd('\n', 2);
 	if (TERM(cmd_quote) != NULL)
 		fill_cmd_line(grp);
-	if (ret_quote < 0)
+	if (ret_q < 0)
 	{
 		grp->err_parse = 1;
 		error_cmd("parse error", "parenthese closed too soon", 1);
 	}
-	ft_bzero(order, BUF_SIZE + 1);
 	check_parentheses(0);
 	reset_edl(grp);
 }

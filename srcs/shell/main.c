@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/25 15:43:44 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/19 19:57:54 by jmontija         ###   ########.fr       */
+/*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
+/*   Updated: 2016/11/19 20:58:10 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int			main(int argc, char **argv, char **env)
 	t_group *grp;
 
 	if (argc || argv)
-		{}
+		;
 	init_shell();
 	grp = get_grp();
 	grp->program_name = SDUP(argv[0]);

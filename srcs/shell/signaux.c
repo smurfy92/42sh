@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/30 14:50:41 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/19 19:57:43 by jmontija         ###   ########.fr       */
+/*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
+/*   Updated: 2016/11/19 20:56:51 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	handler_win(int sig)
 
 	grp = get_grp();
 	if (sig)
-	{}
+		;
 	ioctl(0, TIOCGWINSZ, &w);
 	TERM(window->width) = w.ws_col;
 	TERM(window->heigth) = w.ws_row;
@@ -50,7 +50,7 @@ void	ft_prompt(int signum)
 	char	order[2];
 
 	if (signum)
-		{}
+		;
 	order[0] = 3;
 	order[1] = 0;
 	ioctl(0, TIOCSTI, order);
@@ -58,7 +58,7 @@ void	ft_prompt(int signum)
 
 void	sig_handler(void)
 {
-    signal(SIGINT, handler_ctrl_c);
+	signal(SIGINT, handler_ctrl_c);
 	signal(SIGTSTP, ft_prompt);
 	signal(SIGQUIT, handler_ctrl_c);
 	signal(SIGWINCH, handler_win);

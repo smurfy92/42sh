@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard_tools3.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/13 20:08:18 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/13 20:44:56 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/19 19:16:24 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,14 @@ void	ft_next_word(t_group *grp)
 	}
 }
 
+/*
+**	to add in handlig clear screen ??
+**	show_prompt(grp, "fsh-> ", 6, "\033[1;32m");
+*/
+
 void	handling_clear_screen(t_group *grp)
 {
 	tputs(tgetstr("cl", NULL), 0, ft_getchar);
-//	show_prompt(grp, "fsh-> ", 6, "\033[1;32m");
 	prompt();
 	ft_putstr_fd(TERM(cmd_line), 2);
 	TERM(curs_pos) = LEN(TERM(cmd_line));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard_lib.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 15:43:58 by julio             #+#    #+#             */
-/*   Updated: 2016/11/18 16:46:39 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/19 19:09:56 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,20 @@ void		ft_go_down(t_group *grp)
 		ft_right_arrow(grp);
 }
 
-// void		insert_hist(t_group *grp, char *name)
-// {
-// 	t_hist	*new;
-
-// 	grp->curr_hist = NULL;
-// 	if (ft_strcmp("", name) == 0 ||
-// 		(grp->hist && ft_strcmp(grp->hist->name, name) == 0))
-// 		return ;
-// 	new = (t_hist *)malloc(sizeof(t_hist));
-// 	new->name = SDUP(name);
-// 	new->next = grp->hist;
-// 	new->prev = NULL;
-// 	if (grp->hist != NULL)
-// 		grp->hist->prev = new;
-// 	grp->hist = new;
-// }
+/*
+** void		insert_hist(t_group *grp, char *name)
+** {
+** 	t_hist	*new;
+** 	grp->curr_hist = NULL;
+** 	if (ft_strcmp("", name) == 0 ||
+** 		(grp->hist && ft_strcmp(grp->hist->name, name) == 0))
+** 		return ;
+** 	new = (t_hist *)malloc(sizeof(t_hist));
+** 	new->name = SDUP(name);
+** 	new->next = grp->hist;
+** 	new->prev = NULL;
+** 	if (grp->hist != NULL)
+** 		grp->hist->prev = new;
+** 	grp->hist = new;
+** }
+*/
