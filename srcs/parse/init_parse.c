@@ -91,7 +91,7 @@ static void		ft_parse(t_group *grp, t_andor *andor)
 ** spliting on allcmd nodes and creating andor nodes
 */
 
-void		ft_init_parse(t_group *grp)
+void			ft_init_parse(t_group *grp)
 {
 	t_allcmd	*tabl;
 	t_andor		*tmp2;

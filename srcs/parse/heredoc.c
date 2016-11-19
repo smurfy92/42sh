@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/06 17:52:49 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/19 20:58:13 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/19 23:39:05 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int			heredoc(t_group *grp, char *file, char *eof)
 		get_cmd(grp, 0);
 		if (TERM(other_read) == false)
 			break ;
-		polish_hd(grp);
 		if (TERM(cmd_line) && ft_strcmp(TERM(cmd_line), eof) == 0)
 			break ;
 		ft_putendl_fd(TERM(cmd_line), fd);

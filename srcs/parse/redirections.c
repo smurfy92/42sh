@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:10:01 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/19 21:43:47 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/19 23:05:52 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void		ft_addfile(t_group *grp, t_parse *parse, int i)
 {
 	if (parse->file)
 		REMOVE(&parse->file);
-	parse->file = get_redirection(grp, parse, i,  i - 1);
+	parse->file = get_redirection(grp, parse, i, i - 1);
 	check_rights(parse, &parse->file, 1);
 }
 
@@ -36,7 +36,7 @@ static void		ft_adddoubleredirection(t_group *grp, t_parse *parse, int i)
 {
 	if (parse->dbred)
 		REMOVE(&parse->dbred);
-	parse->dbred = get_redirection(grp, parse, i,  i - 2);
+	parse->dbred = get_redirection(grp, parse, i, i - 2);
 	if (check_rights(parse, &parse->dbred, 0))
 		grp->fail = 1;
 }
@@ -94,7 +94,7 @@ static void		ft_parse_redirections2(t_group *grp, t_parse *parse, int i)
 ** checking parse cmd char by char to parse redirections
 */
 
-void		ft_parse_redirections(t_group *grp, t_parse *parse)
+void			ft_parse_redirections(t_group *grp, t_parse *parse)
 {
 	int i;
 	int ret;

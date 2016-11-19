@@ -3,24 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   parse_lib.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 21:55:58 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/19 22:23:54 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/19 22:57:27 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-void		ft_replace_dollar(t_group *grp, t_parse *parse, char *tmp,
-char *tmp2, int start)
+void		ft_replace_dollar(t_group *grp, t_parse *parse, char *tmp2,
+	int start)
 {
 	parse->cmd[start - 1] = '\0';
 	if (!parse->cmd[start + 1])
 		parse->cmd = ft_strjoin_nf(parse->cmd, ft_itoa(grp->exit), 3);
 	else
 		parse->cmd = JOINF(JOINF(parse->cmd, ft_itoa(grp->exit), 3), tmp2, 1);
-
 }
 
 /*
@@ -39,7 +38,7 @@ void		ft_replace_vars(t_group *grp, t_parse *parse, int i)
 	tmp = ft_strsub(&parse->cmd[start], 0, i - start);
 	tmp2 = ft_strdup(&parse->cmd[i]);
 	if (ft_strlen(tmp) == 1 && tmp[0] == '?')
-		ft_replace_dollar(grp, parse, tmp, tmp2, start);
+		ft_replace_dollar(grp, parse, tmp2, start);
 	else if (ft_getenv(grp, tmp) == NULL)
 		grp->minus = 1;
 	else

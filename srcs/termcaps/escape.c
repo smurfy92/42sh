@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/01 17:35:14 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/18 23:02:52 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/19 23:36:13 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	fill_cmdquote(t_group *grp)
 	TERM(curs_pos) = 0;
 	TERM(line) = 0;
 	TERM(cmd_size) = 0;
-	TERM(other_read) = true;
+	TERM(other_read) = false;
 	REMOVE(&TERM(cmd_line));
 }
 
@@ -106,7 +106,7 @@ int		ft_escape(t_group *grp)
 	int	ret;
 
 	grp->prompt_size = 6;
-	if ((ret = check_esc(grp)) == 0)
+	if ((ret = check_esc(grp)) == 0 || TERM(other_read))
 		return (0);
 	if (ret == -1)
 		return (-1);
