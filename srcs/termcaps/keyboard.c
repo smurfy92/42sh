@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 17:05:11 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/18 16:46:37 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/19 15:15:52 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	get_cmd(t_group *grp, int fd)
 	if (ret_quote < 0)
 	{
 		grp->err_parse = 1;
-		error_cmd("42sh: parse error", "parenthese closed too soon", 1);
+		error_cmd("parse error", "parenthese closed too soon", 1);
 	}
 	ft_bzero(order, BUF_SIZE + 1);
 	check_parentheses(0);

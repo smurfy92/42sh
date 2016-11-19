@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 17:24:49 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/18 15:46:50 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/19 15:13:27 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int			check_stat(t_parse *parse, char **file)
 	REMOVE(&tmp);
 	if (S_ISDIR(buf.st_mode))
 	{
-		error_cmd("42sh: is a directory: ", *file, 1);
+		error_cmd("is a directory: ", *file, 1);
 		REMOVE(file);
 		parse->fail = 1;
 		return (1);

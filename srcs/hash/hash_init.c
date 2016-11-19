@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 20:13:19 by vdanain           #+#    #+#             */
-/*   Updated: 2016/11/13 23:04:03 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/18 22:31:20 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ char			*fill_list(t_group *grp, char *cus_p)
 	i = -1;
 	if (!(tmpath = ft_getenv(grp, "PATH")) && cus_p == NULL)
 		return (NULL);
-	if (!(path = (cus_p == NULL) ? ft_strsplit(tmpath, ':') : ft_strsplit(cus_p, ':')))
+	if (!(path = (cus_p == NULL) ? ft_strsplit(tmpath, ':') :
+		ft_strsplit(cus_p, ':')))
 		return (NULL);
 	while (path[++i])
 	{
@@ -63,7 +64,8 @@ int				tree_filler(t_root **root, t_group *grp, char *cus_p)
 	i = -1;
 	if (!(tmpath = ft_getenv(grp, "PATH")) && cus_p == NULL)
 		return (1);
-	if (!(path = (cus_p == NULL) ? ft_strsplit(tmpath, ':') : ft_strsplit(cus_p, ':')))
+	if (!(path = (cus_p == NULL) ? ft_strsplit(tmpath, ':') :
+		ft_strsplit(cus_p, ':')))
 		return (1);
 	while (path[++i])
 	{

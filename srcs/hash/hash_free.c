@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/13 01:57:20 by vdanain           #+#    #+#             */
-/*   Updated: 2016/11/13 23:04:29 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/19 16:32:26 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void		free_hashcmd(t_path **cmd)
 {
-	t_path *tmp = *cmd;
+	t_path *tmp;
+
+	tmp = *cmd;
 	ft_strdel(&tmp->path);
 	ft_strdel(&tmp->name);
 	free(*cmd);
@@ -41,6 +43,8 @@ void		hash_free(t_root **root, int len, t_hash *tmp)
 
 void		root_hfree(t_root **root)
 {
+	if (!(*root))
+		return ;
 	hash_free(root, ft_strlen((*root)->charlist), (*root)->first);
 	ft_strdel(&(*root)->charlist);
 	get_nbchar(NULL, 1);

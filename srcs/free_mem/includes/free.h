@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:09:57 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/17 14:32:01 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/19 15:58:12 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ void		free_allcmd(t_group *grp);
 void		ft_free_andor(t_group *grp);
 void		free_history(t_group *grp);
 void		free_term(t_group *grp);
+void		free_env_tmp(t_group *grp);
 
 #endif

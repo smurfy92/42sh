@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/02 12:56:35 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/18 21:25:14 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/19 15:12:00 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ void	error_cmd(char *what, char *who, int exit_code)
 	t_group		*grp;
 
 	grp = get_grp();
+	ft_putstr_fd("42sh: ", 2);
 	ft_putstr_fd(what, 2);
-	ft_putstr_fd(" -> ", 2);
+	ft_putstr_fd(": ", 2);
 	ft_putendl_fd(who, 2);
 	grp->exit = exit_code;
 }

@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/02 17:32:31 by victordanain      #+#    #+#             */
-/*   Updated: 2016/11/13 23:02:57 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/18 22:40:56 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,23 @@ static int		check_charlist(char *lst, char c)
 }
 
 /*
+**	remplis la static charlist
+*/
+
+static void		charlist_filler(char **charlist, struct dirent *cur_e, int i)
+{
+	char	c[2];
+	char	*tmp;
+
+	ft_bzero(c, 2);
+	c[0] = cur_e->d_name[i];
+	tmp = ((*charlist) == NULL) ? ft_strdup("") : ft_strdup((*charlist));
+	ft_strdel(charlist);
+	(*charlist) = ft_strjoin(tmp, c);
+	ft_strdel(&tmp);
+}
+
+/*
 **	lis tous les noms de commandes et retourne le nb de char differents
 **	les composant
 */
@@ -40,10 +57,7 @@ char			*get_nbchar(DIR *cur_d, int free)
 	struct dirent	*cur_e;
 	static char		*charlist = NULL;
 	int				i;
-	char			c[2];
-	char			*tmp;
 
-	ft_bzero(c, 2);
 	if (free == 1)
 	{
 		ft_strdel(&charlist);
@@ -51,18 +65,11 @@ char			*get_nbchar(DIR *cur_d, int free)
 	}
 	while ((cur_e = readdir(cur_d)))
 	{
-		i = 0;
-		while (cur_e->d_name[i])
+		i = -1;
+		while (cur_e->d_name[++i])
 		{
 			if (check_charlist(charlist, cur_e->d_name[i]))
-			{
-				c[0] = cur_e->d_name[i];
-				tmp = (charlist == NULL) ? ft_strdup("") : ft_strdup(charlist);
-				ft_strdel(&charlist);
-				charlist = ft_strjoin(tmp, c);
-				ft_strdel(&tmp);
-			}
-			i++;
+				charlist_filler(&charlist, cur_e, i);
 		}
 	}
 	return (charlist);
