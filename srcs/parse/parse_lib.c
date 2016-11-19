@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   parse_lib.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 21:55:58 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/19 21:56:12 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/19 22:23:54 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
+
+void		ft_replace_dollar(t_group *grp, t_parse *parse, char *tmp,
+char *tmp2, int start)
+{
+	parse->cmd[start - 1] = '\0';
+	if (!parse->cmd[start + 1])
+		parse->cmd = ft_strjoin_nf(parse->cmd, ft_itoa(grp->exit), 3);
+	else
+		parse->cmd = JOINF(JOINF(parse->cmd, ft_itoa(grp->exit), 3), tmp2, 1);
+
+}
 
 /*
 ** replacing environment variables in parse cmd
@@ -26,23 +37,13 @@ void		ft_replace_vars(t_group *grp, t_parse *parse, int i)
 	while (parse->cmd[i] && (ft_isalpha(parse->cmd[i]) || parse->cmd[i] == '?'))
 		i++;
 	tmp = ft_strsub(&parse->cmd[start], 0, i - start);
+	tmp2 = ft_strdup(&parse->cmd[i]);
 	if (ft_strlen(tmp) == 1 && tmp[0] == '?')
-	{
-		tmp2 = ft_strdup(&parse->cmd[i]);
-		parse->cmd[start - 1] = '\0';
-		if (!parse->cmd[start + 1])
-			parse->cmd = ft_strjoin_nf(parse->cmd, ft_itoa(grp->exit), 3);
-		else
-			parse->cmd = JOINF(JOINF(parse->cmd,
-			ft_itoa(grp->exit), 3), tmp2, 1);
-		ft_strdel(&tmp2);
-		ft_strdel(&tmp);
-	}
+		ft_replace_dollar(grp, parse, tmp, tmp2, start);
 	else if (ft_getenv(grp, tmp) == NULL)
 		grp->minus = 1;
 	else
 	{
-		tmp2 = ft_strdup(&parse->cmd[i]);
 		parse->cmd[start - 1] = '\0';
 		if (!parse->cmd[start + 1])
 			parse->cmd = ft_strjoin_nf(parse->cmd, ft_getenv(grp, tmp), 1);
@@ -50,8 +51,9 @@ void		ft_replace_vars(t_group *grp, t_parse *parse, int i)
 			parse->cmd = JOINF(JOINF(parse->cmd,
 			ft_getenv(grp, tmp), 1), tmp2, 1);
 		ft_strdel(&tmp2);
-		ft_strdel(&tmp);
 	}
+	(tmp) ? REMOVE(&tmp) : 0;
+	(tmp2) ? REMOVE(&tmp2) : 0;
 }
 
 /*
@@ -107,22 +109,17 @@ void		ft_replace_bquote(t_parse *parse, int i)
 	start = i + 1;
 	i = start;
 	end = 0;
-	while (parse->cmd[i] != '`')
-	{
-		end++;
+	while (parse->cmd[i] != '`' && end++)
 		i++;
-	}
 	bquote = SUB(parse->cmd, start, end);
 	if (parse->bquotes != NULL)
-	{
-		parse->bquotes = JOINF(parse->bquotes, ";", 1);
-		parse->bquotes = JOINF(parse->bquotes, bquote, 2);
-	}
+		parse->bquotes = JOINF(JOINF(parse->bquotes, ";", 1), bquote, 2);
 	else
 	{
 		parse->bquotes = SDUP(bquote);
 		REMOVE(&bquote);
 	}
 	begin = SUB(parse->cmd, 0, start - 1);
-	parse->cmd = JOINF(begin, SUB(parse->cmd, start + end + 1, LEN(parse->cmd)), 2);
+	parse->cmd = JOINF(begin, SUB(parse->cmd, start + end + 1,
+	LEN(parse->cmd)), 2);
 }
