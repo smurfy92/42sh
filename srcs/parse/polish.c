@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 21:49:53 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/19 21:53:02 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/19 22:31:22 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,9 @@ void		ft_polish_parse(t_parse *parse, int i)
 {
 	char	*tmp;
 
+	parse->cmd[i + 1] = '\0';
 	if (parse->cmd[i + 2])
-	{
-		tmp = SDUP(&parse->cmd[i + 2]);
-		parse->cmd[i + 1] = '\0';
-		parse->cmd = JOINF(parse->cmd, tmp, 3);
-	}
-	else
-		parse->cmd[i + 1] = '\0';
+		parse->cmd = JOINF(parse->cmd, SDUP(&parse->cmd[i + 2]), 3);
 }
 
 /*
