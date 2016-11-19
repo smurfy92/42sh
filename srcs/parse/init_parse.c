@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_parse.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 15:59:55 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/19 20:32:45 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/19 21:45:52 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,39 +50,26 @@ static void		polish(t_parse *parse)
 		ret = check_parentheses(parse->cmd[i]);
 		if (parse->cmd[i] == '\\' &&
 			parse->cmd[i + 1])
-		{
 			ft_polish_parse(parse, i - 1);
-		}
-		if (test == 0 && ret == 1)
+		if (test == 0 && ret == 1 && (test = 1))
 		{
 			q = parse->cmd[i];
 			ft_polish_parse(parse, i - 1);
-			test = 1;
-			if (q == '\'')
-			{
-				while ((ret = check_parentheses(parse->cmd[i])) == 1 && parse->cmd[i + 1] != '\'')
-					i++;
-			}
+			while ((q == '\'') &&(ret = check_parentheses(parse->cmd[i]))
+			== 1 && parse->cmd[i + 1] != '\'')
+				i++;
 		}
-		else if (test == 1 && ret == 0)
-		{
-			test = 0;
+		else if (test == 1 && ret == 0 && (test = 0))
 			ft_polish_parse(parse, i - 1);
-		}
 	}
 }
 
 /*
-** creates new parse  node
+** init values of parse node
 */
 
-static void		ft_create_parse(t_group *grp, t_andor *tabl, t_andor *andor)
+static void		ft_parsenode_init(t_parse *tmp)
 {
-	t_parse		*tmp;
-	t_parse		*tmp2;
-
-	tmp = (t_parse*)malloc(sizeof(t_parse));
-	tmp->cmd = ft_strtrim(tabl->cmd);
 	tmp->next = NULL;
 	tmp->heredoc = 0;
 	tmp->dbred = NULL;
@@ -94,6 +81,20 @@ static void		ft_create_parse(t_group *grp, t_andor *tabl, t_andor *andor)
 	tmp->errnb = 0;
 	tmp->fd = -1;
 	tmp->fail = 0;
+}
+
+/*
+** creates new parse node
+*/
+
+static void		ft_create_parse(t_group *grp, t_andor *tabl, t_andor *andor)
+{
+	t_parse		*tmp;
+	t_parse		*tmp2;
+
+	tmp = (t_parse*)malloc(sizeof(t_parse));
+	tmp->cmd = ft_strtrim(tabl->cmd);
+	ft_parsenode_init(tmp);
 	ft_parse_redirections(grp, tmp);
 	polish(tmp);
 	tmp->cmdsplit = ft_strsplit(tmp->cmd, ' ');
