@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/25 15:42:57 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/19 21:51:43 by jtranchi         ###   ########.fr       */
+/*   Created: 2016/11/19 21:56:30 by jmontija          #+#    #+#             */
+/*   Updated: 2016/11/19 21:56:45 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ void					ft_check_redirection_fd(t_parse *parse, int i);
 **	redirections_lib.c
 */
 
-char					*get_redirection(t_group *grp, t_parse *parse, int i, int start);
+char					*get_redirection(t_group *grp, t_parse *parse,
+											int i, int start);
 int						check_rights(t_parse *parse, char **file, int i);
 void					ft_redirection_error(t_parse *parse, int end);
 
