@@ -6,58 +6,15 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 20:23:03 by julio             #+#    #+#             */
-/*   Updated: 2016/11/19 21:09:13 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/19 22:52:50 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-static char		*join_path(t_group *grp, char *path)
-{
-	char	*tmp;
-	char	*result;
-	char	buff[1024 + 1];
+#define RPW(x, y) (ft_getenv(x, "PWD")) ? ft_getenv(x, "PWD") : getcwd(y, 1024)
 
-	ft_bzero(buff, 1025);
-	tmp = ft_strjoin("PWD=", (ft_getenv(grp, "PWD")) ? ft_getenv(grp, "PWD") : getcwd(buff, 1024));
-	if (tmp[ft_strlen(tmp) - 1] != '/')
-		tmp = JOINF(tmp, "/", 1);
-	result = JOIN(tmp, path);
-	return (result);
-}
-
-void			update_env_pwd(t_group *grp, char *path, int opt, char *curr_dir)
-{
-	char	*pwd;
-	char	*old_pwd;
-	char	buf[1024 + 1];
-	char	*tp;
-
-	ft_bzero(buf, 1025);
-	old_pwd = JOIN("OLDPWD=", curr_dir);
-	tp = (ft_getenv(grp, "PWD")) ? ft_getenv(grp, "PWD") : getcwd(buf, 1024);
-	// if (o)
-	// 	pwd = JOIN("PWD=", getcwd(buf, 1024));
-	if (!opt && ft_strncmp(path, "..", 2) != 0 && ft_strncmp(path, ".", 1) != 0)
-		pwd = (path[0] == '/') ? JOIN("PWD=", path) : join_path(grp, path);
-	else if (!opt && ft_strcmp(path, "..") == 0)
-	{
-		curr_dir = ft_strsub(tp, 0, ft_strlen(tp) - (ft_strlen(ft_strrchr(tp, '/')) - 1));
-		if (curr_dir[ft_strlen(curr_dir) - 1] == '/' && ft_strlen(curr_dir) > 1)
-			curr_dir[ft_strlen(curr_dir) - 1] = '\0';
-		pwd = JOIN("PWD=", curr_dir);
-		ft_strdel(&curr_dir);
-	}
-	else if (opt || ft_strncmp(path, "..", 2))
-		pwd = JOIN("PWD=", getcwd(buf, 1024));
-	insert_env(grp, pwd);
-	insert_env(grp, old_pwd);
-	REMOVE(&old_pwd);
-	REMOVE(&pwd);
-	grp->exit = 0;
-}
-
-void			cderr_pwd(t_group *grp, char *path, struct stat s_buf, int opt)
+void	cderr_pwd(t_group *grp, char **path, struct stat s_buf, int opt)
 {
 	mode_t		val;
 	char		buf[1024];
@@ -65,16 +22,67 @@ void			cderr_pwd(t_group *grp, char *path, struct stat s_buf, int opt)
 	char		*pwd;
 	char		*curr_dir;
 
-	curr_dir = (ft_getenv(grp, "PWD")) ? ft_getenv(grp, "PWD") : getcwd(buf, 1024);
+	curr_dir = RPW(grp, buf);
 	val = (s_buf.st_mode & ~S_IFMT);
-	if (access(path, F_OK) != 0)
-		error_cmd("unknown directory", path, 1);
+	if (access((*path), F_OK) != 0)
+		error_cmd("unknown directory", (*path), 1);
 	else if (!S_ISDIR(s_buf.st_mode) && !S_ISLNK(s_buf.st_mode))
-		error_cmd("this is not a directory", path, 1);
+		error_cmd("this is not a directory", (*path), 1);
 	else if (!(val & S_IXUSR))
-		error_cmd("Permission denied", path, 1);
-	else if (chdir(path) == 0)
-		update_env_pwd(grp, path,opt, curr_dir);
+		error_cmd("Permission denied", (*path), 1);
+	else if (chdir((*path)) == 0)
+		update_pwd(grp, (*path), opt, curr_dir);
+	ft_strdel(path);
+}
+
+char	*return_home(t_group *grp, char **path)
+{
+	char	*ret;
+
+	if (path)
+	{
+		(*path) = SDUP(ft_getenv(grp, "OLDPWD"));
+		ft_putstr("> ");
+		ft_putendl((*path));
+		return (NULL);
+	}
+	if (ft_getenv(grp, "HOME") != NULL)
+	{
+		ret = SDUP(ft_getenv(grp, "HOME"));
+		return (ret);
+	}
+	else
+		return (SDUP("HOME has been unset from environnement !"));
+}
+
+int		update_path_cd(char **path, t_parse *parse, t_group *grp, int mode)
+{
+	int		ret;
+
+	ret = 0;
+	if (mode == 1)
+	{
+		if (ft_getenv(grp, "OLDPWD") != NULL)
+			return_home(grp, path);
+		else
+			(*path) = SDUP("OLDPWD has been unset from environnement !");
+	}
+	else if (mode == 2)
+	{
+		if (parse->cmdsplit[2] == NULL)
+			(*path) = return_home(grp, NULL);
+		else
+			(*path) = SDUP(parse->cmdsplit[2]);
+		ret = (parse->cmdsplit[1][1] == 'P') ? 1 : 0;
+	}
+	return (ret);
+}
+
+int		is_param(char c)
+{
+	if (c == 'P' || c == 'L')
+		return (1);
+	return (0);
 }
 
 int		builtin_cd(t_group *grp, t_parse *parse)
@@ -87,42 +95,21 @@ int		builtin_cd(t_group *grp, t_parse *parse)
 	opt = 0;
 	ft_bzero(buf, 1024);
 	if (parse->cmdsplit[1] == NULL)
-	{
-		path = ft_getenv(grp, "HOME") ? SDUP(ft_getenv(grp, "HOME")) :
-		SDUP("HOME has been unset from environnement !");
-	}
+		path = return_home(grp, NULL);
 	else if (parse->cmdsplit[1][0] == '-' && parse->cmdsplit[1][1] == false)
-	{
-		if (ft_getenv(grp, "OLDPWD") != NULL)
-		{
-			path = SDUP(ft_getenv(grp, "OLDPWD"));
-			ft_putstr("> ");
-			ft_putendl(path);
-		}
-		else
-			path = SDUP("OLDPWD has been unset from environnement !");
-	}
-	else if (parse->cmdsplit[1][0] == '-' && (parse->cmdsplit[1][1] == 'P' || parse->cmdsplit[1][1] == 'L'))
-	{
-		if (parse->cmdsplit[2] == NULL)
-		{
-			path = ft_getenv(grp, "HOME") ? SDUP(ft_getenv(grp, "HOME")) :
-				SDUP("HOME has been unset from environnement !");
-		}
-		else
-			path = SDUP(parse->cmdsplit[2]);
-		opt = (parse->cmdsplit[1][1] == 'P') ? 1 : 0;
-	}
+		update_path_cd(&path, parse, grp, 1);
+	else if (parse->cmdsplit[1][0] == '-' && is_param(parse->cmdsplit[1][1]))
+		opt = update_path_cd(&path, parse, grp, 2);
 	else if (ft_strcmp(parse->cmdsplit[1], "..") != 0)
 		path = SDUP(parse->cmdsplit[1]);
 	else
 	{
-		path = ft_strsub((ft_getenv(grp, "PWD")) ? ft_getenv(grp, "PWD") : getcwd(buf, 1024), 0, ft_strlen((ft_getenv(grp, "PWD")) ? ft_getenv(grp, "PWD") : getcwd(buf, 1024)) - (ft_strlen(ft_strrchr((ft_getenv(grp, "PWD")) ? ft_getenv(grp, "PWD") : getcwd(buf, 1024), '/')) - 1));
+		path = SUB(RPW(grp, buf), 0,
+			LEN(RPW(grp, buf)) - (LEN(ft_strrchr(RPW(grp, buf), '/')) - 1));
 		if (path[ft_strlen(path) - 1] == '/' && ft_strlen(path) > 1)
 			path[ft_strlen(path) - 1] = '\0';
 	}
 	lstat(path, &s_buf);
-	cderr_pwd(grp, path, s_buf, opt);
-	REMOVE(&path);
+	cderr_pwd(grp, &path, s_buf, opt);
 	return (1);
 }
