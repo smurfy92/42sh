@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 22:41:30 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/19 22:41:51 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/19 23:04:05 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,26 @@ void		ft_polish_parse(t_parse *parse, int i)
 		parse->cmd = JOINF(parse->cmd, SDUP(&parse->cmd[i + 2]), 3);
 }
 
+void		polisher(t_parse *parse, int i, int ret, int *in)
+{
+	char	q;
+
+	if (*in == 0 && ret == 1)
+	{
+		q = parse->cmd[i];
+		ft_polish_parse(parse, i - 1);
+		while ((q == '\'') && (ret = check_parentheses(parse->cmd[i]))
+		== 1 && parse->cmd[i + 1] != '\'')
+			i++;
+		*in = 1;
+	}
+	else if (*in == 1 && ret == 0)
+	{
+		ft_polish_parse(parse, i - 1);
+		*in = 0;
+	}
+}
+
 /*
 ** polishing parse by deleting unwanted charateres
 ** ex : escaped chars, separators
@@ -33,32 +53,17 @@ void		ft_polish_parse(t_parse *parse, int i)
 void		polish(t_parse *parse)
 {
 	int		ret;
-	int		test;
+	int		in;
 	int		i;
-	char	q;
 
-	test = 0;
 	i = -1;
+	in = 0;
 	check_parentheses(0);
 	while (parse->cmd[++i])
 	{
 		ret = check_parentheses(parse->cmd[i]);
-		if (parse->cmd[i] == '\\' &&
-			parse->cmd[i + 1])
+		if (parse->cmd[i] == '\\' && parse->cmd[i + 1])
 			ft_polish_parse(parse, i - 1);
-		if (test == 0 && ret == 1)
-		{
-			q = parse->cmd[i];
-			ft_polish_parse(parse, i - 1);
-			while ((q == '\'') &&(ret = check_parentheses(parse->cmd[i])) 
-			== 1 && parse->cmd[i + 1] != '\'')
-				i++;
-			test = 1;
-		}
-		else if (test == 1 && ret == 0)
-		{
-			ft_polish_parse(parse, i - 1);
-			test = 0;
-		}
+		polisher(parse, i, ret, &in);
 	}
 }

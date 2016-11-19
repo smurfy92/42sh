@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 17:24:49 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/19 21:43:52 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/19 23:06:50 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,12 @@ char			*get_redirection(t_group *grp, t_parse *parse, int i, int start)
 ** printing error if it is a directory
 */
 
-int			check_stat(t_parse *parse, char **file)
+int				check_stat(t_parse *parse, char **file)
 {
-	struct stat buf;
-	char *tmp = NULL;
+	struct stat		buf;
+	char			*tmp;
 
+	tmp = NULL;
 	tmp = getwd(tmp);
 	tmp = ft_strjoin_nf(tmp, "/", 1);
 	tmp = ft_strjoin_nf(tmp, *file, 1);
@@ -83,12 +84,11 @@ int			check_stat(t_parse *parse, char **file)
 ** printing error if rights are not ok
 */
 
-int			check_rights(t_parse *parse, char **file, int i)
+int				check_rights(t_parse *parse, char **file, int i)
 {
-
 	if (i == 0 && access(*file, F_OK) == 0 && access(*file, W_OK) < 0)
 	{
-		ft_putstr_fd("42sh: permission denied: ",2);
+		ft_putstr_fd("42sh: permission denied: ", 2);
 		ft_putendl_fd(*file, 2);
 		parse->fail = 1;
 		REMOVE(file);
@@ -113,7 +113,7 @@ int			check_rights(t_parse *parse, char **file, int i)
 ** printing error if wrong parse format
 */
 
-void		ft_redirection_error(t_parse *parse, int end)
+void			ft_redirection_error(t_parse *parse, int end)
 {
 	char *tmp;
 

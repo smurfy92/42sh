@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 21:56:30 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/19 21:56:45 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/19 23:38:06 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,13 +117,6 @@ void					ft_escape_parse(t_group *grp, int i);
 */
 
 void					check_heredoc(t_group *grp);
-
-/*
-**	heredoc_lib.c
-*/
-
-void					ft_polish_hd_line(t_group *grp, int i);
-void					polish_hd(t_group *grp);
 
 /*
 **	split
