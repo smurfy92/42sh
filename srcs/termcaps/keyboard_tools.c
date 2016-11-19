@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard_tools.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 19:31:01 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/18 16:23:37 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/19 19:12:51 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,17 @@ void	print_cmd(t_group *grp, char *order)
 	}
 	else if ((START_POS + TERM(curs_pos)) % TERM(window->width) == 0)
 		tputs(tgetstr("do", NULL), 0, ft_getchar);
-	// grp->is_search == true ? find_search(grp) : 0;
 }
+
+/*
+**	a la fin de print_cmd?
+**	grp->is_search == true ? find_search(grp) : 0;
+*/
 
 void	handling_ctrl_d(t_group *grp)
 {
 	char	*tmp;
-	
+
 	if (TERM(cmd_size) == 0)
 		ft_strdel(&TERM(cmd_line));
 	if (TERM(cmd_size) == 0 && TERM(other_read) == false)
@@ -123,5 +127,8 @@ void	handling_backspace(t_group *grp)
 	tputs(tgetstr("sc", NULL), 0, ft_getchar);
 	ft_putstr_fd(&TERM(cmd_line)[TERM(curs_pos)], 2);
 	tputs(tgetstr("rc", NULL), 0, ft_getchar);
-	// grp->is_search == true ? find_search(grp) : 0;
 }
+
+/*
+** grp->is_search == true ? find_search(grp) : 0;
+*/

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:17:06 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/17 20:12:21 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/19 18:57:11 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-int		reset_shell(void)
+int			reset_shell(void)
 {
 	t_group	*grp;
 
@@ -36,10 +36,7 @@ int			init_shell(void)
 	if (getenv("TERM") == NULL)
 		ft_strdel(&name);
 	if (tcgetattr(0, &term) == -1)
-	{
-		grp->quit = true;
-		return (1);
-	}
+		return ((grp->quit = true));
 	grp->cpy_term = term;
 	term.c_lflag = term.c_lflag & (~ICANON & ~ECHO);
 	term.c_cc[VMIN] = 1;
