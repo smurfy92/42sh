@@ -3,25 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/19 20:56:31 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/19 21:45:03 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
-
-int		ft_is_printable(char *order)
-{
-	int	i;
-
-	i = -1;
-	while (order[++i] != '\0')
-		if (ft_isprint(order[i]) == false)
-			return (0);
-	return (1);
-}
 
 int		key_selection_next(t_group *grp, char *order, int key)
 {
@@ -84,6 +73,22 @@ void	read_fd_in(t_group *grp)
 	REMOVE(&order);
 }
 
+static void	get_cmd_help(t_group *grp, int ret_q)
+{
+	ft_go_end(grp);
+	ft_putchar_fd('\n', 2);
+	if (TERM(cmd_quote) != NULL)
+		fill_cmd_line(grp);
+	if (ret_q < 0)
+	{
+		grp->err_parse = 1;
+		error_cmd("parse error", "parenthese closed too soon", 1);
+	}
+	check_parentheses(0);
+	reset_edl(grp);
+
+}
+
 void	get_cmd(t_group *grp, int fd)
 {
 	int		ret;
@@ -102,15 +107,16 @@ void	get_cmd(t_group *grp, int fd)
 			break ;
 		ft_bzero(order, BUF_SIZE + 1);
 	}
-	ft_go_end(grp);
-	ft_putchar_fd('\n', 2);
-	if (TERM(cmd_quote) != NULL)
-		fill_cmd_line(grp);
-	if (ret_q < 0)
-	{
-		grp->err_parse = 1;
-		error_cmd("parse error", "parenthese closed too soon", 1);
-	}
-	check_parentheses(0);
-	reset_edl(grp);
+	get_cmd_help(grp,ret_q);
+	// ft_go_end(grp);
+	// ft_putchar_fd('\n', 2);
+	// if (TERM(cmd_quote) != NULL)
+	// 	fill_cmd_line(grp);
+	// if (ret_q < 0)
+	// {
+	// 	grp->err_parse = 1;
+	// 	error_cmd("parse error", "parenthese closed too soon", 1);
+	// }
+	// check_parentheses(0);
+	// reset_edl(grp);
 }
