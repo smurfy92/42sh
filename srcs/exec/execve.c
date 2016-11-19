@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 02:28:21 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/18 21:40:30 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/19 15:11:51 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ int			check_cmd(char **path, char *cmd)
 	ret = lstat(*path, &s_buf);
 	val = (s_buf.st_mode & ~S_IFMT);
 	if (ret != 0)
-		error_cmd("42sh: unknown command", cmd, 1);
+		error_cmd("command not found", cmd, 1);
 	else if (s_buf.st_size <= 0)
-		error_cmd("42sh: executable format error", cmd, 1);
+		error_cmd("executable format error", cmd, 1);
 	else if (!(val & S_IXUSR) || S_ISDIR(s_buf.st_mode))
-		error_cmd("42sh: Permission denied", cmd, 1);
+		error_cmd("Permission denied", cmd, 1);
 	else
 		return (0);
 	return (-1);
