@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/25 15:42:57 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/19 21:42:46 by jmontija         ###   ########.fr       */
+/*   Created: 2016/11/19 21:56:30 by jmontija          #+#    #+#             */
+/*   Updated: 2016/11/19 21:56:45 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,13 @@ typedef struct			s_andor
 */
 
 void					ft_init_parse(t_group *grp);
+
+/*
+**	polish.c
+*/
+
+void					ft_polish_parse(t_parse *parse, int i);
+void					polish(t_parse *parse);
 
 /*
 **	redirections.c
