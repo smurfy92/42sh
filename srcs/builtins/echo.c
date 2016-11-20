@@ -98,5 +98,6 @@ int		builtin_echo(t_group *grp, t_parse *parse)
 	while (grp && parse->cmdsplit[++i])
 		check_line(parse->cmdsplit[i]);
 	ft_putchar('\n');
+	grp->exit = 0;
 	return (1);
 }

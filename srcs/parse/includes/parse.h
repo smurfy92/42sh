@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 21:56:30 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/19 23:38:06 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/20 21:40:30 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void					ft_init_parse(t_group *grp);
 **	polish.c
 */
 
-void					ft_polish_parse(t_parse *parse, int i);
+void					ft_polish_parse(t_parse *parse, int j, int i);
 void					polish(t_parse *parse);
 
 /*

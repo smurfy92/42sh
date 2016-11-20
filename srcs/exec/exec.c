@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 13:30:12 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/18 21:28:39 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/20 23:25:19 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,8 @@ void		pipe_exec(t_group *grp, t_parse *parse)
 	waitpid(grp->father, &ret, 0);
 	grp->program_pid = getpid();
 	error_process_check(ret);
+	grp->exit = (ret > 0 ? 1 : 0);
 	check_lastcmd(grp, tmp);
-	if (ret > 0)
-		grp->exit = 1;
 }
 
 void		andor_exec(t_group *grp, t_andor *andor)

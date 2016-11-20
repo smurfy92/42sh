@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 15:59:55 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/20 20:40:18 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/20 22:33:07 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ static void		ft_create_parse(t_group *grp, t_andor *tabl, t_andor *andor)
 	tmp->cmd = ft_strtrim(tabl->cmd);
 	ft_parsenode_init(tmp);
 	ft_parse_redirections(grp, tmp);
+	tmp->cmdsplit = ft_spacesplit(tmp->cmd);
 	polish(tmp);
-	tmp->cmdsplit = ft_strsplit(tmp->cmd, ' ');
 	if (!andor->parselst)
 		andor->parselst = tmp;
 	else
