@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/20 00:07:07 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/21 00:07:49 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int			main(int argc, char **argv, char **env)
 	grp->program_name = SDUP(argv[0]);
 	grp->program_pid = getpid();
 	init_env(grp, env);
-	hash_init(&grp->root, grp, NULL);
 	sig_handler();
 	while (42)
 		proccess(grp);
