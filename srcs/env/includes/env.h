@@ -58,7 +58,7 @@ char					**list_to_tab(t_envlst *envlst);
 **	env_opt.c
 */
 
-int						env_opt(t_group *grp);
+int						env_opt(t_group *grp, t_parse *parse);
 
 /*
 **	env_init.c

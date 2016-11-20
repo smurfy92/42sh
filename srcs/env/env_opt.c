@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_opt.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 16:18:52 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/16 22:17:19 by julio            ###   ########.fr       */
+/*   Updated: 2016/11/20 19:51:21 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,22 +59,22 @@ int		env_cmd(t_group *grp, char *env_cmd)
 	return (3);
 }
 
-int		env_opt(t_group *grp)
+int		env_opt(t_group *grp, t_parse *parse)
 {
 	int		i;
 	int		step;
 
 	i = 0;
 	step = 0;
-	while (CMD(cmdsplit) && CMD(cmdsplit)[++i])
+	while (parse->cmdsplit && parse->cmdsplit[++i])
 	{
-		if (CMD(cmdsplit)[i][0] == '-' && step <= 1)
+		if (parse->cmdsplit[i][0] == '-' && step <= 1)
 		{
 			step = 1;
-			if (analyse_opt(grp, CMD(cmdsplit)[i]) < 0)
+			if (analyse_opt(grp, parse->cmdsplit[i]) < 0)
 				return (-1);
 		}
-		else if (is_env(CMD(cmdsplit)[i]) > 0)
+		else if (is_env(parse->cmdsplit[i]) > 0)
 		{
 			if (step < 2)
 				ENV(start_varenv) = i;
@@ -82,7 +82,7 @@ int		env_opt(t_group *grp)
 			step = 2;
 		}
 		else
-			step = env_cmd(grp, CMD(cmdsplit)[i]);
+			step = env_cmd(grp, parse->cmdsplit[i]);
 	}
 	return (0);
 }

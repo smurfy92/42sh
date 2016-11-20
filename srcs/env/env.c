@@ -63,7 +63,7 @@ int		builtin_env(t_group *grp, t_parse *parse)
 	int		end;
 
 	cmdsplit = parse->cmdsplit;
-	if (env_opt(grp) < 0)
+	if (env_opt(grp, parse) < 0)
 		return (-1);
 	if (ENV(opt_i) == false && ENV(start_varenv) == false && ENV(cmd) == NULL)
 		show_env(0, grp);
