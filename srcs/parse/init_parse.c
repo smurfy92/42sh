@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_parse.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 15:59:55 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/19 21:45:52 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/20 20:40:18 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void		ft_create_parse(t_group *grp, t_andor *tabl, t_andor *andor)
 ** spliting on andor node and creating parses nodes
 */
 
-static void		ft_parse(t_group *grp, t_andor *andor)
+static int		ft_parse(t_group *grp, t_andor *andor)
 {
 	t_andor		*tabl;
 	t_andor		*tmp;
@@ -71,13 +71,13 @@ static void		ft_parse(t_group *grp, t_andor *andor)
 	tabl = ft_strsplitpipe(andor->cmd, '|');
 	while (tabl)
 	{
-		if (tabl->cmd[0] == '\0' && !grp->fail)
+		if (tabl->cmd[0] == '\0' && !grp->fail) 
 		{
 			grp->fail = 1;
-			ft_putendl("Invalid null command.");
+			error_cmd("Invalid null command near", "|", 1);
+			return (-1) ;
 		}
-		if (!grp->fail)
-			ft_create_parse(grp, tabl, andor);
+		ft_create_parse(grp, tabl, andor);
 		REMOVE(&tabl->cmd);
 		tmp = tabl->next;
 		free(tabl);
@@ -85,6 +85,7 @@ static void		ft_parse(t_group *grp, t_andor *andor)
 		i++;
 	}
 	TERM(cmd_size) = 0;
+	return (0);
 }
 
 /*
@@ -103,7 +104,14 @@ void			ft_init_parse(t_group *grp)
 		tmp2 = tabl->andor;
 		while (tmp2)
 		{
-			ft_parse(grp, tmp2);
+			if (tmp2->cmd[0] == '\0' && !grp->fail)
+			{
+				grp->fail = 1;
+				error_cmd("Invalid null command near", "separator (&& / ||)", 1);
+				return ;
+			}
+			if (ft_parse(grp, tmp2) < 0)
+				return ;
 			tmp2 = tmp2->next;
 		}
 		tabl = tabl->next;
