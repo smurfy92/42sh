@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hash_use.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 20:13:24 by vdanain           #+#    #+#             */
-/*   Updated: 2016/11/18 22:33:14 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/19 23:43:54 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,6 @@ char		*get_possible(t_hash *start, size_t len, int comp_free)
 {
 	t_hash		*cur;
 	static char	*result = NULL;
-	char		*tmp;
-	char		*tmp2;
 	size_t		i;
 
 	if (comp_free == 1)

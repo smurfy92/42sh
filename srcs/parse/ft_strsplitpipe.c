@@ -83,7 +83,6 @@ t_andor						*ft_strsplitpipe(char *s, char c)
 	int		i;
 	int		start;
 	t_andor	*lst;
-	char	*part;
 	int		len;
 
 	i = 0;

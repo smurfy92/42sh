@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/10 19:59:55 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/19 19:04:50 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/19 23:47:27 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ t_allcmd					*ft_strsplitquote(char *s, char c)
 {
 	int			i;
 	t_allcmd	*lst;
-	char		*part;
 	int			len;
 
 	i = 0;

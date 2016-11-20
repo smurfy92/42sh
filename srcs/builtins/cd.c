@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 20:23:03 by julio             #+#    #+#             */
-/*   Updated: 2016/11/19 22:52:50 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/19 23:44:50 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ void	cderr_pwd(t_group *grp, char **path, struct stat s_buf, int opt)
 {
 	mode_t		val;
 	char		buf[1024];
-	char		*old_pwd;
-	char		*pwd;
 	char		*curr_dir;
 
 	curr_dir = RPW(grp, buf);

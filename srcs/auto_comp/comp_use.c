@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   comp_use.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/13 01:38:59 by vdanain           #+#    #+#             */
-/*   Updated: 2016/11/18 17:54:59 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/19 23:49:19 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,6 @@ void		display_next(t_group *grp, int comp_free)
 {
 	static char		*name = NULL;
 	static t_comp	*last = NULL;
-	char			*tmp2;
-	char			*tmp;
 
 	update_name(grp, &name, &last, comp_free);
 	if (!grp->comp)

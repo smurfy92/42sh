@@ -3,48 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard_tools2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/10 17:06:09 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/19 19:15:47 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/20 00:12:36 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
-
-/*
-** void	display_historic(t_group *grp)
-** {
-** 	ft_putstr_fd(grp->curr_hist->name, 2);
-** 	if ((START_POS + LEN(grp->curr_hist->name)) % TERM(window->width) == 0)
-** 		tputs(tgetstr("do", NULL), 0, ft_getchar);
-** 	TERM(cmd_line) = SDUP(grp->curr_hist->name);
-** 	TERM(curs_pos) += LEN(TERM(cmd_line));
-** 	TERM(cmd_size) = TERM(curs_pos);
-** }
-** void	handling_historic(t_group *grp, int key)
-** {
-** 	grp->is_search ? canceled_search(grp) : 0;
-** 	remove_line(grp);
-** 	if (key == ARROW_U && grp->hist)
-** 	{
-** 		if (grp->curr_hist == NULL)
-** 			grp->curr_hist = grp->hist;
-** 		else if (grp->curr_hist->next)
-** 			grp->curr_hist = grp->curr_hist->next;
-** 		display_historic(grp);
-** 	}
-** 	else if (key == ARROW_D && grp->hist)
-** 	{
-** 		if (grp->curr_hist != NULL)
-** 			grp->curr_hist = grp->curr_hist->prev;
-** 		if (grp->curr_hist != NULL)
-** 			display_historic(grp);
-** 		else
-** 			remove_line(grp);
-** 	}
-** }
-*/
 
 void	ft_place_to_eof(t_group *grp)
 {
