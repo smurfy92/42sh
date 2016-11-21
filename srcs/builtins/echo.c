@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 17:03:39 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/19 23:46:14 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/21 23:56:15 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,5 @@ int		builtin_echo(t_group *grp, t_parse *parse)
 	while (grp && parse->cmdsplit[++i])
 		check_line(parse->cmdsplit[i]);
 	ft_putchar('\n');
-	grp->exit = 0;
 	return (1);
 }

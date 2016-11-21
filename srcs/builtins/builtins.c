@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:50:41 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/21 21:32:16 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/21 23:56:43 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int	builtin_setenv(t_group *grp, t_parse *parse)
 			return (1);
 		}
 	}
-	grp->exit = 0;
 	return (1);
 }
 
@@ -81,7 +80,6 @@ int	builtin_unsetenv(t_group *grp, t_parse *parse)
 			return (1);
 		}
 	}
-	grp->exit = 0;
 	return (1);
 }
 

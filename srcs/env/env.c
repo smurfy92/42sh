@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 16:51:54 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/21 21:42:54 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/21 23:56:29 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int		builtin_env(t_group *grp, t_parse *parse)
 		}
 		ENV(cmd) == NULL ? show_env(1, grp) : init_exec_env(grp);
 	}
-	grp->exit = 0;
 	return (1);
 }
 

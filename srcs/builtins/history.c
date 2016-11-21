@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:55:46 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/21 21:42:23 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/22 00:10:03 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int		builtin_history(t_group *grp, t_parse *parse)
 
 	grp->history = ft_history_get_last(grp);
 	cmdsplit = parse->cmdsplit;
-	grp->exit = 1;
 	if (!cmdsplit[1])
 		if (grp->history->i > 16)
 			ft_display_history(ft_history_get_by_id(grp, grp->history->i - 16));
@@ -93,6 +92,5 @@ int		builtin_history(t_group *grp, t_parse *parse)
 		if (builtin_history2(grp, parse))
 			return (1);
 	}
-	grp->exit = 0;
 	return (0);
 }
