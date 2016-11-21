@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:10:01 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/21 03:50:20 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/21 22:05:41 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static void		ft_addfile(t_group *grp, t_parse *parse, int i)
 	if (parse->file)
 		REMOVE(&parse->file);
 	parse->file = get_redirection(grp, parse, i, i - 1);
-	check_rights(parse, &parse->file, 1);
+	if (check_rights(parse, &parse->file, 1))
+		grp->fail = 1;
 }
 
 /*

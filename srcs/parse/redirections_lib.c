@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 17:24:49 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/19 23:06:50 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/21 22:06:36 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int				check_rights(t_parse *parse, char **file, int i)
 {
 	if (i == 0 && access(*file, F_OK) == 0 && access(*file, W_OK) < 0)
 	{
-		ft_putstr_fd("42sh: permission denied: ", 2);
+		ft_putstr_fd("permission denied: ", 2);
 		ft_putendl_fd(*file, 2);
 		parse->fail = 1;
 		REMOVE(file);
@@ -97,9 +97,9 @@ int				check_rights(t_parse *parse, char **file, int i)
 	else if (i == 1 && (access(*file, F_OK) < 0 || access(*file, R_OK) < 0))
 	{
 		if (access(*file, F_OK) < 0)
-			error_cmd("42sh: no such file or directory: ", *file, 1);
+			error_cmd("no such file or directory: ", *file, 1);
 		else if (access(*file, R_OK) < 0)
-			error_cmd("42sh: permission denied: ", *file, 1);
+			error_cmd("permission denied: ", *file, 1);
 		parse->fail = 1;
 		REMOVE(file);
 		return (1);
