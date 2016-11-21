@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:50:41 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/20 20:28:23 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/21 00:58:44 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,56 +36,52 @@ int	is_builtins(char **cmd)
 int	builtin_setenv(t_group *grp, t_parse *parse)
 {
 	char	**cmdsplit;
-	t_bool	error;
 	int		i;
 
 	i = 0;
 	cmdsplit = parse->cmdsplit;
-	error = cmdsplit[1] != NULL ? false : true;
+	cmdsplit[1] == NULL ? error_cmd("setenv", "no argument given", 1) : 0;
 	while (cmdsplit[++i] != NULL)
 	{
 		if (!ft_strncmp(cmdsplit[i], "_", 1) ||
 			!ft_strncmp(cmdsplit[i], "SHLVL", 5))
 		{
-			ft_putendl_fd("setenv: \"SHLVL\" and \"_\" can't be modify", 2);
-			break ;
+			error_cmd("setenv: 'SHLVL'", "'_' can't be modify", 1);
+			return (1);
 		}
 		else if (insert_env(grp, cmdsplit[i]) < 0)
 		{
-			ft_putstr_fd("setenv: bad synthax -> ", 2);
-			ft_putendl_fd(cmdsplit[i], 2);
-			error = true;
+			error_cmd("setenv: bad syntax", cmdsplit[i], 1);
+			return (1);
 		}
 	}
-	grp->exit = error ? 1 : 0;
+	grp->exit = 0;
 	return (1);
 }
 
 int	builtin_unsetenv(t_group *grp, t_parse *parse)
 {
 	char	**cmdsplit;
-	t_bool	error;
 	int		i;
 
 	i = 0;
 	cmdsplit = parse->cmdsplit;
-	error = cmdsplit[1] != NULL ? false : true;
+	cmdsplit[1] == NULL ? error_cmd("unsetenv", "no argument given", 1) : 0;
 	while (cmdsplit[++i] != NULL)
 	{
 		if (!ft_strncmp(cmdsplit[i], "_", 1) ||
 			!ft_strncmp(cmdsplit[i], "SHLVL", 5))
 		{
-			ft_putendl_fd("setenv: 'SHLVL', '_' can't be modify", 2);
-			break ;
+			error_cmd("unsetenv: 'SHLVL'", "'_' can't be modify", 1);
+			return (1);
 		}
 		else if (unset_env(grp, cmdsplit[i]) < 0)
 		{
-			ft_putstr_fd("unsetenv: unfound key -> ", 2);
-			ft_putendl_fd(cmdsplit[i], 2);
-			error = true;
+			error_cmd("unsetenv: unfound key", cmdsplit[i], 1);
+			return (1);
 		}
 	}
-	grp->exit = error ? 1 : 0;
+	grp->exit = 0;
 	return (1);
 }
 

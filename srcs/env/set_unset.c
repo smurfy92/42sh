@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_unset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/20 23:45:59 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/20 23:46:16 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/21 00:41:38 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,17 @@ int				unset_env(t_group *grp, char *todel)
 	return (-1);
 }
 
+
 static t_envlst	*create_env_line(t_group *grp, char *env, int i)
 {
 	t_envlst *new;
 	t_envlst *curr_env;
 
 	curr_env = grp->env->lst;
+	if ((i = is_env(env)) == false)
+		return (NULL);
 	new = (t_envlst *)malloc(sizeof(t_envlst));
 	if (!(new) || !(env))
-		return (NULL);
-	if ((i = is_env(env)) == false)
 		return (NULL);
 	new->exist = false;
 	new->name = SUB(env, 0, i);
