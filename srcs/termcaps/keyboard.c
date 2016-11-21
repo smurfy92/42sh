@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/19 23:26:19 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/21 20:04:07 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static void	get_cmd_help(t_group *grp, int ret_q)
 	if (ret_q < 0)
 	{
 		grp->err_parse = 1;
-		error_cmd("parse error", "parenthese closed too soon", 1);
+		error_cmd("parse error", "parenthese closed but not opened", 1);
 	}
 	check_parentheses(0);
 	reset_edl(grp);
