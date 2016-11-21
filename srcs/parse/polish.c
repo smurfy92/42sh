@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   polish.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 22:41:30 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/20 22:40:21 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/21 01:12:06 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void		polish(t_parse *parse)
 	in = 0;
 	j = -1;
 	check_parentheses(0);
-	printf("CMD: %s\n", parse->cmd);
 	while (parse->cmdsplit && parse->cmdsplit[++j])
 	{
 		i = -1;

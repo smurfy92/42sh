@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/19 03:11:24 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/18 22:49:22 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/21 01:58:49 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int		check_parentheses(char c)
 		check_quotes(quotes, c, ']', cro);
 		check_quotes(quotes, c, '(', par);
 		check_quotes(quotes, c, ')', par);
+		check_quotes(quotes, c, '`', bquote);
 	}
 	ret = ret_clean_quotes(0, quotes);
 	return (ret);
