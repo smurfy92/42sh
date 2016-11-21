@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/21 03:51:22 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/21 20:25:32 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,6 @@
 int			ft_getchar(int c)
 {
 	return (write(2, &c, 1));
-}
-
-void		prompt(void)
-{
-	t_group *grp;
-
-	grp = get_grp();
-	if (grp->quit == false)
-		ft_putstr_fd("42sh> ", 2);
-	grp->prompt_size = 6;
 }
 
 void		proccess(t_group *grp)

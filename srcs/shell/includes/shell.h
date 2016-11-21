@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:43:06 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/19 17:41:58 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/21 20:27:04 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,11 @@ void					handler_win(int sig);
 void					handler_ctrl_c(int sig);
 void					ft_prompt(int signum);
 void					sig_handler(void);
+
+/*
+**	prompt.c
+*/
+
+void					prompt(void);
 
 #endif

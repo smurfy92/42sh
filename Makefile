@@ -5,6 +5,7 @@ LIB = srcs/libft/libft.a
 SRC =  srcs/shell/main.c
 SRC	+= srcs/shell/init.c
 SRC	+= srcs/shell/signaux.c
+SRC	+= srcs/shell/prompt.c
 
 #exec
 SRC	+= srcs/exec/exec.c
