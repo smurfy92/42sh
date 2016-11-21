@@ -6,13 +6,13 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 17:03:39 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/19 16:44:32 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/19 23:46:14 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-int		replace_ascii(char c, char *str, char **ptr)
+int		replace_ascii(char *str, char **ptr)
 {
 	int		i;
 	int		decimal_int;
@@ -64,7 +64,7 @@ char	check_operands(char c, char *str, char **ptr)
 	else if (c == '\\')
 		return ('\\');
 	else if (c == '0')
-		return (replace_ascii(c, str, ptr));
+		return (replace_ascii(str, ptr));
 	return (-1);
 }
 
@@ -72,8 +72,6 @@ void	check_line(char *arg)
 {
 	int		i;
 	char	operand;
-	char	*new;
-	char	*tmp;
 
 	i = -1;
 	while (arg[++i] != '\0')
@@ -97,8 +95,9 @@ int		builtin_echo(t_group *grp, t_parse *parse)
 	int	i;
 
 	i = 0;
-	while (parse->cmdsplit[++i])
+	while (grp && parse->cmdsplit[++i])
 		check_line(parse->cmdsplit[i]);
 	ft_putchar('\n');
+	grp->exit = 0;
 	return (1);
 }

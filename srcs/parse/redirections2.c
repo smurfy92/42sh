@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:14:56 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/18 15:42:59 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/19 22:59:04 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void		ft_addheredoc(t_group *grp, t_parse *parse, int i)
 {
 	char	*tmp;
 
-	tmp = get_redirection(grp, parse, i,  i - 2);
+	tmp = get_redirection(grp, parse, i, i - 2);
 	if (!parse->heredoc)
 	{
 		parse->heredoc = ft_strdup(tmp);
@@ -67,7 +67,6 @@ void		ft_check_close(t_parse *parse, int i)
 ** parsing for redirection fd
 ** format char** "'(int)out'>'(int)in'"
 */
-
 
 void		ft_check_redirection_fd(t_parse *parse, int i)
 {

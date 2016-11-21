@@ -3,66 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init_parse.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 15:59:55 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/19 21:45:52 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/21 03:22:23 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
-
-/*
-** deletes char in parse cmd at given indice
-*/
-
-static void		ft_polish_parse(t_parse *parse, int i)
-{
-	char	*tmp;
-
-	if (parse->cmd[i + 2])
-	{
-		tmp = SDUP(&parse->cmd[i + 2]);
-		parse->cmd[i + 1] = '\0';
-		parse->cmd = JOINF(parse->cmd, tmp, 3);
-	}
-	else
-		parse->cmd[i + 1] = '\0';
-}
-
-/*
-** polishing parse by deleting unwanted charateres
-** ex : escaped chars, separators
-*/
-
-static void		polish(t_parse *parse)
-{
-	int		ret;
-	int		test;
-	int		i;
-	char	q;
-
-	test = 0;
-	i = -1;
-	check_parentheses(0);
-	while (parse->cmd[++i])
-	{
-		ret = check_parentheses(parse->cmd[i]);
-		if (parse->cmd[i] == '\\' &&
-			parse->cmd[i + 1])
-			ft_polish_parse(parse, i - 1);
-		if (test == 0 && ret == 1 && (test = 1))
-		{
-			q = parse->cmd[i];
-			ft_polish_parse(parse, i - 1);
-			while ((q == '\'') &&(ret = check_parentheses(parse->cmd[i]))
-			== 1 && parse->cmd[i + 1] != '\'')
-				i++;
-		}
-		else if (test == 1 && ret == 0 && (test = 0))
-			ft_polish_parse(parse, i - 1);
-	}
-}
 
 /*
 ** init values of parse node
@@ -96,8 +44,8 @@ static void		ft_create_parse(t_group *grp, t_andor *tabl, t_andor *andor)
 	tmp->cmd = ft_strtrim(tabl->cmd);
 	ft_parsenode_init(tmp);
 	ft_parse_redirections(grp, tmp);
+	tmp->cmdsplit = ft_spacesplit(tmp->cmd);
 	polish(tmp);
-	tmp->cmdsplit = ft_strsplit(tmp->cmd, ' ');
 	if (!andor->parselst)
 		andor->parselst = tmp;
 	else
@@ -113,7 +61,7 @@ static void		ft_create_parse(t_group *grp, t_andor *tabl, t_andor *andor)
 ** spliting on andor node and creating parses nodes
 */
 
-static void		ft_parse(t_group *grp, t_andor *andor)
+static int		ft_parse(t_group *grp, t_andor *andor)
 {
 	t_andor		*tabl;
 	t_andor		*tmp;
@@ -123,13 +71,13 @@ static void		ft_parse(t_group *grp, t_andor *andor)
 	tabl = ft_strsplitpipe(andor->cmd, '|');
 	while (tabl)
 	{
-		if (tabl->cmd[0] == '\0' && !grp->fail)
+		if (tabl->cmd[0] == '\0' && !grp->fail) 
 		{
 			grp->fail = 1;
-			ft_putendl("Invalid null command.");
+			error_cmd("Invalid null command near", "|", 1);
+			return (-1) ;
 		}
-		if (!grp->fail)
-			ft_create_parse(grp, tabl, andor);
+		ft_create_parse(grp, tabl, andor);
 		REMOVE(&tabl->cmd);
 		tmp = tabl->next;
 		free(tabl);
@@ -137,13 +85,14 @@ static void		ft_parse(t_group *grp, t_andor *andor)
 		i++;
 	}
 	TERM(cmd_size) = 0;
+	return (0);
 }
 
 /*
 ** spliting on allcmd nodes and creating andor nodes
 */
 
-void		ft_init_parse(t_group *grp)
+void			ft_init_parse(t_group *grp)
 {
 	t_allcmd	*tabl;
 	t_andor		*tmp2;
@@ -155,7 +104,14 @@ void		ft_init_parse(t_group *grp)
 		tmp2 = tabl->andor;
 		while (tmp2)
 		{
-			ft_parse(grp, tmp2);
+			if (tmp2->cmd[0] == '\0' && !grp->fail)
+			{
+				grp->fail = 1;
+				error_cmd("Invalid null command near", "separator (&& / ||)", 1);
+				return ;
+			}
+			if (ft_parse(grp, tmp2) < 0)
+				return ;
 			tmp2 = tmp2->next;
 		}
 		tabl = tabl->next;

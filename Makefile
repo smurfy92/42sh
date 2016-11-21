@@ -5,6 +5,7 @@ LIB = srcs/libft/libft.a
 SRC =  srcs/shell/main.c
 SRC	+= srcs/shell/init.c
 SRC	+= srcs/shell/signaux.c
+SRC	+= srcs/shell/prompt.c
 
 #exec
 SRC	+= srcs/exec/exec.c
@@ -20,6 +21,7 @@ SRC	+= srcs/hash/hash_free.c
 #builtins
 SRC += srcs/builtins/builtins.c
 SRC += srcs/builtins/cd.c
+SRC += srcs/builtins/cd_lib.c
 SRC += srcs/builtins/echo.c
 SRC += srcs/builtins/echo_lib.c
 SRC += srcs/builtins/history.c
@@ -43,6 +45,7 @@ SRC	+= srcs/termcaps/escape.c
 
 #parse
 SRC	+= srcs/parse/init_parse.c
+SRC	+= srcs/parse/polish.c
 SRC	+= srcs/parse/redirections.c
 SRC	+= srcs/parse/redirections2.c
 SRC	+= srcs/parse/redirections_lib.c
@@ -50,7 +53,6 @@ SRC	+= srcs/parse/parse_lib.c
 SRC	+= srcs/parse/parse_lib2.c
 SRC	+= srcs/parse/pre_parse.c
 SRC	+= srcs/parse/heredoc.c
-SRC	+= srcs/parse/heredoc_lib.c
 SRC	+= srcs/parse/ft_strsplitquote.c
 SRC	+= srcs/parse/ft_strsplitandor.c
 SRC	+= srcs/parse/ft_strsplitpipe.c
@@ -94,9 +96,7 @@ INC += -I srcs/errors/includes/
 INC += -I ./includes/
 
 OBJ = $(SRC:.c=.o)
-FLAG = -g 
-#-Wall -Werror -Wextra
-#-fsanitize=address
+FLAG = -g -Wall -Werror -Wextra
 CG = \033[92m
 CY =  \033[93m
 CE = \033[0m

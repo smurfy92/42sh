@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   termcaps.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:43:24 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/13 20:45:03 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/19 21:43:30 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,6 @@ void					reset_edl(t_group *grp);
 int						check_last_char(char *line, int i);
 int						ft_escape(t_group *grp);
 void					fill_cmd_line(t_group *grp);
+int						ft_is_printable(char *order);
 
 #endif

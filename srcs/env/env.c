@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 16:51:54 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/19 17:33:16 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/21 19:50:23 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ int		builtin_env(t_group *grp, t_parse *parse)
 	int		end;
 
 	cmdsplit = parse->cmdsplit;
-	if (env_opt(grp) < 0)
-		return (-1);
+	if (env_opt(grp, parse) < 0)
+		return ((grp->exit = 1));
 	if (ENV(opt_i) == false && ENV(start_varenv) == false && ENV(cmd) == NULL)
 		show_env(0, grp);
 	else

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/25 15:42:57 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/19 20:35:38 by jmontija         ###   ########.fr       */
+/*   Created: 2016/11/19 21:56:30 by jmontija          #+#    #+#             */
+/*   Updated: 2016/11/21 03:50:22 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,13 @@ typedef struct			s_andor
 void					ft_init_parse(t_group *grp);
 
 /*
+**	polish.c
+*/
+
+void					ft_polish_parse(t_parse *parse, int j, int i);
+void					polish(t_parse *parse);
+
+/*
 **	redirections.c
 */
 
@@ -73,7 +80,8 @@ void					ft_check_redirection_fd(t_parse *parse, int i);
 **	redirections_lib.c
 */
 
-char					*get_redirection(t_group *grp, t_parse *parse, int i, int start);
+char					*get_redirection(t_group *grp, t_parse *parse,
+											int i, int start);
 int						check_rights(t_parse *parse, char **file, int i);
 void					ft_redirection_error(t_parse *parse, int end);
 
@@ -82,6 +90,8 @@ void					ft_redirection_error(t_parse *parse, int end);
 */
 
 void					ft_replace_vars(t_group *grp, t_parse *parse, int i);
+void					ft_replace_dollar(t_group *grp, t_parse *parse, char *tmp2,
+											int start);
 void					ft_create_redirections(t_parse *parse);
 /*
 **	int						ft_count_pipes(char *cmd);
@@ -109,13 +119,6 @@ void					ft_escape_parse(t_group *grp, int i);
 */
 
 void					check_heredoc(t_group *grp);
-
-/*
-**	heredoc_lib.c
-*/
-
-void					ft_polish_hd_line(t_group *grp, int i);
-void					polish_hd(t_group *grp);
 
 /*
 **	split

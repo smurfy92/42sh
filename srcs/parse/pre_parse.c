@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/19 20:59:02 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/20 21:35:45 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,21 +72,18 @@ int end)
 void		ft_replace_by_id(t_group *grp, int i)
 {
 	int			start;
-	int			end;
 	char		*tmp;
 	t_history	*hist;
 
 	start = i;
-	/* segflt sur ./42sh < srcs/shell/init.c */
-	while (ft_isdigit(TERM(cmd_line)[i]))
+	while (TERM(cmd_line)[i] && ft_isdigit(TERM(cmd_line)[i]))
 		i++;
-	end = i;
-	tmp = ft_strsub(TERM(cmd_line), start, end);
+	tmp = ft_strsub(TERM(cmd_line), start, i);
 	hist = ft_history_get_by_id(grp, ft_atoi(tmp));
 	if (hist)
 	{
 		ft_putendl_fd(hist->var, 2);
-		ft_replace_command(grp, hist, start, end);
+		ft_replace_command(grp, hist, start, i);
 	}
 	else
 	{
