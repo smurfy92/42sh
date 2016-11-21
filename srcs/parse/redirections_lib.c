@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_lib.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 17:24:49 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/21 22:06:36 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/21 23:03:51 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ static void		ft_del_red_from_cmd(t_parse *parse, int end, int start)
 	parse->cmd = ft_strjoin_nf(parse->cmd, tmp, 3);
 }
 
+// int				is_invalid(char c)
+// {
+// 	if (c == '>' || c == '&' || c == '<')
+// }
+
 /*
 ** returning redirection file if found
 ** else returning null and printing error
@@ -37,6 +42,11 @@ char			*get_redirection(t_group *grp, t_parse *parse, int i, int start)
 	int		end;
 	char	*tmp;
 
+	if (ft_end_of_red(parse->cmd[i]) && (grp->fail = 1))
+	{
+		ft_redirection_error(parse, i);
+		return (NULL);
+	}
 	while (parse->cmd[i] && !ft_isalpha(parse->cmd[i]) &&
 	!ft_isdigit(parse->cmd[i]) && !ft_is_quote(parse->cmd[i]))
 		i++;
@@ -117,8 +127,9 @@ void			ft_redirection_error(t_parse *parse, int end)
 {
 	char *tmp;
 
-	tmp = ft_strjoin_nf(ft_strjoin("42sh : parse error near `",
+	parse->cmd[end] = '\0';
+	tmp = ft_strjoin_nf(ft_strjoin("`",
 	&parse->cmd[end - 1]), "'", 1);
-	ft_putendl_fd(tmp, 2);
+	error_cmd("parse error near ", tmp, 1);
 	ft_strdel(&tmp);
 }
