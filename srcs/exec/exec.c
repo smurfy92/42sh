@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 13:30:12 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/20 23:25:19 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/21 22:19:08 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void		pipe_exec(t_group *grp, t_parse *parse)
 		while (tmp)
 		{
 			if (!tmp->fail)
-				(tmp->next) ? ft_fork_pipe(grp, tmp) : exec_child(grp, tmp);
+				(tmp->next && tmp->fd == -1) ? ft_fork_pipe(grp, tmp) : exec_child(grp, tmp);
 			tmp = tmp->next;
 		}
 		ft_exit(grp, EXIT_FAILURE);
