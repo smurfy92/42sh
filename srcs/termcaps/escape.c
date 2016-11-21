@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/01 17:35:14 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/21 03:50:16 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/21 20:00:16 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ int		check_last_char(char *line, int i)
 	int		count;
 
 	if (i == 0)
-		return (0);
-	if (line[i] == '\'')
 		return (0);
 	tmp = &line[i - 1];
 	count = 0;
@@ -37,14 +35,27 @@ int		check_last_char(char *line, int i)
 	return (1);
 }
 
+void	check_squote_escape(t_group *grp, int i, int *ret, int *test)
+{
+	if (*test == 0 && *ret == 1 && check_last_char(TERM(cmd_line), i) == 1)
+	{
+		*test = 1;
+		*ret = 0;
+	}
+	else if (*test == 1 && *ret == 1)
+		*test = 0;
+}
+
 int		check_esc(t_group *grp)
 {
 	int		i;
 	int		ret;
 	char	c;
+	int		test;
 
 	i = -1;
 	ret = -2;
+	test = 0;
 	while (TERM(cmd_line) && (c = TERM(cmd_line)[++i]) != '\0')
 	{
 		if (ft_is_quote(c) && check_last_char(TERM(cmd_line), i) == 0)
@@ -52,6 +63,7 @@ int		check_esc(t_group *grp)
 		else if (!ft_is_quote(c))
 			if ((ret = check_parentheses(c)) < 0)
 				return (-1);
+		c == '\'' ? check_squote_escape(grp, i, &ret, &test) : 0;
 	}
 	if (TERM(cmd_line) && c == '\0' && check_last_char(TERM(cmd_line), i) == 1)
 		return (1);

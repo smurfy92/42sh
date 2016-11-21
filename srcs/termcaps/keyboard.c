@@ -82,7 +82,7 @@ static void	get_cmd_help(t_group *grp, int ret_q)
 	if (ret_q < 0)
 	{
 		grp->err_parse = 1;
-		error_cmd("parse error", "parenthese closed too soon", 1);
+		error_cmd("parse error", "parenthese closed but not opened", 1);
 	}
 	check_parentheses(0);
 	reset_edl(grp);
