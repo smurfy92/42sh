@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_lib.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 22:44:21 by vdanain           #+#    #+#             */
-/*   Updated: 2016/11/19 22:51:56 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/21 23:27:41 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,4 @@ void		update_pwd(t_group *grp, char *pth, int opt, char *curr_dir)
 	insert_env(grp, old_pwd);
 	REMOVE(&old_pwd);
 	REMOVE(&pwd);
-	grp->exit = 0;
 }

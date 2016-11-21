@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 13:30:12 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/21 22:19:08 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/21 23:41:22 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void		pipe_exec(t_group *grp, t_parse *parse)
 	{
 		while (tmp)
 		{
-			if (!tmp->fail)
-				(tmp->next && tmp->fd == -1) ? ft_fork_pipe(grp, tmp) : exec_child(grp, tmp);
+			if (!tmp->fail && tmp->fd == -1)
+				(tmp->next) ? ft_fork_pipe(grp, tmp) : exec_child(grp, tmp);
 			tmp = tmp->next;
 		}
 		ft_exit(grp, EXIT_FAILURE);
@@ -60,10 +60,7 @@ void		andor_exec(t_group *grp, t_andor *andor)
 		init_shell();
 		if ((tmp->type == 1 && grp->exit != 0) ||
 			(tmp->type == 2 && grp->exit == 0))
-		{
-			grp->exit = 0;
 			break ;
-		}
 		if (tmp->next)
 			grp->exit = 0;
 		tmp = tmp->next;
@@ -77,6 +74,7 @@ void		init_exec(t_group *grp)
 	tmp = grp->allcmd;
 	if (!grp->fail)
 	{
+		grp->exit = 0;
 		while (tmp)
 		{
 			andor_exec(grp, tmp->andor);

@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 02:28:21 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/21 22:18:26 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/21 23:53:06 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,6 @@ void		ft_fork_exec(t_group *grp, t_parse *parse)
 		ft_exit(grp, EXIT_FAILURE);
 	ft_exit(grp, grp->exit);
 }
-
-/*
-**	attention on peut pas catch les segflt entre les pipes verifier ce
-**	que fait bash sur un segflt en plein milieu d'un pipe
-*/
 
 void		ft_fork_pipe(t_group *grp, t_parse *parse)
 {
