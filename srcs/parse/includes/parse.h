@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 21:56:30 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/20 21:40:30 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/21 03:50:22 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ void					ft_redirection_error(t_parse *parse, int end);
 */
 
 void					ft_replace_vars(t_group *grp, t_parse *parse, int i);
+void					ft_replace_dollar(t_group *grp, t_parse *parse, char *tmp2,
+											int start);
 void					ft_create_redirections(t_parse *parse);
 /*
 **	int						ft_count_pipes(char *cmd);
