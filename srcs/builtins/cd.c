@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 20:23:03 by julio             #+#    #+#             */
-/*   Updated: 2016/11/21 23:27:40 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/22 11:25:11 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	cderr_pwd(t_group *grp, char **path, struct stat s_buf, int opt)
 
 	curr_dir = RPW(grp, buf);
 	val = (s_buf.st_mode & ~S_IFMT);
+	ft_putendl(*path);
 	if (access((*path), F_OK) != 0)
 		error_cmd("unknown directory", (*path), 1);
 	else if (!S_ISDIR(s_buf.st_mode) && !S_ISLNK(s_buf.st_mode))
@@ -92,20 +93,45 @@ int		builtin_cd(t_group *grp, t_parse *parse)
 
 	opt = 0;
 	ft_bzero(buf, 1024);
+	int i = 0;
+	while (parse->cmdsplit[i])
+	{
+		ft_putendl(parse->cmdsplit[i]);
+		i++;
+	}
 	if (parse->cmdsplit[1] == NULL)
+	{
 		path = return_home(grp, NULL);
+		ft_putendl("1----->");
+		ft_putendl(path);
+	}
 	else if (parse->cmdsplit[1][0] == '-' && parse->cmdsplit[1][1] == false)
+	{
 		update_path_cd(&path, parse, grp, 1);
+		ft_putendl("2----->");
+		ft_putendl(path);
+	}
 	else if (parse->cmdsplit[1][0] == '-' && is_param(parse->cmdsplit[1][1]))
+	{
 		opt = update_path_cd(&path, parse, grp, 2);
+		ft_putendl("3----->");
+		ft_putendl(path);
+	}
 	else if (ft_strcmp(parse->cmdsplit[1], "..") != 0)
+	{
 		path = SDUP(parse->cmdsplit[1]);
+		ft_putendl("4----->");
+		ft_putendl(path);
+	}
 	else
 	{
 		path = SUB(RPW(grp, buf), 0,
 			LEN(RPW(grp, buf)) - (LEN(ft_strrchr(RPW(grp, buf), '/')) - 1));
+		ft_putendl(path);
 		if (path[ft_strlen(path) - 1] == '/' && ft_strlen(path) > 1)
 			path[ft_strlen(path) - 1] = '\0';
+		ft_putendl("5----->");
+		ft_putendl(path);
 	}
 	lstat(path, &s_buf);
 	cderr_pwd(grp, &path, s_buf, opt);
