@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:50:41 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/21 23:56:43 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/22 20:59:28 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,22 @@ int	builtin_unsetenv(t_group *grp, t_parse *parse)
 	return (1);
 }
 
+int	builtin_next(t_group *grp, t_parse *parse, char **cmd)
+{
+	int		ret;
+
+	ret = 0;
+	if (ft_strcmp(cmd[0], "unsetenv") == 0)
+		ret = builtin_unsetenv(grp, parse);
+	else if (ft_strcmp(cmd[0], "history") == 0)
+		ret = builtin_history(grp, parse);
+	else if (ft_strcmp(cmd[0], "echo") == 0)
+		ret = builtin_echo(grp, parse);
+	else if (ft_strcmp(cmd[0], "exit") == 0)
+		ft_exit(grp, (cmd[1] != NULL ? ft_atoi(cmd[1]) : grp->exit));
+	return (ret);
+}
+
 /*
 **	exit code to do for history et echo ??
 */
@@ -100,19 +116,14 @@ int	builtins(t_group *grp, t_parse *parse)
 		ret = builtin_env(grp, parse);
 	else if (ft_strcmp(cmd[0], "cd") == 0)
 	{
-		if ((cmd[1] && ft_strcmp(cmd[1], ".") == 0) || (cmd[1] && ft_strcmp(cmd[1], ".") == 0))
+		if ((cmd[1] && ft_strcmp(cmd[1], ".") == 0) ||
+			(cmd[1] && ft_strcmp(cmd[1], ".") == 0))
 			return ((ret = 0));
 		ret = builtin_cd(grp, parse);
 	}
 	else if (ft_strcmp(cmd[0], "setenv") == 0)
 		ret = builtin_setenv(grp, parse);
-	else if (ft_strcmp(cmd[0], "unsetenv") == 0)
-		ret = builtin_unsetenv(grp, parse);
-	else if (ft_strcmp(cmd[0], "history") == 0)
-		ret = builtin_history(grp, parse);
-	else if (ft_strcmp(cmd[0], "echo") == 0)
-		ret = builtin_echo(grp, parse);
-	else if (ft_strcmp(cmd[0], "exit") == 0)
-		ft_exit(grp, (cmd[1] != NULL ? ft_atoi(cmd[1]) : grp->exit));
+	else
+		return (builtin_next(grp, parse, cmd));
 	return (ret);
 }
