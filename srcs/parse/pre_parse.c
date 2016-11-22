@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pre_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/22 00:11:25 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/22 17:21:08 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,12 +134,12 @@ void		ft_pre_parse(t_group *grp)
 			ft_escape_parse(grp, i - 1);
 			ft_escape_parse(grp, i - 1);
 		}
-		if (TERM(cmd_line)[i] == '!' && TERM(cmd_line)[i + 1] &&
+		if (((i - 1 > 0 && TERM(cmd_line)[i - 1] == ' ') || (i == 0)) && TERM(cmd_line)[i] == '!' && TERM(cmd_line)[i + 1] &&
 			TERM(cmd_line)[i + 1] == '!')
 		{
 			ft_replace_last_cmd(grp, i);
 		}
-		else if (TERM(cmd_line)[i] == '!' && TERM(cmd_line)[i + 1])
+		else if (((i - 1 > 0 && TERM(cmd_line)[i - 1] == ' ') || (i == 0)) && TERM(cmd_line)[i] == '!' && TERM(cmd_line)[i + 1])
 			ft_replace_by_id(grp, i + 1);
 	}
 }
