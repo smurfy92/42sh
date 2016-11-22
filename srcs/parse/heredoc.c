@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/06 17:52:49 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/19 23:39:05 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/22 02:41:27 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int			prepare_heredoc(t_group *grp, t_parse *tmp3)
 		while (hdoc[++i])
 			if ((ret = heredoc(grp, file, hdoc[i])) < 0)
 				break ;
-		if (tmp3->file == NULL)
+		if (tmp3->file == NULL && ret != -1)
 			tmp3->file = SDUP(file);
 		REMOVE(&file);
 		ft_freestrtab(&hdoc);
