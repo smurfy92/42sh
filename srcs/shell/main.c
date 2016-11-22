@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/22 01:20:39 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/22 03:13:03 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void		proccess(t_group *grp)
 	ft_pre_parse(grp);
 	if (LEN(TERM(cmd_line)) > 0)
 		ft_add_history(grp, TERM(cmd_line));
-
 	if (grp->err_parse == false && TERM(cmd_line))
 	{
 		grp->allcmd = ft_strsplitquote(TERM(cmd_line), ';');

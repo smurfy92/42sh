@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 22:41:30 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/22 01:18:28 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/22 03:48:04 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,10 @@ void		ft_polish_parse(t_parse *parse, int j, int i)
 void		handle_squote(t_parse *parse, int j, int *i)
 {
 	ft_polish_parse(parse, j, *i);
-	while (parse->cmdsplit[j][*i] != '\'')
+	while (parse->cmdsplit[j][*i] != '\'' && parse->cmdsplit[j][*i] != '\0')
 		*i += 1;
-	ft_polish_parse(parse, j, *i);
+	if (parse->cmdsplit[j][*i] == '\'')
+		ft_polish_parse(parse, j, *i);
 }
 
 void		handle_dquote(t_parse *parse, int j, int *i)
@@ -67,7 +68,8 @@ void		handle_dquote(t_parse *parse, int j, int *i)
 
 	grp = get_grp();
 	ft_polish_parse(parse, j, *i);
-	while (parse->cmdsplit[j][*i] != '"' || check_last_char(parse->cmdsplit[j], *i) == 1)
+	while (parse->cmdsplit[j][*i] != '\0' &&
+		(parse->cmdsplit[j][*i] != '"' || check_last_char(parse->cmdsplit[j], *i) == 1))
 	{
 		c = parse->cmdsplit[j][*i];
 		if (c == '$' && check_last_char(parse->cmdsplit[j], *i) == 0)
@@ -84,7 +86,8 @@ void		handle_dquote(t_parse *parse, int j, int *i)
 		}
 		*i += 1;
 	}
-	ft_polish_parse(parse, j, *i);
+	if (parse->cmdsplit[j][*i] == '"')
+		ft_polish_parse(parse, j, *i);
 }
 
 void		polish(t_parse *parse)
