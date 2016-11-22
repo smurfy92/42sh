@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 02:28:21 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/22 03:12:34 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/22 19:58:08 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ void		exec_child(t_group *grp, t_parse *parse)
 	}
 	else if (ret == 0)
 		ft_exit(grp, EXIT_FAILURE);
+	else if (ret == 1 && parse->fd >= 0)
+		builtins(grp, parse);
 	ft_exit(grp, 0);
 }
 

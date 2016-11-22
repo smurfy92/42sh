@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 17:03:39 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/22 12:20:51 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/22 19:45:32 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int	check_line(char *arg)
 	return (0);
 }
 
+
 int		builtin_echo(t_group *grp, t_parse *parse)
 {
 	int	i;
@@ -107,5 +108,11 @@ int		builtin_echo(t_group *grp, t_parse *parse)
 	}
 	if (!ret)
 		ft_putchar('\n');
+	else
+	{
+		tputs(tgetstr("so", NULL), 0, ft_getchar);
+		ft_putstr("%\n");
+		tputs(tgetstr("se", NULL), 0, ft_getchar);
+	}
 	return (1);
 }
