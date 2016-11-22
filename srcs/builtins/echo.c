@@ -68,7 +68,7 @@ char	check_operands(char c, char *str, char **ptr)
 	return (-1);
 }
 
-int	check_line(char *arg)
+int		check_line(char *arg)
 {
 	int		i;
 	char	operand;
@@ -92,7 +92,6 @@ int	check_line(char *arg)
 	}
 	return (0);
 }
-
 
 int		builtin_echo(t_group *grp, t_parse *parse)
 {

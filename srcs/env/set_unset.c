@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_unset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/20 23:45:59 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/21 23:56:46 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/22 21:05:39 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int				unset_env(t_group *grp, char *todel)
 	return (-1);
 }
 
-
 static t_envlst	*create_env_line(t_group *grp, char *env, int i)
 {
 	t_envlst *new;
@@ -79,7 +78,6 @@ static t_envlst	*create_env_line(t_group *grp, char *env, int i)
 	new->next = NULL;
 	return (new);
 }
-
 
 static int		free_and_return(t_envlst *new, t_group *grp)
 {

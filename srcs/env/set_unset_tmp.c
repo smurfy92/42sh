@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 15:44:38 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/21 00:50:42 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/22 21:05:22 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static t_envlst	*create_env_line(t_group *grp, char *env, int i)
 	curr_env = grp->env->lst_tmp;
 	new = (t_envlst *)malloc(sizeof(t_envlst));
 	if (!(new) || !(env) || (i = is_env(env)) == false)
-		return (NULL); 
+		return (NULL);
 	new_helper(new, env, i);
 	if (ft_strcmp(new->name, "PATH") == 0)
 	{
