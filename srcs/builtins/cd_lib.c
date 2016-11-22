@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_lib.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 22:44:21 by vdanain           #+#    #+#             */
-/*   Updated: 2016/11/21 23:27:41 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/22 11:32:10 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void		update_pwd(t_group *grp, char *pth, int opt, char *curr_dir)
 
 	ft_bzero(buf, 1025);
 	old_pwd = JOIN("OLDPWD=", curr_dir);
+	pth[LEN(pth) - 1] = (pth[LEN(pth) - 1] == '/' && LEN(pth) - 1 != 0)  ? '\0' : pth[LEN(pth) - 1];
 	tp = (ft_getenv(grp, "PWD")) ? ft_getenv(grp, "PWD") : getcwd(buf, 1024);
 	if (!opt && ft_strncmp(pth, "..", 2) != 0 && ft_strncmp(pth, ".", 1) != 0)
 		pwd = (pth[0] == '/') ? JOIN("PWD=", pth) : join_path(grp, pth);
