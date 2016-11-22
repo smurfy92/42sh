@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 20:25:26 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/21 22:14:37 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/22 02:55:40 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void		prompt_path(t_group *grp)
 	{
 		str = SDUP(ft_getenv(grp, "PWD"));
 		str2 = SDUP(ft_getenv(grp, "HOME"));
-		if (ft_strstr(str, str2))
+		if (str2 && ft_strstr(str, str2))
 		{
 			str3 = ft_strjoin("~", &str[ft_strlen(str2)]);
 			ft_putstr_fd(str3, 2);
@@ -61,9 +61,9 @@ void			prompt(void)
 			ft_putstr_fd("42sh", 2);
 			grp->prompt_size += 4;
 		}
-		ft_putstr_fd(":", 2);
+		ft_putstr_fd(":(", 2);
 		prompt_path(grp);
-		ft_putstr_fd(" > \033[0m", 2);
+		ft_putstr_fd(") > \033[0m", 2);
 		grp->prompt_size += 4;
 	}
 	//grp->prompt_size = 6;

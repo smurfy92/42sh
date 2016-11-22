@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_lib.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 17:24:49 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/21 23:03:51 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/11/22 01:19:34 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,23 @@ char			*get_redirection(t_group *grp, t_parse *parse, int i, int start)
 	int		end;
 	char	*tmp;
 
-	if (ft_end_of_red(parse->cmd[i]) && (grp->fail = 1))
-	{
-		ft_redirection_error(parse, i);
-		return (NULL);
-	}
+	if (grp){}
+	// if (ft_end_of_red(parse->cmd[i]) && (grp->fail = 1))
+	// {
+	// 	ft_redirection_error(parse, i);
+	// 	return (NULL);
+	// }
 	while (parse->cmd[i] && !ft_isalpha(parse->cmd[i]) &&
 	!ft_isdigit(parse->cmd[i]) && !ft_is_quote(parse->cmd[i]))
 		i++;
 	end = i;
 	while (parse->cmd[end] && !ft_end_of_red(parse->cmd[end]))
 		end++;
-	if (end == i && (grp->fail = 1))
-	{
-		ft_redirection_error(parse, end);
-		return (NULL);
-	}
+	// if (end == i && (grp->fail = 1))
+	// {
+	// 	ft_redirection_error(parse, end);
+	// 	return (NULL);
+	// }
 	tmp = ft_strsub(&parse->cmd[i], 0, end - i);
 	ft_del_red_from_cmd(parse, end, start);
 	return (tmp);
