@@ -22,6 +22,7 @@ SRC	+= srcs/hash/hash_free.c
 SRC += srcs/builtins/builtins.c
 SRC += srcs/builtins/cd.c
 SRC += srcs/builtins/cd_lib.c
+SRC += srcs/builtins/cd_lib2.c
 SRC += srcs/builtins/echo.c
 SRC += srcs/builtins/echo_lib.c
 SRC += srcs/builtins/history.c
