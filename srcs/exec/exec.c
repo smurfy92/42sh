@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 21:15:46 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/22 21:18:44 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/22 21:44:30 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void		pipe_exec(t_group *grp, t_parse *parse)
 
 	tmp = parse;
 	grp->father = fork();
+	grp->father < 0 ? ft_exit(grp, 999) : 0;
 	grp->program_pid = grp->father;
 	if (grp->father == 0)
 	{

@@ -99,7 +99,7 @@ INC += -I srcs/errors/includes/
 INC += -I ./includes/
 
 OBJ = $(SRC:.c=.o)
-FLAG = -g -Wall -Werror -Wextra
+FLAG = -Wall -Werror -Wextra
 CG = \033[92m
 CY =  \033[93m
 CE = \033[0m
