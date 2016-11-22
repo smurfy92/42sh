@@ -6,8 +6,11 @@ tabulation: c’est obligatoire ca peut nous baiser !
 --> bash n'en affiche jamais avec le bouton tab ..
 --> utilisation d'une combinaison de touches INEDITE ?
 
+
+
 hdoc: 
 - Testez l'existence et le fonctionnement du heredoc "<<", avec ses options (wtf ???)  et cas particuliers. 
+cat << heredoc | cat -e ---> reste bloque dans le pipe
 
 historic: (Ya pas de segflt)
 - fais des truc bizarre si !num en plein milieu d’une cmd
