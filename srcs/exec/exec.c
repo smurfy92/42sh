@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/04 13:30:12 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/22 20:30:39 by jmontija         ###   ########.fr       */
+/*   Created: 2016/11/22 21:15:46 by jmontija          #+#    #+#             */
+/*   Updated: 2016/11/22 21:16:15 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ void		pipe_exec(t_group *grp, t_parse *parse)
 				(tmp->next && tmp->fd == -1) ? 
 				ft_fork_pipe(grp, tmp) : exec_child(grp, tmp);
 				tmp = tmp->next;
+				(tmp->next && tmp->fd == -1) ? ft_fork_pipe(grp, tmp) :
+					exec_child(grp, tmp);
+			tmp = tmp->next;
 		}
 		ft_exit(grp, EXIT_FAILURE);
 	}
