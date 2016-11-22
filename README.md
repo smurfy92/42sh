@@ -17,7 +17,7 @@ si plusieurs args en squote a partir du deuxieme args la premiere quote nest pas
 appel check_parentheses(0) pr chaque arg ---> OK;
 
 historic: (Ya pas de segflt)
-- fais des truc bizarre si !num en plein milieu d’une cmd
+- fais des truc bizarre si !num en plein milieu d’une cmd ---> normalement corrige avec ca ((i - 1 > 0 && TERM(cmd_line)[i - 1] == ' ') || (i == 0))
 
 separateur ';':
 - on fonctionnent pas comme bash, a voir si utile de le modifier
