@@ -18,7 +18,7 @@ historic: (Ya pas de segflt)
 separateur ';':
 - on fonctionnent pas comme bash, a voir si utile de le modifier
 
-prompt ?
+prompt ? Resolu (+ 6 au lieu de +4 a la fin de prompt() --> a checker)
 -> bug edition de ligne sur la premiere ligne -> 2char sur la 2eme ligne puis \n
 
 ++ Trello: https://trello.com/b/WJXyMpVc/42sh
