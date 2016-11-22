@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 20:25:26 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/22 16:42:54 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/22 20:37:29 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void		prompt_path(t_group *grp)
 		else
 		{
 			ft_putstr_fd(str, 2);
-			grp->prompt_size += ft_strlen(str);	
+			grp->prompt_size += ft_strlen(str);
 		}
 		REMOVE(&str);
 		REMOVE(&str2);
@@ -48,9 +48,9 @@ void			prompt(void)
 	if (grp->quit == false)
 	{
 		if (!grp->exit)
-			ft_putstr_fd("\033[92m",2);
+			ft_putstr_fd("\033[92m", 2);
 		else
-			ft_putstr_fd("\033[91m",2);
+			ft_putstr_fd("\033[91m", 2);
 		if (ft_getenv(grp, "LOGNAME") != NULL)
 		{
 			ft_putstr_fd(ft_getenv(grp, "LOGNAME"), 2);
@@ -66,5 +66,4 @@ void			prompt(void)
 		ft_putstr_fd(") > \033[0m", 2);
 		grp->prompt_size += 6;
 	}
-	//grp->prompt_size = 6;
 }

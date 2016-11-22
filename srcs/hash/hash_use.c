@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/20 18:09:48 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/20 19:40:09 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/22 21:12:42 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char		*gp(char *cmd, t_root *root)
 	cur = root->first;
 	while (cmd[i])
 	{
-		cur = cur->node[val_tokey(root->charlist, cmd[i])]; 
+		cur = cur->node[val_tokey(root->charlist, cmd[i])];
 		i++;
 		if (cur == NULL)
 			return (NULL);
