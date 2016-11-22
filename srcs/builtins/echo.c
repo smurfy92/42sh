@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 17:03:39 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/22 11:39:06 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/22 12:20:51 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	check_operands(char c, char *str, char **ptr)
 	return (-1);
 }
 
-void	check_line(char *arg)
+int	check_line(char *arg)
 {
 	int		i;
 	char	operand;
@@ -80,7 +80,9 @@ void	check_line(char *arg)
 			(operand = check_operands(arg[i + 1], &arg[i + 2], &arg)) >= 0)
 		{
 			if (operand == '\0')
-				break ;
+			{
+				return (1);
+			}
 			if (operand != 'a')
 				ft_putchar(operand);
 			i++;
@@ -88,19 +90,22 @@ void	check_line(char *arg)
 		else
 			ft_putchar(arg[i]);
 	}
+	return (0);
 }
 
 int		builtin_echo(t_group *grp, t_parse *parse)
 {
 	int	i;
+	int	ret;
 
 	i = 0;
 	while (grp && parse->cmdsplit[++i])
 	{
-		check_line(parse->cmdsplit[i]);
+		ret = check_line(parse->cmdsplit[i]);
 		if (parse->cmdsplit[i + 1])
 			ft_putchar(' ');
 	}
-	ft_putchar('\n');
+	if (!ret)
+		ft_putchar('\n');
 	return (1);
 }
