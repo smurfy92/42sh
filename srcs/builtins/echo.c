@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 17:03:39 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/21 23:56:15 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/22 11:39:06 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,11 @@ int		builtin_echo(t_group *grp, t_parse *parse)
 
 	i = 0;
 	while (grp && parse->cmdsplit[++i])
+	{
 		check_line(parse->cmdsplit[i]);
+		if (parse->cmdsplit[i + 1])
+			ft_putchar(' ');
+	}
 	ft_putchar('\n');
 	return (1);
 }

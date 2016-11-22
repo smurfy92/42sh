@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 20:23:03 by julio             #+#    #+#             */
-/*   Updated: 2016/11/22 11:25:11 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/22 12:15:03 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ void	cderr_pwd(t_group *grp, char **path, struct stat s_buf, int opt)
 
 	curr_dir = RPW(grp, buf);
 	val = (s_buf.st_mode & ~S_IFMT);
-	ft_putendl(*path);
-	if (access((*path), F_OK) != 0)
+	if (!(*path) || access((*path), F_OK) != 0)
 		error_cmd("unknown directory", (*path), 1);
 	else if (!S_ISDIR(s_buf.st_mode) && !S_ISLNK(s_buf.st_mode))
 		error_cmd("this is not a directory", (*path), 1);
@@ -84,6 +83,37 @@ int		is_param(char c)
 	return (0);
 }
 
+char	*starting_replace(char *path, char *replace, char *by)
+{
+	char	buff[2048];
+	char	tmp[2048];
+
+	ft_bzero(buff, 2048);
+	ft_bzero(tmp, 2048);
+	ft_strcpy(buff, path);
+	ft_strcpy(tmp, ft_strstr(buff, replace) + LEN(replace));
+	ft_bzero(ft_strstr(buff, replace), LEN(path));
+	ft_strcat(buff, by);
+	ft_strcat(buff, tmp);
+	return (ft_strdup(buff));
+}
+
+char	*replace_in_path(t_group *grp, t_parse *parse)
+{
+	char	*tmp;
+	char	buf[1024 + 1];
+
+	ft_bzero(buf, 1025);
+	tmp = RPW(grp, buf);
+	if (!ft_strstr(tmp, parse->cmdsplit[1]))
+	{
+		error_cmd("Can't find in actual path", parse->cmdsplit[1], 1);
+		return (NULL);
+	}
+	tmp = starting_replace(tmp, parse->cmdsplit[1], parse->cmdsplit[2]);
+	return (tmp);
+}
+
 int		builtin_cd(t_group *grp, t_parse *parse)
 {
 	struct stat	s_buf;
@@ -93,46 +123,25 @@ int		builtin_cd(t_group *grp, t_parse *parse)
 
 	opt = 0;
 	ft_bzero(buf, 1024);
-	int i = 0;
-	while (parse->cmdsplit[i])
-	{
-		ft_putendl(parse->cmdsplit[i]);
-		i++;
-	}
 	if (parse->cmdsplit[1] == NULL)
-	{
 		path = return_home(grp, NULL);
-		ft_putendl("1----->");
-		ft_putendl(path);
-	}
 	else if (parse->cmdsplit[1][0] == '-' && parse->cmdsplit[1][1] == false)
-	{
 		update_path_cd(&path, parse, grp, 1);
-		ft_putendl("2----->");
-		ft_putendl(path);
-	}
 	else if (parse->cmdsplit[1][0] == '-' && is_param(parse->cmdsplit[1][1]))
-	{
 		opt = update_path_cd(&path, parse, grp, 2);
-		ft_putendl("3----->");
-		ft_putendl(path);
-	}
+	else if (parse->cmdsplit[1] && parse->cmdsplit[2])
+		path = replace_in_path(grp, parse);
 	else if (ft_strcmp(parse->cmdsplit[1], "..") != 0)
-	{
 		path = SDUP(parse->cmdsplit[1]);
-		ft_putendl("4----->");
-		ft_putendl(path);
-	}
 	else
 	{
 		path = SUB(RPW(grp, buf), 0,
 			LEN(RPW(grp, buf)) - (LEN(ft_strrchr(RPW(grp, buf), '/')) - 1));
-		ft_putendl(path);
 		if (path[ft_strlen(path) - 1] == '/' && ft_strlen(path) > 1)
 			path[ft_strlen(path) - 1] = '\0';
-		ft_putendl("5----->");
-		ft_putendl(path);
 	}
+	if (!path)
+		return (1);
 	lstat(path, &s_buf);
 	cderr_pwd(grp, &path, s_buf, opt);
 	return (1);
