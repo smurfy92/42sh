@@ -14,6 +14,7 @@ cat << heredoc | cat -e ---> reste bloque dans le pipe
 
 squote:
 si plusieurs args en squote a partir du deuxieme args la premiere quote nest pas polish -> ret de check parenthese == 0;
+appel check_parentheses(0) pr chaque arg ---> OK;
 
 historic: (Ya pas de segflt)
 - fais des truc bizarre si !num en plein milieu d’une cmd
