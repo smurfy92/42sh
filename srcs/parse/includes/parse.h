@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 21:56:30 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/22 21:04:30 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/22 21:27:47 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSE_H
 # define PARSE_H
+
+# define PRS parse->cmdsplit
 
 /*
 **	struct

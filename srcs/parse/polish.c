@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   polish.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 22:41:30 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/22 20:50:34 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/22 21:27:40 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,21 @@ void		ft_replace_dolls(t_group *grp, t_parse *parse, int j, int i)
 	char	*tmp2;
 
 	start = i;
-	while (parse->cmdsplit[j][i] && (ft_isalpha(parse->cmdsplit[j][i]) || parse->cmdsplit[j][i] == '?'))
+	while (PRS[j][i] && (ft_isalpha(PRS[j][i]) || PRS[j][i] == '?'))
 		i++;
-	tmp = ft_strsub(&parse->cmdsplit[j][start], 0, i - start);
-	tmp2 = ft_strdup(&parse->cmdsplit[j][i]);
+	tmp = ft_strsub(&PRS[j][start], 0, i - start);
+	tmp2 = ft_strdup(&PRS[j][i]);
 	if (ft_strlen(tmp) == 1 && tmp[0] == '?')
 		ft_replace_dollar(grp, parse, tmp2, start);
 	else if (ft_getenv(grp, tmp) == NULL)
 		grp->minus = 1;
 	else
 	{
-		parse->cmdsplit[j][start - 1] = '\0';
-		if (!parse->cmdsplit[j][start + 1])
-			parse->cmdsplit[j] = ft_strjoin_nf(parse->cmdsplit[j], ft_getenv(grp, tmp), 1);
+		PRS[j][start - 1] = '\0';
+		if (!PRS[j][start + 1])
+			PRS[j] = ft_strjoin_nf(PRS[j], ft_getenv(grp, tmp), 1);
 		else
-			parse->cmdsplit[j] = JOINF(JOINF(parse->cmdsplit[j],
+			PRS[j] = JOINF(JOINF(PRS[j],
 			ft_getenv(grp, tmp), 1), tmp2, 1);
 		ft_strdel(&tmp2);
 	}
