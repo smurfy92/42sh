@@ -42,6 +42,7 @@ SRC	+= srcs/termcaps/keyboard_tools.c
 SRC	+= srcs/termcaps/keyboard_tools2.c
 SRC	+= srcs/termcaps/keyboard_tools3.c
 SRC	+= srcs/termcaps/escape.c
+SRC	+= srcs/termcaps/escape_lib.c
 
 #parse
 SRC	+= srcs/parse/init_parse.c
@@ -49,6 +50,7 @@ SRC	+= srcs/parse/polish.c
 SRC	+= srcs/parse/redirections.c
 SRC	+= srcs/parse/redirections2.c
 SRC	+= srcs/parse/redirections_lib.c
+SRC	+= srcs/parse/redirections_lib2.c
 SRC	+= srcs/parse/parse_lib.c
 SRC	+= srcs/parse/parse_lib2.c
 SRC	+= srcs/parse/pre_parse.c

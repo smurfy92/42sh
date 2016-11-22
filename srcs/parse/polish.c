@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   polish.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 22:41:30 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/22 17:14:08 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/22 20:50:34 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void		ft_replace_dolls(t_group *grp, t_parse *parse, int j, int i)
 	}
 	(tmp) ? REMOVE(&tmp) : 0;
 	(tmp2) ? REMOVE(&tmp2) : 0;
-
 }
 
 void		ft_polish_parse(t_parse *parse, int j, int i)
@@ -47,7 +46,7 @@ void		ft_polish_parse(t_parse *parse, int j, int i)
 	parse->cmdsplit[j][i] = '\0';
 	if (parse->cmdsplit[j][i + 1])
 	{
-		parse->cmdsplit[j] = 
+		parse->cmdsplit[j] =
 		JOINF(parse->cmdsplit[j], SDUP(&parse->cmdsplit[j][i + 1]), 3);
 	}
 }
@@ -63,13 +62,14 @@ void		handle_squote(t_parse *parse, int j, int *i)
 
 void		handle_dquote(t_parse *parse, int j, int *i)
 {
-	t_group *grp;
-	char c;
+	t_group	*grp;
+	char	c;
 
 	grp = get_grp();
 	ft_polish_parse(parse, j, *i);
 	while (parse->cmdsplit[j][*i] != '\0' &&
-		(parse->cmdsplit[j][*i] != '"' || check_last_char(parse->cmdsplit[j], *i) == 1))
+		(parse->cmdsplit[j][*i] != '"' ||
+		check_last_char(parse->cmdsplit[j], *i) == 1))
 	{
 		c = parse->cmdsplit[j][*i];
 		if (c == '$' && check_last_char(parse->cmdsplit[j], *i) == 0)
@@ -86,8 +86,7 @@ void		handle_dquote(t_parse *parse, int j, int *i)
 		}
 		*i += 1;
 	}
-	if (parse->cmdsplit[j][*i] == '"')
-		ft_polish_parse(parse, j, *i);
+	(parse->cmdsplit[j][*i] == '"') ? ft_polish_parse(parse, j, *i) : 0;
 }
 
 void		polish(t_parse *parse)
@@ -110,7 +109,8 @@ void		polish(t_parse *parse)
 				handle_squote(parse, j, &i);
 			else if (ret == 1 && parse->cmdsplit[j][i] == '\"')
 				handle_dquote(parse, j, &i);
-			else if (ret == 0 && parse->cmdsplit[j][i] == '\\' && parse->cmdsplit[j][i + 1])
+			else if (ret == 0 && parse->cmdsplit[j][i] == '\\' &&
+					parse->cmdsplit[j][i + 1])
 				ft_polish_parse(parse, j, i);
 		}
 		check_parentheses(0);

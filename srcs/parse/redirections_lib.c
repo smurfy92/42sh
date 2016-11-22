@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 17:24:49 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/22 03:55:59 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/22 21:05:52 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,6 @@ static void		ft_del_red_from_cmd(t_parse *parse, int end, int start)
 	parse->cmd = ft_strjoin_nf(parse->cmd, tmp, 3);
 }
 
-// int				is_invalid(char c)
-// {
-// 	if (c == '>' || c == '&' || c == '<')
-// }
-
 /*
 ** returning redirection file if found
 ** else returning null and printing error
@@ -42,7 +37,8 @@ char			*get_redirection(t_group *grp, t_parse *parse, int i, int start)
 	int		end;
 	char	*tmp;
 
-	if (grp){}
+	if (grp)
+	{}
 	// if (ft_end_of_red(parse->cmd[i]) && (grp->fail = 1))
 	// {
 	// 	ft_redirection_error(parse, i);

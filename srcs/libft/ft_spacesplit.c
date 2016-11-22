@@ -6,13 +6,13 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/04 22:25:15 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/21 04:09:44 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/22 21:11:45 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/libft.h"
 
-int		is_space(int c)
+int				is_space(int c)
 {
 	if (c == ' ' || c == '\t')
 		return (1);

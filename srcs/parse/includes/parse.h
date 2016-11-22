@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 21:56:30 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/21 03:50:22 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/22 21:04:30 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,21 @@ int						check_rights(t_parse *parse, char **file, int i);
 void					ft_redirection_error(t_parse *parse, int end);
 
 /*
+**	redirections_lib2.c
+*/
+
+void					ft_addfile(t_group *grp, t_parse *parse, int i);
+void					ft_adddoubleredirection(t_group *grp, t_parse *parse,
+												int i);
+void					ft_addredirection(t_group *grp, t_parse *parse, int i);
+
+/*
 **	parse_lib.c.c
 */
 
 void					ft_replace_vars(t_group *grp, t_parse *parse, int i);
-void					ft_replace_dollar(t_group *grp, t_parse *parse, char *tmp2,
-											int start);
+void					ft_replace_dollar(t_group *grp, t_parse *parse,
+								char *tmp2, int start);
 void					ft_create_redirections(t_parse *parse);
 /*
 **	int						ft_count_pipes(char *cmd);

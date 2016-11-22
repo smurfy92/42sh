@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 21:55:58 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/22 05:00:34 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/22 20:48:21 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,6 @@ void		ft_replace_bquote(t_parse *parse, int i)
 		parse->bquotes = SDUP(bquote);
 		REMOVE(&bquote);
 	}
-	printf("bquote %s\n", parse->bquotes);
 	begin = SUB(parse->cmd, 0, start - 1);
 	parse->cmd = JOINF(begin, SUB(parse->cmd, start + end + 1,
 	LEN(parse->cmd)), 2);
