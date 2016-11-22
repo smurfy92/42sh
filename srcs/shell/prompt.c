@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 20:25:26 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/22 02:55:40 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/22 16:42:54 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void			prompt(void)
 		ft_putstr_fd(":(", 2);
 		prompt_path(grp);
 		ft_putstr_fd(") > \033[0m", 2);
-		grp->prompt_size += 4;
+		grp->prompt_size += 6;
 	}
 	//grp->prompt_size = 6;
 }
