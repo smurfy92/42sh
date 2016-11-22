@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   polish.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 22:41:30 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/22 03:48:04 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/22 17:14:08 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,5 +113,6 @@ void		polish(t_parse *parse)
 			else if (ret == 0 && parse->cmdsplit[j][i] == '\\' && parse->cmdsplit[j][i + 1])
 				ft_polish_parse(parse, j, i);
 		}
+		check_parentheses(0);
 	}
 }
