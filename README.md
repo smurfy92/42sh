@@ -12,6 +12,9 @@ hdoc:
 - Testez l'existence et le fonctionnement du heredoc "<<", avec ses options (wtf ???)  et cas particuliers. 
 cat << heredoc | cat -e ---> reste bloque dans le pipe
 
+squote:
+si plusieurs args en squote a partir du deuxieme args la premiere quote nest pas polish -> ret de check parenthese == 0;
+
 historic: (Ya pas de segflt)
 - fais des truc bizarre si !num en plein milieu d’une cmd
 
