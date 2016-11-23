@@ -6,11 +6,24 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 14:51:15 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/21 22:18:53 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/23 22:31:32 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
+
+void		remove_hdoc(t_group *grp)
+{
+	char	*file;
+	
+	while (grp->hdcount > 0)
+	{
+		file = JOINF("/private/tmp/hdoc_", ft_itoa(grp->hdcount), 2);
+		unlink(file);
+		REMOVE(&file);
+		grp->hdcount -= 1;
+	}
+}
 
 void		free_history(t_group *grp)
 {
@@ -65,17 +78,8 @@ void		free_allcmd(t_group *grp)
 
 void		ft_free_parse(t_group *grp)
 {
-	char	*file;
-
 	free_term(grp);
 	free_env_tmp(grp);
 	check_parentheses(0);
 	free_allcmd(grp);
-	while (grp->hdcount > 0)
-	{
-		file = JOINF("hdoc_", ft_itoa(grp->hdcount), 2);
-		unlink(file);
-		REMOVE(&file);
-		grp->hdcount -= 1;
-	}
 }

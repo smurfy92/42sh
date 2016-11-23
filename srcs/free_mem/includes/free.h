@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:09:57 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/19 17:29:32 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/23 22:19:45 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,5 @@ void		ft_free_andor(t_group *grp);
 void		free_history(t_group *grp);
 void		free_term(t_group *grp);
 void		free_env_tmp(t_group *grp);
-
+void		remove_hdoc(t_group *grp);
 #endif
