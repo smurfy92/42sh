@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:10:01 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/22 21:40:31 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/23 20:37:18 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void			ft_parse_redirections(t_group *grp, t_parse *parse)
 			i++;
 		if (grp->fail || parse->fail)
 			break ;
-		(parse->sgred || parse->dbred) ? ft_create_redirections(parse) : 0;
+		//(parse->sgred || parse->dbred) ? ft_create_redirections(parse) : 0;
 		(grp->minus) ? (i += 1) : 0;
 	}
 }
