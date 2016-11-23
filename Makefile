@@ -39,6 +39,7 @@ SRC	+= srcs/env/env_exec.c
 #termcaps
 SRC	+= srcs/termcaps/keyboard.c
 SRC	+= srcs/termcaps/keyboard_lib.c
+SRC	+= srcs/termcaps/keyboard_lib2.c
 SRC	+= srcs/termcaps/keyboard_tools.c
 SRC	+= srcs/termcaps/keyboard_tools2.c
 SRC	+= srcs/termcaps/keyboard_tools3.c
