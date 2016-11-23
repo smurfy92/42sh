@@ -9,6 +9,7 @@ SRC	+= srcs/shell/prompt.c
 
 #exec
 SRC	+= srcs/exec/exec.c
+SRC	+= srcs/exec/execlib.c
 SRC	+= srcs/exec/execve.c
 
 #hash

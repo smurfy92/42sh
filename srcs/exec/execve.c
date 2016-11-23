@@ -6,57 +6,49 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 02:28:21 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/23 22:31:39 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/23 23:57:38 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-int			check_cmd(char **path, char *cmd)
+void		prepare_bquotes(t_group*grp, t_parse *parse, int *fd, char **cmdsplit)
 {
-	struct stat	s_buf;
-	mode_t		val;
-	int			ret;
-
-	if (*path == NULL)
-		*path = SDUP(cmd);
-	ret = lstat(*path, &s_buf);
-	val = (s_buf.st_mode & ~S_IFMT);
-	if (ret != 0)
-		error_cmd("command not found", cmd, 1);
-	else if (s_buf.st_size <= 0)
-		error_cmd("executable format error", cmd, 1);
-	else if (!(val & S_IXUSR) || S_ISDIR(s_buf.st_mode))
-		error_cmd("Permission denied", cmd, 1);
-	else
-		return (0);
-	return (-1);
+	cmdsplit[0] = ft_getenv(grp, "_"); // rajouter a l'env -i "_" !
+	cmdsplit[1] = NULL;
+	fd[0] = open("TOSHELL", O_WRONLY | O_CREAT | O_TRUNC,
+	S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
+	ft_putstr_fd(parse->bquotes, fd[0]);
+	close(fd[0]);
+	fd[0] = open("TOSHELL", O_RDONLY);
+	fd[1] = open("FROMSHELL", O_WRONLY | O_CREAT | O_TRUNC,
+	S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
 }
 
-void		ft_dup_redirection(t_parse *parse)
+void		exec_bquotes(t_group *grp, t_parse *parse)
 {
-	char	**tmp;
-	int		i;
+	pid_t	pid;
+	int		fd[2];
+	int		ret;
+	char	**env;
+	char	*cmdsplit[2];
 
-	if (parse->redfd)
+	prepare_bquotes(grp, parse, fd, cmdsplit);
+	pid = fork();
+	grp->program_pid = pid;
+	pid < 0 ? ft_exit(grp, 999) : 0;
+	if (pid == 0)
 	{
-		tmp = ft_strsplit(parse->redfd, '>');
-		parse->fd = dup2(ft_atoi(tmp[1]), ft_atoi(tmp[0]));
-		REMOVE(&tmp[0]);
-		REMOVE(&tmp[1]);
-		free(tmp);
+		dup2(fd[0], STDIN_FILENO);
+		dup2(fd[1], STDOUT_FILENO);
+		env = list_to_tab(ENV(lst));
+		execve(cmdsplit[0], cmdsplit, env);
+		ft_freestrtab(&env);
+		ft_exit(grp, 0);
 	}
-	if (parse->closefd)
-	{
-		tmp = ft_strsplit(parse->closefd, ';');
-		i = -1;
-		while (tmp[++i])
-		{
-			close(ft_atoi(tmp[i]));
-			REMOVE(&tmp[i]);
-		}
-		free(tmp);
-	}
+	waitpid(pid, &ret, 0);
+	grp->program_pid = getpid();
+	printf("cmd: %s\n", parse->cmdsplit[0]);
 }
 
 void		exec_child(t_group *grp, t_parse *parse)
