@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/06 17:52:49 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/22 02:41:27 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/23 22:31:34 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int			prepare_heredoc(t_group *grp, t_parse *tmp3)
 	{
 		i = -1;
 		grp->hdcount += 1;
-		file = JOINF("hdoc_", ft_itoa(grp->hdcount), 2);
+		file = JOINF("/private/tmp/hdoc_", ft_itoa(grp->hdcount), 2);
 		hdoc = ft_strsplit(tmp3->heredoc, ';');
 		while (hdoc[++i])
 			if ((ret = heredoc(grp, file, hdoc[i])) < 0)

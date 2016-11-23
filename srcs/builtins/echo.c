@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 17:03:39 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/22 19:45:32 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/23 21:31:29 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,7 @@ int		check_line(char *arg)
 			(operand = check_operands(arg[i + 1], &arg[i + 2], &arg)) >= 0)
 		{
 			if (operand == '\0')
-			{
 				return (1);
-			}
 			if (operand != 'a')
 				ft_putchar(operand);
 			i++;
@@ -110,7 +108,7 @@ int		builtin_echo(t_group *grp, t_parse *parse)
 	else
 	{
 		tputs(tgetstr("so", NULL), 0, ft_getchar);
-		ft_putstr("%\n");
+		parse->fd < 0 ? ft_putstr("%\n") : 0;
 		tputs(tgetstr("se", NULL), 0, ft_getchar);
 	}
 	return (1);

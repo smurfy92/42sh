@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/22 03:13:03 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/23 22:19:30 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void		proccess(t_group *grp)
 		ft_init_parse(grp);
 		if (grp->err_parse == false)
 			init_exec(grp);
+		remove_hdoc(grp);
 		ft_free_parse(grp);
 		free(grp->allcmd);
 	}
