@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 21:55:58 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/23 23:04:05 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/24 19:20:31 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,26 @@ void		ft_replace_tilde(t_group *grp, t_parse *parse, int i)
 ** replacing backquotes in parse cmd
 */
 
-void		ft_replace_bquote(t_parse *parse, int i)
+char		*replace_bquote(t_group *grp, t_parse *parse)
+{
+	int		fd;
+	char	*bquote_result;
+	char	*line;
+
+	line = NULL;
+	exec_bquotes(grp, parse);
+	fd = open("FROMSHELL", O_RDONLY);
+	bquote_result = NEW(0);
+	while (get_next_line(fd, &line) > 0)
+	{
+		line = ft_charjoin(line, ' ');
+		bquote_result = JOINF(bquote_result, line, 3);
+	}
+	bquote_result[LEN(bquote_result) - 1] = '\0';
+	return (bquote_result);
+}
+
+void		ft_replace_bquote(t_group *grp, t_parse *parse, int i)
 {
 	int		start;
 	int		end;
@@ -114,15 +133,17 @@ void		ft_replace_bquote(t_parse *parse, int i)
 		i++;
 	}
 	bquote = SUB(parse->cmd, start, end);
-	if (parse->bquotes != NULL)
-		parse->bquotes = JOINF(JOINF(parse->bquotes, ";", 1), bquote, 2);
-	else
-	{
-		parse->bquotes = SDUP(bquote);
-		REMOVE(&bquote);
-	}
-	begin = SUB(parse->cmd, 0, start - 1);
+	// if (parse->bquotes != NULL)
+	// 	parse->bquotes = JOINF(JOINF(parse->bquotes, ";", 1), bquote, 2);
+	// else
+	// {
+	parse->bquotes = SDUP(bquote);
+	REMOVE(&bquote);
+	//}
+	bquote = replace_bquote(grp, parse);
+	begin = JOINF(SUB(parse->cmd, 0, start - 1), bquote, 3);
 	parse->cmd = JOINF(begin, SUB(parse->cmd, start + end + 1,
 	LEN(parse->cmd)), 2);
+	//printf("CMD: %s\n", parse->cmd);
 	check_parentheses(0);
 }
