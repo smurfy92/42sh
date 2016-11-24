@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 16:10:01 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/23 22:39:42 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/24 19:12:29 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void			ft_parse_redirections(t_group *grp, t_parse *parse)
 			ft_parse_redirections2(grp, parse, i);
 		else if (ret && !inquote && parse->cmd[i] == '`' &&
 				check_last_char(parse->cmd, i) == 0)
-			ft_replace_bquote(parse, i);
+			ft_replace_bquote(grp, parse, i);
 		else
 			i++;
 		if (grp->fail || parse->fail)

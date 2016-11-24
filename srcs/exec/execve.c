@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 02:28:21 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/23 23:57:38 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/24 19:04:45 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,9 @@ void		exec_bquotes(t_group *grp, t_parse *parse)
 		ft_exit(grp, 0);
 	}
 	waitpid(pid, &ret, 0);
+	close(fd[0]);
+	close(fd[1]);
 	grp->program_pid = getpid();
-	printf("cmd: %s\n", parse->cmdsplit[0]);
 }
 
 void		exec_child(t_group *grp, t_parse *parse)
