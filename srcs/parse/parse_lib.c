@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_lib.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 21:55:58 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/24 19:20:31 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/24 20:14:10 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char		*replace_bquote(t_group *grp, t_parse *parse)
 
 	line = NULL;
 	exec_bquotes(grp, parse);
-	fd = open("FROMSHELL", O_RDONLY);
+	fd = open("/tmp/.fromshell", O_RDONLY);
 	bquote_result = NEW(0);
 	while (get_next_line(fd, &line) > 0)
 	{

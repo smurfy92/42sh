@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 16:54:18 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/19 17:40:33 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/24 20:11:59 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void					help_shlvl(t_group *grp);
 void					path_help(t_group *grp);
 void					help_pwd(t_group *grp);
 void					home_helper(t_group *grp);
+void					under_helper(t_group *grp);
 
 /*
 **	env exec
