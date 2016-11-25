@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/12 02:28:21 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/25 22:52:51 by jmontija         ###   ########.fr       */
+/*   Created: 2016/11/25 23:37:23 by jmontija          #+#    #+#             */
+/*   Updated: 2016/11/25 23:37:51 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ void		prepare_bquotes(t_group*grp, t_parse *parse, int *fd, char **cmdsplit)
 {
 	cmdsplit[0] = ft_getenv(grp, "_"); // rajouter a l'env -i "_" !
 	cmdsplit[1] = NULL;
-	fd[0] = open("TOSHELL", O_WRONLY | O_CREAT | O_TRUNC,
+	fd[0] = open("/tmp/.to_shell", O_WRONLY | O_CREAT | O_TRUNC,
 	S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
 	ft_putstr_fd(parse->bquotes, fd[0]);
 	close(fd[0]);
-	fd[0] = open("TOSHELL", O_RDONLY);
-	fd[1] = open("FROMSHELL", O_WRONLY | O_CREAT | O_TRUNC,
+	fd[0] = open("/tmp/.to_shell", O_RDONLY);
+	fd[1] = open("/tmp/.fromshell", O_WRONLY | O_CREAT | O_TRUNC,
 	S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
 }
 

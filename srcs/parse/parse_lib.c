@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/19 21:55:58 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/25 00:12:55 by jmontija         ###   ########.fr       */
+/*   Created: 2016/11/25 23:37:23 by jmontija          #+#    #+#             */
+/*   Updated: 2016/11/25 23:37:56 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char		*replace_bquote(t_group *grp, t_parse *parse)
 
 	line = NULL;
 	exec_bquotes(grp, parse);
-	fd = open("FROMSHELL", O_RDONLY);
+	fd = open("/tmp/.fromshell", O_RDONLY);
 	bquote_result = NEW(0);
 	while (get_next_line(fd, &line) > 0)
 	{

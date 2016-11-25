@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 16:51:54 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/21 23:56:29 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/24 20:14:56 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,6 @@ void	init_env(t_group *grp, char **env)
 		path_help(grp);
 	if (ft_getenv(grp, "PWD") == NULL)
 		help_pwd(grp);
+	if (ft_getenv(grp, "_") == NULL)
+		under_helper(grp);
 }

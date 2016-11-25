@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/08 18:39:35 by victordanain      #+#    #+#             */
-/*   Updated: 2016/11/23 19:53:14 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/24 21:03:55 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,26 @@ void		path_help(t_group *grp)
 	ft_strcat(path, line);
 	insert_env(grp, path);
 	close(fd);
+}
+
+void		under_helper(t_group *grp)
+{
+	char			buff[1024 + 1];
+	struct stat		file;
+	char			*path;
+
+	ft_bzero(buff, 1025);
+	getcwd(buff, 1024);
+
+	if (buff[LEN(buff) - 1] != '/')
+		ft_strcat(buff, "/");
+	path = ft_strjoin(buff, grp->program_name);
+	if (stat(path, &file) != -1)
+	{
+		path = JOINF("_=", path, 2);
+		insert_env(grp, path);
+	}
+	ft_strdel(&path);
 }
 
 void		home_helper(t_group *grp)
