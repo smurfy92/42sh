@@ -4,6 +4,7 @@ LIB = srcs/libft/libft.a
 #shell
 SRC =  srcs/shell/main.c
 SRC	+= srcs/shell/init.c
+SRC	+= srcs/shell/init_shell.c
 SRC	+= srcs/shell/signaux.c
 SRC	+= srcs/shell/prompt.c
 
@@ -11,6 +12,12 @@ SRC	+= srcs/shell/prompt.c
 SRC	+= srcs/exec/exec.c
 SRC	+= srcs/exec/execlib.c
 SRC	+= srcs/exec/execve.c
+
+#jobcontrol
+SRC	+= srcs/jobcontrol/jobcontrol.c
+SRC	+= srcs/jobcontrol/bg.c
+SRC	+= srcs/jobcontrol/fg.c
+SRC	+= srcs/jobcontrol/jobs.c
 
 #hash
 SRC += srcs/hash/hash_use.c
@@ -98,6 +105,7 @@ INC += -I srcs/debug/includes/
 INC += -I srcs/free_mem/includes/
 INC += -I srcs/history/includes/
 INC += -I srcs/errors/includes/
+INC += -I srcs/jobcontrol/includes/
 INC += -I ./includes/
 
 OBJ = $(SRC:.c=.o)

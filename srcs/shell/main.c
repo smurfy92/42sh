@@ -52,7 +52,6 @@ int			main(int argc, char **argv, char **env)
 	grp->program_name = SDUP(argv[0]);
 	grp->program_pid = getpid();
 	init_env(grp, env);
-	sig_handler();
 	while (42)
 		proccess(grp);
 	reset_shell();

@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:07:29 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/19 22:03:55 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/25 00:13:51 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct			s_group
 	struct s_env			*env;
 	struct s_root			*root;
 	struct s_comp			*comp;
+	struct s_jobs			*jobs;
 	int						fail;
 	int						minus;
 }						t_group;

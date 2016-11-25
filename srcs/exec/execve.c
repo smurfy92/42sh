@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/12 02:28:21 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/24 20:14:04 by vdanain          ###   ########.fr       */
+/*   Created: 2016/11/25 23:37:23 by jmontija          #+#    #+#             */
+/*   Updated: 2016/11/25 23:37:51 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void		exec_bquotes(t_group *grp, t_parse *parse)
 	grp->program_pid = getpid();
 }
 
-void		exec_child(t_group *grp, t_parse *parse)
+void		exec_child(int jobs, t_group *grp, t_parse *parse)
 {
 	int		fd;
 	int		ret;
@@ -74,7 +74,7 @@ void		exec_child(t_group *grp, t_parse *parse)
 	}
 	else if (ret == 0)
 		ft_exit(grp, EXIT_FAILURE);
-	else if (ret == 1 && parse->fd >= 0)
+	else if (ret == 1 && (parse->fd >= 0 || jobs))
 		builtins(grp, parse);
 	ft_exit(grp, 0);
 }
