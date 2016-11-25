@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/22 19:35:09 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/25 23:35:05 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,18 @@ void	ft_prompt(int signum)
 	ioctl(0, TIOCSTI, order);
 }
 
+void	ft_goeson(int sig)
+{
+	printf("signal :%d\n", sig);
+}
+
 void	sig_handler(void)
 {
 	signal(SIGINT, handler_ctrl_c);
 	signal(SIGTSTP, ft_prompt);
 	signal(SIGQUIT, handler_ctrl_c);
 	signal(SIGWINCH, handler_win);
+	// signal (SIGTTIN, ft_goeson);
+	// signal (SIGTTOU, ft_goeson);
+	// signal (SIGCHLD, ft_goeson);
 }

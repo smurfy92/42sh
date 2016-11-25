@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplitandor.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 17:16:37 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/21 01:05:04 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/25 23:20:16 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int							ft_isandor(char *s, int idx)
 		return (1);
 	else if (s[idx] == '|' && s[idx + 1] != '\0' && s[idx + 1] == '|')
 		return (2);
+	else if (s[idx] == '&' && !ft_isdigit(s[idx + 1]) && s[idx + 1] != '-')
+		return (3);
 	return (0);
 }
 
@@ -71,11 +73,11 @@ static int					split_part(t_andor **lst, char *s, int i)
 
 	start = 0;
 	len = 0;
-	while ((type = (ft_isandor(s, i) > 0)) && !check_last_char(s, i))
+	while ((type = ft_isandor(s, i)) > 0 && !check_last_char(s, i))
 	{
 		if (i == 0)
 			insert_part(lst, "", type);
-		i += 2;
+		i = (type == 3) ? (i + 1) : (i + 2);
 		break ;
 	}
 	start = i;
@@ -85,7 +87,8 @@ static int					split_part(t_andor **lst, char *s, int i)
 	if (part == NULL)
 		return (-1);
 	type = ft_isandor(s, i);
-	insert_part(lst, part, type);
+	if (len)
+		insert_part(lst, part, type);
 	REMOVE(&part);
 	return (i);
 }

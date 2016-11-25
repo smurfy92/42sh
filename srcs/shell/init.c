@@ -12,43 +12,6 @@
 
 #include "fortytwo.h"
 
-int			reset_shell(void)
-{
-	t_group	*grp;
-
-	grp = get_grp();
-	if (tcsetattr(0, 0, &(grp->cpy_term)) == -1)
-		return (-1);
-	return (0);
-}
-
-int			init_shell(void)
-{
-	char			*name;
-	struct termios	term;
-	t_group			*grp;
-
-	grp = get_grp();
-	if ((name = getenv("TERM")) == NULL)
-		name = ft_strdup("xterm-256color");
-	if (tgetent(NULL, name) == ERR)
-		exit(-1);
-	if (getenv("TERM") == NULL)
-		ft_strdel(&name);
-	if (tcgetattr(0, &term) == -1)
-		return ((grp->quit = true));
-	grp->cpy_term = term;
-	term.c_lflag = term.c_lflag & (~ICANON & ~ECHO);
-	term.c_cc[VMIN] = 1;
-	term.c_cc[VTIME] = 0;
-	if (tcsetattr(0, 0, &term))
-	{
-		ft_putendl("could not set termcaps's attributes");
-		exit(-1);
-	}
-	return (1);
-}
-
 void		init_term(t_group *grp)
 {
 	struct winsize	w;

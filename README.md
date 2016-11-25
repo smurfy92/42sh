@@ -10,3 +10,6 @@ hdoc:
 - Testez l'existence et le fonctionnement du heredoc "<<", avec ses options (wtf ???)  et cas particuliers. 
 
 ++ Trello: https://trello.com/b/WJXyMpVc/42sh
+
+DOCS:
+- https://www.andrew.cmu.edu/course/15-310/applications/homework/homework4/lab4.pdf

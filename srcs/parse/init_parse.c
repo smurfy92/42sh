@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 15:59:55 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/23 22:15:13 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/25 23:16:39 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ static int		ft_parse(t_group *grp, t_andor *andor)
 			return (-1);
 		}
 		ft_create_parse(grp, tabl, andor);
-
 		REMOVE(&tabl->cmd);
 		tmp = tabl->next;
 		free(tabl);
@@ -105,11 +104,12 @@ void			ft_init_parse(t_group *grp)
 		tmp2 = tabl->andor;
 		while (tmp2)
 		{
+			//printf("%d\n", tmp2->type);
 			if (tmp2->cmd[0] == '\0' && !grp->fail)
 			{
-				grp->fail = 1;
-				error_cmd(
-				"Invalid null command near", "&& / ||", 1);
+				// grp->fail = 1;
+				// error_cmd(
+				// "Invalid null command near", "&& / ||", 1);
 				return ;
 			}
 			if (ft_parse(grp, tmp2) < 0)

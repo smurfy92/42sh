@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 21:15:46 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/24 19:11:46 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/25 22:52:19 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void		pipe_exec(t_group *grp, t_parse *parse)
 		{
 			if (!tmp->fail)
 				(tmp->next && tmp->fd == -1) ? ft_fork_pipe(grp, tmp) :
-					exec_child(grp, tmp);
+					exec_child(0, grp, tmp);
 			tmp = tmp->next;
 		}
 		ft_exit(grp, EXIT_FAILURE);
@@ -50,7 +50,7 @@ void		pipe_exec(t_group *grp, t_parse *parse)
 	check_lastcmd(grp, tmp);
 }
 
-void		create_fd_exec_bquote(t_parse *parse)
+void		create_fd(t_parse *parse)
 {
 	t_parse		*tmp;
 
@@ -71,8 +71,8 @@ void		andor_exec(t_group *grp, t_andor *andor)
 	while (tmp)
 	{
 		reset_shell();
-		create_fd_exec_bquote(tmp->parselst);
-		pipe_exec(grp, tmp->parselst);
+		create_fd(tmp->parselst);
+		tmp->type == 3 ? init_job_control(grp, tmp) : pipe_exec(grp, tmp->parselst);
 		init_shell();
 		if ((tmp->type == 1 && grp->exit != 0) ||
 			(tmp->type == 2 && grp->exit == 0))
