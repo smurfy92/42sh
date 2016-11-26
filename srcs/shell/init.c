@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:17:06 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/19 18:57:11 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/26 00:04:14 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_group		*set_grp(t_group *grp)
 	grp->father = -1;
 	grp->program_name = NULL;
 	grp->program_pid = -1;
+	grp->jobs = NULL;
 	ft_get_history(grp);
 	init_term(grp);
 	grp->root = NULL;

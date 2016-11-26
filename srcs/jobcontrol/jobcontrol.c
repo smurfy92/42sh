@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 23:18:46 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/25 23:38:10 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/26 01:20:59 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		fill_jobs(t_jobs *jobs, int idx, int pid, char *cmd)
 {
-	REMOVE(&jobs->cmd);
+	//REMOVE(&jobs->cmd);
 	jobs->idx = idx;
 	jobs->pid = pid;
 	jobs->status = 0;
@@ -22,32 +22,31 @@ void		fill_jobs(t_jobs *jobs, int idx, int pid, char *cmd)
 	jobs->is_last = true;
 	jobs->is_prelast = false;
 	jobs->terminate = 0;
+	jobs->next = NULL;
 }
 
-void		create_jobs(t_group *grp, char *cmd, int pid, int ret)
+void		create_jobs(t_group *grp, char *cmd, int pid)
 {
-	t_jobs	*tmp;
-	int		count;
+	t_jobs		*tmp;
+	t_jobs		*tmp2;
+	int			count;
 
-	if (ret)
-		;
-	count = 0;
-	if (grp->jobs == NULL)
-	{
-		grp->jobs = (t_jobs *)malloc(sizeof(t_jobs));
-		fill_jobs(grp->jobs, 1, pid, cmd);
-		return ;
-	}
-	tmp = grp->jobs;
-	while (tmp->next)
-	{
-		count++;
-		if (tmp->terminate)
-			fill_jobs(tmp, tmp->idx, pid, cmd);
-		tmp = tmp->next;
-	}
+	count = 2;
 	tmp = (t_jobs *)malloc(sizeof(t_jobs));
-	fill_jobs(tmp, count, pid, cmd);
+	fill_jobs(tmp, 1, pid, cmd);
+	if (!grp->jobs)
+		grp->jobs = tmp;
+	else
+	{
+		tmp2 = grp->jobs;
+		while (tmp2 && tmp2->next)
+		{
+			count++;
+			tmp2 = tmp2->next;
+		}
+		tmp2->next = tmp;
+		tmp2->next->idx = count;
+	}
 }
 
 void		init_shell_job(int pgid)
@@ -59,10 +58,8 @@ void		init_shell_job(int pgid)
 	if (is_interact)
 	{
 		pid = getpid ();
-		if (pgid == 0) 
-			pgid = pid;
+		pgid == 0 ? (pgid = pid) : 0;
 		setpgid (pid, pgid);
-
 		signal (SIGINT, SIG_DFL);
 		signal (SIGQUIT, SIG_DFL);
 		signal (SIGTSTP, SIG_DFL);
@@ -76,6 +73,7 @@ void		jobs_exec(t_group *grp, t_andor *andor)
 {
 	t_parse		*tmp;
 	pid_t		pid;
+	int			ret;
 
 	tmp = andor->parselst;
 	pid = fork();
@@ -90,7 +88,7 @@ void		jobs_exec(t_group *grp, t_andor *andor)
 			{
 				if (tmp->next && tmp->fd == -1)
 				{
-					ft_fork_pipe(grp, tmp);
+					ft_fork_pipe(grp, tmp); // <-- stocker la commande dans jobs how ? fd ?
 				}
 				else
 				{
@@ -101,9 +99,8 @@ void		jobs_exec(t_group *grp, t_andor *andor)
 		}
 		ft_exit(grp, EXIT_FAILURE);
 	}
-	// waitpid(pid, &ret, WNOHANG);
-	// printf("ret : %d\n", ret);
-	//create_jobs(grp, andor->cmd, pid, 0);
+	create_jobs(grp, andor->cmd, pid);
+	waitpid(pid, &ret, WNOHANG);
 }
 
 void	init_job_control(t_group *grp, t_andor *andor)
