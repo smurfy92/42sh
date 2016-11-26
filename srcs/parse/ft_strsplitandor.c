@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 17:16:37 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/25 23:20:16 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/25 23:54:12 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static int					split_part(t_andor **lst, char *s, int i)
 	if (part == NULL)
 		return (-1);
 	type = ft_isandor(s, i);
-	if (len)
+	if (len) // attention protection pour le jobs a modifier !
 		insert_part(lst, part, type);
 	REMOVE(&part);
 	return (i);
