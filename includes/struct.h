@@ -17,6 +17,7 @@ typedef struct			s_group
 {
 	char					*program_name;
 	pid_t					program_pid;
+	int						is_interact;
 	struct s_history		*history;
 	int						inhistory;
 	int						prompt_size;

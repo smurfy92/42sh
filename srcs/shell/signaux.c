@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 03:04:04 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/27 03:04:19 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/28 00:04:12 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,19 @@ void	ft_prompt(int signum)
 
 void	ft_goeson(int sig)
 {
-	printf("signal :%d\n", sig);
-	t_group	*grp;
+	printf("PUT 42sh IN BG ?\n");
+	// // t_group	*grp;
+	// // grp = get_grp();
 
-	grp = get_grp();
-	init_shell();
-	ft_exit(grp, 0);
+	if (sig)
+		;
+	// int	ret;
+	// waitpid(-1, &ret, 0);
 }
 
 void	sig_handler(void)
 {
+	printf("SIGNAUX\n");
 	signal(SIGINT, handler_ctrl_c);
 	signal(SIGTSTP, ft_prompt);
 	signal(SIGQUIT, handler_ctrl_c);

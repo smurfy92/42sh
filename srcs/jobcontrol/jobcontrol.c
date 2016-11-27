@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 23:18:46 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/27 03:00:30 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/27 23:58:46 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void		init_shell_job(int pgid)
 	int	pid;
 	int	is_interact;
 
+	printf("JOBS_init_shell \n");
 	is_interact = isatty (STDIN_FILENO);
 	if (is_interact)
 	{
@@ -89,7 +90,6 @@ void		jobs_exec(t_group *grp, t_andor *andor)
 	t_parse		*tmp;
 	pid_t		pid;
 	int			ret;
-	int			info;
 
 	tmp = andor->parselst;
 	pid = fork();
@@ -114,9 +114,10 @@ void		jobs_exec(t_group *grp, t_andor *andor)
 		}
 		ft_exit(grp, EXIT_FAILURE);
 	}
-	//waitid(P_PID, pid, &info, WNOHANG | WNOWAIT);
-	info = waitpid(pid, &ret, WNOHANG);
 	create_jobs(grp, andor->cmd, pid);
+	if (grp->is_interact)
+		setpgid (pid, pid);
+	waitpid(pid, &ret, WNOHANG);
 }
 
 void	init_job_control(t_group *grp, t_andor *andor)
