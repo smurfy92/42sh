@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signaux.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/26 18:59:05 by jtranchi         ###   ########.fr       */
+/*   Created: 2016/11/27 03:04:04 by jmontija          #+#    #+#             */
+/*   Updated: 2016/11/27 03:04:19 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,11 @@ void	ft_prompt(int signum)
 void	ft_goeson(int sig)
 {
 	printf("signal :%d\n", sig);
+	t_group	*grp;
+
+	grp = get_grp();
+	init_shell();
+	ft_exit(grp, 0);
 }
 
 void	sig_handler(void)
@@ -67,7 +72,7 @@ void	sig_handler(void)
 	signal(SIGTSTP, ft_prompt);
 	signal(SIGQUIT, handler_ctrl_c);
 	signal(SIGWINCH, handler_win);
-	// signal (SIGTTIN, ft_goeson);
-	// signal (SIGTTOU, ft_goeson);
+	signal(SIGTTIN, ft_goeson);
+	signal(SIGTTOU, ft_goeson);
 	// signal (SIGCHLD, ft_goeson);
 }

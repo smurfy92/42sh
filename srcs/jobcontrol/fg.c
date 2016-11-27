@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 23:24:04 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/26 01:21:10 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/27 00:10:30 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int		builtin_fg(t_group *grp, int idx)
 	//     if (kill (- j->pgid, SIGCONT) < 0)
 	//       perror ("kill (SIGCONT)");
 	//   }
-
+	
 	waitpid(curr->pid, &ret, 0);
+	printf("\nend of processus fg\n");
 	return (1);
 }
