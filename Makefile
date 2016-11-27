@@ -15,6 +15,7 @@ SRC	+= srcs/exec/execve.c
 
 #jobcontrol
 SRC	+= srcs/jobcontrol/jobcontrol.c
+SRC	+= srcs/jobcontrol/jobstatus.c
 SRC	+= srcs/jobcontrol/bg.c
 SRC	+= srcs/jobcontrol/fg.c
 SRC	+= srcs/jobcontrol/jobs.c

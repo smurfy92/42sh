@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 20:25:26 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/23 21:28:31 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/27 01:07:36 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void			prompt(void)
 	t_group		*grp;
 
 	grp = get_grp();
+	jobs_status(grp);
 	grp->prompt_size = 0;
 	if (grp->quit == false)
 	{

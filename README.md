@@ -10,3 +10,4 @@ tabulation: c’est obligatoire ca peut nous baiser !
 
 DOCS:
 - https://www.andrew.cmu.edu/course/15-310/applications/homework/homework4/lab4.pdf
+- http://stackoverflow.com/questions/10779020/sending-a-process-to-the-background-and-returning-control-to-my-shell
