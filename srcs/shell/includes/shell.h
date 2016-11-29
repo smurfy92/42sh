@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:43:06 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/27 23:18:32 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/29 02:36:37 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,8 @@ void					sig_handler(void);
 */
 
 void					prompt(void);
+int						take_tc_hand(void);
+int						set_for_jobs(int terminal);
+void					restore_shell(void);
 
 #endif

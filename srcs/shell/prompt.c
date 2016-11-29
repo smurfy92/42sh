@@ -44,7 +44,6 @@ void			prompt(void)
 	t_group		*grp;
 
 	grp = get_grp();
-	jobs_status(grp);
 	grp->prompt_size = 0;
 	if (grp->quit == false)
 	{

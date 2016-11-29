@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/28 00:03:31 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/29 04:27:26 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,36 +41,8 @@ void		proccess(t_group *grp)
 	grp->hdcount = 0;
 }
 
-int			set_for_jobs(int terminal)
-{
-	pid_t 		shell_pgid;
-
-		printf("SET_FOR_JOBS\n");
-
-	/* Loop until we are in the foreground.  */
-	while (tcgetpgrp (terminal) != (shell_pgid = getpgrp ()))
-	{
-		printf("terminal %d shell_pgid: %d\n", terminal, shell_pgid);
-		kill (shell_pgid, SIGTTIN);
-	}
-	/* Ignore interactive and job-control signals.  */
-	sig_handler();
-	/* Put ourselves in our own process group.  */
-	shell_pgid = getpid ();
-	if (setpgid (shell_pgid, shell_pgid) < 0)
-	{
-		perror ("Couldn't put the shell in its own process group");
-		exit (1);
-	}
-	/* Grab control of the terminal.  */
-	tcsetpgrp (terminal, shell_pgid);
-	return (0);
-}
-
 int			main(int argc, char **argv, char **env)
 {
-	// int		is_interact;
-	// int terminal;
 	t_group *grp;
 
 	if (argc || argv)
@@ -85,7 +57,6 @@ int			main(int argc, char **argv, char **env)
 		init_shell();
 	}
 	init_env(grp, env);
-	//insert_env(grp, JOINF("42PID=", ft_atoi(getpid()), 2));
 	while (42)
 		proccess(grp);
 	reset_shell();

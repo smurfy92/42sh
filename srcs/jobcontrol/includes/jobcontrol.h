@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 23:25:11 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/27 02:10:47 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/29 05:17:03 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,7 @@ int			builtin_jobs(t_group *grp);
 int			builtin_fg(t_group *grp, int idx);
 int			builtin_bg(void);
 void		jobs_status(t_group *grp);
+void		update_job(t_jobs *jobs);
+void		jobs_states(t_group *grp);
 
 #endif

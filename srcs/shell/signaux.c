@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 03:04:04 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/28 00:04:12 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/29 04:30:25 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	handler_ctrl_c(int sig)
 	ioctl(0, TIOCSTI, "\n");
 }
 
-void	ft_prompt(int signum)
+void	handler_ctrl_z(int signum)
 {
 	char	order[2];
 
@@ -56,26 +56,24 @@ void	ft_prompt(int signum)
 	ioctl(0, TIOCSTI, order);
 }
 
-void	ft_goeson(int sig)
+void	handler_ttinout(int sig)
 {
-	printf("PUT 42sh IN BG ?\n");
-	// // t_group	*grp;
-	// // grp = get_grp();
+	t_group	*grp;
 
-	if (sig)
-		;
-	// int	ret;
-	// waitpid(-1, &ret, 0);
+	grp = get_grp();
+	printf("curr_pid: %d\n signal: %d\n", getpid(), sig);
+	tcsetpgrp (STDIN_FILENO, grp->program_pid);
+	reset_shell();
+	restore_shell();
 }
 
 void	sig_handler(void)
 {
 	printf("SIGNAUX\n");
 	signal(SIGINT, handler_ctrl_c);
-	signal(SIGTSTP, ft_prompt);
 	signal(SIGQUIT, handler_ctrl_c);
+	signal(SIGTSTP, handler_ctrl_z);
+	signal(SIGTTIN, handler_ttinout);
+	signal(SIGTTOU, handler_ttinout);
 	signal(SIGWINCH, handler_win);
-	signal(SIGTTIN, ft_goeson);
-	signal(SIGTTOU, ft_goeson);
-	// signal (SIGCHLD, ft_goeson);
 }

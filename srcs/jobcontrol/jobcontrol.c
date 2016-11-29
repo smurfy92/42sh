@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 23:18:46 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/27 23:58:46 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/29 05:19:41 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void		fill_jobs(t_jobs *jobs, int idx, int pid, char *cmd)
 	jobs->cmd = SDUP(cmd);
 	jobs->is_last = true;
 	jobs->is_prelast = false;
-	jobs->terminate = 0;
+	jobs->terminate = -1;
 }
 
 void		display_jobs(int idx, int pid)
@@ -69,7 +69,7 @@ void		init_shell_job(int pgid)
 	int	pid;
 	int	is_interact;
 
-	printf("JOBS_init_shell \n");
+	printf("JOBS_manage_shell \n");
 	is_interact = isatty (STDIN_FILENO);
 	if (is_interact)
 	{
@@ -96,17 +96,15 @@ void		jobs_exec(t_group *grp, t_andor *andor)
 	pid < 0 ? ft_exit(grp, 999) : 0;
 	if (pid == 0)
 	{
-		init_shell_job(pid);
 		while (tmp)
 		{
 			if (!tmp->fail)
 			{
 				if (tmp->next && tmp->fd == -1)
-				{
 					ft_fork_pipe(grp, tmp); // <-- stocker la commande dans jobs how ? fd ?
-				}
 				else
 				{
+					init_shell_job(pid);
 					exec_child(1, grp, tmp);
 				}
 			}

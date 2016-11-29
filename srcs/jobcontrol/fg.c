@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 23:24:04 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/28 00:04:35 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/29 05:18:37 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,21 @@ int		builtin_fg(t_group *grp, int idx)
 	}
 	if (idx == 0)
 		curr = jobs;
-	if (curr == NULL)
+	if (curr == NULL || curr->pid < 0)
 	{
 		idx == 0 ? error_cmd("no jobs in background", "use & to create jobs", 1) :
 		error_cmd("could not found jobs", ft_itoa(idx), 1);
 		return (1);
 	}
-
-	//reset_shell();
 	tcsetpgrp (STDIN_FILENO, curr->pid);
-
 	// if (cont)
 	//   {
 	//     tcsetattr (shell_terminal, TCSADRAIN, &j->tmodes);
 	//     if (kill (- j->pgid, SIGCONT) < 0)
 	//       perror ("kill (SIGCONT)");
 	//   }
-	
 	waitpid(curr->pid, &ret, 0);
-	tcsetpgrp (STDIN_FILENO, grp->program_pid);
-	printf("\nend of processus fg\n");
+	if (ret > 0)
+		change_state(curr, ret);
 	return (1);
 }
