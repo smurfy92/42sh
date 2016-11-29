@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 23:18:46 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/29 05:19:41 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/30 00:07:34 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void		fill_jobs(t_jobs *jobs, int idx, int pid, char *cmd)
 {
 	jobs->idx = idx;
 	jobs->pid = pid;
-	jobs->status = 0;
+	jobs->status = SDUP("RUNNING");
 	jobs->cmd = SDUP(cmd);
 	jobs->is_last = true;
 	jobs->is_prelast = false;
@@ -64,27 +64,6 @@ void		create_jobs(t_group *grp, char *cmd, int pid)
 	display_jobs(tmp->idx, pid);
 }
 
-void		init_shell_job(int pgid)
-{
-	int	pid;
-	int	is_interact;
-
-	printf("JOBS_manage_shell \n");
-	is_interact = isatty (STDIN_FILENO);
-	if (is_interact)
-	{
-		pid = getpid ();
-		pgid == 0 ? (pgid = pid) : 0;
-		setpgid (pid, pgid);
-		signal (SIGINT, SIG_DFL);
-		signal (SIGQUIT, SIG_DFL);
-		signal (SIGTSTP, SIG_DFL);
-		signal (SIGTTIN, SIG_DFL);
-		signal (SIGTTOU, SIG_DFL);
-		signal (SIGCHLD, SIG_DFL);
-	}
-}
-
 void		jobs_exec(t_group *grp, t_andor *andor)
 {
 	t_parse		*tmp;
@@ -104,7 +83,7 @@ void		jobs_exec(t_group *grp, t_andor *andor)
 					ft_fork_pipe(grp, tmp); // <-- stocker la commande dans jobs how ? fd ?
 				else
 				{
-					init_shell_job(pid);
+					init_shell_job(0, 0);
 					exec_child(1, grp, tmp);
 				}
 			}
@@ -112,9 +91,12 @@ void		jobs_exec(t_group *grp, t_andor *andor)
 		}
 		ft_exit(grp, EXIT_FAILURE);
 	}
-	create_jobs(grp, andor->cmd, pid);
-	if (grp->is_interact)
-		setpgid (pid, pid);
+	else
+	{
+		create_jobs(grp, andor->cmd, pid);
+		if (grp->is_interact)
+			setpgid (pid, pid);
+	}
 	waitpid(pid, &ret, WNOHANG);
 }
 

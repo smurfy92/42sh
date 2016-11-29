@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 03:04:04 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/29 04:30:25 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/29 21:22:44 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	handler_ctrl_c(int sig)
 	t_group	*grp;
 
 	grp = get_grp();
+	printf("ctrl_c\n");
 	if (sig && getpid() != grp->program_pid)
 		return ;
 	if (grp->comp)
@@ -61,10 +62,12 @@ void	handler_ttinout(int sig)
 	t_group	*grp;
 
 	grp = get_grp();
-	printf("curr_pid: %d\n signal: %d\n", getpid(), sig);
+	printf("curr_pid: %d\nsignal: %d\n", getpid(), sig);
 	tcsetpgrp (STDIN_FILENO, grp->program_pid);
-	reset_shell();
 	restore_shell();
+	//reset_shell();
+	//set_for_jobs(STDIN_FILENO);
+	//init_shell();
 }
 
 void	sig_handler(void)

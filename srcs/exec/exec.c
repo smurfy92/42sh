@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 21:15:46 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/29 04:56:22 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/29 23:58:47 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void		pipe_exec(t_group *grp, t_parse *parse)
 	grp->program_pid = grp->father;
 	if (grp->father == 0)
 	{
+		//init_shell_job(0, 1);
 		while (tmp)
 		{
 			if (!tmp->fail)
@@ -43,8 +44,10 @@ void		pipe_exec(t_group *grp, t_parse *parse)
 		}
 		ft_exit(grp, EXIT_FAILURE);
 	}
+	//tcsetpgrp (STDIN_FILENO, grp->father);
 	waitpid(grp->father, &ret, 0);
 	grp->program_pid = getpid();
+	//tcsetpgrp (STDIN_FILENO, grp->program_pid);
 	error_process_check(ret);
 	grp->exit = (ret > 0 ? 1 : 0);
 	check_lastcmd(grp, tmp);

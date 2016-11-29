@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 23:24:04 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/29 05:18:37 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/30 00:07:08 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,23 @@ int		builtin_fg(t_group *grp, int idx)
 		error_cmd("could not found jobs", ft_itoa(idx), 1);
 		return (1);
 	}
+	// if (curr->code == SIGTSTP)
+	// {
+	// 	tcsetattr (STDIN_FILENO, 0, &curr->tmodes);
+	// 	if (kill (- curr->pid, SIGCONT) < 0)
+	// 		perror ("kill (SIGCONT)");
+	// }
 	tcsetpgrp (STDIN_FILENO, curr->pid);
-	// if (cont)
-	//   {
-	//     tcsetattr (shell_terminal, TCSADRAIN, &j->tmodes);
-	//     if (kill (- j->pgid, SIGCONT) < 0)
-	//       perror ("kill (SIGCONT)");
-	//   }
+	// pid_t pid;
+	// pid = fork();
+	// if (pid == 0)
+	// {
+	// 	tcsetpgrp (STDIN_FILENO, curr->pid);
+	// 	ft_exit(grp, 0);
+	// }
 	waitpid(curr->pid, &ret, 0);
+	//tcgetattr (STDIN_FILENO, &curr->tmodes);
+	//tcsetpgrp(STDIN_FILENO, grp->program_pid);
 	if (ret > 0)
 		change_state(curr, ret);
 	return (1);

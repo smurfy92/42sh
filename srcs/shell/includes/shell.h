@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:43:06 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/29 02:36:37 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/29 23:57:34 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void					prompt();
 int						ft_getchar(int c);
 int						init_shell(void);
 int						reset_shell(void);
+void					init_shell_job(int pgid, int fg);
 t_group					*set_grp(t_group *grp);
 t_group					*get_grp(void);
 

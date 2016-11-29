@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 23:24:26 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/29 05:16:48 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/29 23:50:23 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,23 @@ int	builtin_jobs(t_group *grp)
 {
 	t_jobs	*tmp;
 
-	jobs_status(grp); // ce jobs_status doit changer les params pour l'affichage (jobs_states)
+	jobs_states(grp);
 	tmp = grp->jobs;
 	while (tmp)
 	{
 		if (tmp->pid > 0)
-			printf("[%d] %d %s\n", tmp->idx, tmp->pid, tmp->cmd);
+		{
+			ft_putchar('[');
+			ft_putnbr(tmp->idx);
+			ft_putstr("] ");
+			ft_putnbr(tmp->pid);
+			ft_putchar(' ');
+			ft_putstr(tmp->status);
+			ft_putchar(' ');
+			ft_putendl(tmp->cmd);
+		}
 		tmp = tmp->next;
 	}
-	//jobs_status(grp); // ce jobs_status doit clear les jobs done or else ! (jobs_update)
+	jobs_update(grp);
 	return (1);
 }
