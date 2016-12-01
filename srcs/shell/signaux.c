@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 03:04:04 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/29 21:22:44 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/01 01:49:43 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,9 @@ void	handler_ctrl_c(int sig)
 {
 	t_group	*grp;
 
+	if (sig)
+		;
 	grp = get_grp();
-	printf("ctrl_c\n");
-	if (sig && getpid() != grp->program_pid)
-		return ;
 	if (grp->comp)
 		comp_free(grp, &grp->comp);
 	ft_go_end(grp);
@@ -62,12 +61,10 @@ void	handler_ttinout(int sig)
 	t_group	*grp;
 
 	grp = get_grp();
-	printf("curr_pid: %d\nsignal: %d\n", getpid(), sig);
+	printf("signal: %d\n", sig);
+	printf("getpid: %d\ncurr_pid: %d\nprog_pid: %d\n", getpid(), grp->curr_pid, grp->program_pid);
 	tcsetpgrp (STDIN_FILENO, grp->program_pid);
-	restore_shell();
-	//reset_shell();
-	//set_for_jobs(STDIN_FILENO);
-	//init_shell();
+	printf("pgrp: %d\n", tcgetpgrp (STDIN_FILENO));
 }
 
 void	sig_handler(void)
@@ -75,7 +72,7 @@ void	sig_handler(void)
 	printf("SIGNAUX\n");
 	signal(SIGINT, handler_ctrl_c);
 	signal(SIGQUIT, handler_ctrl_c);
-	signal(SIGTSTP, handler_ctrl_z);
+	signal(SIGTSTP, SIG_IGN);
 	signal(SIGTTIN, handler_ttinout);
 	signal(SIGTTOU, handler_ttinout);
 	signal(SIGWINCH, handler_win);

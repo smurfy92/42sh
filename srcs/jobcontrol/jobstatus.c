@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 00:13:31 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/29 23:09:06 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/01 02:17:30 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*update_status(int sig)
 
 	status = NULL;
 	sig == SIGINT ? (status = SDUP("INTERRUPT")) : 0;
+	sig == SIGTSTP ? (status = SDUP("SUSPENDED")) : 0;
 	status == NULL ? (status = SDUP("DONE")) : 0;
 	return (status);
 }
@@ -71,7 +72,7 @@ void	jobs_update(t_group *grp)
 		if (jobs->pid > 0)
 		{
 			ret = waitpid(jobs->pid, &code, WNOHANG);
-			if (jobs->terminate > -1)
+			if (jobs->terminate > -1 && jobs->terminate != 18)
 				remove_job(jobs);
 		}
 		jobs = jobs->next;

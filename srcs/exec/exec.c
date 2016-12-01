@@ -6,35 +6,44 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 21:15:46 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/29 23:58:47 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/01 02:17:57 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-void		check_lastcmd(t_group *grp, t_parse *parse)
+void		check_lastcmd(t_group *grp, t_parse *parse, t_jobs *jobs, int fg)
 {
 	t_parse *tmp;
+	int			ret;
 
 	tmp = parse;
 	while (tmp && tmp->next)
 		tmp = tmp->next;
-	if (is_builtins(tmp->cmdsplit) && parse->fd < 0)
+	if (is_builtins(tmp->cmdsplit) && parse->fd < 0 && fg)
+	{
+		waitpid(grp->father, &ret, 0);
 		builtins(grp, tmp);
+	}
+	else if (grp->is_interact == false)
+		waitpid(grp->father, &ret, 0);
+	else if (fg)
+		put_in_fg(grp, jobs);
+	else
+		;// builtin_bg();
 }
 
-void		pipe_exec(t_group *grp, t_parse *parse)
+void		launch_exec(t_group *grp, t_parse *parse, t_jobs *jobs, int fg)
 {
 	t_parse		*tmp;
-	int			ret;
 
 	tmp = parse;
 	grp->father = fork();
 	grp->father < 0 ? ft_exit(grp, 999) : 0;
-	grp->program_pid = grp->father;
 	if (grp->father == 0)
 	{
-		//init_shell_job(0, 1);
+		if (!is_builtins(tmp->cmdsplit))
+			init_shell_job(grp->father, fg);
 		while (tmp)
 		{
 			if (!tmp->fail)
@@ -44,13 +53,12 @@ void		pipe_exec(t_group *grp, t_parse *parse)
 		}
 		ft_exit(grp, EXIT_FAILURE);
 	}
-	//tcsetpgrp (STDIN_FILENO, grp->father);
-	waitpid(grp->father, &ret, 0);
-	grp->program_pid = getpid();
-	//tcsetpgrp (STDIN_FILENO, grp->program_pid);
-	error_process_check(ret);
-	grp->exit = (ret > 0 ? 1 : 0);
-	check_lastcmd(grp, tmp);
+	else if (grp->is_interact)
+	{
+		jobs = create_jobs(grp, parse->cmd, grp->father);
+		setpgid (grp->father, grp->father);
+	}
+	check_lastcmd(grp, tmp, jobs, fg);
 }
 
 void		create_fd(t_parse *parse)
@@ -75,7 +83,7 @@ void		andor_exec(t_group *grp, t_andor *andor)
 	{
 		reset_shell();
 		create_fd(tmp->parselst);
-		tmp->type == 3 ? init_job_control(grp, tmp) : pipe_exec(grp, tmp->parselst);
+		launch_exec(grp, tmp->parselst, NULL, (tmp->type == 3) ? 0 : 1);
 		restore_shell();
 		if ((tmp->type == 1 && grp->exit != 0) ||
 			(tmp->type == 2 && grp->exit == 0))

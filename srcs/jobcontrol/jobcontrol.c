@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 23:18:46 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/30 00:07:34 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/01 02:07:38 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,17 @@ void		fill_jobs(t_jobs *jobs, int idx, int pid, char *cmd)
 	jobs->terminate = -1;
 }
 
-void		display_jobs(int idx, int pid)
+t_jobs		*display_jobs(int idx, int pid)
 {
 	ft_putstr_fd("[", 2);
 	ft_putnbr_fd(idx, 2);
 	ft_putstr_fd("] ", 2);
 	ft_putnbr_fd(pid, 2);
 	ft_putchar('\n');
+	return (NULL);
 }
 
-void		create_jobs(t_group *grp, char *cmd, int pid)
+t_jobs		*create_jobs(t_group *grp, char *cmd, int pid)
 {
 	t_jobs		*tmp;
 	t_jobs		*tmp2;
@@ -54,7 +55,8 @@ void		create_jobs(t_group *grp, char *cmd, int pid)
 			{
 				REMOVE(&tmp->cmd); free(tmp);
 				fill_jobs(tmp2, tmp2->idx, pid, cmd);
-				return (display_jobs(tmp2->idx, pid));
+				display_jobs(tmp2->idx, pid);
+				return (tmp2);
 			}
 			tmp2 = tmp2->next;
 		}
@@ -62,45 +64,5 @@ void		create_jobs(t_group *grp, char *cmd, int pid)
 		tmp2->next->idx = count;
 	}
 	display_jobs(tmp->idx, pid);
-}
-
-void		jobs_exec(t_group *grp, t_andor *andor)
-{
-	t_parse		*tmp;
-	pid_t		pid;
-	int			ret;
-
-	tmp = andor->parselst;
-	pid = fork();
-	pid < 0 ? ft_exit(grp, 999) : 0;
-	if (pid == 0)
-	{
-		while (tmp)
-		{
-			if (!tmp->fail)
-			{
-				if (tmp->next && tmp->fd == -1)
-					ft_fork_pipe(grp, tmp); // <-- stocker la commande dans jobs how ? fd ?
-				else
-				{
-					init_shell_job(0, 0);
-					exec_child(1, grp, tmp);
-				}
-			}
-			tmp = tmp->next;
-		}
-		ft_exit(grp, EXIT_FAILURE);
-	}
-	else
-	{
-		create_jobs(grp, andor->cmd, pid);
-		if (grp->is_interact)
-			setpgid (pid, pid);
-	}
-	waitpid(pid, &ret, WNOHANG);
-}
-
-void	init_job_control(t_group *grp, t_andor *andor)
-{
-    jobs_exec(grp, andor);
+	return(tmp);
 }

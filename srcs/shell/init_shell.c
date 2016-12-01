@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 20:04:13 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/29 23:46:53 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/01 01:21:29 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,12 @@ void		restore_shell()
 
 	printf("RESTORE_SHELL\n");
 	grp = get_grp();
-	//tcsetpgrp (STDIN_FILENO, grp->program_pid);
-	//set_for_jobs(STDIN_FILENO);
 	tcsetattr (STDIN_FILENO, 0, &grp->curr_term);
+}
+
+void	ft_try(int s)
+{
+	printf("HERE%d\n", s);
 }
 
 void		init_shell_job(int pgid, int fg)
@@ -67,14 +70,14 @@ void		init_shell_job(int pgid, int fg)
 	is_interact = isatty (STDIN_FILENO);
 	if (is_interact)
 	{
-		printf("JOBS_manage_shell \n");
+		
 		pid = getpid ();
 		pgid == 0 ? (pgid = pid) : 0;
 		setpgid (pid, pgid);
 		fg ? tcsetpgrp (STDIN_FILENO, pgid) : 0;
 		signal (SIGINT, SIG_DFL);
 		signal (SIGQUIT, SIG_DFL);
-		signal (SIGTSTP, SIG_DFL);
+		signal (SIGTSTP, ft_try);
 		signal (SIGTTIN, SIG_DFL);
 		signal (SIGTTOU, SIG_DFL);
 		signal (SIGCHLD, SIG_DFL);
