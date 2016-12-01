@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 21:15:46 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/01 02:17:57 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/01 05:07:11 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,20 @@
 
 void		check_lastcmd(t_group *grp, t_parse *parse, t_jobs *jobs, int fg)
 {
-	t_parse *tmp;
+	t_parse		*tmp;
 	int			ret;
+	int			is_built;
 
 	tmp = parse;
 	while (tmp && tmp->next)
 		tmp = tmp->next;
-	if (is_builtins(tmp->cmdsplit) && parse->fd < 0 && fg)
+	is_built = is_builtins(tmp->cmdsplit);
+	if ((!is_built || !fg) && grp->is_interact)
+	{
+		jobs = create_jobs(grp, parse->cmd, grp->father);
+		setpgid (grp->father, grp->father);
+	}
+	if (is_built && parse->fd < 0)
 	{
 		waitpid(grp->father, &ret, 0);
 		builtins(grp, tmp);
@@ -29,8 +36,6 @@ void		check_lastcmd(t_group *grp, t_parse *parse, t_jobs *jobs, int fg)
 		waitpid(grp->father, &ret, 0);
 	else if (fg)
 		put_in_fg(grp, jobs);
-	else
-		;// builtin_bg();
 }
 
 void		launch_exec(t_group *grp, t_parse *parse, t_jobs *jobs, int fg)
@@ -53,12 +58,8 @@ void		launch_exec(t_group *grp, t_parse *parse, t_jobs *jobs, int fg)
 		}
 		ft_exit(grp, EXIT_FAILURE);
 	}
-	else if (grp->is_interact)
-	{
-		jobs = create_jobs(grp, parse->cmd, grp->father);
-		setpgid (grp->father, grp->father);
-	}
-	check_lastcmd(grp, tmp, jobs, fg);
+	else
+		check_lastcmd(grp, tmp, jobs, fg);
 }
 
 void		create_fd(t_parse *parse)

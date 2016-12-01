@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 20:04:13 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/01 01:21:29 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/01 05:07:01 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ int			set_for_jobs(int terminal)
 {
 	pid_t 		shell_pgid;
 
-		printf("SET_FOR_JOBS\n");
+	//printf("SET_FOR_JOBS\n");
 
 	/* Loop until we are in the foreground.  */
-	while (tcgetpgrp (terminal) != (shell_pgid = getpgrp ()))
+	while (tcgetpgrp(terminal) != (shell_pgid = getpgrp ()))
 	{
 		printf("terminal %d shell_pgid stopped: %d\n", terminal, shell_pgid);
-		kill (shell_pgid, SIGTTIN);
+		kill (-shell_pgid, SIGTTIN);
 	}
 	/* Ignore interactive and job-control signals.  */
 	sig_handler();
@@ -41,7 +41,7 @@ int			set_for_jobs(int terminal)
 int			reset_shell(void)
 {
 	t_group	*grp;
-	printf("RESET_SHELL\n");
+	//printf("RESET_SHELL\n");
 	grp = get_grp();
 	if (tcsetattr(0, 0, &(grp->cpy_term)) == -1)
 		return (-1);
@@ -52,7 +52,7 @@ void		restore_shell()
 {
 	t_group	*grp;
 
-	printf("RESTORE_SHELL\n");
+	//printf("RESTORE_SHELL\n");
 	grp = get_grp();
 	tcsetattr (STDIN_FILENO, 0, &grp->curr_term);
 }
@@ -77,7 +77,7 @@ void		init_shell_job(int pgid, int fg)
 		fg ? tcsetpgrp (STDIN_FILENO, pgid) : 0;
 		signal (SIGINT, SIG_DFL);
 		signal (SIGQUIT, SIG_DFL);
-		signal (SIGTSTP, ft_try);
+		signal (SIGTSTP, SIG_DFL);
 		signal (SIGTTIN, SIG_DFL);
 		signal (SIGTTOU, SIG_DFL);
 		signal (SIGCHLD, SIG_DFL);
@@ -89,7 +89,7 @@ int			init_shell(void)
 	t_group		*grp;
 	char		*name;
 
-	printf("INITSHELL\n");
+	//printf("INITSHELL\n");
 
 	grp = get_grp();
 	if ((name = getenv("TERM")) == NULL)

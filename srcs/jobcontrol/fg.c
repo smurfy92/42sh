@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 23:24:04 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/01 02:18:21 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/01 05:24:45 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,20 @@ void	put_in_fg(t_group *grp, t_jobs *curr)
 {
 	int		ret;
 
+	if (curr == NULL)
+		return ;
 	tcsetpgrp (STDIN_FILENO, curr->pid);
-	// if (curr->code == SIGTSTP)
-	// {
-	// 	tcsetattr (STDIN_FILENO, 0, &curr->tmodes);
-	// 	if (kill (- curr->pid, SIGCONT) < 0)
-	// 		perror ("kill (SIGCONT)");
-	// }
+	if (curr->terminate == SIGTSTP)
+	{
+		//tcsetattr (STDIN_FILENO, 0, &curr->tmodes);
+		if (kill (-curr->pid, SIGCONT) < 0)
+			perror ("kill (SIGCONT)");
+	}
 	waitpid(curr->pid, &ret, WUNTRACED);
-	//printf("ST: %d\nSRET: %d\nWRET: %d\n", WIFSIGNALED(ret), WEXITSTATUS(ret), WSTOPSIG(ret));
 	tcsetpgrp(STDIN_FILENO, grp->program_pid);
-	tcgetattr(STDIN_FILENO, &curr->tmodes);
+	//tcgetattr(STDIN_FILENO, &curr->tmodes);
 	error_process_check(ret);
-	change_state(curr, WEXITSTATUS(ret));
+	change_state(curr, WEXITSTATUS(ret) ? WEXITSTATUS(ret) : ret);
 	grp->exit = (ret > 0 ? 1 : 0);
 }
 

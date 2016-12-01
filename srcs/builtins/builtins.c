@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:50:41 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/26 01:21:23 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/01 05:26:42 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	builtin_next(t_group *grp, t_parse *parse, char **cmd)
 	else if (ft_strcmp(cmd[0], "fg") == 0)
 		ret = builtin_fg(grp, (cmd[1] != NULL ? ft_atoi(cmd[1]) : 0));
 	else if (ft_strcmp(cmd[0], "bg") == 0)
-		ret = builtin_bg();
+		ret = builtin_bg(grp, (cmd[1] != NULL ? ft_atoi(cmd[1]) : 0));
 	return (ret);
 }
 

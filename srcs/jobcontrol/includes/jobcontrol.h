@@ -31,7 +31,7 @@ void		init_job_control(t_group *grp, t_andor *andor);
 t_jobs		*create_jobs(t_group *grp, char *cmd, int pid);
 int			builtin_jobs(t_group *grp);
 int			builtin_fg(t_group *grp, int idx);
-int			builtin_bg(void);
+int			builtin_bg(t_group *grp, int idx);
 void		jobs_update(t_group *grp);
 void		jobs_states(t_group *grp);
 void		change_state(t_jobs *jobs, int code);
