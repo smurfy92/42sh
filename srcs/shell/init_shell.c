@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 20:04:13 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/01 05:07:01 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/02 05:23:11 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,8 @@ void		init_shell_job(int pgid, int fg)
 
 	is_interact = isatty (STDIN_FILENO);
 	if (is_interact)
-	{
-		
-		pid = getpid ();
+	{		
+		pid = getpid();
 		pgid == 0 ? (pgid = pid) : 0;
 		setpgid (pid, pgid);
 		fg ? tcsetpgrp (STDIN_FILENO, pgid) : 0;

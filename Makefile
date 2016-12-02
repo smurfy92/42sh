@@ -14,11 +14,9 @@ SRC	+= srcs/exec/execlib.c
 SRC	+= srcs/exec/execve.c
 
 #jobcontrol
-SRC	+= srcs/jobcontrol/jobcontrol.c
+SRC	+= srcs/jobcontrol/jobsbuiltins.c
+SRC	+= srcs/jobcontrol/jobscreate.c
 SRC	+= srcs/jobcontrol/jobstatus.c
-SRC	+= srcs/jobcontrol/bg.c
-SRC	+= srcs/jobcontrol/fg.c
-SRC	+= srcs/jobcontrol/jobs.c
 
 #hash
 SRC += srcs/hash/hash_use.c

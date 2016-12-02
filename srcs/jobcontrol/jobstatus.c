@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 00:13:31 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/01 05:25:23 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/02 05:08:11 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ char	*update_status(int sig)
 	status = NULL;
 	sig == SIGINT ? (status = SDUP("INTERRUPT")) : 0;
 	sig == SIGTSTP ? (status = SDUP("SUSPENDED")) : 0;
-	status == NULL ? (status = SDUP("DONE")) : 0;
+	sig == SIGSEGV ? (status = SDUP("SEGFAULT")) : 0;
+	status == NULL ? (status = SDUP("DONE")) : ft_putchar_fd('\n', 2);
 	return (status);
 }
 
@@ -29,6 +30,14 @@ void	change_state(t_jobs *jobs, int code)
 	jobs->terminate = code;
 	jobs->status = update_status(code);
 	jobs->is_last = true;
+	if (code > 0)
+	{
+		display_jobs(jobs->idx, jobs->pid, 0);
+		ft_putchar_fd(' ', 2);
+		ft_putstr_fd(jobs->status, 2);
+		ft_putchar_fd(' ', 2);
+		ft_putendl_fd(jobs->cmd, 2);
+	}
 }
 
 void	jobs_states(t_group *grp)

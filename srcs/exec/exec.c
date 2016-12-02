@@ -6,19 +6,21 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 21:15:46 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/01 05:07:11 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/02 05:08:38 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-void		check_lastcmd(t_group *grp, t_parse *parse, t_jobs *jobs, int fg)
+void		check_lastcmd(t_group *grp, t_parse *parse, int fg)
 {
 	t_parse		*tmp;
+	t_jobs		*jobs;
 	int			ret;
 	int			is_built;
 
 	tmp = parse;
+	jobs = NULL;
 	while (tmp && tmp->next)
 		tmp = tmp->next;
 	is_built = is_builtins(tmp->cmdsplit);
@@ -36,9 +38,19 @@ void		check_lastcmd(t_group *grp, t_parse *parse, t_jobs *jobs, int fg)
 		waitpid(grp->father, &ret, 0);
 	else if (fg)
 		put_in_fg(grp, jobs);
+	// else
+	// {
+	// 	// int ret;
+	// 	// int code;
+	// 	// sleep(1);
+	// 	// ret = waitpid(jobs->pid, &code, 0);
+	// 	// printf("ret %d code%d\n", ret, WEXITSTATUS(code));
+	// 	// 	// if (ret == jobs->pid)
+	// 	// 	// 	change_state(jobs, code);
+	// }
 }
 
-void		launch_exec(t_group *grp, t_parse *parse, t_jobs *jobs, int fg)
+void		launch_exec(t_group *grp, t_parse *parse, int fg)
 {
 	t_parse		*tmp;
 
@@ -59,7 +71,7 @@ void		launch_exec(t_group *grp, t_parse *parse, t_jobs *jobs, int fg)
 		ft_exit(grp, EXIT_FAILURE);
 	}
 	else
-		check_lastcmd(grp, tmp, jobs, fg);
+		check_lastcmd(grp, tmp, fg);
 }
 
 void		create_fd(t_parse *parse)
@@ -84,7 +96,7 @@ void		andor_exec(t_group *grp, t_andor *andor)
 	{
 		reset_shell();
 		create_fd(tmp->parselst);
-		launch_exec(grp, tmp->parselst, NULL, (tmp->type == 3) ? 0 : 1);
+		launch_exec(grp, tmp->parselst, (tmp->type == 3) ? 0 : 1);
 		restore_shell();
 		if ((tmp->type == 1 && grp->exit != 0) ||
 			(tmp->type == 2 && grp->exit == 0))
