@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 20:40:36 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/03 04:13:34 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/03 04:53:23 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	put_in_fg(t_group *grp, t_jobs *curr)
 	if (grp && curr == NULL)
 		return ;
 	tcsetpgrp (STDIN_FILENO, curr->pid);
-	ft_sigcont(curr);
+	ft_sigcont(curr) ? change_state(curr, CLD_CONTINUED) : 0;
+	sleep(1);
 	waitpid(curr->pid, &ret, 0);
 	tcsetpgrp(STDIN_FILENO, grp->program_pid);
 }
@@ -51,17 +52,10 @@ int		builtin_fg(t_group *grp, int idx)
 int	builtin_bg(t_group *grp, int idx)
 {
 	t_jobs *curr;
-	// int	ret;
-	// int	code;
 
 	curr = get_jobs_idx(grp, idx);
 	if (curr)
-	{
 		ft_sigcont(curr);
-		// ret = waitpid(curr->pid, &code, WNOHANG | WCONTINUED);
-		// if (ret > -1 && WIFCONTINUED(code))
-		// 	change_state(curr, CLD_CONTINUED);
-	}
 	return (1);
 }
 

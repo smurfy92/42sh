@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 03:04:04 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/03 04:21:04 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/03 04:50:12 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	handler_ttinout(int sig)
 	grp = get_grp();
 	if (sig)
 		;
-	//printf("signal: %d\n", sig);
 	tcsetpgrp (STDIN_FILENO, grp->program_pid);
 }
 
@@ -65,14 +64,12 @@ void	ft_sigchild(int sig, siginfo_t *info, void *context)
 
 	if (sig && context)
 		;
-	// printf("siginfo: %d\npid: %d\nuid: %d\nsignal: %d\ncode: %d\nstatus: %d\n",
-	// sig, info->si_pid, info->si_uid, info->si_signo, info->si_code, info->si_status);
 	waitpid(info->si_pid, &ret, WNOHANG);
 	grp = get_grp();
 	code = info->si_code;
 	jobs = get_jobs_pid(grp, info->si_pid);
 	change_state(jobs, code);
-	grp->exit = (code > 0 ? 1 : 0);
+	grp->exit = (ret > 0 ? 1 : 0);
 }
 
 void	sig_handler(void)

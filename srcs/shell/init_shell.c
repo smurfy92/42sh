@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 20:04:13 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/03 04:11:22 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/03 04:36:50 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,18 @@ int			set_for_jobs(int terminal)
 {
 	pid_t 		shell_pgid;
 
-	//printf("SET_FOR_JOBS\n");
-
-	/* Loop until we are in the foreground.  */
 	while (tcgetpgrp(terminal) != (shell_pgid = getpgrp ()))
 	{
 		printf("terminal %d shell_pgid stopped: %d\n", terminal, shell_pgid);
 		kill (-shell_pgid, SIGTTIN);
 	}
-	/* Ignore interactive and job-control signals.  */
 	sig_handler();
-	/* Put ourselves in our own process group.  */
-	shell_pgid = getpid ();
+	shell_pgid = getpid();
 	if (setpgid (shell_pgid, shell_pgid) < 0)
 	{
 		perror ("Couldn't put the shell in its own process group");
 		exit (1);
 	}
-	/* Grab control of the terminal.  */
 	tcsetpgrp (terminal, shell_pgid);
 	return (0);
 }

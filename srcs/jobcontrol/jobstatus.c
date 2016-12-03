@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 00:13:31 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/03 04:20:25 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/03 04:50:15 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*update_status(int sig)
 	sig == CLD_DUMPED ? (status = SDUP("DUMPED")) : 0;
 	sig == CLD_KILLED ? (status = SDUP("INTERRUPT")) : 0;
 	sig == CLD_EXITED ? (status = SDUP("EXITED")) : 0;
-	status == NULL ? (status = SDUP("UNKNOWN STATUS TERMINATE")) : 0;
+	status == NULL ? (status = SDUP("UNKNOWN STATUS: TERMINATED")) : 0;
 	return (status);
 }
 
