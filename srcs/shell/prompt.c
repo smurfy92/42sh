@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 20:25:26 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/29 21:15:00 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/03 04:11:59 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void			prompt(void)
 
 	grp = get_grp();
 	grp->prompt_size = 0;
+	jobs_is_continued(grp);
 	if (grp->quit == false)
 	{
 		if (!grp->exit)

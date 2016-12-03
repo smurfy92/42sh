@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 20:04:13 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/02 05:23:11 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/03 04:11:22 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,6 @@ void		restore_shell()
 	tcsetattr (STDIN_FILENO, 0, &grp->curr_term);
 }
 
-void	ft_try(int s)
-{
-	printf("HERE%d\n", s);
-}
-
 void		init_shell_job(int pgid, int fg)
 {
 	int	pid;
@@ -77,6 +72,7 @@ void		init_shell_job(int pgid, int fg)
 		signal (SIGINT, SIG_DFL);
 		signal (SIGQUIT, SIG_DFL);
 		signal (SIGTSTP, SIG_DFL);
+		signal (SIGCONT, SIG_DFL);
 		signal (SIGTTIN, SIG_DFL);
 		signal (SIGTTOU, SIG_DFL);
 		signal (SIGCHLD, SIG_DFL);
@@ -98,7 +94,10 @@ int			init_shell(void)
 	if (getenv("TERM") == NULL)
 		ft_strdel(&name);
 	if (tcgetattr(STDIN_FILENO, &grp->curr_term) == -1)
+	{
+		printf("HERE\n");
 		return ((grp->quit = true));
+	}
 	grp->cpy_term = grp->curr_term;
 	grp->curr_term.c_lflag = grp->curr_term.c_lflag & (~ICANON & ~ECHO);
 	grp->curr_term.c_cc[VMIN] = 1;

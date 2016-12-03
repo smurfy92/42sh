@@ -6,42 +6,40 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 20:40:36 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/02 05:08:16 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/03 04:13:34 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-void	ft_sigcont(t_jobs *curr)
+int		ft_sigcont(t_jobs *curr)
 {
-	if (curr->terminate == SIGTSTP)
+	if (curr->terminate == CLD_STOPPED)
 	{
 		if (kill (-curr->pid, SIGCONT) < 0)
 			perror ("kill (SIGCONT)");
+		return (1);
 	}
+	return (0);
 }
 
 void	put_in_fg(t_group *grp, t_jobs *curr)
 {
 	int		ret;
-	int		code;
 
-	if (curr == NULL)
+	if (grp && curr == NULL)
 		return ;
 	tcsetpgrp (STDIN_FILENO, curr->pid);
 	ft_sigcont(curr);
-	waitpid(curr->pid, &ret, WUNTRACED);
+	waitpid(curr->pid, &ret, 0);
 	tcsetpgrp(STDIN_FILENO, grp->program_pid);
-	code = WEXITSTATUS(ret) ? WEXITSTATUS(ret) : ret;
-	change_state(curr, code);
-	grp->exit = (code > 0 ? 1 : 0);
 }
 
 int		builtin_fg(t_group *grp, int idx)
 {
 	t_jobs	*curr;
 
-	curr = get_jobs(grp, idx);
+	curr = get_jobs_idx(grp, idx);
 	if (curr != NULL)
 	{
 		setpgid (grp->father, curr->pid);
@@ -53,10 +51,17 @@ int		builtin_fg(t_group *grp, int idx)
 int	builtin_bg(t_group *grp, int idx)
 {
 	t_jobs *curr;
+	// int	ret;
+	// int	code;
 
-	curr = get_jobs(grp, idx);
+	curr = get_jobs_idx(grp, idx);
 	if (curr)
+	{
 		ft_sigcont(curr);
+		// ret = waitpid(curr->pid, &code, WNOHANG | WCONTINUED);
+		// if (ret > -1 && WIFCONTINUED(code))
+		// 	change_state(curr, CLD_CONTINUED);
+	}
 	return (1);
 }
 
@@ -64,7 +69,6 @@ int	builtin_jobs(t_group *grp)
 {
 	t_jobs	*tmp;
 
-	jobs_states(grp);
 	tmp = grp->jobs;
 	while (tmp)
 	{

@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 21:15:46 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/02 05:08:38 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/03 04:09:57 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,6 @@ void		check_lastcmd(t_group *grp, t_parse *parse, int fg)
 		waitpid(grp->father, &ret, 0);
 	else if (fg)
 		put_in_fg(grp, jobs);
-	// else
-	// {
-	// 	// int ret;
-	// 	// int code;
-	// 	// sleep(1);
-	// 	// ret = waitpid(jobs->pid, &code, 0);
-	// 	// printf("ret %d code%d\n", ret, WEXITSTATUS(code));
-	// 	// 	// if (ret == jobs->pid)
-	// 	// 	// 	change_state(jobs, code);
-	// }
 }
 
 void		launch_exec(t_group *grp, t_parse *parse, int fg)

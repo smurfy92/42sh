@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 20:37:49 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/02 05:08:30 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/03 04:09:59 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_jobs		*create_jobs(t_group *grp, char *cmd, int pid)
 	return(tmp);
 }
 
-t_jobs		*get_jobs(t_group *grp, int idx)
+t_jobs		*get_jobs_idx(t_group *grp, int idx)
 {
 	t_jobs	*jobs;
 	t_jobs	*curr;
@@ -88,5 +88,26 @@ t_jobs		*get_jobs(t_group *grp, int idx)
 		error_cmd("could not found jobs", ft_itoa(idx), 1);
 		return (NULL);
 	}
+	return (curr);
+}
+
+t_jobs		*get_jobs_pid(t_group *grp, int pid)
+{
+	t_jobs	*jobs;
+	t_jobs	*curr;
+
+	curr = NULL;
+	jobs = grp->jobs;
+	while (jobs)
+	{
+		if (jobs->pid == pid)
+		{
+			curr = jobs;
+			break;
+		}
+		jobs = jobs->next;
+	}
+	if (curr == NULL || curr->pid < 0)
+		return (NULL);
 	return (curr);
 }

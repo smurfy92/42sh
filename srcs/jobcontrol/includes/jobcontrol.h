@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 23:25:11 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/02 02:43:38 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/03 04:10:23 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ typedef struct s_jobs
 */
 
 t_jobs		*create_jobs(t_group *grp, char *cmd, int pid);
-t_jobs		*get_jobs(t_group *grp, int idx);
+t_jobs		*get_jobs_idx(t_group *grp, int val);
+t_jobs		*get_jobs_pid(t_group *grp, int pid);
 t_jobs		*display_jobs(int idx, int pid, int n);
 
 /*
@@ -48,7 +49,7 @@ void		put_in_fg(t_group *grp, t_jobs *curr);
 */
 
 void		jobs_update(t_group *grp);
-void		jobs_states(t_group *grp);
+void		jobs_is_continued(t_group *grp);
 void		change_state(t_jobs *jobs, int code);
 
 #endif

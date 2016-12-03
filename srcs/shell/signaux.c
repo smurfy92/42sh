@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 03:04:04 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/02 05:34:37 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/03 04:21:04 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,6 @@ void	handler_ctrl_c(int sig)
 	ioctl(0, TIOCSTI, "\n");
 }
 
-void	handler_ctrl_z(int signum)
-{
-	char	order[2];
-
-	if (signum)
-		;
-	order[0] = 3;
-	order[1] = 0;
-	ioctl(0, TIOCSTI, order);
-}
-
 void	handler_ttinout(int sig)
 {
 	t_group	*grp;
@@ -63,25 +52,41 @@ void	handler_ttinout(int sig)
 	grp = get_grp();
 	if (sig)
 		;
+	//printf("signal: %d\n", sig);
 	tcsetpgrp (STDIN_FILENO, grp->program_pid);
 }
 
-void	ft_sigchild(int sig)
+void	ft_sigchild(int sig, siginfo_t *info, void *context)
 {
-	//pid_t pid;
-	//if (sig)
+	t_group	*grp;
+	t_jobs	*jobs;
+	int		code;
+	int		ret;
+
+	if (sig && context)
 		;
-	//printf("\nHERE %d\n", getpid());
+	// printf("siginfo: %d\npid: %d\nuid: %d\nsignal: %d\ncode: %d\nstatus: %d\n",
+	// sig, info->si_pid, info->si_uid, info->si_signo, info->si_code, info->si_status);
+	waitpid(info->si_pid, &ret, WNOHANG);
+	grp = get_grp();
+	code = info->si_code;
+	jobs = get_jobs_pid(grp, info->si_pid);
+	change_state(jobs, code);
+	grp->exit = (code > 0 ? 1 : 0);
 }
 
 void	sig_handler(void)
 {
-	printf("SIGNAUX\n");
+	struct sigaction sigact;
+ 
+	memset (&sigact, '\0', sizeof(sigact));
+	sigact.sa_sigaction = &ft_sigchild;
+ 	sigact.sa_flags = SA_SIGINFO;
+ 	sigaction(SIGCHLD, &sigact, NULL);
 	signal(SIGINT, handler_ctrl_c);
 	signal(SIGQUIT, handler_ctrl_c);
-	signal(SIGTSTP, SIG_IGN);
+	signal(SIGTSTP, handler_ttinout);
 	signal(SIGTTIN, handler_ttinout);
 	signal(SIGTTOU, handler_ttinout);
 	signal(SIGWINCH, handler_win);
-	signal(SIGCHLD, ft_sigchild);
 }

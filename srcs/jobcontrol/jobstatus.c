@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 00:13:31 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/02 05:08:11 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/03 04:20:25 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,20 @@ char	*update_status(int sig)
 	char	*status;
 
 	status = NULL;
-	sig == SIGINT ? (status = SDUP("INTERRUPT")) : 0;
-	sig == SIGTSTP ? (status = SDUP("SUSPENDED")) : 0;
-	sig == SIGSEGV ? (status = SDUP("SEGFAULT")) : 0;
-	status == NULL ? (status = SDUP("DONE")) : ft_putchar_fd('\n', 2);
+	sig == CLD_CONTINUED ? (status = SDUP("CONTINUED")) : 0;
+	sig == CLD_STOPPED ? (status = SDUP("SUSPENDED")) : 0;
+	sig == CLD_TRAPPED ? (status = SDUP("TRAPPED")) : 0;
+	sig == CLD_DUMPED ? (status = SDUP("DUMPED")) : 0;
+	sig == CLD_KILLED ? (status = SDUP("INTERRUPT")) : 0;
+	sig == CLD_EXITED ? (status = SDUP("EXITED")) : 0;
+	status == NULL ? (status = SDUP("UNKNOWN STATUS TERMINATE")) : 0;
 	return (status);
 }
 
 void	change_state(t_jobs *jobs, int code)
 {
+	if (jobs == NULL)
+		return ;
 	REMOVE(&jobs->status);
 	jobs->terminate = code;
 	jobs->status = update_status(code);
@@ -40,7 +45,7 @@ void	change_state(t_jobs *jobs, int code)
 	}
 }
 
-void	jobs_states(t_group *grp)
+void	jobs_is_continued(t_group *grp)
 {
 	t_jobs		*jobs;
 	int			ret;
@@ -49,11 +54,12 @@ void	jobs_states(t_group *grp)
 	jobs = grp->jobs;
 	while (jobs)
 	{
-		if (jobs->pid > 0)
+		code = 0;
+		if (jobs->pid > 0 && jobs->terminate == CLD_STOPPED)
 		{	
-			ret = waitpid(jobs->pid, &code, WNOHANG);
-			if (ret == jobs->pid)
-				change_state(jobs, code);
+			ret = waitpid(jobs->pid, &code, WNOHANG | WCONTINUED);
+			if (ret > -1 && WIFCONTINUED(code))
+				change_state(jobs, CLD_CONTINUED);
 		}
 		jobs = jobs->next;
 	}
@@ -72,16 +78,14 @@ void	remove_job(t_jobs *jobs)
 void	jobs_update(t_group *grp)
 {
 	t_jobs		*jobs;
-	int			ret;
-	int			code;
 
 	jobs = grp->jobs;
 	while (jobs)
 	{
 		if (jobs->pid > 0)
 		{
-			ret = waitpid(jobs->pid, &code, WNOHANG);
-			if (jobs->terminate > -1 && jobs->terminate != 18)
+			if (jobs->terminate > -1 && jobs->terminate != CLD_STOPPED
+				&& jobs->terminate != CLD_CONTINUED)
 				remove_job(jobs);
 		}
 		jobs = jobs->next;
