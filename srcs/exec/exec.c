@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 21:15:46 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/03 04:43:11 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/03 06:26:05 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void		check_lastcmd(t_group *grp, t_parse *parse, int fg)
 	else if (fg)
 		put_in_fg(grp, jobs);
 	else
-		sleep(1);
+		sleep(1); // attention sleep dangereux sur certains cas
 }
 
 void		launch_exec(t_group *grp, t_parse *parse, int fg)
