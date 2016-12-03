@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 20:40:36 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/03 06:26:13 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/03 06:40:01 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	put_in_fg(t_group *grp, t_jobs *curr)
 		return ;
 	tcsetpgrp (STDIN_FILENO, curr->pid);
 	ft_sigcont(curr) ? change_state(curr, CLD_CONTINUED) : 0;
-	//sleep(1);
 	waitpid(curr->pid, &ret, 0);
 	tcsetpgrp(STDIN_FILENO, grp->program_pid);
 }
