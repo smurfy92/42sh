@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 00:13:31 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/03 06:20:06 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/05 05:24:46 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,13 @@ void	change_state(t_jobs *jobs, int code)
 	jobs->status = update_status(code);
 	jobs->is_last = true;
 	if (code > 0)
-	{
-		display_jobs(jobs->idx, jobs->pid, 0);
-		ft_putchar_fd(' ', 2);
-		ft_putstr_fd(jobs->status, 2);
-		ft_putchar_fd(' ', 2);
-		ft_putendl_fd(jobs->cmd, 2);
-	}
+		display_jobs(jobs, 1);
 }
 
-void	jobs_is_continued(t_group *grp)
+void	jobs_status(t_group *grp)
 {
 	t_jobs		*jobs;
+	//t_jobs		*pipe;
 	int			ret;
 	int			code;
 
@@ -55,11 +50,27 @@ void	jobs_is_continued(t_group *grp)
 	while (jobs)
 	{
 		code = 0;
-		if (jobs->pid > 0 && jobs->terminate == CLD_STOPPED)
+		if (jobs->pid > 0 &&
+			(jobs->terminate == CLD_STOPPED))
 		{	
 			ret = waitpid(jobs->pid, &code, WNOHANG | WCONTINUED);
-			if (ret > -1 && WIFCONTINUED(code))
-				change_state(jobs, CLD_CONTINUED);
+			// if (ret > -1 && WIFCONTINUED(code))
+			// 	change_state(jobs, CLD_CONTINUED);
+			// pipe = jobs->next_pipe;
+			// while (pipe)
+			// {
+			// 	ret = waitpid(pipe->pid, &code, WNOHANG | WUNTRACED | WCONTINUED);
+			// 	printf("%d\n", code);
+			// 	if (ret > -1 && WIFCONTINUED(code))
+			// 		change_state(pipe, CLD_CONTINUED);
+			// 	else if (ret > -1 && WIFSTOPPED(code))
+			// 		change_state(pipe, CLD_STOPPED);
+			// 	else if (ret > -1 && WIFEXITED(code))
+			// 		change_state(pipe, CLD_EXITED);
+			// 	else if (ret == 2)
+			// 		change_state(pipe, CLD_KILLED);
+			// 	pipe = pipe->next_pipe;
+			// }
 		}
 		jobs = jobs->next;
 	}

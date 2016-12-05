@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:07:29 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/29 23:08:09 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/04 22:12:11 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef struct			s_group
 	pid_t					program_pid;
 	pid_t					curr_pid;
 	int						is_interact;
+	int						pipefd_in;
 	struct s_history		*history;
 	int						inhistory;
 	int						prompt_size;

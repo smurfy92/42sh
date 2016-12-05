@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 23:25:11 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/03 04:10:23 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/05 03:33:11 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct s_jobs
 	char			*cmd;
 	char			*status;
 	struct termios	tmodes;
+	struct s_jobs	*next_pipe;
 	struct s_jobs	*next;
 }				t_jobs;
 
@@ -30,10 +31,12 @@ typedef struct s_jobs
 **	jobscreate.c
 */
 
-t_jobs		*create_jobs(t_group *grp, char *cmd, int pid);
+t_jobs		*control_jobs(t_jobs **parent, t_group *grp, t_parse *parse);
+t_jobs		*create_jobs(t_group *grp, t_jobs *new, char *cmd, int pid);
+t_jobs		*create_pipe_jobs(t_jobs *new, t_jobs *jobs, char *cmd, int pid);
 t_jobs		*get_jobs_idx(t_group *grp, int val);
 t_jobs		*get_jobs_pid(t_group *grp, int pid);
-t_jobs		*display_jobs(int idx, int pid, int n);
+void		display_jobs(t_jobs *jobs, int n);
 
 /*
 **	jobsbuiltins.c
@@ -49,7 +52,7 @@ void		put_in_fg(t_group *grp, t_jobs *curr);
 */
 
 void		jobs_update(t_group *grp);
-void		jobs_is_continued(t_group *grp);
+void		jobs_status(t_group *grp);
 void		change_state(t_jobs *jobs, int code);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 23:37:23 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/01 05:07:25 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/05 03:16:19 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void		exec_child(int jobs, t_group *grp, t_parse *parse)
 	char	*path;
 	char	**env;
 
+	dup2(grp->pipefd_in, STDIN_FILENO);
 	if (parse->file && (fd = open(parse->file, O_RDONLY)))
 		dup2(fd, STDIN_FILENO);
 	if (parse->fd > 0)
@@ -99,27 +100,39 @@ void		ft_fork_exec(t_group *grp, t_parse *parse)
 	ft_exit(grp, grp->exit);
 }
 
-void		ft_fork_pipe(t_group *grp, t_parse *parse)
+void		ft_fork_pipe(t_group *grp, t_parse *parse, int pipefd_out)
 {
-	int		tabl[2];
-	pid_t	pid;
 	int		fd;
 
-	pipe(tabl);
-	pid = fork();
-	pid < 0 ? ft_exit(grp, 999) : 0;
-	if (pid == 0)
-	{
-		if (parse->file && (fd = open(parse->file, O_RDONLY)))
-			dup2(fd, STDIN_FILENO);
-		if (parse->fd > 0)
-			dup2(tabl[1], parse->fd);
-		else
-			dup2(tabl[1], STDOUT_FILENO);
-		ft_dup_redirection(parse);
-		close(tabl[0]);
-		ft_fork_exec(grp, parse);
-	}
-	dup2(tabl[0], STDIN_FILENO);
-	close(tabl[1]);
+	dup2(grp->pipefd_in, STDIN_FILENO);
+	if (parse->file && (fd = open(parse->file, O_RDONLY)))
+		dup2(fd, STDIN_FILENO);
+	dup2(pipefd_out, STDOUT_FILENO);
+	ft_dup_redirection(parse);
+	ft_fork_exec(grp, parse);
 }
+
+// void		ft_fork_pipe(t_group *grp, t_parse *parse)
+// {
+// 	int		tabl[2];
+// 	pid_t	pid;
+// 	int		fd;
+
+// 	pipe(tabl);
+// 	pid = fork();
+// 	pid < 0 ? ft_exit(grp, 999) : 0;
+// 	if (pid == 0)
+// 	{
+// 		if (parse->file && (fd = open(parse->file, O_RDONLY)))
+// 			dup2(fd, STDIN_FILENO);
+// 		if (parse->fd > 0)
+// 			dup2(tabl[1], parse->fd);
+// 		else
+// 			dup2(tabl[1], STDOUT_FILENO); // etrange n'est censer jamais sexecuter 
+// 		ft_dup_redirection(parse);
+// 		close(tabl[0]);
+// 		ft_fork_exec(grp, parse);
+// 	}
+// 	dup2(tabl[0], STDIN_FILENO);
+// 	close(tabl[1]);
+// }

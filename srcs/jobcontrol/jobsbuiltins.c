@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 20:40:36 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/03 06:40:01 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/05 05:24:47 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,20 +61,21 @@ int	builtin_bg(t_group *grp, int idx)
 int	builtin_jobs(t_group *grp)
 {
 	t_jobs	*tmp;
+	t_jobs	*pipe;
 
 	tmp = grp->jobs;
+	//rajouter une options pour supprimer ou pas les EXITED par dflt suppr 
 	while (tmp)
 	{
 		if (tmp->pid > 0)
 		{
-			ft_putchar('[');
-			ft_putnbr(tmp->idx);
-			ft_putstr("] ");
-			ft_putnbr(tmp->pid);
-			ft_putchar(' ');
-			ft_putstr(tmp->status);
-			ft_putchar(' ');
-			ft_putendl(tmp->cmd);
+			display_jobs(tmp, 1);
+			pipe = tmp->next_pipe;
+			while(pipe)
+			{
+				display_jobs(pipe, 1);
+				pipe = pipe->next_pipe;
+			}
 		}
 		tmp = tmp->next;
 	}
