@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/23 22:56:18 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/23 22:56:48 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/12/05 13:10:23 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		ft_get_last_eol(t_group *grp)
 
 	i = TERM(curs_pos);
 	y = 0;
-	while (TERM(cmd_line)[--i] && TERM(cmd_line)[i] != '\n')
+	while (--i >= 0 && TERM(cmd_line)[i] && TERM(cmd_line)[i] != '\n')
 		y++;
 	return (y);
 }

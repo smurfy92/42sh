@@ -110,7 +110,7 @@ INC += -I srcs/jobcontrol/includes/
 INC += -I ./includes/
 
 OBJ = $(SRC:.c=.o)
-FLAG = -Wall -Werror -Wextra
+FLAG = -Wall -Werror -Wextra -fsanitize=address
 CG = \033[92m
 CY =  \033[93m
 CE = \033[0m
