@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/29 18:49:38 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/23 19:21:16 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/12/07 22:48:01 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void		ft_history_next(t_group *grp)
 		return ;
 	if (TERM(cmd_line))
 		remove_line(grp);
-	//sleep(1);
 	if (grp->history->next)
 	{
 		grp->history = grp->history->next;
