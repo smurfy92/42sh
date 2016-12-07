@@ -6,16 +6,11 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/08 18:39:35 by victordanain      #+#    #+#             */
-/*   Updated: 2016/11/24 21:03:55 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/07 22:46:01 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
-
-void		help_shlvl(t_group *grp)
-{
-	insert_env(grp, "SHLVL=1");
-}
 
 void		shlvl(t_group *grp)
 {
@@ -57,11 +52,9 @@ void		path_help(t_group *grp)
 	i = -1;
 	while ((ret = read(fd, line, 4096)))
 	{
-		line[ret] = '\0';
+		line[ret - 1] = '\0';
 		while (line[++i])
 		{
-			if (line[i] == '\n' && line[i + 1] == '\0')
-				line[i] = '\0';
 			if (line[i] == '\n')
 				line[i] = ':';
 		}
@@ -80,7 +73,6 @@ void		under_helper(t_group *grp)
 
 	ft_bzero(buff, 1025);
 	getcwd(buff, 1024);
-
 	if (buff[LEN(buff) - 1] != '/')
 		ft_strcat(buff, "/");
 	path = ft_strjoin(buff, grp->program_name);

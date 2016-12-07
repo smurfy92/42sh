@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 16:51:54 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/24 20:14:56 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/07 22:45:40 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	init_env(t_group *grp, char **env)
 	i = -1;
 	while (env && env[++i])
 		insert_env(grp, env[i]);
-	ft_getenv(grp, "SHLVL") == NULL ? help_shlvl(grp) : shlvl(grp);
+	ft_getenv(grp, "SHLVL") == NULL ? insert_env(grp, "SHLVL=1") : shlvl(grp);
 	if (ft_getenv(grp, "HOME") == NULL)
 		home_helper(grp);
 	if (ft_getenv(grp, "PATH") == NULL)
