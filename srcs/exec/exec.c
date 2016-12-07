@@ -6,94 +6,11 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 21:15:46 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/05 05:41:03 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/07 04:52:57 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fortytwo.h"
-
-// void		check_lastcmd(t_group *grp, t_parse *parse, int fg)
-// {
-// 	t_parse		*tmp;
-// 	t_jobs		*jobs;
-// 	int			ret;
-// 	int			is_built;
-
-// 	tmp = parse;
-// 	jobs = NULL;
-// 	while (tmp && tmp->next)
-// 		tmp = tmp->next;
-// 	is_built = is_builtins(tmp->cmdsplit);
-// 	if ((!is_built || !fg) && grp->is_interact) // 1ere cond a suppr
-// 	{
-// 		jobs = control_jobs(grp, parse, grp->father);
-// 		setpgid (grp->father, grp->father);
-// 	}
-// 	if (is_built && parse->fd < 0)
-// 	{
-// 		waitpid(grp->father, &ret, 0);
-// 		builtins(grp, tmp);
-// 	}
-// 	else if (grp->is_interact == false)
-// 		waitpid(grp->father, &ret, 0);
-// 	else if (fg)
-// 		put_in_fg(grp, jobs);
-// 	else
-// 		sleep(1);
-// }
-
-// void		launch_exec(t_group *grp, t_parse *parse, int fg)
-// {
-// 	t_parse		*tmp;
-
-// 	tmp = parse;
-// 	grp->father = fork();
-// 	grp->father < 0 ? ft_exit(grp, 999) : 0;
-// 	if (grp->father == 0)
-// 	{
-// 		if (!is_builtins(tmp->cmdsplit))
-// 			init_shell_job(grp->father, fg);
-// 		while (tmp)
-// 		{
-// 			if (!tmp->fail)
-// 				(tmp->next && tmp->fd == -1) ? ft_fork_pipe(grp, tmp) :
-// 					exec_child(0, grp, tmp);
-// 			tmp = tmp->next;
-// 		}
-// 		ft_exit(grp, EXIT_FAILURE);
-// 	}
-// 	else
-// 		check_lastcmd(grp, parse, fg);
-// }		
-
-void		wait_jobs(t_jobs *parent)
-{
-	int		code;
-	int		ret;
-	t_jobs	*pipe;
-
-	//printf("IN\n");
-	while (42)
-	{
-		pipe = parent->next_pipe;
-		ret = waitpid(parent->pid, &code, WNOHANG | WUNTRACED);
-		if (ret && pipe == NULL)
-		{
-			printf("OUTPARENT\n");
-			return ;
-		}
-		while (pipe)
-		{
-			ret = waitpid(pipe->pid, &code, WNOHANG | WUNTRACED);
-			if (ret && pipe->next_pipe == NULL)
-			{
-				printf("OUTPIPE\n");
-				return ;
-			}
-			pipe = pipe->next_pipe;
-		}
-	}
-}
+#include "fortytwo.h"	
 
 void		launch_exec(t_group *grp, t_parse *parse, int fg)
 {
@@ -110,36 +27,47 @@ void		launch_exec(t_group *grp, t_parse *parse, int fg)
 	while (tmp)
 	{
 		is_built = is_builtins(tmp->cmdsplit);
-		if ((!is_built || tmp->next || tmp->fd > -1) && !tmp->fail)
+		if (!tmp->fail &&(!is_built || tmp->next || tmp->fd > -1))
 		{
 			pipe(tabl);
 			grp->father = fork();
 			grp->father < 0 ? ft_exit(grp, 999) : 0;
 			if (grp->father == 0)
 			{
-				init_shell_job(grp->father, fg);
+				init_shell_job(parent ? parent->pid : 0, fg);
 				if (tmp->next && tmp->fd == -1)
+				{
+					close(tabl[0]);
 					ft_fork_pipe(grp, tmp, tabl[1]);
+				}
 				else
-					exec_child(0, grp, tmp);
-				close(tabl[0]);
+				{
+					close(tabl[0]);
+					close(tabl[1]);
+					exec_child(grp, tmp);
+				}
 			}
-			close(tabl[1]);
-			grp->pipefd_in = tabl[0];
-			jobs = control_jobs(&parent, grp, tmp);
-			setpgid (parent->pid, grp->father); // reflchir a tout stocker dans
+			else
+			{
+				close(tabl[1]);
+				grp->pipefd_in = tabl[0]; // pour les pipe verifier si tabl[0] toujours actif sinon broken pipe ! same for tabl[1]
+				jobs = control_jobs(&parent, grp, tmp);
+				setpgid (jobs->pid, parent->pid);
+			}
 		}
 		else if (is_built && tmp->fd < 0)
 			builtins(grp, tmp);
+		if (tmp->fd > -1)
+			break ;
 		tmp = tmp->next;
 	}
 	parent ? display_jobs(parent, 1) : 0;
-	if (fg && is_built == false)
-	{
-		tcsetpgrp(STDIN_FILENO, jobs->pid);
-		wait_jobs(parent);
-		tcsetpgrp(STDIN_FILENO, grp->program_pid);
-	}
+	if (grp->is_interact == false)
+		waitpid(grp->father, NULL, 0);
+	else if (fg && is_built == false)
+		put_in_fg(grp, parent);
+	else
+		usleep(500);
 }
 
 void		create_fd(t_parse *parse)

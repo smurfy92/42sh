@@ -6,11 +6,28 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 00:13:31 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/05 05:24:46 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/07 04:54:16 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
+
+void		display_jobs(t_jobs *jobs, int n)
+{
+	if (jobs == NULL)
+		return ;
+	!jobs->idx ? ft_putstr_fd("  ", 2) : 0;
+	ft_putstr_fd("[", 2);
+	!jobs->idx ? ft_putchar_fd('p', 2) : ft_putnbr_fd(jobs->idx, 2);
+	ft_putstr_fd("] ", 2);
+	ft_putnbr_fd(jobs->pid, 2);
+	ft_putchar_fd(' ', 2);
+	ft_putstr_fd(jobs->status, 2);
+	ft_putchar_fd(' ', 2);
+	ft_putstr_fd(jobs->cmd, 2);
+	if (n)
+		ft_putchar_fd('\n', 2);
+}
 
 char	*update_status(int sig)
 {
@@ -35,71 +52,61 @@ void	change_state(t_jobs *jobs, int code)
 	jobs->terminate = code;
 	jobs->status = update_status(code);
 	jobs->is_last = true;
+	jobs->enable = (code == 1 || code == 2) ? false : true;
 	if (code > 0)
 		display_jobs(jobs, 1);
+}
+
+void	analyse_ret(t_jobs *jobs, int ret, int code)
+{
+	if (jobs->terminate == -1 || jobs->enable == true)
+	{	
+		if (ret == jobs->pid && WIFCONTINUED(code))
+			change_state(jobs, CLD_CONTINUED);
+		else if (ret == jobs->pid && WIFSTOPPED(code))
+			change_state(jobs, CLD_STOPPED);
+		else if (ret == jobs->pid && WIFEXITED(code))
+			change_state(jobs, CLD_EXITED);
+		else if (ret == jobs->pid)
+			change_state(jobs, CLD_KILLED);
+		else if (ret == -1 && jobs->terminate == -1)
+			change_state(jobs, 0);
+	}
+}
+
+void	check_jobs_status(t_jobs *jobs)
+{
+	t_jobs		*prev;
+	t_jobs		*pipe;
+	int			ret;
+	int			code;
+
+	if (jobs && jobs->pid > 0)
+	{
+		ret = waitpid(jobs->pid, &code, WNOHANG | WUNTRACED | WCONTINUED);
+		analyse_ret(jobs, ret, code);
+		prev = jobs;
+		pipe = jobs->next_pipe;
+		while (pipe)
+		{
+			if (prev->enable == false)
+				setpgid(pipe->pid, 0);
+			ret = waitpid(pipe->pid, &code, WNOHANG | WUNTRACED | WCONTINUED);
+			analyse_ret(pipe, ret, code);
+			prev = pipe;
+			pipe = pipe->next_pipe;
+		}
+	}
 }
 
 void	jobs_status(t_group *grp)
 {
 	t_jobs		*jobs;
-	//t_jobs		*pipe;
-	int			ret;
-	int			code;
 
 	jobs = grp->jobs;
 	while (jobs)
 	{
-		code = 0;
-		if (jobs->pid > 0 &&
-			(jobs->terminate == CLD_STOPPED))
-		{	
-			ret = waitpid(jobs->pid, &code, WNOHANG | WCONTINUED);
-			// if (ret > -1 && WIFCONTINUED(code))
-			// 	change_state(jobs, CLD_CONTINUED);
-			// pipe = jobs->next_pipe;
-			// while (pipe)
-			// {
-			// 	ret = waitpid(pipe->pid, &code, WNOHANG | WUNTRACED | WCONTINUED);
-			// 	printf("%d\n", code);
-			// 	if (ret > -1 && WIFCONTINUED(code))
-			// 		change_state(pipe, CLD_CONTINUED);
-			// 	else if (ret > -1 && WIFSTOPPED(code))
-			// 		change_state(pipe, CLD_STOPPED);
-			// 	else if (ret > -1 && WIFEXITED(code))
-			// 		change_state(pipe, CLD_EXITED);
-			// 	else if (ret == 2)
-			// 		change_state(pipe, CLD_KILLED);
-			// 	pipe = pipe->next_pipe;
-			// }
-		}
+		check_jobs_status(jobs);
 		jobs = jobs->next;
 	}
-}
-
-void	remove_job(t_jobs *jobs)
-{
-	REMOVE(&jobs->cmd);
-	REMOVE(&jobs->status);
-	jobs->pid = -1;
-	jobs->terminate = -1;
-	jobs->is_last = false;
-	jobs->is_prelast = false;
-}
-
-void	jobs_update(t_group *grp)
-{
-	t_jobs		*jobs;
-
-	jobs = grp->jobs;
-	while (jobs)
-	{
-		if (jobs->pid > 0)
-		{
-			if (jobs->terminate > -1 && jobs->terminate != CLD_STOPPED
-				&& jobs->terminate != CLD_CONTINUED)
-				remove_job(jobs);
-		}
-		jobs = jobs->next;
-	}
-	// update les + - nil
 }

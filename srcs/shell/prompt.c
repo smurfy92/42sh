@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 20:25:26 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/12/05 04:24:11 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/07 03:48:26 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void			prompt(void)
 	grp->prompt_size = 0;
 	if (grp->quit == false)
 	{
-		//jobs_status(grp);
+		jobs_status(grp); // not necessary but protection 
 		if (!grp->exit)
 			ft_putstr_fd("\033[92m", 2);
 		else

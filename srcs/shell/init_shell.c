@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 20:04:13 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/05 04:44:37 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/07 04:53:37 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ int			set_for_jobs(int terminal)
 {
 	pid_t 		shell_pgid;
 
+	printf("terminal %d shell_pgid stopped: %d\n", tcgetpgrp(terminal), getpgrp ());
 	while (tcgetpgrp(terminal) != (shell_pgid = getpgrp ()))
 	{
-		printf("terminal %d shell_pgid stopped: %d\n", terminal, shell_pgid);
 		kill (-shell_pgid, SIGTTIN);
 	}
 	sig_handler();

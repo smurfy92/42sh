@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 03:04:04 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/05 05:31:49 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/07 04:46:35 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,12 @@ void	ft_sigchild(int sig, siginfo_t *info, void *context)
 {
 	t_group	*grp;
 	t_jobs	*jobs;
-	int		code;
-	int		ret;
 
+	grp = get_grp();
 	if (sig && context)
 		;
-	//printf("\nsigchild %d\n\n", info->si_pid);
-	waitpid(info->si_pid, &ret, WNOHANG);
-	grp = get_grp();
-	code = info->si_code;
 	jobs = get_jobs_pid(grp, info->si_pid);
-	change_state(jobs, code);
-	//grp->exit = (ret > 0 ? 1 : 0);
+	check_jobs_status(jobs);
 }
 
 void	sig_handler(void)
@@ -79,12 +73,12 @@ void	sig_handler(void)
  
 	memset (&sigact, '\0', sizeof(sigact));
 	sigact.sa_sigaction = &ft_sigchild;
- 	sigact.sa_flags = SA_SIGINFO;
+ 	sigact.sa_flags = SA_SIGINFO ;
  	sigaction(SIGCHLD, &sigact, NULL);
 	signal(SIGINT, handler_ctrl_c);
 	signal(SIGQUIT, handler_ctrl_c);
-	signal(SIGTSTP, handler_ttinout);
-	signal(SIGTTIN, handler_ttinout);
-	signal(SIGTTOU, handler_ttinout);
+	signal(SIGTSTP, SIG_IGN);
+	signal(SIGTTIN, SIG_IGN);
+	signal(SIGTTOU, SIG_IGN);
 	signal(SIGWINCH, handler_win);
 }

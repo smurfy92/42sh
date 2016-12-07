@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:17:06 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/12/05 01:04:00 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/06 05:05:14 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ t_group		*set_grp(t_group *grp)
 	grp->program_pid = -1;
 	grp->jobs = NULL;
 	grp->pipefd_in = STDIN_FILENO;
+	grp->waitstatus = 1;
 	ft_get_history(grp);
 	init_term(grp);
 	grp->root = NULL;

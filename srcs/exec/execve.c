@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 23:37:23 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/05 03:16:19 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/07 04:40:17 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void		exec_bquotes(t_group *grp, t_parse *parse)
 	grp->program_pid = getpid();
 }
 
-void		exec_child(int jobs, t_group *grp, t_parse *parse)
+void		exec_child(t_group *grp, t_parse *parse)
 {
 	int		fd;
 	int		ret;
@@ -64,7 +64,7 @@ void		exec_child(int jobs, t_group *grp, t_parse *parse)
 		dup2(fd, STDIN_FILENO);
 	if (parse->fd > 0)
 		dup2(parse->fd, STDOUT_FILENO);
-	ft_dup_redirection(parse);
+	//ft_dup_redirection(parse);
 	ret = is_builtins(parse->cmdsplit);
 	path = get_path(parse->cmdsplit[0], grp->root);
 	if (ret == 0 && check_cmd(&path, parse->cmdsplit[0]) == 0 && path)
@@ -75,9 +75,9 @@ void		exec_child(int jobs, t_group *grp, t_parse *parse)
 	}
 	else if (ret == 0)
 		ft_exit(grp, EXIT_FAILURE);
-	else if (ret == 1 && (parse->fd >= 0 || jobs))
+	else if (ret == 1)
 		builtins(grp, parse);
-	ft_exit(grp, 0);
+	ft_exit(grp, grp->exit);
 }
 
 void		ft_fork_exec(t_group *grp, t_parse *parse)
@@ -108,31 +108,6 @@ void		ft_fork_pipe(t_group *grp, t_parse *parse, int pipefd_out)
 	if (parse->file && (fd = open(parse->file, O_RDONLY)))
 		dup2(fd, STDIN_FILENO);
 	dup2(pipefd_out, STDOUT_FILENO);
-	ft_dup_redirection(parse);
+	//ft_dup_redirection(parse);
 	ft_fork_exec(grp, parse);
 }
-
-// void		ft_fork_pipe(t_group *grp, t_parse *parse)
-// {
-// 	int		tabl[2];
-// 	pid_t	pid;
-// 	int		fd;
-
-// 	pipe(tabl);
-// 	pid = fork();
-// 	pid < 0 ? ft_exit(grp, 999) : 0;
-// 	if (pid == 0)
-// 	{
-// 		if (parse->file && (fd = open(parse->file, O_RDONLY)))
-// 			dup2(fd, STDIN_FILENO);
-// 		if (parse->fd > 0)
-// 			dup2(tabl[1], parse->fd);
-// 		else
-// 			dup2(tabl[1], STDOUT_FILENO); // etrange n'est censer jamais sexecuter 
-// 		ft_dup_redirection(parse);
-// 		close(tabl[0]);
-// 		ft_fork_exec(grp, parse);
-// 	}
-// 	dup2(tabl[0], STDIN_FILENO);
-// 	close(tabl[1]);
-// }

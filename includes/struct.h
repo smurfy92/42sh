@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:07:29 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/12/04 22:12:11 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/06 05:05:13 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct			s_group
 	int						prompt_size;
 	int						exit;
 	int						quit;
+	int						waitstatus;
 	int						err_parse;
 	int						hdcount;
 	pid_t					father;

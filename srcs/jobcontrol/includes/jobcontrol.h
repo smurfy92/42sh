@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 23:25:11 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/05 03:33:11 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/07 04:53:07 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ typedef struct s_jobs
 	pid_t			pid;
 	int				idx;
 	int				terminate;
+	int				enable;
 	int				is_last;
 	int				is_prelast;
 	char			*cmd;
 	char			*status;
-	struct termios	tmodes;
 	struct s_jobs	*next_pipe;
 	struct s_jobs	*next;
 }				t_jobs;
@@ -54,5 +54,7 @@ void		put_in_fg(t_group *grp, t_jobs *curr);
 void		jobs_update(t_group *grp);
 void		jobs_status(t_group *grp);
 void		change_state(t_jobs *jobs, int code);
+void		analyse_ret(t_jobs *jobs, int ret, int code);
+void		check_jobs_status(t_jobs *jobs);
 
 #endif

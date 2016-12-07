@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 20:40:36 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/05 05:24:47 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/07 04:53:20 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,23 @@ int		ft_sigcont(t_jobs *curr)
 	return (0);
 }
 
-void	put_in_fg(t_group *grp, t_jobs *curr)
+void	put_in_fg(t_group *grp, t_jobs *parent)
 {
-	int		ret;
-
-	if (grp && curr == NULL)
-		return ;
-	tcsetpgrp (STDIN_FILENO, curr->pid);
-	ft_sigcont(curr) ? change_state(curr, CLD_CONTINUED) : 0;
-	waitpid(curr->pid, &ret, 0);
+	if (grp)
+		;
+	tcsetpgrp(STDIN_FILENO, parent->pid);
+	ft_sigcont(parent) ? change_state(parent, CLD_CONTINUED) : 0;
+	while (42) 
+	{
+		if (parent->terminate > -1 && parent->terminate != CLD_CONTINUED)
+		{
+			// here check the pipe to get back the hand
+			printf("parent_terrminate: %d\n", parent->terminate);
+			break ;
+		}
+	}
 	tcsetpgrp(STDIN_FILENO, grp->program_pid);
+	//grp->exit = (parent->terminate > 1 && parent->terminate != CLD_CONTINUED && parent->terminate != CLD_STOPPED ? 1 : 0);
 }
 
 int		builtin_fg(t_group *grp, int idx)
@@ -41,10 +48,7 @@ int		builtin_fg(t_group *grp, int idx)
 
 	curr = get_jobs_idx(grp, idx);
 	if (curr != NULL)
-	{
-		setpgid (grp->father, curr->pid);
 		put_in_fg(grp, curr);
-	}
 	return (1);
 }
 
@@ -55,30 +59,5 @@ int	builtin_bg(t_group *grp, int idx)
 	curr = get_jobs_idx(grp, idx);
 	if (curr)
 		ft_sigcont(curr);
-	return (1);
-}
-
-int	builtin_jobs(t_group *grp)
-{
-	t_jobs	*tmp;
-	t_jobs	*pipe;
-
-	tmp = grp->jobs;
-	//rajouter une options pour supprimer ou pas les EXITED par dflt suppr 
-	while (tmp)
-	{
-		if (tmp->pid > 0)
-		{
-			display_jobs(tmp, 1);
-			pipe = tmp->next_pipe;
-			while(pipe)
-			{
-				display_jobs(pipe, 1);
-				pipe = pipe->next_pipe;
-			}
-		}
-		tmp = tmp->next;
-	}
-	jobs_update(grp);
 	return (1);
 }
