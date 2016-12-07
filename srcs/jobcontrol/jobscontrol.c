@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 20:37:49 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/07 04:53:34 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/07 05:21:49 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_jobs		*control_jobs(t_jobs **parent, t_group *grp, t_parse *parse)
 	new = (t_jobs *)malloc(sizeof(t_jobs));
 	new->next = NULL;
 	new->next_pipe = NULL;
-	new->enable = true;
+	new->enabled = true;
 	if (*parent == NULL)
 	{
 		jobs = create_jobs(grp, new, parse->cmd, grp->father);

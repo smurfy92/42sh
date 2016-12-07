@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 20:40:36 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/07 04:53:20 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/07 05:26:15 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,9 @@ void	put_in_fg(t_group *grp, t_jobs *parent)
 	ft_sigcont(parent) ? change_state(parent, CLD_CONTINUED) : 0;
 	while (42) 
 	{
-		if (parent->terminate > -1 && parent->terminate != CLD_CONTINUED)
+		if (parent->enabled == false || parent->terminate == CLD_STOPPED)
 		{
-			// here check the pipe to get back the hand
-			printf("parent_terrminate: %d\n", parent->terminate);
+			printf("parent_terminated: %d\n", parent->terminate);
 			break ;
 		}
 	}

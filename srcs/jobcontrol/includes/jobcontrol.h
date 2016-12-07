@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 23:25:11 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/07 04:53:07 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/07 05:21:42 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ typedef struct s_jobs
 	pid_t			pid;
 	int				idx;
 	int				terminate;
-	int				enable;
+	int				enabled;
 	int				is_last;
 	int				is_prelast;
 	char			*cmd;

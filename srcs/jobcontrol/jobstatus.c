@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 00:13:31 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/07 04:54:16 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/07 05:55:19 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ void	change_state(t_jobs *jobs, int code)
 	jobs->terminate = code;
 	jobs->status = update_status(code);
 	jobs->is_last = true;
-	jobs->enable = (code == 1 || code == 2) ? false : true;
+	jobs->enabled = (code == 1 || code == 2) ? false : true;
 	if (code > 0)
 		display_jobs(jobs, 1);
 }
 
 void	analyse_ret(t_jobs *jobs, int ret, int code)
 {
-	if (jobs->terminate == -1 || jobs->enable == true)
+	if (jobs->enabled == true)
 	{	
 		if (ret == jobs->pid && WIFCONTINUED(code))
 			change_state(jobs, CLD_CONTINUED);
@@ -81,7 +81,7 @@ void	check_jobs_status(t_jobs *jobs)
 	int			ret;
 	int			code;
 
-	if (jobs && jobs->pid > 0)
+	if (jobs)
 	{
 		ret = waitpid(jobs->pid, &code, WNOHANG | WUNTRACED | WCONTINUED);
 		analyse_ret(jobs, ret, code);
@@ -89,8 +89,10 @@ void	check_jobs_status(t_jobs *jobs)
 		pipe = jobs->next_pipe;
 		while (pipe)
 		{
-			if (prev->enable == false)
-				setpgid(pipe->pid, 0);
+			if (prev->enabled == false)
+			{
+				setpgid(pipe->pid, getpgid(pipe->pid));
+			}
 			ret = waitpid(pipe->pid, &code, WNOHANG | WUNTRACED | WCONTINUED);
 			analyse_ret(pipe, ret, code);
 			prev = pipe;
