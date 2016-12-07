@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard_tools3.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/13 20:08:18 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/23 19:39:03 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/12/07 22:51:01 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	remove_line(t_group *grp)
 	ft_go_end(grp);
 	while (TERM(curs_pos) > 0)
 		handling_backspace(grp);
-
 }
 
 void	reset_edl(t_group *grp)

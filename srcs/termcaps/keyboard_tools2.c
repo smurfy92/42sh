@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard_tools2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/10 17:06:09 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/23 22:55:07 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/12/07 22:50:16 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ void	ft_left_arrow(t_group *grp)
 {
 	int i;
 
-	if (((((TERM(curs_pos) + START_POS) % TERM(window->width)) == 0) && 
+	if (((((TERM(curs_pos) + START_POS) % TERM(window->width)) == 0) &&
 		!ft_contains(grp, TERM(curs_pos))) ||
-		TERM(cmd_line)[TERM(curs_pos) - 1] == '\n' || 
-		(ft_get_last_eol(grp) % TERM(window->width) == 0 && 
+		TERM(cmd_line)[TERM(curs_pos) - 1] == '\n' ||
+		(ft_get_last_eol(grp) % TERM(window->width) == 0 &&
 		ft_contains(grp, TERM(curs_pos))))
 	{
 		i = 0;
@@ -38,10 +38,10 @@ void	ft_left_arrow(t_group *grp)
 void	ft_right_arrow(t_group *grp)
 {
 	TERM(curs_pos) += 1;
-	if (((((TERM(curs_pos) + START_POS) % TERM(window->width)) == 0) && 
+	if (((((TERM(curs_pos) + START_POS) % TERM(window->width)) == 0) &&
 		!ft_contains(grp, TERM(curs_pos))) ||
-		TERM(cmd_line)[TERM(curs_pos) - 1] == '\n' || 
-		(ft_get_last_eol(grp) % TERM(window->width) == 0 && 
+		TERM(cmd_line)[TERM(curs_pos) - 1] == '\n' ||
+		(ft_get_last_eol(grp) % TERM(window->width) == 0 &&
 		ft_contains(grp, TERM(curs_pos))))
 		tputs(tgetstr("do", NULL), 0, ft_getchar);
 	else

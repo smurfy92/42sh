@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard_lib2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/23 22:56:18 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/12/05 13:10:23 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/12/07 22:52:01 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,17 @@ void	ft_place_to_eof(t_group *grp)
 		i += START_POS;
 	while (--i > 0)
 		tputs(tgetstr("nd", NULL), 0, ft_getchar);
+}
+
+void	ft_puttab(t_group *grp)
+{
+	char *tmp;
+	char *ch;
+
+	ch = ft_strnew(1);
+	ch[0] = '\t';
+	tmp = SDUP(&TERM(cmd_line)[TERM(curs_pos)]);
+	TERM(cmd_line)[TERM(curs_pos)] = '\0';
+	TERM(cmd_line) = JOINF(TERM(cmd_line), ch, 3);
+	TERM(cmd_line) = JOINF(TERM(cmd_line), tmp, 3);
 }

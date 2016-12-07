@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/26 19:19:33 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/12/07 22:51:34 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,6 @@ int			key_selection_next(t_group *grp, char *order, int key)
 	else
 		return (0);
 	return (1);
-}
-
-void		ft_puttab(t_group *grp)
-{
-	char *tmp;
-	char *ch;
-
-	ch = ft_strnew(1);
-	ch[0] = '\t';
-	tmp = SDUP(&TERM(cmd_line)[TERM(curs_pos)]);
-	TERM(cmd_line)[TERM(curs_pos)] = '\0';
-	TERM(cmd_line) = JOINF(TERM(cmd_line), ch, 3);
-	TERM(cmd_line) = JOINF(TERM(cmd_line), tmp, 3);
-
 }
 
 int			key_selection(t_group *grp, char *order)
