@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 23:25:11 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/07 05:21:42 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/08 07:20:24 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ typedef struct s_jobs
 	int				idx;
 	int				terminate;
 	int				enabled;
-	int				is_last;
-	int				is_prelast;
+	int				code;
+	int				fdin;
+	int				fdout;
 	char			*cmd;
 	char			*status;
 	struct s_jobs	*next_pipe;

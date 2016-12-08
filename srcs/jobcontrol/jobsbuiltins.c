@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 20:40:36 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/08 02:28:31 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/08 07:12:09 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ int		ft_sigcont(t_jobs *curr)
 	return (0);
 }
 
-int		check_jobs_enabled(t_jobs *jobs)
+int		check_jobs_enabled(t_group *grp, t_jobs *jobs)
 {
 	t_jobs	*pipe;
+	t_jobs	*last;
 	int stopped;
 	int	count;
 
@@ -34,15 +35,18 @@ int		check_jobs_enabled(t_jobs *jobs)
 	if (jobs->terminate == CLD_EXITED || jobs->terminate == CLD_KILLED || 
 		jobs->terminate == CLD_STOPPED)
 		stopped += 1;
+	last = jobs;
 	pipe = jobs->next_pipe;
 	while (pipe)
 	{
-		if (pipe->terminate == CLD_EXITED || pipe->terminate == CLD_KILLED || 
+		if (pipe->terminate == CLD_EXITED || pipe->terminate == CLD_KILLED ||
 			pipe->terminate == CLD_STOPPED)
 			stopped += 1;
 		count++;
+		last = pipe;
 		pipe = pipe->next_pipe;
 	}
+	grp->exit = (last->code > 0) ? 1 : 0; 
 	return (count == stopped ? false : true);
 }
 
@@ -54,11 +58,11 @@ void	put_in_fg(t_group *grp, t_jobs *parent)
 	ft_sigcont(parent) ? change_state(parent, CLD_CONTINUED) : 0;
 	while (42)
 	{
-		if (check_jobs_enabled(parent) == false)
+		if (check_jobs_enabled(grp, parent) == false)
 			break ;
 	}
 	tcsetpgrp(STDIN_FILENO, grp->program_pid);
-	//grp->exit = (parent->terminate > 1 && parent->terminate != CLD_CONTINUED && parent->terminate != CLD_STOPPED ? 1 : 0);
+	grp->exit = parent->code;
 }
 
 int		builtin_fg(t_group *grp, int idx)

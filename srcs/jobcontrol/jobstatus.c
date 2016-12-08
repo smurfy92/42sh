@@ -6,28 +6,11 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 00:13:31 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/08 02:27:40 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/08 07:20:07 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
-
-void		display_jobs(t_jobs *jobs, int n)
-{
-	if (jobs == NULL)
-		return ;
-	!jobs->idx ? ft_putstr_fd("  ", 2) : 0;
-	ft_putstr_fd("[", 2);
-	!jobs->idx ? ft_putchar_fd('p', 2) : ft_putnbr_fd(jobs->idx, 2);
-	ft_putstr_fd("] ", 2);
-	ft_putnbr_fd(jobs->pid, 2);
-	ft_putchar_fd(' ', 2);
-	ft_putstr_fd(jobs->status, 2);
-	ft_putchar_fd(' ', 2);
-	ft_putstr_fd(jobs->cmd, 2);
-	if (n)
-		ft_putchar_fd('\n', 2);
-}
 
 char	*update_status(int sig)
 {
@@ -51,14 +34,14 @@ void	change_state(t_jobs *jobs, int code)
 	REMOVE(&jobs->status);
 	jobs->terminate = code;
 	jobs->status = update_status(code);
-	jobs->is_last = true;
 	jobs->enabled = (code == 1 || code == 2) ? false : true;
-	if (code > 0)
+	if (code > 1)
 		display_jobs(jobs, 1);
 }
 
 void	analyse_ret(t_jobs *jobs, int ret, int code)
 {
+	jobs->code = code;
 	if (jobs->enabled == true || jobs->terminate == CLD_STOPPED)
 	{	
 		if (ret == jobs->pid && WIFCONTINUED(code))

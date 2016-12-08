@@ -6,6 +6,8 @@ tabulation: c’est obligatoire ca peut nous baiser !
 - bash n'en affiche jamais avec le bouton tab ..
 - utilisation d'une combinaison de touches INEDITE ?
 
+- penser a la protection sur les commandes fausse modifier le strsplitandor pour avoir le \0 creer
+
 ++ Trello: https://trello.com/b/WJXyMpVc/42sh
 
 DOCS:

@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/06 05:55:46 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/08 06:34:10 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,13 @@ int			main(int argc, char **argv, char **env)
 	grp->program_name = SDUP(argv[0]);
 	grp->program_pid = getpid();
 	grp->is_interact = isatty(STDIN_FILENO);
-	printf("id_start: %d\n", getpid());
 	if (grp->is_interact)
 	{
 		set_for_jobs(STDIN_FILENO);
 		init_shell();
 	}
+	else
+		grp->quit = true;
 	init_env(grp, env);
 	while (42)
 		proccess(grp);

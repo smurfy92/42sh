@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/07 00:53:40 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/07 05:21:51 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/08 06:57:17 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	builtin_jobs(t_group *grp)
 	t_jobs	*pipe;
 
 	tmp = grp->jobs;
-	//rajouter une options pour supprimer ou pas les EXITED par dflt suppr 
 	while (tmp)
 	{
 		if (tmp->pid > 0 || tmp->next_pipe)

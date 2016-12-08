@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 21:15:46 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/08 02:31:14 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/08 07:25:16 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void		launch_exec(t_group *grp, t_parse *parse, int fg)
 	while (tmp)
 	{
 		is_built = is_builtins(tmp->cmdsplit);
-		if (!tmp->fail &&(!is_built || tmp->next || tmp->fd > -1))
+		if (!tmp->fail && (!is_built || tmp->next || tmp->fd > -1))
 		{
 			pipe(tabl);
 			grp->father = fork();
@@ -49,25 +49,24 @@ void		launch_exec(t_group *grp, t_parse *parse, int fg)
 			}
 			else
 			{
-				close(tabl[1]);
-				grp->pipefd_in = tabl[0];
 				jobs = control_jobs(&parent, grp, tmp);
 				setpgid (jobs->pid, parent->pid);
+				jobs->fdin = tabl[0];
+				tmp->next ? (grp->pipefd_in = tabl[0]) : close(tabl[0]);
+				close(tabl[1]);
 			}
 		}
 		else if (is_built && tmp->fd < 0)
 			builtins(grp, tmp);
-		if (tmp->fd > -1)
-			break ;
 		tmp = tmp->next;
 	}
-	parent && fg ? display_jobs(parent, 1) : 0;
+	parent && !fg ? display_jobs(parent, 1) : 0;
 	if (grp->is_interact == false)
 		waitpid(grp->father, NULL, 0);
-	else if (fg && is_built == false)
+	else if (fg && parent)
 		put_in_fg(grp, parent);
-	else
-		usleep(500);
+	else if (parent)
+		sleep(1);
 }
 
 void		create_fd(t_parse *parse)
@@ -81,6 +80,7 @@ void		create_fd(t_parse *parse)
 			ft_create_redirections(tmp);
 		tmp = tmp->next;
 	}
+	// ici faire la verif des redirection d'entree '<'
 }
 
 void		andor_exec(t_group *grp, t_andor *andor)
