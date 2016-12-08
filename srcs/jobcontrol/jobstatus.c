@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 00:13:31 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/07 05:55:19 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/08 02:27:40 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	change_state(t_jobs *jobs, int code)
 
 void	analyse_ret(t_jobs *jobs, int ret, int code)
 {
-	if (jobs->enabled == true)
+	if (jobs->enabled == true || jobs->terminate == CLD_STOPPED)
 	{	
 		if (ret == jobs->pid && WIFCONTINUED(code))
 			change_state(jobs, CLD_CONTINUED);
@@ -76,7 +76,6 @@ void	analyse_ret(t_jobs *jobs, int ret, int code)
 
 void	check_jobs_status(t_jobs *jobs)
 {
-	t_jobs		*prev;
 	t_jobs		*pipe;
 	int			ret;
 	int			code;
@@ -85,17 +84,11 @@ void	check_jobs_status(t_jobs *jobs)
 	{
 		ret = waitpid(jobs->pid, &code, WNOHANG | WUNTRACED | WCONTINUED);
 		analyse_ret(jobs, ret, code);
-		prev = jobs;
 		pipe = jobs->next_pipe;
 		while (pipe)
 		{
-			if (prev->enabled == false)
-			{
-				setpgid(pipe->pid, getpgid(pipe->pid));
-			}
 			ret = waitpid(pipe->pid, &code, WNOHANG | WUNTRACED | WCONTINUED);
 			analyse_ret(pipe, ret, code);
-			prev = pipe;
 			pipe = pipe->next_pipe;
 		}
 	}

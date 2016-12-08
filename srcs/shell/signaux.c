@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 03:04:04 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/07 05:21:30 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/08 02:31:09 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,6 @@ void	handler_ctrl_c(int sig)
 	REMOVE(&TERM(cmd_line));
 	grp->prompt_size = 6;
 	ioctl(0, TIOCSTI, "\n");
-}
-
-void	handler_ttinout(int sig)
-{
-	t_group	*grp;
-
-	grp = get_grp();
-	if (sig)
-		;
-	tcsetpgrp (STDIN_FILENO, grp->program_pid);
 }
 
 void	ft_sigchild(int sig, siginfo_t *info, void *context)

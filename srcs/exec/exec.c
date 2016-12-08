@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 21:15:46 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/07 05:22:06 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/08 02:31:14 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void		launch_exec(t_group *grp, t_parse *parse, int fg)
 			else
 			{
 				close(tabl[1]);
-				grp->pipefd_in = tabl[0]; // pour les pipe verifier si tabl[0] toujours actif sinon broken pipe ! same for tabl[1]
+				grp->pipefd_in = tabl[0];
 				jobs = control_jobs(&parent, grp, tmp);
 				setpgid (jobs->pid, parent->pid);
 			}
@@ -61,7 +61,7 @@ void		launch_exec(t_group *grp, t_parse *parse, int fg)
 			break ;
 		tmp = tmp->next;
 	}
-	parent ? display_jobs(parent, 1) : 0;
+	parent && fg ? display_jobs(parent, 1) : 0;
 	if (grp->is_interact == false)
 		waitpid(grp->father, NULL, 0);
 	else if (fg && is_built == false)

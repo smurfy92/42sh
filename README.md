@@ -14,3 +14,4 @@ DOCS:
 - http://www.ibm.com/support/knowledgecenter/SSLTBW_2.1.0/com.ibm.zos.v2r1.bpxbd00/rtsetp.htm
 - http://www.cs.uleth.ca/~holzmann/C/system/pipeforkexec.html
 - http://stackoverflow.com/questions/26430771/linux-change-pgrp-process-group-during-c-program-execution
+- http://stackoverflow.com/questions/6784907/does-linux-allow-process-group-ids-to-be-reassigned-to-processes
