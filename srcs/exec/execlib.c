@@ -58,3 +58,27 @@ void		ft_dup_redirection(t_parse *parse)
 		free(tmp);
 	}
 }
+
+int 		check_redirections_rights(t_andor *andor)
+{
+	t_andor *tmp;
+	t_parse *tmp2;
+
+	tmp = andor;
+	while (tmp)
+	{
+		tmp2 = tmp->parselst;
+		while (tmp2)
+		{
+			if (tmp2->file && check_rights(tmp2, &tmp2->file, 1))
+				return (0);
+			if (tmp2->sgred && check_rights(tmp2, &tmp2->sgred, 0))
+				return (0);
+			if (tmp2->dbred && check_rights(tmp2, &tmp2->dbred, 0))
+				return (0);
+			tmp2 = tmp2->next;
+		}
+		tmp = tmp->next;
+	}
+	return (1);
+}

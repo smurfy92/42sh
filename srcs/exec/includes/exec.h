@@ -19,5 +19,6 @@ void		exec_bquotes(t_group *grp, t_parse *parse);
 void		ft_fork_pipe(t_group *grp, t_parse *parse);
 void		ft_dup_redirection(t_parse *parse);
 int			check_cmd(char **path, char *cmd);
+int 		check_redirections_rights(t_andor *andor);
 
 #endif

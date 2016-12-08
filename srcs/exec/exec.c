@@ -93,6 +93,8 @@ void		init_exec(t_group *grp)
 		grp->exit = 0;
 		while (tmp)
 		{
+			if (!check_redirections_rights(tmp->andor))
+				break;
 			andor_exec(grp, tmp->andor);
 			tmp = tmp->next;
 		}
