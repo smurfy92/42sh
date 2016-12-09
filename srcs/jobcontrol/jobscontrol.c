@@ -6,13 +6,13 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 20:37:49 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/09 02:34:09 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/09 06:36:29 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-t_jobs		*control_jobs(t_jobs **parent, t_group *grp, t_parse *parse)
+t_jobs		*control_jobs(t_jobs **parent, t_group *grp, t_parse *parse, char *andorcmd)
 {
 	static t_jobs	*jobs = NULL;
 	t_jobs			*new;
@@ -24,6 +24,7 @@ t_jobs		*control_jobs(t_jobs **parent, t_group *grp, t_parse *parse)
 	if (*parent == NULL)
 	{
 		jobs = create_jobs(grp, new, parse->cmd, grp->father);
+		jobs->parent_cmd = SDUP(andorcmd);
 		*parent = jobs;
 	}
 	else

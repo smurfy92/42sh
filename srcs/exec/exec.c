@@ -6,13 +6,13 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 21:15:46 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/09 02:30:12 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/09 06:36:09 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-void		launch_exec(t_group *grp, t_parse *parse, int fg)
+void		launch_exec(t_group *grp, t_parse *parse, char *andorcmd, int fg)
 {
 	int		tabl[2];
 	int		is_built;
@@ -49,8 +49,9 @@ void		launch_exec(t_group *grp, t_parse *parse, int fg)
 			}
 			else
 			{
-				jobs = control_jobs(&parent, grp, tmp);
+				jobs = control_jobs(&parent, grp, tmp, andorcmd);
 				jobs->fdin = grp->pipefd_in;
+				jobs->fg = fg;
 				setpgid (jobs->pid, parent->pid);
 				if (tmp->next)
 					grp->pipefd_in = tabl[0];
@@ -69,7 +70,7 @@ void		launch_exec(t_group *grp, t_parse *parse, int fg)
 		}
 		tmp = tmp->next;
 	}
-	parent && !fg ? display_jobs(parent, 1) : 0;
+	parent && !fg ? display_jobs(parent, 1, 1) : 0;
 	if (grp->is_interact == false)
 		waitpid(grp->father, NULL, 0);
 	else if (fg && parent)
@@ -96,7 +97,6 @@ int			create_fd(t_parse *parse)
 		tmp = tmp->next;
 	}
 	return (1);
-	// ici faire la verif des redirection d'entree '<'
 }
 
 void		andor_exec(t_group *grp, t_andor *andor)
@@ -108,7 +108,7 @@ void		andor_exec(t_group *grp, t_andor *andor)
 	{
 		reset_shell();
 		if (create_fd(tmp->parselst))
-			launch_exec(grp, tmp->parselst, (tmp->type == 3) ? 0 : 1);
+			launch_exec(grp, tmp->parselst, tmp->cmd, (tmp->type == 3) ? 0 : 1);
 		restore_shell();
 		if ((tmp->type == 1 && grp->exit != 0) ||
 			(tmp->type == 2 && grp->exit == 0))
