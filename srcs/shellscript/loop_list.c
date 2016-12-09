@@ -12,7 +12,6 @@
 
 #include "fortytwo.h"
 
-
 static int		get_loop_type(char *line, t_loop *new)
 {
 	if (ft_strncmp(line, "while ", 6) == 0)
