@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fortytwo.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:42:31 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/26 19:17:57 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/12/09 05:00:11 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <grp.h>
 # include <termios.h>
 # include <signal.h>
-# include <errno.h>
+//# include <errno.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <sys/ioctl.h>
@@ -41,6 +41,7 @@
 # include "debug.h"
 # include "errors.h"
 # include "jobcontrol.h"
+# include "shell_script.h"
 # include <string.h>
 # define KEY(a, b, c, d) ((d << 24) + (c << 16) + (b << 8) + a)
 # define NEW(x)			(ft_strnew(x))

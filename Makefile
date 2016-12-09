@@ -8,6 +8,28 @@ SRC	+= srcs/shell/init_shell.c
 SRC	+= srcs/shell/signaux.c
 SRC	+= srcs/shell/prompt.c
 
+#shellscript
+SRC	+= srcs/shellscript/init_shellscript.c
+SRC	+= srcs/shellscript/checker.c
+SRC	+= srcs/shellscript/assign.c
+SRC	+= srcs/shellscript/action_list.c
+SRC	+= srcs/shellscript/script_list.c
+SRC	+= srcs/shellscript/debug.c
+SRC	+= srcs/shellscript/action_reader.c
+SRC	+= srcs/shellscript/var_list.c
+SRC	+= srcs/shellscript/assignator.c
+SRC	+= srcs/shellscript/error.c
+SRC	+= srcs/shellscript/var_replacer.c
+SRC	+= srcs/shellscript/condition_make.c
+SRC	+= srcs/shellscript/cond_list.c
+SRC	+= srcs/shellscript/com_list.c
+SRC	+= srcs/shellscript/condition_performer.c
+SRC	+= srcs/shellscript/loop_list.c
+SRC	+= srcs/shellscript/script_free.c
+SRC	+= srcs/shellscript/script_lib.c
+SRC	+= srcs/shellscript/check_lib.c
+SRC	+= srcs/shellscript/script_free2.c
+
 #exec
 SRC	+= srcs/exec/exec.c
 SRC	+= srcs/exec/execlib.c
@@ -107,6 +129,7 @@ INC += -I srcs/free_mem/includes/
 INC += -I srcs/history/includes/
 INC += -I srcs/errors/includes/
 INC += -I srcs/jobcontrol/includes/
+INC += -I srcs/shellscript/includes/
 INC += -I ./includes/
 
 OBJ = $(SRC:.c=.o)
