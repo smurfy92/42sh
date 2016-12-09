@@ -89,8 +89,7 @@ int				check_rights(t_parse *parse, char **file, int i)
 {
 	if (i == 0 && access(*file, F_OK) == 0 && access(*file, W_OK) < 0)
 	{
-		ft_putstr_fd("permission denied: ", 2);
-		ft_putendl_fd(*file, 2);
+		error_cmd("permission denied: ", *file,  1);
 		parse->fail = 1;
 		REMOVE(file);
 		return (1);

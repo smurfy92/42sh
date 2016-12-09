@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fortytwo.h"	
+#include "fortytwo.h"
 
 void		launch_exec(t_group *grp, t_parse *parse, int fg)
 {
@@ -26,7 +26,7 @@ void		launch_exec(t_group *grp, t_parse *parse, int fg)
 	grp->pipefd_in = STDIN_FILENO;
 	while (tmp)
 	{
-		is_built = is_builtins(tmp->cmdsplit);                                    
+		is_built = is_builtins(tmp->cmdsplit);
 		if (!tmp->fail && (!is_built || tmp->next || tmp->fd > -1))
 		{
 			pipe(tabl);
@@ -78,17 +78,24 @@ void		launch_exec(t_group *grp, t_parse *parse, int fg)
 		sleep(1);
 }
 
-void		create_fd(t_parse *parse)
+int			create_fd(t_parse *parse)
 {
 	t_parse		*tmp;
 
 	tmp = parse;
 	while (tmp)
 	{
+		if (tmp->file && check_rights(tmp, &tmp->file, 1))
+			return (0);
+		if (tmp->sgred && check_rights(tmp, &tmp->sgred, 0))
+			return (0);
+		if (tmp->dbred && check_rights(tmp, &tmp->dbred, 0))
+			return (0);
 		if (tmp->sgred || tmp->dbred)
 			ft_create_redirections(tmp);
 		tmp = tmp->next;
 	}
+	return (1);
 	// ici faire la verif des redirection d'entree '<'
 }
 
@@ -100,8 +107,8 @@ void		andor_exec(t_group *grp, t_andor *andor)
 	while (tmp)
 	{
 		reset_shell();
-		create_fd(tmp->parselst);
-		launch_exec(grp, tmp->parselst, (tmp->type == 3) ? 0 : 1);
+		if (create_fd(tmp->parselst))
+			launch_exec(grp, tmp->parselst, (tmp->type == 3) ? 0 : 1);
 		restore_shell();
 		if ((tmp->type == 1 && grp->exit != 0) ||
 			(tmp->type == 2 && grp->exit == 0))
