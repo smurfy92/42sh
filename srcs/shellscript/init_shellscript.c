@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 20:34:46 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 05:31:13 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/09 06:41:21 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int		init_shellscript(int ac, char **av, t_group *grp)
 				line_checker(clean_s, &i, script, &script->begin);
 				if (script->errnb)
 					break ;
-				ft_putendl("");
 				i++;
 			}
 		}
@@ -76,15 +75,33 @@ int		init_shellscript(int ac, char **av, t_group *grp)
 		ft_freestrtab(&clean_s);
 		if (script->errnb)
 			error_handler(script);
-		display_action(script->begin);
-		ft_putendl("starting reading actions");
-		action_reader(script, script->begin);
-		ft_putendl("end of reading");
-		display_vars(script->vars);
+		else
+		{
+			// display_action(script->begin);
+			action_reader(script, script->begin);
+			if (!script->errnb)
+			{
+				ft_pre_parse(grp);
+				if (LEN(TERM(cmd_line)) > 0)
+					ft_add_history(grp, TERM(cmd_line));
+				if (grp->err_parse == false && TERM(cmd_line))
+				{
+					grp->allcmd = ft_strsplitquote(TERM(cmd_line), ';');
+					ft_init_parse(grp);
+					if (grp->err_parse == false)
+						init_exec(grp);
+					remove_hdoc(grp);
+					ft_free_parse(grp);
+					free(grp->allcmd);
+				}
+			}
+			ft_strdel(&TERM(cmd_line));
+		}
+		// ft_putendl("AFTER EXEC");
+		// if (grp->quit == true)
 		free_script(&script);
-		grp->quit = true;
+		ft_exit(grp, grp->exit);
+		grp->hdcount = 0;	
 	}
-	ft_putendl(TERM(cmd_line));
-	ft_putendl("FINISHED");
-	return (0);
-}
+		return (0);
+	}

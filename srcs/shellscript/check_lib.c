@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/08 02:53:38 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 05:10:33 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/09 06:40:48 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ int		update_last_ckecker(char **last, char *to_check)
 
 	if (ft_strncmp(*last, to_check, 2))
 	{
-		ft_putendl(*last);
-		ft_putendl(to_check);
 		return (1);
 	}
 	if ((len = ft_strlen(*last)) > 2)
@@ -62,7 +60,6 @@ int		check_good_closure(char **check, int i)
 	i++;
 	while (check[i])
 	{
-		ft_putendl(check[i]);
 		if (ft_strncmp(check[i], "if", 2) == 0)
 			last = ft_strjoin_nf("fi", last, 2);
 		if (ft_strncmp(check[i], "while", 5) == 0)
@@ -159,8 +156,6 @@ int		main_checker(char **check)
 	while (check[i])
 	{
 		tmp = ft_strtrim(check[i]);
-		ft_putstr("--------------->");
-		ft_putendl(check[i]);
 		if (ft_strncmp(tmp, "if", 2) == 0)
 		{
 			if (ft_strncmp(tmp, "if [ ", 5) || !ft_strchr(tmp, ']') || !ft_strstr(tmp, " ]"))
@@ -210,7 +205,7 @@ int		main_checker(char **check)
 			if (check_comp_line(tmp))
 				return (clean_checker(&tmp, E_INCOMPLETE_COND, i));
 		}
-		else if (ft_strchr(tmp, '=') && is_important_space(tmp))
+		else if (ft_strchr(tmp, '=') && !is_important_space(tmp))
 		{
 			if (!(*(ft_strchr(tmp, '=') + 1) || ft_strchr(ft_strchr(tmp, '=') + 1, '=')))
 				return (clean_checker(&tmp, E_TOO_EQU, i));

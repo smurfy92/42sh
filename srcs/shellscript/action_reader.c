@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/05 01:21:12 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 05:29:23 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/09 06:06:13 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void		assignation_handler(t_assign *assign, t_script *script)
 {
-	ft_putendl(assign->name);
 	add_to_list(script, assign);
 	if (script->errnb)
 		error_handler(script);
@@ -29,10 +28,13 @@ static void		line_handler(t_line *cmd, t_script *script, t_group *grp)
 	char	*line;
 	char	*tmp;
 
+	if (grp)
+		;
 	tmp = ft_strdup(cmd->cmd);
 	var_replacer(script, &tmp);
 	line = ft_strjoin(tmp, "; ");
 	TERM(cmd_line) = ft_strjoin_nf(TERM(cmd_line), line, 1);
+	TERM(cmd_size) = ft_strlen(TERM(cmd_line));
 	// write(script->fd, line, ft_strlen(line));
 	ft_strdel(&line);
 	ft_strdel(&tmp);

@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 23:43:44 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 05:14:09 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/09 06:10:30 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,11 @@ t_var		*new_var(int type, void *data, char *name)
 	new->type = type;
 	if (type == STR_T)
 	{
-		ft_putendl("CREATING A VARIABLE WITH TYPE STR");
 		new->str = ft_strdup((char *)data);
-		ft_putendl(new->str);
 	}
 	else if (type == NUMBER_T)
 	{
-		ft_putendl("CREATING A VARIABLE WITH TYPE INT");
 		new->nb = (int *)data;
-		ft_putnbr(*new->nb);
-		ft_putendl("");
 	}
 	return (new);
 }
