@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/09 02:30:28 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/09 06:11:06 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ int			main(int argc, char **argv, char **env)
 {
 	t_group *grp;
 
-	if (argc || argv)
-		;
 	grp = get_grp();
 	grp->program_name = SDUP(argv[0]);
 	grp->program_pid = getpid();
@@ -59,7 +57,11 @@ int			main(int argc, char **argv, char **env)
 	else
 		grp->quit = true;
 	init_env(grp, env);
+	if (argc >= 2)
+		init_shellscript(argc, argv, grp);
 	while (42)
+	{
 		proccess(grp);
+	}
 	return (0);
 }
