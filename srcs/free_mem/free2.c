@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 14:51:15 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/23 22:31:32 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/09 02:34:24 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,5 @@ void		ft_free_parse(t_group *grp)
 	free_env_tmp(grp);
 	check_parentheses(0);
 	free_allcmd(grp);
+	grp->fail = false;
 }

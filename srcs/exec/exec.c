@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 21:15:46 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/09 01:12:43 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/09 02:30:12 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void		launch_exec(t_group *grp, t_parse *parse, int fg)
 	grp->pipefd_in = STDIN_FILENO;
 	while (tmp)
 	{
-		is_built = is_builtins(tmp->cmdsplit);
+		is_built = is_builtins(tmp->cmdsplit);                                    
 		if (!tmp->fail && (!is_built || tmp->next || tmp->fd > -1))
 		{
 			pipe(tabl);
@@ -127,5 +127,4 @@ void		init_exec(t_group *grp)
 		}
 	}
 	free_allcmd(grp);
-	grp->fail = 0;
 }
