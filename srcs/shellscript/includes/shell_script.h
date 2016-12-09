@@ -6,16 +6,12 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 20:29:28 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 05:19:50 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/09 07:05:10 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHELL_SCRIPT_H
 # define SHELL_SCRIPT_H
-
-# include <fcntl.h>
-# include <unistd.h>
-# include "libft.h"
 
 # define LAST(x) x[ft_strlen(x) - 1]
 
