@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 00:13:31 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/09 06:36:33 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/09 06:54:10 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	change_state(t_jobs *jobs, int code)
 	if (jobs->enabled == false)
 		if (jobs->fdin > 2)
 			close(jobs->fdin);
-	if (code > 1 && jobs->parent_cmd != NULL)
+	if (code > 1 && jobs->parent_cmd != NULL) // check tcsetpgrp to see if display or not
 		display_jobs(jobs, 1, 1);
 }
 
