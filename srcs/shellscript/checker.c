@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/05 01:32:48 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 04:57:46 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/09 05:10:30 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ static int			equal_checker(char *line,
 	t_assign	*new;
 
 	if (ft_strchr(ft_strchr(line, '=') + 1, '='))
-		return ((script->errno = E_TOO_EQU));
+		return ((script->errnb = E_TOO_EQU));
 	instant = ft_strsplit(line, '=');
 	if (!instant[1])
-		return ((script->errno = E_INSTANT));
+		return ((script->errnb = E_INSTANT));
 	new = new_assignation(instant[0], instant[1]);
 	add_to_action(new, script, ASSIGN_T, begin);
 	ft_freestrtab(&instant);
@@ -81,7 +81,7 @@ static int			cond_checker(char **clean, int *i,
 		ft_strdel(&buff);
 		(*i)++;
 	}
-	return ((script->errno = E_INCOMPLETE_COND));
+	return ((script->errnb = E_INCOMPLETE_COND));
 }
 
 static int			loop_checker(char **clean, int *i, t_script *script,
@@ -112,7 +112,7 @@ static int			loop_checker(char **clean, int *i, t_script *script,
 		ft_strdel(&buff);
 		(*i)++;
 	}
-	return ((script->errno = E_INCOMPLETE_COND));
+	return ((script->errnb = E_INCOMPLETE_COND));
 }
 
 /*
@@ -126,16 +126,16 @@ int					line_checker(char **clean, int *i, t_script *script, t_action **begin)
 	line = ft_strtrim(clean[*i]);
 	if (ft_strncmp(line, "if ", 3) == 0)
 	{
-		if (!(script->errno = cond_checker(clean, i, script, &line)))
-			script->errno = condition_maker(line, script, begin);
+		if (!(script->errnb = cond_checker(clean, i, script, &line)))
+			script->errnb = condition_maker(line, script, begin);
 	}
 	else if (ft_strncmp(line, "while ", 6) == 0)
 	{
-		if (!(script->errno = loop_checker(clean, i, script, &line)))
+		if (!(script->errnb = loop_checker(clean, i, script, &line)))
 			add_to_action(new_loop(line, script), script, LOOP_T, begin);
 	}
 	else if (ft_strchr(line, '=') && is_important_space(line))
-		script->errno = equal_checker(line, script, begin);
+		script->errnb = equal_checker(line, script, begin);
 	else
 		cmd_checker(line, script, begin);
 	ft_strdel(&line);

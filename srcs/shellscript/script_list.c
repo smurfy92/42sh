@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   script_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 20:57:34 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 04:58:26 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/09 05:13:59 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_script	*new_script(void)
 	new->begin = NULL;
 	new->rd_fd = 0;
 	new->fd = 0;
-	new->errno = 0;
+	new->errnb = 0;
 	new->vars = NULL;
 	get_script(new);
 	return (new);

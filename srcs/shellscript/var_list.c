@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 23:43:44 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 04:58:29 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/09 05:14:09 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,17 +101,17 @@ void		add_to_list(t_script *script, t_assign *assign)
 	tmp = script->vars;
 	if (ft_strchr(assign->name, ' '))
 	{
-		script->errno = E_INSTANT;
+		script->errnb = E_INSTANT;
 		return ;
 	}
 	if ((new = check_if_var_exists(assign->name, script)))
 	{
 		if (!(value = assignator(assign, &type)))
 		{
-			script->errno = E_INSTANT;
+			script->errnb = E_INSTANT;
 			return ;
 		}
-		if ((script->errno = update_var(new, value, type)))
+		if ((script->errnb = update_var(new, value, type)))
 		{
 			return ;
 		}
@@ -120,7 +120,7 @@ void		add_to_list(t_script *script, t_assign *assign)
 	{
 		if (!(value = assignator(assign, &type)))
 		{
-			script->errno = E_INSTANT;
+			script->errnb = E_INSTANT;
 			return ;
 		}
 		while (tmp && tmp->next)

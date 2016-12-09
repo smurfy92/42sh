@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_script.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 20:29:28 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 05:01:42 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/09 05:19:50 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ typedef struct		s_script
 	int				fd;
 	t_action		*begin;
 	t_var			*vars;
-	int				errno;
+	int				errnb;
 	int				rd_fd;
 	int				idx;
 }					t_script;
@@ -298,6 +298,6 @@ t_assign			*new_assignation(char *name, char *value);
 
 void				var_replacer(t_script *script, char **line);
 
-int					init_shellscript(int ac, char **av);
+int					init_shellscript(int ac, char **av, t_group *grp);
 
 #endif

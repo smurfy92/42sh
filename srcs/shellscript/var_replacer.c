@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_replacer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/28 03:52:23 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 04:58:35 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/09 05:14:18 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	replace_at(char **line, int i, t_script *script)
 	old = ft_strsub(&tmp[i], 0, len);
 	if (!(var = check_if_var_exists(old, script)))
 	{
-		script->errno = E_UNKNOWN_VAR;
+		script->errnb = E_UNKNOWN_VAR;
 		ft_strdel(&old);
 		error_handler(script);
 	}
@@ -82,7 +82,7 @@ void		var_replacer(t_script *script, char **line)
 		}
 		else if ((*line)[i] == '$')
 		{
-			script->errno = E_UNKNOWN_VAR;
+			script->errnb = E_UNKNOWN_VAR;
 			error_handler(script);
 		}
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cond_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/05 01:02:20 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 04:57:53 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/09 05:11:17 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ static int		cond_parser(t_cond *cond, t_script *script)
 	while (full_c[i])
 	{
 		if (i == 0 && ft_strncmp(full_c[i], "fi", 2))
-			script->errno = get_cond(full_c[i], cond, script, NULL);
+			script->errnb = get_cond(full_c[i], cond, script, NULL);
 		else if (i == 1 && ft_strcmp(full_c[i], "then"))
-			script->errno = E_INCOMPLETE_COND;
+			script->errnb = E_INCOMPLETE_COND;
 		else if (i > 1)
 			line_checker(full_c, &i, script, &cond->acts);
 		i++;
@@ -100,7 +100,7 @@ t_cond			*new_cond(char *text, t_script *script, t_cond **begin)
 		new->type = COND_ELIF;
 	else if (ft_strncmp(text, "else", 4) == 0)
 		new->type = COND_ELSE;
-	script->errno = cond_parser(new, script);
+	script->errnb = cond_parser(new, script);
 	while (tmp && tmp->next)
 		tmp = tmp->next;
 	if (tmp)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/05 01:33:45 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 04:58:14 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/09 05:12:31 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ t_loop		*new_loop(char *text, t_script *script)
 	{
 		if (i == 0)
 		{
-			if ((script->errno = get_loop_type(clean[i], new)))
+			if ((script->errnb = get_loop_type(clean[i], new)))
 				error_handler(script);
-			script->errno = get_cond(clean[i], NULL, script, new);
+			script->errnb = get_cond(clean[i], NULL, script, new);
 		}
 		if (i == 1 && ft_strcmp(clean[i], "do"))
 			return (NULL);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   com_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/30 15:15:45 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 04:57:50 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/09 05:11:02 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,9 @@ t_com				*new_comparaison(char *comp, t_script *script)
 	t_com	*new;
 
 	new = (t_com *)malloc(sizeof(t_com));
-	if ((script->errno = get_comp_type(comp, new)))
+	if ((script->errnb = get_comp_type(comp, new)))
 		error_handler(script);
-	if ((script->errno = get_comp_vars(new, comp)))
+	if ((script->errnb = get_comp_vars(new, comp)))
 		error_handler(script);
 	return (new);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shellscript.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 20:34:46 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 05:02:02 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/09 05:31:13 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	add_var_args(char **av, t_script *script)
 	}
 }
 
-int		init_shellscript(int ac, char **av)
+int		init_shellscript(int ac, char **av, t_group *grp)
 {
 	char	*line;
 	char	*buffer;
@@ -45,11 +45,12 @@ int		init_shellscript(int ac, char **av)
 	i = 0;
 	script = new_script();
 	buffer = ft_strdup("");
+	TERM(cmd_line) = ft_strdup("");
 	if (ac >= 2)
 	{
 		if (ac > 2)
 			add_var_args(av, script);
-		if (((script->rd_fd = open(av[1], O_RDONLY)) < 0) && (script->errno = E_WRONG_FILE))
+		if (((script->rd_fd = open(av[1], O_RDONLY)) < 0) && (script->errnb = E_WRONG_FILE))
 			error_handler(script);
 		while (get_next_line(script->rd_fd, &line))
 		{
@@ -65,7 +66,7 @@ int		init_shellscript(int ac, char **av)
 			while (clean_s[i])
 			{
 				line_checker(clean_s, &i, script, &script->begin);
-				if (script->errno)
+				if (script->errnb)
 					break ;
 				ft_putendl("");
 				i++;
@@ -73,7 +74,7 @@ int		init_shellscript(int ac, char **av)
 		}
 		ft_strdel(&buffer);
 		ft_freestrtab(&clean_s);
-		if (script->errno)
+		if (script->errnb)
 			error_handler(script);
 		display_action(script->begin);
 		ft_putendl("starting reading actions");
@@ -81,6 +82,9 @@ int		init_shellscript(int ac, char **av)
 		ft_putendl("end of reading");
 		display_vars(script->vars);
 		free_script(&script);
+		grp->quit = true;
 	}
+	ft_putendl(TERM(cmd_line));
+	ft_putendl("FINISHED");
 	return (0);
 }

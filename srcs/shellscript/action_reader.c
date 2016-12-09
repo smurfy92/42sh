@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   action_reader.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/05 01:21:12 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 04:57:37 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/09 05:29:23 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void		assignation_handler(t_assign *assign, t_script *script)
 {
 	ft_putendl(assign->name);
 	add_to_list(script, assign);
-	if (script->errno)
+	if (script->errnb)
 		error_handler(script);
 }
 
@@ -24,15 +24,16 @@ static void		assignation_handler(t_assign *assign, t_script *script)
 **	classiic line
 */
 
-static void		line_handler(t_line *cmd, t_script *script)
+static void		line_handler(t_line *cmd, t_script *script, t_group *grp)
 {
 	char	*line;
 	char	*tmp;
 
 	tmp = ft_strdup(cmd->cmd);
 	var_replacer(script, &tmp);
-	line = ft_strjoin(tmp, "\n");
-	write(script->fd, line, ft_strlen(line));
+	line = ft_strjoin(tmp, "; ");
+	TERM(cmd_line) = ft_strjoin_nf(TERM(cmd_line), line, 1);
+	// write(script->fd, line, ft_strlen(line));
 	ft_strdel(&line);
 	ft_strdel(&tmp);
 }
@@ -81,7 +82,7 @@ void			action_reader(t_script *script, t_action *begin)
 		if (tmp->type == ASSIGN_T)
 			assignation_handler((t_assign *)tmp->action, script);
 		else if (tmp->type == LINE_T)
-			line_handler(tmp->action, script);
+			line_handler(tmp->action, script, get_grp());
 		else if (tmp->type == COND_T)
 			condition_handler(tmp->action, script);
 		else if (tmp->type == LOOP_T)

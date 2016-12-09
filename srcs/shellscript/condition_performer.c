@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   condition_performer.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/05 01:30:50 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 04:57:59 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/09 05:11:55 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static t_var	*get_comp_var(char *value, int idx)
 	{
 		assign_free((void **)&tp);
 		ft_strdel(&name);
-		get_script(NULL)->errno = E_INCOMPLETE_COND;
+		get_script(NULL)->errnb = E_INCOMPLETE_COND;
 		error_handler(get_script(NULL));
 	}
 	tmp = new_var(type, val, tp->name);
@@ -72,9 +72,9 @@ int				comp_analyzer(t_com *cmp)
 	fst = get_comp_var(cmp->first, 1);
 	scd = get_comp_var(cmp->second, 2);
 	if (fst->type != scd->type)
-		return ((get_script(NULL)->errno = E_INCOMPLETE_COND));
+		return ((get_script(NULL)->errnb = E_INCOMPLETE_COND));
 	else if (cmp->type != EQU_C && fst->type == STR_T)
-		return ((get_script(NULL)->errno = E_INCOMPLETE_COND));
+		return ((get_script(NULL)->errnb = E_INCOMPLETE_COND));
 	ret = get_comp_value(cmp, fst, scd);
 	vars_free(&fst);
 	vars_free(&scd);

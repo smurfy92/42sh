@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   check_lib.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/08 02:53:38 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 04:57:44 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/09 05:10:33 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-int		clean_checker(char **tmp, int errno, int line)
+int		clean_checker(char **tmp, int errnb, int line)
 {
 	if (tmp)
 		ft_strdel(tmp);
-	get_script(NULL)->errno = errno;
-	if (errno && line != -1)
+	get_script(NULL)->errnb = errnb;
+	if (errnb && line != -1)
 	{
 		ft_putstr_fd("Error on line ", 2);
 		ft_putnbr_fd(line + 1, 2);
 		ft_putstr_fd(": ", 2);
 	}
-	return (errno);
+	return (errnb);
 }
 
 int		update_last_ckecker(char **last, char *to_check)

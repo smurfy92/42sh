@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   condition_make.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/04 22:46:53 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 04:57:56 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/09 05:11:33 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static void		handle_end_of_cond(char *line, t_action **begin,
 	t_cond **lead, t_script *script)
 {
 	if (ft_strlen(line) != 2)
-			script->errno = E_INCOMPLETE_COND;
+			script->errnb = E_INCOMPLETE_COND;
 	new_cond(line, script, lead);
 	add_to_action(*lead, script, COND_T, begin);
 }
@@ -111,5 +111,5 @@ int				condition_maker(char *line, t_script *script, t_action **begin)
 			last--;
 	}
 	ft_freestrtab(&clean);
-	return (script->errno);
+	return (script->errnb);
 }
