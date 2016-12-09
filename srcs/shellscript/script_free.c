@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   script_free.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/05 03:57:13 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 04:58:18 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/09 06:09:46 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void		assign_free(void **to_free)
 {
 	t_assign	*tmp;
 
-	ft_putendl("ASSIGN FREEING");
 	tmp = *to_free;
 	ft_strdel(&tmp->name);
 	ft_strdel(&tmp->value);
@@ -28,7 +27,6 @@ void		line_free(void **to_free)
 {
 	t_line	*tmp;
 
-	ft_putendl("LINE FREEING");
 	tmp = *to_free;
 	ft_strdel(&tmp->cmd);
 	free(*to_free);
@@ -39,19 +37,13 @@ void		sc_comp_free(t_com **to_free)
 {
 	t_com	*tmp;
 
-	ft_putendl("COMP FREEING");
 	tmp = *to_free;
 	if (tmp)
 	{
-		ft_putendl("1");
-		ft_putendl(tmp->first);
 		ft_strdel(&tmp->first);
-		ft_putendl("1");
 		ft_strdel(&tmp->second);
-		ft_putendl("1");
 		free(tmp);
 	}
-	ft_putendl("ENDED COMP");
 	*to_free = NULL;
 }
 
@@ -61,7 +53,6 @@ void		condition_free(void **to_free)
 	t_cond	*tp;
 
 	tmp = *to_free;
-	ft_putendl("COND FREEING");
 	while (tmp)
 	{
 		tp = tmp->next;

@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/09 05:33:32 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/09 06:11:06 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int			main(int argc, char **argv, char **env)
 	grp = get_grp();
 	grp->program_name = SDUP(argv[0]);
 	grp->program_pid = getpid();
-	grp->is_interact = (argc > 1) ? 0 : isatty(STDIN_FILENO);
+	grp->is_interact = isatty(STDIN_FILENO);
 	if (grp->is_interact)
 	{
 		set_for_jobs(STDIN_FILENO);
@@ -61,7 +61,6 @@ int			main(int argc, char **argv, char **env)
 		init_shellscript(argc, argv, grp);
 	while (42)
 	{
-		ft_putendl(TERM(cmd_line));
 		proccess(grp);
 	}
 	return (0);

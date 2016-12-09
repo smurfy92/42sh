@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   script_free2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/08 04:45:12 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 04:58:21 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/09 06:45:27 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void		loop_free(void **to_free)
 {
 	t_loop	*tmp;
 
-	ft_putendl("LOOP FREEING");
 	tmp = *to_free;
 	sc_comp_free(&tmp->comp);
 	action_free(&tmp->acts);
@@ -30,7 +29,6 @@ void		action_free(t_action **begin)
 	t_action	*tp;
 
 	tmp = *begin;
-	ft_putendl("ACTION FREEING");
 	while (tmp)
 	{
 		tp = tmp->next;
@@ -52,11 +50,9 @@ void		vars_free(t_var **to_free)
 	t_var	*tmp;
 	t_var	*tp;
 
-	ft_putendl("VAR FREEING");
 	tmp = *to_free;
 	while (tmp)
 	{
-		ft_putendl(tmp->name);
 		tp = tmp->next;
 		if (tmp->str)
 			ft_strdel(&tmp->str);
@@ -66,7 +62,6 @@ void		vars_free(t_var **to_free)
 		free(tmp);
 		tmp = tp;
 	}
-	ft_putendl("ENDED");
 	*to_free = NULL;
 }
 
@@ -74,20 +69,20 @@ void		free_script(t_script **script)
 {
 	t_script	*to_free;
 
-	ft_putendl("FREEING THA SCRIPT");
-	to_free = *script;
-	action_free(&to_free->begin);
-	vars_free(&to_free->vars);
-	if (to_free->fd)
+	if (*script)
 	{
-		ft_putendl("CLOSING FIRST");
-		close(to_free->fd);
+		to_free = *script;
+		action_free(&to_free->begin);
+		vars_free(&to_free->vars);
+		if (to_free->fd)
+		{
+			close(to_free->fd);
+		}
+		if (to_free->rd_fd)
+		{
+			close(to_free->rd_fd);
+		}
+		free(to_free);
+		*script = NULL;
 	}
-	if (to_free->rd_fd)
-	{
-		ft_putendl("CLOSING SECOND");
-		close(to_free->rd_fd);
-	}
-	free(to_free);
-	*script = NULL;
 }

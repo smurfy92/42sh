@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assignator.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 23:53:50 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 04:57:41 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/09 06:39:04 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,6 @@ static void	*handler_str_conc(char **clean, int *type)
 
 	*type = STR_T;
 	ret = ft_strjoin(clean[0], clean[1]);
-	ft_putendl(ret);
 	return ((void *)ret);
 }
 
@@ -151,12 +150,10 @@ static void	*handler_op(char *value, int *type, char op)
 	var_replacer(get_script(NULL), &clean[1]);
 	types[0] = type_guesser(clean[0]);
 	types[1] = type_guesser(clean[1]);
-	ft_putendl("ICI CEST LOUUUURD");
 	if (types[0] == types[1] && types[0] == NUMBER_T)
 		ret = handler_numb_op(clean, op, type);
 	if (types[0] == types[1] && types[0] == STR_T && op == '+')
 	{
-		ft_putendl("CONCATENATION ACTIVATED");
 		ret = handler_str_conc(clean, type);
 	}
 	ft_freestrtab(&clean);

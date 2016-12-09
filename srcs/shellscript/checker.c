@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/05 01:32:48 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 05:10:30 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/09 06:40:33 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,8 @@ static int			cmd_checker(char *line, t_script *script, t_action **begin)
 {
 	t_line		*new;
 
-	ft_putendl("HERE");
 	new = (t_line *)malloc(sizeof(t_line));
 	new->cmd = ft_strdup(line);
-	ft_putendl("DONYDONE");
 	add_to_action(new, script, LINE_T, begin);
 	return (0);
 }
@@ -134,7 +132,7 @@ int					line_checker(char **clean, int *i, t_script *script, t_action **begin)
 		if (!(script->errnb = loop_checker(clean, i, script, &line)))
 			add_to_action(new_loop(line, script), script, LOOP_T, begin);
 	}
-	else if (ft_strchr(line, '=') && is_important_space(line))
+	else if (ft_strchr(line, '=') && !is_important_space(line))
 		script->errnb = equal_checker(line, script, begin);
 	else
 		cmd_checker(line, script, begin);

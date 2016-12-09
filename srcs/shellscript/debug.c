@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 21:42:18 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 04:58:06 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/09 06:39:32 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 
 void			display_action(t_action *begin)
 {
+	if (begin)
+		;
 	if (begin)
 		;
 	t_action		*tmp;
@@ -90,6 +92,8 @@ void			display_action(t_action *begin)
 
 void			display_vars(t_var *begin)
 {
+	if (begin)
+		;
 	t_var		*tmp;
 
 	tmp = begin;

@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/05 01:02:20 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 05:11:17 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/09 06:07:54 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int				get_cond(char *line, t_cond *cond,
 	char		**clean;
 	char		**tmp;
 
-	ft_putendl(line);
 	if (!ft_strchr(line, '[') || !ft_strchr(line, ']'))
 		return (E_INCOMPLETE_COND);
 	tmp = ft_strsplit(line, '[');

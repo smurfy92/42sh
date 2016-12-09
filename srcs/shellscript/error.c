@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/28 02:06:06 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 05:12:14 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/09 06:36:42 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	error_handler(t_script *script)
 		ft_putendl_fd("Invalid operation", 2);
 	else
 		error_handler_next(script);
+	// get_grp()->fail = true;
 	free_script(&script);
-	exit(0);
+	ft_exit(get_grp(), 1);
 }
