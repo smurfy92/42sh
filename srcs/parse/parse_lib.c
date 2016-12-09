@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/19 21:55:58 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/19 22:57:27 by jmontija         ###   ########.fr       */
+/*   Created: 2016/11/25 23:37:23 by jmontija          #+#    #+#             */
+/*   Updated: 2016/11/25 23:53:55 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,26 @@ void		ft_replace_tilde(t_group *grp, t_parse *parse, int i)
 ** replacing backquotes in parse cmd
 */
 
-void		ft_replace_bquote(t_parse *parse, int i)
+char		*replace_bquote(t_group *grp, t_parse *parse)
+{
+	int		fd;
+	char	*bquote_result;
+	char	*line;
+
+	line = NULL;
+	exec_bquotes(grp, parse);
+	fd = open("/tmp/.fromshell", O_RDONLY);
+	bquote_result = NEW(0);
+	while (get_next_line(fd, &line) > 0)
+	{
+		line = ft_charjoin(line, ' ');
+		bquote_result = JOINF(bquote_result, line, 3);
+	}
+	bquote_result[LEN(bquote_result) - 1] = '\0';
+	return (bquote_result);
+}
+
+void		ft_replace_bquote(t_group *grp, t_parse *parse, int i)
 {
 	int		start;
 	int		end;
@@ -108,17 +127,17 @@ void		ft_replace_bquote(t_parse *parse, int i)
 	start = i + 1;
 	i = start;
 	end = 0;
-	while (parse->cmd[i] != '`' && end++)
-		i++;
-	bquote = SUB(parse->cmd, start, end);
-	if (parse->bquotes != NULL)
-		parse->bquotes = JOINF(JOINF(parse->bquotes, ";", 1), bquote, 2);
-	else
+	while (parse->cmd[i] != '`')
 	{
-		parse->bquotes = SDUP(bquote);
-		REMOVE(&bquote);
+		end++;
+		i++;
 	}
-	begin = SUB(parse->cmd, 0, start - 1);
+	bquote = SUB(parse->cmd, start, end);
+	parse->bquotes = SDUP(bquote);
+	REMOVE(&bquote);
+	bquote = replace_bquote(grp, parse);
+	begin = JOINF(SUB(parse->cmd, 0, start - 1), bquote, 3);
 	parse->cmd = JOINF(begin, SUB(parse->cmd, start + end + 1,
 	LEN(parse->cmd)), 2);
+	check_parentheses(0);
 }

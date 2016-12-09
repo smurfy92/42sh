@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   termcaps.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:43:24 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/19 21:43:30 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/23 22:57:10 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,10 @@ int						check_last_char(char *line, int i);
 int						ft_escape(t_group *grp);
 void					fill_cmd_line(t_group *grp);
 int						ft_is_printable(char *order);
+void					check_squote_escape(t_group *grp,
+										int i, int *ret, int *test);
+int						ft_contains(t_group *grp, int i);
+int						ft_get_last_eol(t_group *grp);
+void					ft_place_to_eof(t_group *grp);
 
 #endif

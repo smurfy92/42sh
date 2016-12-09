@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 16:48:03 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/19 16:48:21 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/23 19:46:32 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ void		create_exec_env(t_group *grp, char **cmd_split)
 	path = get_path(cmd_split[0], grp->root);
 	if (check_cmd(&path, cmd_split[0]) == 0 && path)
 	{
-		env = ENV(lst_tmp) ? list_to_tab(ENV(lst_tmp)) :
-			list_to_tab(ENV(lst));
+		env = list_to_tab(ENV(lst_tmp));
 		execve(path, cmd_split, env);
 	}
 	exit(EXIT_FAILURE);

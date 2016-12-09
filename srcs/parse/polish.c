@@ -6,47 +6,88 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 22:41:30 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/20 21:43:48 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/23 18:16:52 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-/*
-** deletes char in parse cmd at given indice
-*/
+void		ft_replace_dolls(t_group *grp, t_parse *parse, int j, int i)
+{
+	int		start;
+	char	*tmp;
+	char	*tmp2;
+
+	start = i;
+	while (PRS[j][i] && (ft_isalpha(PRS[j][i]) || PRS[j][i] == '?'))
+		i++;
+	tmp = ft_strsub(&PRS[j][start], 0, i - start);
+	tmp2 = ft_strdup(&PRS[j][i]);
+	if (ft_strlen(tmp) == 1 && tmp[0] == '?')
+		ft_replace_dollar(grp, parse, tmp2, start);
+	else if (ft_getenv(grp, tmp) == NULL)
+		grp->minus = 1;
+	else
+	{
+		PRS[j][start - 1] = '\0';
+		if (!PRS[j][start + 1])
+			PRS[j] = ft_strjoin_nf(PRS[j], ft_getenv(grp, tmp), 1);
+		else
+			PRS[j] = JOINF(JOINF(PRS[j],
+			ft_getenv(grp, tmp), 1), tmp2, 1);
+		ft_strdel(&tmp2);
+	}
+	(tmp) ? REMOVE(&tmp) : 0;
+	(tmp2) ? REMOVE(&tmp2) : 0;
+}
 
 void		ft_polish_parse(t_parse *parse, int j, int i)
 {
-	parse->cmdsplit[j][i + 1] = '\0';
-	if (parse->cmdsplit[j][i + 2])
-		parse->cmdsplit[j] = JOINF(parse->cmdsplit[j], SDUP(&parse->cmdsplit[j][i + 2]), 3);
+	parse->cmdsplit[j][i] = '\0';
+	if (parse->cmdsplit[j][i + 1])
+	{
+		parse->cmdsplit[j] =
+		JOINF(parse->cmdsplit[j], SDUP(&parse->cmdsplit[j][i + 1]), 3);
+	}
 }
 
-void		polisher(t_parse *parse, int i, int j, int ret, int *in)
+void		handle_squote(t_parse *parse, int j, int *i)
 {
-	char	q;
-
-	if (*in == 0 && ret == 1)
-	{
-		q = parse->cmdsplit[j][i];
-		ft_polish_parse(parse, j, i - 1);
-		while ((q == '\'') && (ret = check_parentheses(parse->cmdsplit[j][i]))
-		== 1 && parse->cmdsplit[j][i + 1] != '\'')
-			i++;
-		*in = 1;
-	}
-	else if (*in == 1 && ret == 0)
-	{
-		ft_polish_parse(parse, j, i - 1);
-		*in = 0;
-	}
+	ft_polish_parse(parse, j, *i);
+	while (parse->cmdsplit[j][*i] != '\'' && parse->cmdsplit[j][*i] != '\0')
+		*i += 1;
+	if (parse->cmdsplit[j][*i] == '\'')
+		ft_polish_parse(parse, j, *i);
 }
 
-/*
-** polishing parse by deleting unwanted charateres
-** ex : escaped chars, separators
-*/
+void		handle_dquote(t_parse *parse, int j, int *i)
+{
+	t_group	*grp;
+	char	c;
+
+	grp = get_grp();
+	ft_polish_parse(parse, j, *i);
+	while (parse->cmdsplit[j][*i] != '\0' &&
+		(parse->cmdsplit[j][*i] != '"' ||
+		check_last_char(parse->cmdsplit[j], *i) == 1))
+	{
+		c = parse->cmdsplit[j][*i];
+		if (c == '$' && check_last_char(parse->cmdsplit[j], *i) == 0)
+			ft_replace_dolls(grp, parse, j, *i + 1);
+		else if (c == '$' && check_last_char(parse->cmdsplit[j], *i) == 1)
+		{
+			ft_polish_parse(parse, j, *i - 1);
+			*i -= 1;
+		}
+		if (c == '"' && check_last_char(parse->cmdsplit[j], *i) == 1)
+		{
+			ft_polish_parse(parse, j, *i - 1);
+			*i -= 1;
+		}
+		*i += 1;
+	}
+	(parse->cmdsplit[j][*i] == '"') ? ft_polish_parse(parse, j, *i) : 0;
+}
 
 void		polish(t_parse *parse)
 {
@@ -59,14 +100,19 @@ void		polish(t_parse *parse)
 	j = -1;
 	check_parentheses(0);
 	while (parse->cmdsplit && parse->cmdsplit[++j])
-	{	
+	{
 		i = -1;
 		while (parse->cmdsplit[j][++i])
 		{
 			ret = check_parentheses(parse->cmdsplit[j][i]);
-			if (parse->cmdsplit[j][i] == '\\' && parse->cmdsplit[j][i + 1])
-				ft_polish_parse(parse, j, i - 1);
-			polisher(parse, i, j, ret, &in);
+			if (ret == 1 && parse->cmdsplit[j][i] == '\'')
+				handle_squote(parse, j, &i);
+			else if (ret == 1 && parse->cmdsplit[j][i] == '\"')
+				handle_dquote(parse, j, &i);
+			else if (ret == 0 && parse->cmdsplit[j][i] == '\\' &&
+					parse->cmdsplit[j][i + 1])
+				ft_polish_parse(parse, j, i);
 		}
+		check_parentheses(0);
 	}
 }

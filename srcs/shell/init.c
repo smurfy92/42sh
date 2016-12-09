@@ -3,51 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:17:06 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/19 18:57:11 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/06 05:05:14 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
-
-int			reset_shell(void)
-{
-	t_group	*grp;
-
-	grp = get_grp();
-	if (tcsetattr(0, 0, &(grp->cpy_term)) == -1)
-		return (-1);
-	return (0);
-}
-
-int			init_shell(void)
-{
-	char			*name;
-	struct termios	term;
-	t_group			*grp;
-
-	grp = get_grp();
-	if ((name = getenv("TERM")) == NULL)
-		name = ft_strdup("xterm-256color");
-	if (tgetent(NULL, name) == ERR)
-		exit(-1);
-	if (getenv("TERM") == NULL)
-		ft_strdel(&name);
-	if (tcgetattr(0, &term) == -1)
-		return ((grp->quit = true));
-	grp->cpy_term = term;
-	term.c_lflag = term.c_lflag & (~ICANON & ~ECHO);
-	term.c_cc[VMIN] = 1;
-	term.c_cc[VTIME] = 0;
-	if (tcsetattr(0, 0, &term))
-	{
-		ft_putendl("could not set termcaps's attributes");
-		exit(-1);
-	}
-	return (1);
-}
 
 void		init_term(t_group *grp)
 {
@@ -87,6 +50,9 @@ t_group		*set_grp(t_group *grp)
 	grp->father = -1;
 	grp->program_name = NULL;
 	grp->program_pid = -1;
+	grp->jobs = NULL;
+	grp->pipefd_in = STDIN_FILENO;
+	grp->waitstatus = 1;
 	ft_get_history(grp);
 	init_term(grp);
 	grp->root = NULL;

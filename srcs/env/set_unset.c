@@ -5,12 +5,21 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/30 15:44:41 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/18 18:10:20 by vdanain          ###   ########.fr       */
+/*   Created: 2016/11/20 23:45:59 by jmontija          #+#    #+#             */
+/*   Updated: 2016/11/22 21:05:39 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
+
+static void		update_path_env(t_group *grp, t_envlst *new)
+{
+	if (ft_strcmp(new->name, "PATH") == 0)
+	{
+		root_hfree(&grp->root);
+		hash_init(&grp->root, grp, NULL);
+	}
+}
 
 int				unset_env(t_group *grp, char *todel)
 {
@@ -29,6 +38,7 @@ int				unset_env(t_group *grp, char *todel)
 				grp->env->lst = curr->next;
 			else
 				prev->next = curr->next;
+			ft_strcmp(todel, "PATH") == 0 ? root_hfree(&grp->root) : 0;
 			REMOVE(&curr->name);
 			REMOVE(&curr->val);
 			ft_memdel((void *)&curr);
@@ -46,10 +56,10 @@ static t_envlst	*create_env_line(t_group *grp, char *env, int i)
 	t_envlst *curr_env;
 
 	curr_env = grp->env->lst;
+	if ((i = is_env(env)) == false)
+		return (NULL);
 	new = (t_envlst *)malloc(sizeof(t_envlst));
 	if (!(new) || !(env))
-		return (NULL);
-	if ((i = is_env(env)) == false)
 		return (NULL);
 	new->exist = false;
 	new->name = SUB(env, 0, i);
@@ -105,5 +115,6 @@ int				insert_env(t_group *grp, char *env)
 		tmp->next = new;
 	else
 		grp->env->lst = new;
+	update_path_env(grp, new);
 	return (1);
 }

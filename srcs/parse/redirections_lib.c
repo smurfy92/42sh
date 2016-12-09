@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 17:24:49 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/19 23:06:50 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/23 23:02:31 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@ char			*get_redirection(t_group *grp, t_parse *parse, int i, int start)
 	int		end;
 	char	*tmp;
 
-	while (parse->cmd[i] && !ft_isalpha(parse->cmd[i]) &&
-	!ft_isdigit(parse->cmd[i]) && !ft_is_quote(parse->cmd[i]))
+	if (grp)
+	{}
+	while (parse->cmd[i] && parse->cmd[i] == ' ')
 		i++;
 	end = i;
 	while (parse->cmd[end] && !ft_end_of_red(parse->cmd[end]))
@@ -88,7 +89,7 @@ int				check_rights(t_parse *parse, char **file, int i)
 {
 	if (i == 0 && access(*file, F_OK) == 0 && access(*file, W_OK) < 0)
 	{
-		ft_putstr_fd("42sh: permission denied: ", 2);
+		ft_putstr_fd("permission denied: ", 2);
 		ft_putendl_fd(*file, 2);
 		parse->fail = 1;
 		REMOVE(file);
@@ -97,9 +98,9 @@ int				check_rights(t_parse *parse, char **file, int i)
 	else if (i == 1 && (access(*file, F_OK) < 0 || access(*file, R_OK) < 0))
 	{
 		if (access(*file, F_OK) < 0)
-			error_cmd("42sh: no such file or directory: ", *file, 1);
+			error_cmd("no such file or directory: ", *file, 1);
 		else if (access(*file, R_OK) < 0)
-			error_cmd("42sh: permission denied: ", *file, 1);
+			error_cmd("permission denied: ", *file, 1);
 		parse->fail = 1;
 		REMOVE(file);
 		return (1);
@@ -117,8 +118,9 @@ void			ft_redirection_error(t_parse *parse, int end)
 {
 	char *tmp;
 
-	tmp = ft_strjoin_nf(ft_strjoin("42sh : parse error near `",
+	parse->cmd[end] = '\0';
+	tmp = ft_strjoin_nf(ft_strjoin("`",
 	&parse->cmd[end - 1]), "'", 1);
-	ft_putendl_fd(tmp, 2);
+	error_cmd("parse error near ", tmp, 1);
 	ft_strdel(&tmp);
 }

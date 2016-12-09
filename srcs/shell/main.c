@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/20 00:07:07 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/09 02:30:28 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,6 @@ int			ft_getchar(int c)
 	return (write(2, &c, 1));
 }
 
-void		prompt(void)
-{
-	t_group *grp;
-
-	grp = get_grp();
-	if (grp->quit == false)
-		ft_putstr_fd("42sh> ", 2);
-	grp->prompt_size = 6;
-}
-
 void		proccess(t_group *grp)
 {
 	prompt();
@@ -35,12 +25,13 @@ void		proccess(t_group *grp)
 	ft_pre_parse(grp);
 	if (LEN(TERM(cmd_line)) > 0)
 		ft_add_history(grp, TERM(cmd_line));
-	if (grp->err_parse == false)
+	if (grp->err_parse == false && TERM(cmd_line))
 	{
 		grp->allcmd = ft_strsplitquote(TERM(cmd_line), ';');
 		ft_init_parse(grp);
 		if (grp->err_parse == false)
 			init_exec(grp);
+		remove_hdoc(grp);
 		ft_free_parse(grp);
 		free(grp->allcmd);
 	}
@@ -56,15 +47,19 @@ int			main(int argc, char **argv, char **env)
 
 	if (argc || argv)
 		;
-	init_shell();
 	grp = get_grp();
 	grp->program_name = SDUP(argv[0]);
 	grp->program_pid = getpid();
+	grp->is_interact = isatty(STDIN_FILENO);
+	if (grp->is_interact)
+	{
+		set_for_jobs(STDIN_FILENO);
+		init_shell();
+	}
+	else
+		grp->quit = true;
 	init_env(grp, env);
-	hash_init(&grp->root, grp, NULL);
-	sig_handler();
 	while (42)
 		proccess(grp);
-	reset_shell();
 	return (0);
 }

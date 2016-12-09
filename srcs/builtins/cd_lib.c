@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 22:44:21 by vdanain           #+#    #+#             */
-/*   Updated: 2016/11/19 22:51:56 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/22 11:32:10 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,13 @@ char		*join_path(t_group *grp, char *path)
 	return (result);
 }
 
-void		update_pwd(t_group *grp, char *pth, int opt, char *curr_dir)
+void		replce_last_s(char *cd, int len)
+{
+	if (*cd == '/' && len > 1)
+		*cd = '\0';
+}
+
+void		update_pwd(t_group *grp, char *pth, int opt, char *cd)
 {
 	char	*pwd;
 	char	*old_pwd;
@@ -60,17 +66,18 @@ void		update_pwd(t_group *grp, char *pth, int opt, char *curr_dir)
 	char	*tp;
 
 	ft_bzero(buf, 1025);
-	old_pwd = JOIN("OLDPWD=", curr_dir);
+	old_pwd = JOIN("OLDPWD=", cd);
+	pth[LEN(pth) - 1] = (pth[LEN(pth) - 1] == '/' && LEN(pth) - 1 != 0) ?
+		'\0' : pth[LEN(pth) - 1];
 	tp = (ft_getenv(grp, "PWD")) ? ft_getenv(grp, "PWD") : getcwd(buf, 1024);
 	if (!opt && ft_strncmp(pth, "..", 2) != 0 && ft_strncmp(pth, ".", 1) != 0)
 		pwd = (pth[0] == '/') ? JOIN("PWD=", pth) : join_path(grp, pth);
 	else if (!opt && ft_strcmp(pth, "..") == 0)
 	{
-		curr_dir = ft_strsub(tp, 0, LEN(tp) - (LEN(ft_strrchr(tp, '/')) - 1));
-		if (curr_dir[ft_strlen(curr_dir) - 1] == '/' && LEN(curr_dir) > 1)
-			curr_dir[ft_strlen(curr_dir) - 1] = '\0';
-		pwd = JOIN("PWD=", curr_dir);
-		ft_strdel(&curr_dir);
+		cd = ft_strsub(tp, 0, LEN(tp) - (LEN(ft_strrchr(tp, '/')) - 1));
+		replce_last_s(&cd[LEN(cd) - 1], LEN(cd));
+		pwd = JOIN("PWD=", cd);
+		ft_strdel(&cd);
 	}
 	else if (opt || ft_strncmp(pth, "..", 2) == 0)
 		pwd = JOIN("PWD=", getcwd(buf, 1024));
@@ -78,5 +85,4 @@ void		update_pwd(t_group *grp, char *pth, int opt, char *curr_dir)
 	insert_env(grp, old_pwd);
 	REMOVE(&old_pwd);
 	REMOVE(&pwd);
-	grp->exit = 0;
 }

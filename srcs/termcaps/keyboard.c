@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/19 23:26:19 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/06 02:54:51 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 
 int			key_selection_next(t_group *grp, char *order, int key)
 {
+	if (key == STAB)
+	{
+		order[0] = 9;
+		order[1] = 0;
+		order[2] = 0;
+		order[3] = 0;
+	}
 	if (key == HOME)
 		ft_go_home(grp);
 	else if (key == END)
@@ -25,11 +32,25 @@ int			key_selection_next(t_group *grp, char *order, int key)
 	else if (key == ARROW_L || key == ARROW_R ||
 		key == ARROW_U || key == ARROW_D)
 		handling_arrow(grp, key);
-	else if (ft_is_printable(order))
+	else if (ft_is_printable(order) || key == STAB)
 		print_cmd(grp, order);
 	else
 		return (0);
 	return (1);
+}
+
+void		ft_puttab(t_group *grp)
+{
+	char *tmp;
+	char *ch;
+
+	ch = ft_strnew(1);
+	ch[0] = '\t';
+	tmp = SDUP(&TERM(cmd_line)[TERM(curs_pos)]);
+	TERM(cmd_line)[TERM(curs_pos)] = '\0';
+	TERM(cmd_line) = JOINF(TERM(cmd_line), ch, 3);
+	TERM(cmd_line) = JOINF(TERM(cmd_line), tmp, 3);
+
 }
 
 int			key_selection(t_group *grp, char *order)
@@ -82,7 +103,7 @@ static void	get_cmd_help(t_group *grp, int ret_q)
 	if (ret_q < 0)
 	{
 		grp->err_parse = 1;
-		error_cmd("parse error", "parenthese closed too soon", 1);
+		error_cmd("parse error", "parenthese closed but not opened", 1);
 	}
 	check_parentheses(0);
 	reset_edl(grp);

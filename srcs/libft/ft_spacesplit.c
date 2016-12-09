@@ -6,11 +6,19 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/04 22:25:15 by jmontija          #+#    #+#             */
-/*   Updated: 2016/10/31 15:35:31 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/22 21:11:45 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/libft.h"
+
+int				is_space(int c)
+{
+	if (c == ' ' || c == '\t')
+		return (1);
+	else
+		return (0);
+}
 
 static int		ft_cnt_parts(const char *s)
 {
@@ -24,9 +32,9 @@ static int		ft_cnt_parts(const char *s)
 	while (*s != '\0')
 	{
 		synth = check_parentheses(*s);
-		if (synth == 0 && in_substring == 1 && ft_isspace(*s))
+		if (synth == 0 && in_substring == 1 && is_space(*s))
 			in_substring = 0;
-		if (in_substring == 0 && !ft_isspace(*s))
+		if (in_substring == 0 && !is_space(*s))
 		{
 			in_substring = 1;
 			cnt++;
@@ -47,7 +55,7 @@ static int		ft_wlen(const char *s)
 	while (*s != '\0')
 	{
 		synth = check_parentheses(*s);
-		if (synth == 0 && ft_isspace(*s))
+		if (synth == 0 && is_space(*s))
 			break ;
 		len++;
 		s++;
@@ -63,13 +71,14 @@ char			**ft_spacesplit(char const *s)
 	int		index;
 
 	index = 0;
+	check_parentheses(0);
 	nb_word = ft_cnt_parts((const char *)s);
-	t = (char **)malloc(sizeof(*t) * (ft_cnt_parts((const char *)s) + 1));
+	t = (char **)malloc(sizeof(*t) * (nb_word + 1));
 	if (t == NULL)
 		return (NULL);
 	while (nb_word--)
 	{
-		while (ft_isspace(*s) && *s != '\0')
+		while (is_space(*s) && *s != '\0')
 			s++;
 		t[index] = ft_strsub((const char *)s, 0, ft_wlen((const char *)s));
 		if (t[index] == NULL)

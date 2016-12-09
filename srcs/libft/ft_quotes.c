@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_quotes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/19 03:11:24 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/18 22:49:22 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/11/22 04:36:45 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,13 @@ int		check_parentheses(char c)
 	ret = 0;
 	if (malloc_free(&quotes, c) < 0)
 		return (ret);
-	quotes[dquote] == 0 && quotes[par] == 0 ?
+	quotes[dquote] == 0 && quotes[par] == 0 && quotes[bquote] == 0 ?
 	check_quotes(quotes, c, '\'', squote) : 0;
-	quotes[squote] == 0 && quotes[par] == 0 ?
+	quotes[squote] == 0 && quotes[par] == 0 && quotes[bquote] == 0 ?
 	check_quotes(quotes, c, '"', dquote) : 0;
-	if (quotes[squote] == 0 && quotes[dquote] == 0)
+	quotes[squote] == 0 && quotes[par] == 0 && quotes[dquote] == 0 ?
+	check_quotes(quotes, c, '`', bquote) : 0;
+	if (quotes[squote] == 0 && quotes[dquote] == 0 && quotes[bquote] == 0)
 	{
 		check_quotes(quotes, c, '{', acc);
 		check_quotes(quotes, c, '}', acc);

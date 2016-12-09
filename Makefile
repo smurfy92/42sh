@@ -4,11 +4,21 @@ LIB = srcs/libft/libft.a
 #shell
 SRC =  srcs/shell/main.c
 SRC	+= srcs/shell/init.c
+SRC	+= srcs/shell/init_shell.c
 SRC	+= srcs/shell/signaux.c
+SRC	+= srcs/shell/prompt.c
 
 #exec
 SRC	+= srcs/exec/exec.c
+SRC	+= srcs/exec/execlib.c
 SRC	+= srcs/exec/execve.c
+
+#jobcontrol
+SRC	+= srcs/jobcontrol/jobscreate.c
+SRC	+= srcs/jobcontrol/jobscontrol.c
+SRC	+= srcs/jobcontrol/jobsbuiltin.c
+SRC	+= srcs/jobcontrol/jobsbuiltins.c
+SRC	+= srcs/jobcontrol/jobstatus.c
 
 #hash
 SRC += srcs/hash/hash_use.c
@@ -21,6 +31,7 @@ SRC	+= srcs/hash/hash_free.c
 SRC += srcs/builtins/builtins.c
 SRC += srcs/builtins/cd.c
 SRC += srcs/builtins/cd_lib.c
+SRC += srcs/builtins/cd_lib2.c
 SRC += srcs/builtins/echo.c
 SRC += srcs/builtins/echo_lib.c
 SRC += srcs/builtins/history.c
@@ -37,10 +48,12 @@ SRC	+= srcs/env/env_exec.c
 #termcaps
 SRC	+= srcs/termcaps/keyboard.c
 SRC	+= srcs/termcaps/keyboard_lib.c
+SRC	+= srcs/termcaps/keyboard_lib2.c
 SRC	+= srcs/termcaps/keyboard_tools.c
 SRC	+= srcs/termcaps/keyboard_tools2.c
 SRC	+= srcs/termcaps/keyboard_tools3.c
 SRC	+= srcs/termcaps/escape.c
+SRC	+= srcs/termcaps/escape_lib.c
 
 #parse
 SRC	+= srcs/parse/init_parse.c
@@ -48,6 +61,7 @@ SRC	+= srcs/parse/polish.c
 SRC	+= srcs/parse/redirections.c
 SRC	+= srcs/parse/redirections2.c
 SRC	+= srcs/parse/redirections_lib.c
+SRC	+= srcs/parse/redirections_lib2.c
 SRC	+= srcs/parse/parse_lib.c
 SRC	+= srcs/parse/parse_lib2.c
 SRC	+= srcs/parse/pre_parse.c
@@ -92,10 +106,11 @@ INC += -I srcs/debug/includes/
 INC += -I srcs/free_mem/includes/
 INC += -I srcs/history/includes/
 INC += -I srcs/errors/includes/
+INC += -I srcs/jobcontrol/includes/
 INC += -I ./includes/
 
 OBJ = $(SRC:.c=.o)
-FLAG = -g -Wall -Werror -Wextra
+FLAG = -Wall -Werror -Wextra
 CG = \033[92m
 CY =  \033[93m
 CE = \033[0m
@@ -114,34 +129,7 @@ $(NAME): $(OBJ)
 	@gcc $(FLAG) -c $< -o $@ $(INC)
 
 start:
-	@echo "\n\n"
-	@echo "	$(CG)                          00000000000000000000$(CE)";
-	@echo "	$(CG)                       00000000000000000000000000$(CE)";
-	@echo "	$(CG)                    000000000000000000000000000000000         00   0000$(CE)";
-	@echo "	$(CG)    000000        00000000000000000000000000000000000000       000000000$(CE)";
-	@echo "	$(CG) 00 000000      0000000000    0000000000000    0000000000       0000000$(CE)";
-	@echo "	$(CG) 000000000     0000000000      00000000000      00000000000    0000000$(CE)";
-	@echo "	$(CG)   0000000    00000000000      00000000000      0000000000000000000000$(CE)";
-	@echo "	$(CG)   00000000000000000000000    0000000000000    00000000000000  00000$(CE)";
-	@echo "	$(CG)    000000000000000000000000000000000000000000000000000000000     000$(CE)";
-	@echo "	$(CG)     000   000000000000000000000000000000000000000000000000000     0000$(CE)";
-	@echo "	$(CG)    0000   000000000000000000000000000000000000000000000000000       000$(CE)";
-	@echo "	$(CG)    000    0000000000000000000000000000000000000000000000 0000000000000000$(CE)";
-	@echo "	$(CG)   0000000000000  0000000000000000000000000000000000000   00000000000000000$(CE)";
-	@echo "	$(CG)   0000000000000   0000000000000000000000000000000000     00000000000$(CE)";
-	@echo "	$(CG)  0000       0000    000000000000000000000000000000      000$(CE)";
-	@echo "	$(CG)             00000     0000000000000000000000000         00$(CE)";
-	@echo "	$(CG)               0000          000000000000000           000$(CE)";
-	@echo "	$(CG)                00000                                0000$(CE)";
-	@echo "	$(CG)                 000000      00000000000000        0000$(CE)";
-	@echo "	$(CG)                   00000000     0000000000000   000000$(CE)";
-	@echo "	$(CG)                      00000000000  0000000000000000$(CE)";
-	@echo "	$(CG)                         000000000000000000000$(CE)";
-	@echo "	$(CG)                                 00000000000000$(CE)";
-	@echo "	$(CG)                                     00000000000$(CE)";
-	@echo "	$(CG)                                      0000000000$(CE)";
-	@echo "	$(CG)                                       0000000$(CE)";
-	@echo "\n\n"
+	@echo "\n";
 	@echo "			$(CG)        :::     ::::::::  :::::::: :::    ::: $(CE)";
 	@echo "			$(CG)      :+:     :+:    :+::+:    :+::+:    :+:     $(CE)";
 	@echo "			$(CG)    +:+ +:+        +:+ +:+       +:+    +:+      $(CE)";
@@ -149,6 +137,7 @@ start:
 	@echo "			$(CG)+#+#+#+#+#+  +#+            +#++#+    +#+        $(CE)";
 	@echo "			$(CG)     #+#   #+#      #+#    #+##+#    #+#         $(CE)";
 	@echo "			$(CG)    ###  ########## ######## ###    ###          $(CE)";
+	@echo "\n";
 
 clean: start
 	@echo "\033[K$(CY)[42SH] :$(CE) $(CG)Cleaning Library ...$(CE)\033[1A";

@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 15:59:55 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/20 21:30:24 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/08 07:40:46 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ static int		ft_parse(t_group *grp, t_andor *andor)
 	tabl = ft_strsplitpipe(andor->cmd, '|');
 	while (tabl)
 	{
-		if (tabl->cmd[0] == '\0' && !grp->fail) 
+		if (tabl->cmd[0] == '\0' && !grp->fail)
 		{
 			grp->fail = 1;
 			error_cmd("Invalid null command near", "|", 1);
-			return (-1) ;
+			return (-1);
 		}
 		ft_create_parse(grp, tabl, andor);
 		REMOVE(&tabl->cmd);
@@ -96,22 +96,26 @@ void			ft_init_parse(t_group *grp)
 {
 	t_allcmd	*tabl;
 	t_andor		*tmp2;
+	int			allow;
 
 	tabl = grp->allcmd;
+	allow = false;
 	while (tabl)
 	{
 		tabl->andor = ft_strsplitandor(tabl->cmd);
 		tmp2 = tabl->andor;
 		while (tmp2)
 		{
-			if (tmp2->cmd[0] == '\0' && !grp->fail)
+			if (allow == false && tmp2->cmd[0] == '\0' && !grp->fail)
 			{
 				grp->fail = 1;
-				error_cmd("Invalid null command near", "separator (&& / ||)", 1);
+				error_cmd(
+				"Invalid null command near", "&& / ||", 1);
 				return ;
 			}
 			if (ft_parse(grp, tmp2) < 0)
 				return ;
+			allow = (tmp2->type == 3) ? true : false;
 			tmp2 = tmp2->next;
 		}
 		tabl = tabl->next;

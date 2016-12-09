@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/20 21:35:45 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/22 20:38:39 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ void		ft_replace_last_cmd(t_group *grp, int i)
 
 	hist = ft_history_get_last(grp);
 	if (!hist)
-		return (ft_putendl_fd("42sh: no previous command", 2));
+	{
+		grp->err_parse = 1;
+		return (error_cmd("no previous", "command", 1));
+	}
 	ft_putendl_fd(hist->var, 2);
 	if (!TERM(cmd_line)[i + 2])
 	{
@@ -87,8 +90,8 @@ void		ft_replace_by_id(t_group *grp, int i)
 	}
 	else
 	{
-		ft_putstr_fd("42sh: no historic at indice: ", 2);
-		ft_putendl_fd(tmp, 2);
+		grp->err_parse = 1;
+		error_cmd("no historic at indice: ", tmp, 1);
 	}
 	REMOVE(&tmp);
 }
@@ -136,7 +139,8 @@ void		ft_pre_parse(t_group *grp)
 		{
 			ft_replace_last_cmd(grp, i);
 		}
-		else if (TERM(cmd_line)[i] == '!' && TERM(cmd_line)[i + 1])
+		else if (TERM(cmd_line)[i] == '!' && TERM(cmd_line)[i + 1] &&
+			TERM(cmd_line)[i + 1] != ' ')
 			ft_replace_by_id(grp, i + 1);
 	}
 }

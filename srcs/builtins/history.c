@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:55:46 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/19 16:56:42 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/22 00:10:03 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int		builtin_history2(t_group *grp, t_parse *parse)
 	{
 		if (ft_atoi(parse->cmdsplit[1]) > grp->history->i)
 		{
-			ft_putendl("42sh: history: invalid parameter");
+			error_cmd("history", "invalid parameter", 1);
 			return (1);
 		}
 		if (ft_atoi(parse->cmdsplit[1]) == grp->history->i)
@@ -86,7 +86,7 @@ int		builtin_history(t_group *grp, t_parse *parse)
 	{
 		if (!ft_strisdigit(cmdsplit[1]))
 		{
-			ft_putendl("42sh: history: invalid parameter");
+			error_cmd("history", "invalid parameter", 1);
 			return (1);
 		}
 		if (builtin_history2(grp, parse))

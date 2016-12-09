@@ -6,12 +6,14 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 21:56:30 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/20 21:40:30 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/04 03:58:12 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSE_H
 # define PARSE_H
+
+# define PRS parse->cmdsplit
 
 /*
 **	struct
@@ -86,16 +88,27 @@ int						check_rights(t_parse *parse, char **file, int i);
 void					ft_redirection_error(t_parse *parse, int end);
 
 /*
+**	redirections_lib2.c
+*/
+
+void					ft_addfile(t_group *grp, t_parse *parse, int i);
+void					ft_adddoubleredirection(t_group *grp, t_parse *parse,
+												int i);
+void					ft_addredirection(t_group *grp, t_parse *parse, int i);
+
+/*
 **	parse_lib.c.c
 */
 
 void					ft_replace_vars(t_group *grp, t_parse *parse, int i);
+void					ft_replace_dollar(t_group *grp, t_parse *parse,
+								char *tmp2, int start);
 void					ft_create_redirections(t_parse *parse);
 /*
 **	int						ft_count_pipes(char *cmd);
 */
 void					ft_replace_tilde(t_group *grp, t_parse *parse, int i);
-void					ft_replace_bquote(t_parse *parse, int i);
+void					ft_replace_bquote(t_group *grp, t_parse *parse, int i);
 /*
 **	parse_lib2.c
 */

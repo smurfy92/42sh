@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fortytwo.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:42:31 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/19 22:02:51 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/11/26 19:17:57 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # include "free.h"
 # include "debug.h"
 # include "errors.h"
+# include "jobcontrol.h"
 # include <string.h>
 # define KEY(a, b, c, d) ((d << 24) + (c << 16) + (b << 8) + a)
 # define NEW(x)			(ft_strnew(x))
@@ -59,6 +60,7 @@
 # define ENTER 10
 # define SPACE 32
 # define TAB 9
+# define STAB 5921563
 # define ESC 27
 # define ARROW_L 4479771
 # define ARROW_U 4283163
