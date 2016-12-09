@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 03:04:04 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/08 06:53:08 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/09 01:05:58 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	sig_handler(void)
 	memset (&sigact, '\0', sizeof(sigact));
 	sigact.sa_sigaction = &ft_sigchild;
  	sigact.sa_flags = SA_SIGINFO ;
- 	sigaction(SIGCHLD, &sigact, NULL);
+ 	//sigaction(SIGCHLD, &sigact, NULL);
 	signal(SIGINT, handler_ctrl_c);
 	signal(SIGQUIT, handler_ctrl_c);
 	signal(SIGTSTP, SIG_IGN);

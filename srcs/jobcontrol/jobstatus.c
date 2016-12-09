@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 00:13:31 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/08 07:20:07 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/09 01:06:06 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ void	change_state(t_jobs *jobs, int code)
 	jobs->terminate = code;
 	jobs->status = update_status(code);
 	jobs->enabled = (code == 1 || code == 2) ? false : true;
+	if (jobs->enabled == false)
+		if (jobs->fdin > 2)
+			close(jobs->fdin);
 	if (code > 1)
 		display_jobs(jobs, 1);
 }

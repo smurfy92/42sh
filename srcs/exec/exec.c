@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 21:15:46 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/08 07:25:16 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/09 01:12:43 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,23 @@ void		launch_exec(t_group *grp, t_parse *parse, int fg)
 			else
 			{
 				jobs = control_jobs(&parent, grp, tmp);
+				jobs->fdin = grp->pipefd_in;
 				setpgid (jobs->pid, parent->pid);
-				jobs->fdin = tabl[0];
-				tmp->next ? (grp->pipefd_in = tabl[0]) : close(tabl[0]);
+				if (tmp->next)
+					grp->pipefd_in = tabl[0];
+				else
+				{
+					close(tabl[0]);
+					grp->pipefd_in = STDIN_FILENO;
+				}
 				close(tabl[1]);
 			}
 		}
 		else if (is_built && tmp->fd < 0)
+		{
+			parent ? close(grp->pipefd_in) : 0;
 			builtins(grp, tmp);
+		}
 		tmp = tmp->next;
 	}
 	parent && !fg ? display_jobs(parent, 1) : 0;
