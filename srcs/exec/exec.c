@@ -6,16 +6,14 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 21:15:46 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/10 00:51:50 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/10 05:13:45 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
 /* todo:
-		- wait rec
 		- all redir
-		- remove group jobs exited/interrupt
 */
 void		launch_exec(t_group *grp, t_parse *parse, char *andorcmd, int fg)
 {

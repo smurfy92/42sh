@@ -6,11 +6,28 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 20:37:49 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/10 02:10:16 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/10 03:41:20 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
+
+void		display_jobs(t_jobs *jobs, int n, int parent)
+{
+	if (jobs == NULL)
+		return ;
+	!jobs->idx ? ft_putstr_fd("  ", 1) : 0;
+	ft_putstr_fd("[", 1);
+	!jobs->idx ? ft_putchar_fd('p', 1) : ft_putnbr_fd(jobs->idx, 1);
+	ft_putstr_fd("] ", 1);
+	ft_putnbr_fd(jobs->pid, 1);
+	ft_putchar_fd(' ', 1);
+	ft_putstr_fd(jobs->status, 1);
+	ft_putchar_fd(' ', 1);
+	parent ? ft_putstr_fd(jobs->parent_cmd, 1) : ft_putstr_fd(jobs->cmd, 1);
+	if (n)
+		ft_putchar_fd('\n', 1);
+}
 
 t_jobs		*control_jobs(t_jobs **parent, t_group *grp, t_parse *parse, char *andorcmd)
 {
@@ -30,7 +47,6 @@ t_jobs		*control_jobs(t_jobs **parent, t_group *grp, t_parse *parse, char *andor
 	else
 		jobs = create_pipe_jobs(new, jobs, parse->cmd, grp->father);
 	return (jobs);
-
 }
 
 t_jobs		*get_jobs_idx(t_group *grp, int idx)

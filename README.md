@@ -17,3 +17,4 @@ DOCS:
 - http://www.cs.uleth.ca/~holzmann/C/system/pipeforkexec.html
 - http://stackoverflow.com/questions/26430771/linux-change-pgrp-process-group-during-c-program-execution
 - http://stackoverflow.com/questions/6784907/does-linux-allow-process-group-ids-to-be-reassigned-to-processes
+- http://people.cs.pitt.edu/~alanjawi/cs449/code/shell/UnixSignals.htm

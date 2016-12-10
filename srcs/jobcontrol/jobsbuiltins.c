@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 20:40:36 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/10 02:14:25 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/10 05:01:37 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		ft_sigcont(t_jobs *jobs)
 {
 	t_jobs	*pipe;
 
-	if (jobs->terminate == CLD_STOPPED)
+	if (jobs->terminate == SIGNSTOP)
 	{
 		if (kill (jobs->pid, SIGCONT) < 0)
 			perror ("kill (SIGCONT)");
@@ -24,7 +24,7 @@ int		ft_sigcont(t_jobs *jobs)
 	pipe = jobs->next_pipe;
 	while (pipe)
 	{
-		if (pipe->terminate == CLD_STOPPED)
+		if (pipe->terminate == SIGNSTOP)
 		{
 			if (kill (pipe->pid, SIGCONT) < 0)
 				perror ("kill (SIGCONT)");
@@ -52,7 +52,7 @@ int		check_jobs_stopped(t_group *grp, t_jobs *jobs)
 		last = pipe;
 		pipe = pipe->next_pipe;
 	}
-	grp->exit = (last->code > 1 && last->terminate != CLD_STOPPED) ? 1 : 0; 
+	grp->exit = (last->code > 0 && last->terminate != SIGNSTOP) ? 1 : 0; 
 	return (true);
 }
 
@@ -62,7 +62,7 @@ void	put_in_fg(t_group *grp, t_jobs *pgid)
 	ft_sigcont(pgid);
 	while (42)
 	{
-		if (check_jobs_stopped(grp, pgid) || check_group_jobs(pgid, 0) < 0)
+		if (check_group_status(pgid, 0) < 0 || check_jobs_stopped(grp, pgid))
 			break ;
 	}
 	tcsetpgrp(STDIN_FILENO, grp->program_pid);

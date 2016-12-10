@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/07 00:53:40 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/10 02:09:43 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/10 05:01:07 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	builtin_jobs(t_group *grp, char **cmd)
 		else
 			display_jobs(tmp, 0, 1);
 		display_jobs_pipe(tmp, options);
-		//check_group_jobs(tmp, 1);
+		check_group_status(tmp, 1);
 		tmp = tmp->next;
 	}
 	return (1);
