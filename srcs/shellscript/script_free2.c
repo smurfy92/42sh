@@ -6,11 +6,27 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/08 04:45:12 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 06:45:27 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/10 08:09:18 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
+
+void		fold_free(t_fold **to_free)
+{
+	t_fold		*tmp;
+
+	tmp = *to_free;
+	if (tmp)
+	{
+		if (tmp->dir)
+			closedir(tmp->dir);
+		ft_strdel(&tmp->tp);
+		ft_strdel(&tmp->dirname);
+		free(tmp);
+	}
+	*to_free = NULL;
+}
 
 void		loop_free(void **to_free)
 {
@@ -19,6 +35,7 @@ void		loop_free(void **to_free)
 	tmp = *to_free;
 	sc_comp_free(&tmp->comp);
 	action_free(&tmp->acts);
+	fold_free(&tmp->f_loop);
 	free(tmp);
 	*to_free = NULL;
 }

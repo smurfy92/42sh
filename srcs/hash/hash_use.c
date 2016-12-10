@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hash_use.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/20 18:09:48 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/22 21:40:54 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/10 08:29:15 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,11 @@ char		*get_path(char *cmd, t_root *root)
 		return (NULL);
 	if (root == NULL || !root->first)
 		return (NULL);
+	if (ft_strcmp(cmd, "42sh") == 0)
+	{
+		tmpath = ft_strdup(ft_getenv(get_grp(), "_"));
+		return (tmpath);
+	}
 	if (ft_strchr(cmd, '/'))
 	{
 		if (ft_strcmp((tmpath = gp(ft_strrchr(cmd, '/') + 1, root)), cmd) == 0)
