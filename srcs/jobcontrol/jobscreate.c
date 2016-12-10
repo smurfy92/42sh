@@ -6,34 +6,68 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/03 23:41:24 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/09 06:40:42 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/10 08:21:26 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-void		display_jobs(t_jobs *jobs, int n, int parent)
+void		free_jobs(t_jobs *jobs)
 {
-	if (jobs == NULL)
-		return ;
-	!jobs->idx ? ft_putstr_fd("  ", 1) : 0;
-	ft_putstr_fd("[", 1);
-	!jobs->idx ? ft_putchar_fd('p', 1) : ft_putnbr_fd(jobs->idx, 1);
-	ft_putstr_fd("] ", 1);
-	ft_putnbr_fd(jobs->pid, 1);
-	ft_putchar_fd(' ', 1);
-	ft_putstr_fd(jobs->status, 1);
-	ft_putchar_fd(' ', 1);
-	parent ? ft_putstr_fd(jobs->parent_cmd, 1) : ft_putstr_fd(jobs->cmd, 1);
-	if (n)
-		ft_putchar_fd('\n', 1);
+	t_jobs	*pipe;
+	t_jobs	*next;
+
+	REMOVE(&jobs->status);
+	REMOVE(&jobs->cmd);
+	REMOVE(&jobs->parent_cmd);
+	pipe = jobs->next_pipe;
+	while (pipe)
+	{
+		next = pipe->next_pipe;
+		REMOVE(&pipe->status);
+		REMOVE(&pipe->cmd);
+		free(pipe);
+		pipe = NULL;
+		pipe = next;
+	}
+	free(jobs);
+	jobs = NULL;
+}
+
+void		remove_jobs(int pgid)
+{
+	t_jobs		*jobs;
+	t_jobs		*next;
+	t_jobs		*prev;
+	t_group		*grp;
+
+	prev = NULL;
+	grp = get_grp();
+	jobs = grp->jobs;
+	while (jobs)
+	{
+		next = jobs->next;
+		if (pgid == jobs->pid)
+		{	
+			if (prev)
+				prev->next = next;
+			else if (prev == NULL && next != NULL)
+				grp->jobs = next;
+			else if (prev == NULL && next == NULL)
+				grp->jobs = NULL;
+			free_jobs(jobs);
+			return ;
+		}
+		prev = jobs;
+		jobs = next;
+	}
 }
 
 void		fill_jobs(t_jobs *jobs, int idx, int pid, char *cmd)
 {
 	jobs->idx = idx;
 	jobs->pid = pid;
-	jobs->status = SDUP("RUNNING");
+	jobs->status = SDUP("running");
 	jobs->cmd = SDUP(cmd);
 	jobs->terminate = -1;
 	jobs->code = 0;
@@ -42,28 +76,17 @@ void		fill_jobs(t_jobs *jobs, int idx, int pid, char *cmd)
 t_jobs		*create_jobs(t_group *grp, t_jobs *new, char *cmd, int pid)
 {
 	t_jobs		*tmp;
-	int			count;
 
-	count = 2;
 	fill_jobs(new, 1, pid, cmd);
 	if (!grp->jobs)
 		grp->jobs = new;
 	else
 	{
 		tmp = grp->jobs;
-		while (tmp && tmp->next)//(tmp->next || tmp->pid == -1))
-		{
-			count++;
-			// if (tmp->pid == -1)
-			// {
-			// 	REMOVE(&new->cmd); free(new);
-			// 	fill_jobs(tmp, tmp->idx, pid, cmd);
-			// 	return (tmp);
-			// }
+		while (tmp && tmp->next)
 			tmp = tmp->next;
-		}
+		new->idx = tmp->idx + 1;
 		tmp->next = new;
-		tmp->next->idx = count;
 	}
 	return(new);
 }
@@ -72,7 +95,7 @@ t_jobs		*create_pipe_jobs(t_jobs *new, t_jobs *jobs, char *cmd, int pid)
 {
 	new->idx = 0;
 	new->pid = pid;
-	new->status = SDUP("RUNNING");
+	new->status = SDUP("running");
 	new->cmd = SDUP(cmd);
 	new->terminate = -1;
 	new->parent_cmd = NULL;
