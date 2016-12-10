@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 20:37:49 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/10 03:41:20 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/10 08:24:34 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,8 @@ t_jobs		*get_jobs_idx(t_group *grp, int idx)
 			break;
 		jobs = jobs->next;
 	}
-	if (curr == NULL || curr->pid < 0)
+	if (curr == NULL)
 	{
-		idx == 0 ? error_cmd("no jobs in background", "use & to create jobs", 1) :
 		error_cmd("could not found jobs", ft_itoa(idx), 1);
 		return (NULL);
 	}
@@ -85,7 +84,7 @@ t_jobs		*get_jobs_pid(int pid)
 		if (jobs && jobs->pid == pid)
 			return (jobs);
 		pipe = jobs->next_pipe;
-		while(pipe)
+		while (pipe)
 		{
 			if (pipe && pipe->pid == pid)
 				return (pipe);

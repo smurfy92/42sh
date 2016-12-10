@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/07 00:53:40 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/10 05:01:07 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/10 08:15:50 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,31 +45,6 @@ static int		analyse_opt(t_group *grp, char *arg, int *options, char *env_options
 	return (1);
 }
 
-int		jobs_opt(t_group *grp, char **cmd, int *options)
-{
-	int		i;
-	char	*env_options;
-
-	i = -1;
-	options[0] = false;
-	options[1] = false;
-	options[2] = false;
-	env_options = SDUP("-lp");
-	while (cmd && cmd[++i])
-	{
-		if (cmd[i][0] == '-')
-		{
-			if (analyse_opt(grp, cmd[i], options, env_options) < 0)
-			{
-				REMOVE(&env_options);
-				error_cmd("jobs", "bad arg", 1);
-				return (-1);
-			}
-		}
-	}
-	REMOVE(&env_options);
-	return (0);
-}
 
 void	display_jobs_pipe(t_jobs *jobs, int *options)
 {	
@@ -83,6 +58,7 @@ void	display_jobs_pipe(t_jobs *jobs, int *options)
 		{
 			ft_putstr("  ");
 			ft_putnbr(pipe->pid);
+			ft_putchar('\n');
 		}
 		else
 			display_jobs(pipe, 1, 0);
@@ -90,14 +66,50 @@ void	display_jobs_pipe(t_jobs *jobs, int *options)
 	}
 }
 
+int		jobs_opt(t_group *grp, char **cmd, int *options)
+{
+	int		i;
+	int		is_jobs;
+	char	*env_options;
+	t_jobs	*jobs;
+
+	i = 0;
+	env_options = SDUP("-lp");
+	is_jobs = false;
+	while (cmd && cmd[++i])
+	{
+		if (cmd[i][0] == '-')
+		{
+			if (analyse_opt(grp, cmd[i], options, env_options) < 0)
+			{
+				REMOVE(&env_options);
+				error_cmd("jobs", "bad options", 1);
+				return (-1);
+			}
+		}
+		else
+		{
+			jobs = get_jobs_idx(grp, ft_atoi(cmd[i]));
+			if (jobs)
+				display_jobs(jobs, 1, 1);
+			is_jobs = true;
+		}
+	}
+	REMOVE(&env_options);
+	return (is_jobs ? -1 : 0);
+}
+
 int	builtin_jobs(t_group *grp, char **cmd)
 {
 	t_jobs	*tmp;
 	int		options[3];
 
-	tmp = grp->jobs;
+	options[0] = false;
+	options[1] = false;
+	options[2] = false;
 	if (jobs_opt(grp, cmd, options) < 0)
 		return (1);
+	tmp = grp->jobs;
 	while (tmp)
 	{
 		if (options[2])

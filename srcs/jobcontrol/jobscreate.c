@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/03 23:41:24 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/10 05:01:11 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/10 08:21:26 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void		fill_jobs(t_jobs *jobs, int idx, int pid, char *cmd)
 {
 	jobs->idx = idx;
 	jobs->pid = pid;
-	jobs->status = SDUP("RUNNING");
+	jobs->status = SDUP("running");
 	jobs->cmd = SDUP(cmd);
 	jobs->terminate = -1;
 	jobs->code = 0;
@@ -95,7 +95,7 @@ t_jobs		*create_pipe_jobs(t_jobs *new, t_jobs *jobs, char *cmd, int pid)
 {
 	new->idx = 0;
 	new->pid = pid;
-	new->status = SDUP("RUNNING");
+	new->status = SDUP("running");
 	new->cmd = SDUP(cmd);
 	new->terminate = -1;
 	new->parent_cmd = NULL;

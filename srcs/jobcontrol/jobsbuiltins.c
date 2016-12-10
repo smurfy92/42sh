@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 20:40:36 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/10 05:01:37 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/10 08:23:59 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int		builtin_fg(t_group *grp, int idx)
 {
 	t_jobs	*curr;
 
+	idx == 0 ? (idx = -1) : 0;
 	curr = get_jobs_idx(grp, idx);
 	if (curr != NULL)
 		put_in_fg(grp, curr);
@@ -82,6 +83,7 @@ int	builtin_bg(t_group *grp, int idx)
 {
 	t_jobs *curr;
 
+	idx == 0 ? (idx = -1) : 0;
 	curr = get_jobs_idx(grp, idx);
 	if (curr)
 		ft_sigcont(curr);
