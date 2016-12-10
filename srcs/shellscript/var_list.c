@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 23:43:44 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/10 05:09:03 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/10 08:12:24 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ static int			update_var(t_var *var, void *value, int type)
 	if (var->type == STR_T)
 	{
 		ft_strdel(&var->str);
-		ft_putendl((char *)value);
 		var->str = ft_strdup((char *)value);
 	}
 	if (var->type == NUMBER_T)

@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/05 01:21:12 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/10 05:02:39 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/10 08:10:09 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ static int		run_loop_dir(t_loop *current, t_script *script)
 			name = ft_strjoin_nf(ft_strjoin(current->f_loop->dirname, "/"), cur_e->d_name, 1);
 			// ft_putendl(name);
 			new_a = new_assignation(current->f_loop->tp, name);
-			ft_putendl(new_a->value);
 			add_to_list(script, new_a);
 			action_reader(script, current->acts);
 			assign_free((void **)&new_a);
@@ -82,7 +81,7 @@ static int		run_loop_dir(t_loop *current, t_script *script)
 		}
 	}
 	closedir(current->f_loop->dir);
-	current->f_loop = NULL;
+	current->f_loop->dir = NULL;
 	return (0);
 }
 

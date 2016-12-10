@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 23:53:50 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/10 06:08:51 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/10 08:10:18 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,6 @@ void	*assignator(t_assign *assign, int *type)
 		return (handler_op(assign->value, type, '*'));
 	else if (ft_strchr(assign->value, '/'))
 	{
-		ft_putendl("FACING A PROBLEM");
 		if (check_if_path(assign->value))
 			return (handler_op(assign->value, type, '/'));
 		else

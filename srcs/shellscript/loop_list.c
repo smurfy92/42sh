@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/05 01:33:45 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/10 06:04:16 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/10 08:08:05 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static t_fold	*get_loop_fold(char *dirname, t_loop *new)
 	t_fold		*fold;
 
 	fold = (t_fold *)malloc(sizeof(t_fold));
+	fold->dir = NULL;
 	var_replacer(get_script(NULL), &dirname);
 	if (!(fold->dir = opendir(dirname)))
 	{
