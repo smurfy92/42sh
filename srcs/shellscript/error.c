@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/28 02:06:06 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 06:36:42 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/10 06:14:51 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static void		error_handler_next(t_script *script)
 		ft_putendl_fd("Invalid loop syntax", 2);
 	else if (script->errnb == E_WRONG_FILE)
 		ft_putendl_fd("Can't open input file", 2);
+	else if (script->errnb == E_INVALID_LOOP_FOLDER)
+		ft_putendl_fd("Problem opening the folder", 2);
 	else
 		ft_putendl_fd("Unknown error", 2);
 }
@@ -29,7 +31,7 @@ void	error_handler(t_script *script)
 	else if (script->errnb == E_INSTANT)
 		ft_putendl_fd("Error during variable assignation", 2);
 	else if (script->errnb == E_CONF_TYPES)
-		ft_putstr_fd("Conflicting types during assignation", 2);
+		ft_putendl_fd("Conflicting types during assignation", 2);
 	else if (script->errnb == E_UNKNOWN_VAR)
 		ft_putendl_fd("Unknown variable used", 2);
 	else if (script->errnb == E_INCOMPLETE_COND)

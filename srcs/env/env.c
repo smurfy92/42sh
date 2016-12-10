@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 16:51:54 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/09 06:25:16 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/10 07:04:29 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,17 @@ void	create_tmp_env(t_group *grp)
 	}
 }
 
+static int		display_env_help(void)
+{
+	ft_putendl("usage: env [-i|-h] [name=value] [utility [argument]]");
+	ft_putendl("env is used to create a copy of the current environment for a program.");
+	ft_putendl("by using the pair name, value you can add env variables or change values of the existing ones.");
+	ft_putendl("utility has to be an executable file.");
+	ft_putendl("-i : remove all the env variables");
+	ft_putendl("-h : display help");
+	return (1);
+}
+
 /*
 **	gestion de la builtin env -->
 **	execute si necessaire && cree le tmp modifie
@@ -63,9 +74,11 @@ int		builtin_env(t_group *grp, t_parse *parse)
 	int		end;
 
 	cmdsplit = parse->cmdsplit;
-	if (env_opt(grp, parse) < 0)
+	if (cmdsplit[1] && ft_strcmp(cmdsplit[1], "-h") == 0)
+		return (display_env_help());
+	if (env_opt(grp, parse) < 0 && !(cmdsplit[1] && ft_strcmp(cmdsplit[1], "-h") == 0))
 		return ((grp->exit = 1));
-	if (ENV(opt_i) == false && ENV(start_varenv) == false && ENV(cmd) == NULL)
+	else if (ENV(opt_i) == false && ENV(start_varenv) == false && ENV(cmd) == NULL)
 		show_env(0, grp);
 	else
 	{

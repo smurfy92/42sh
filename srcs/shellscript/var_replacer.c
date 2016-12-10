@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/28 03:52:23 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 05:14:18 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/10 06:12:52 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,15 @@ static void	replace_at(char **line, int i, t_script *script)
 	tmp = *line;
 	len = len_to_space(&tmp[i]);
 	old = ft_strsub(&tmp[i], 0, len);
-	if (!(var = check_if_var_exists(old, script)))
+	if (!(var = check_if_var_exists(old, script)) && !(ft_getenv(get_grp(), old)))
 	{
 		script->errnb = E_UNKNOWN_VAR;
 		ft_strdel(&old);
 		error_handler(script);
 	}
-	if (var->type == STR_T)
+	if (ft_getenv(get_grp(), old))
+		new = ft_strdup(ft_getenv(get_grp(), old));
+	else if (var->type == STR_T)
 		new = ft_strdup(var->str);
 	else
 		new = ft_itoa(*var->nb);

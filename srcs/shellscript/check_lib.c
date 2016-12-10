@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/08 02:53:38 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 06:40:48 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/10 03:09:38 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		check_good_closure(char **check, int i)
 	{
 		if (ft_strncmp(check[i], "if", 2) == 0)
 			last = ft_strjoin_nf("fi", last, 2);
-		if (ft_strncmp(check[i], "while", 5) == 0)
+		if (ft_strncmp(check[i], "while", 5) == 0 || ft_strncmp(check[i], "for ", 4) == 0)
 			last = ft_strjoin_nf("wi", last, 2);
 		if (ft_strcmp(check[i], "done") == 0)
 		{
@@ -144,6 +144,20 @@ int		is_important_space(char *line)
 	return (0);
 }
 
+int		for_loop_checker(char *line)
+{
+	int		i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (ft_strncmp(&line[i], "for ", 4))
+			;
+		i++;
+	}
+	return (0);
+}
+
 int		main_checker(char **check)
 {
 	int		i;
@@ -216,6 +230,11 @@ int		main_checker(char **check)
 			if (assignation_checker(tmp))
 				return (clean_checker(&tmp, E_INSTANT, i));
 
+		}
+		else if (ft_strncmp("for ", tmp, 4) && ft_strstr(tmp, " in "))
+		{
+			if (check_good_closure(check, i))
+				return (clean_checker(&tmp, E_INVALID_LOOP, i));
 		}
 		ft_strdel(&tmp);
 		i++;
