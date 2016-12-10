@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 20:40:36 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/09 06:36:47 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/10 02:14:25 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,47 +34,38 @@ int		ft_sigcont(t_jobs *jobs)
 	return (0);
 }
 
-int		check_jobs_enabled(t_group *grp, t_jobs *jobs)
+int		check_jobs_stopped(t_group *grp, t_jobs *jobs)
 {
 	t_jobs	*pipe;
 	t_jobs	*last;
-	int stopped;
-	int	count;
 
-	stopped = 0;
-	count = 1;
-	if (jobs->terminate == CLD_EXITED || jobs->terminate == CLD_KILLED || 
-		jobs->terminate == CLD_STOPPED)
-		stopped += 1;
+	if (jobs == NULL)
+		return (true);
+	if (jobs->enabled == true)
+		return (false);
 	last = jobs;
 	pipe = jobs->next_pipe;
 	while (pipe)
 	{
-		if (pipe->terminate == CLD_EXITED || pipe->terminate == CLD_KILLED ||
-			pipe->terminate == CLD_STOPPED)
-			stopped += 1;
-		count++;
+		if (pipe->enabled == true)
+			return (false);
 		last = pipe;
 		pipe = pipe->next_pipe;
 	}
-	grp->exit = (last->code > 0) ? 1 : 0; 
-	return (count == stopped ? false : true);
+	grp->exit = (last->code > 1 && last->terminate != CLD_STOPPED) ? 1 : 0; 
+	return (true);
 }
 
-void	put_in_fg(t_group *grp, t_jobs *parent)
+void	put_in_fg(t_group *grp, t_jobs *pgid)
 {
-	if (grp)
-		;
-	tcsetpgrp(STDIN_FILENO, parent->pid);
-	ft_sigcont(parent);
+	tcsetpgrp(STDIN_FILENO, pgid->pid);
+	ft_sigcont(pgid);
 	while (42)
 	{
-		check_jobs_status(parent);
-		if (check_jobs_enabled(grp, parent) == false)
+		if (check_jobs_stopped(grp, pgid) || check_group_jobs(pgid, 0) < 0)
 			break ;
 	}
 	tcsetpgrp(STDIN_FILENO, grp->program_pid);
-	grp->exit = parent->code;
 }
 
 int		builtin_fg(t_group *grp, int idx)

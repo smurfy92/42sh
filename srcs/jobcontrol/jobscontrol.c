@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 20:37:49 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/09 06:36:29 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/10 02:10:16 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,13 @@ t_jobs		*get_jobs_idx(t_group *grp, int idx)
 	return (curr);
 }
 
-t_jobs		*get_jobs_pid(t_group *grp, int pid)
+t_jobs		*get_jobs_pid(int pid)
 {
 	t_jobs	*jobs;
 	t_jobs	*pipe;
+	t_group *grp;
 
+	grp = get_grp();
 	jobs = grp->jobs;
 	while (jobs)
 	{
@@ -70,7 +72,7 @@ t_jobs		*get_jobs_pid(t_group *grp, int pid)
 		while(pipe)
 		{
 			if (pipe && pipe->pid == pid)
-				return (jobs);
+				return (pipe);
 			pipe = pipe->next_pipe;
 		}
 		jobs = jobs->next;

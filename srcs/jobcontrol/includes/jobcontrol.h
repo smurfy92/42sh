@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 23:25:11 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/09 06:38:12 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/10 02:02:09 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_jobs		*control_jobs(t_jobs **parent, t_group *grp, t_parse *parse, char *andor
 t_jobs		*create_jobs(t_group *grp, t_jobs *new, char *cmd, int pid);
 t_jobs		*create_pipe_jobs(t_jobs *new, t_jobs *jobs, char *cmd, int pid);
 t_jobs		*get_jobs_idx(t_group *grp, int val);
-t_jobs		*get_jobs_pid(t_group *grp, int pid);
+t_jobs		*get_jobs_pid(int pid);
 void		display_jobs(t_jobs *jobs, int n, int parent);
 
 /*
@@ -58,5 +58,6 @@ void		jobs_status(t_group *grp);
 void		change_state(t_jobs *jobs, int code);
 void		analyse_ret(t_jobs *jobs, int ret, int code);
 void		check_jobs_status(t_jobs *jobs);
+int			check_group_jobs(t_jobs *pgid, int free);
 
 #endif

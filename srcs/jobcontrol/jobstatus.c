@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 00:13:31 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/09 06:54:10 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/10 02:10:18 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,14 @@ void	change_state(t_jobs *jobs, int code)
 	REMOVE(&jobs->status);
 	jobs->terminate = code;
 	jobs->status = update_status(code);
-	jobs->enabled = (code == 1 || code == 2) ? false : true;
-	if (jobs->enabled == false)
+	jobs->enabled = (code == CLD_EXITED || code == CLD_KILLED || code == CLD_STOPPED) ? false : true;
+	if (jobs->enabled == false && code != CLD_STOPPED)
 		if (jobs->fdin > 2)
 			close(jobs->fdin);
-	if (code > 1 && jobs->parent_cmd != NULL) // check tcsetpgrp to see if display or not
+	if (code > 1 && jobs->parent_cmd != NULL)
 		display_jobs(jobs, 1, 1);
+	else if (code > 1)
+		display_jobs(jobs, 1, 0);
 }
 
 void	analyse_ret(t_jobs *jobs, int ret, int code)
@@ -56,8 +58,28 @@ void	analyse_ret(t_jobs *jobs, int ret, int code)
 		else if (ret == jobs->pid)
 			change_state(jobs, CLD_KILLED);
 		else if (ret == -1 && jobs->terminate == -1)
-			change_state(jobs, 0);
+			change_state(jobs, code);
 	}
+}
+
+int		check_group_jobs(t_jobs *pgid, int free)
+{
+	int		ret;
+	int		code;
+	t_jobs	*jobs;
+
+	ret = waitpid(-pgid->pid, &code, WNOHANG | WUNTRACED | WCONTINUED);
+	if (ret > 0 && (jobs = get_jobs_pid(ret)))
+		analyse_ret(jobs, ret, code);
+	else if (ret == -1)
+	{
+		if (free)
+		{
+			;// remove jobs;
+		}
+		return (-1);
+	}
+	return (0);
 }
 
 void	check_jobs_status(t_jobs *jobs)
