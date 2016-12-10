@@ -6,11 +6,12 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 23:53:50 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 06:39:04 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/10 06:08:51 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
+#include <errno.h>
 
 void				ft_my_trim(char **to_trim)
 {
@@ -42,6 +43,15 @@ static int			type_guesser(char *value)
 		i++;
 	}
 	return (NUMBER_T);
+}
+
+static int			check_if_path(char *value)
+{
+	struct stat		buf;
+
+	if (stat(value, &buf) < 0)
+		return (1);
+	return (0);
 }
 
 /*
@@ -170,7 +180,7 @@ void	*assignator(t_assign *assign, int *type)
 {
 	if (!assign->value)
 		return (NULL);
-	if (check_op(assign->value) > 1)
+	if (check_op(assign->value) > 1 && check_if_path(assign->value))
 		return (NULL);
 	if (ft_strchr(assign->value, '+'))
 		return (handler_op(assign->value, type, '+'));
@@ -179,7 +189,14 @@ void	*assignator(t_assign *assign, int *type)
 	else if (ft_strchr(assign->value, '*'))
 		return (handler_op(assign->value, type, '*'));
 	else if (ft_strchr(assign->value, '/'))
-		return (handler_op(assign->value, type, '/'));
+	{
+		ft_putendl("FACING A PROBLEM");
+		if (check_if_path(assign->value))
+			return (handler_op(assign->value, type, '/'));
+		else
+			return (simple_assignator(assign->value, type));
+		// return ((check_if_path(assign->value)) ? handler_op(assign->value, type, '/') : simple_assignator(assign->value, type));
+	}
 	else if (ft_strchr(assign->value, '%'))
 		return (handler_op(assign->value, type, '%'));
 	else

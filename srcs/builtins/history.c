@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:55:46 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/11/22 00:10:03 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/10 06:48:45 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,16 @@ int		builtin_history2(t_group *grp, t_parse *parse)
 	return (0);
 }
 
+static void		history_display_help(void)
+{
+	ft_putendl("usage: history [ -h | index ]");
+	ft_putendl("history displays the last fifteen commands int the historic.");
+	ft_putendl("If an index is given as an argument, historic will be displayed from this index.");
+	ft_putendl("You can use \'!\' operator to access a particular command in historic : ![index]");
+	ft_putendl("\'!!\' will refer to the last command.");
+	ft_putendl("-h: display help");
+}
+
 int		builtin_history(t_group *grp, t_parse *parse)
 {
 	char	**cmdsplit;
@@ -78,10 +88,14 @@ int		builtin_history(t_group *grp, t_parse *parse)
 	grp->history = ft_history_get_last(grp);
 	cmdsplit = parse->cmdsplit;
 	if (!cmdsplit[1])
+	{
 		if (grp->history->i > 16)
 			ft_display_history(ft_history_get_by_id(grp, grp->history->i - 16));
 		else
 			ft_display_history(ft_history_get_first(grp));
+	}//else pour qul if?????
+	else if (ft_strcmp(cmdsplit[1], "-h") == 0)
+		history_display_help();
 	else
 	{
 		if (!ft_strisdigit(cmdsplit[1]))

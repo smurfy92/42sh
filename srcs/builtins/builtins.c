@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:50:41 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/09 06:25:07 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/10 07:19:27 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,13 @@ int	is_builtins(char **cmd)
 	return (0);
 }
 
+static void		display_setenv_help(void)
+{
+	ft_putendl("usage: setenv [-h] [name=value]");
+	ft_putendl("setenv is used to set or modify an environment variable");
+	ft_putendl("-h : display help");
+}
+
 int	builtin_setenv(t_group *grp, t_parse *parse)
 {
 	char	**cmdsplit;
@@ -47,7 +54,9 @@ int	builtin_setenv(t_group *grp, t_parse *parse)
 	i = 0;
 	cmdsplit = parse->cmdsplit;
 	cmdsplit[1] == NULL ? error_cmd("setenv", "no argument given", 1) : 0;
-	while (cmdsplit[++i] != NULL)
+	if (ft_strcmp(cmdsplit[1], "-h") == 0)
+		display_setenv_help();
+	while (cmdsplit[++i] != NULL && ft_strcmp(cmdsplit[i], "-h"))
 	{
 		if (!ft_strncmp(cmdsplit[i], "_", 1) ||
 			!ft_strncmp(cmdsplit[i], "SHLVL", 5))
@@ -64,6 +73,13 @@ int	builtin_setenv(t_group *grp, t_parse *parse)
 	return (1);
 }
 
+static void		display_unsetenv_help(void)
+{
+	ft_putendl("usage : unsetenv [-h] [ name ]");
+	ft_putendl("unsetenv is used to unset an environment variable in your current shell");
+	ft_putendl("-h : display help");
+}
+
 int	builtin_unsetenv(t_group *grp, t_parse *parse)
 {
 	char	**cmdsplit;
@@ -72,7 +88,9 @@ int	builtin_unsetenv(t_group *grp, t_parse *parse)
 	i = 0;
 	cmdsplit = parse->cmdsplit;
 	cmdsplit[1] == NULL ? error_cmd("unsetenv", "no argument given", 1) : 0;
-	while (cmdsplit[++i] != NULL)
+	if (ft_strcmp(cmdsplit[1], "-h") == 0)
+		display_unsetenv_help();
+	while (cmdsplit[++i] != NULL && ft_strcmp(cmdsplit[1], "-h"))
 	{
 		if (!ft_strncmp(cmdsplit[i], "_", 1) ||
 			!ft_strncmp(cmdsplit[i], "SHLVL", 5))

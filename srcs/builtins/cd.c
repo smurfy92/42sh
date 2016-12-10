@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 20:23:03 by julio             #+#    #+#             */
-/*   Updated: 2016/11/22 21:00:31 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/10 06:49:01 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,19 @@ int		update_path_cd(char **path, t_parse *parse, t_group *grp, int mode)
 	return (ret);
 }
 
+static void		cd_display_help(void)
+{
+	ft_putendl("usage: cd [ -L | -P | -h ] [ dirname ]");
+	ft_putendl("cd is used to change the working directory.");
+	ft_putendl("If 2 arguments are given to cd, the first ocurrence in PWD will be replaced by the second argument.");
+	ft_putendl("-P : change directory using the physical path");
+	ft_putendl("-L : change directory using the logical path");
+	ft_putendl("-h : display help");
+}
+
 int		is_param(char c)
 {
-	if (c == 'P' || c == 'L')
+	if (c == 'P' || c == 'L' || c == 'h')
 		return (1);
 	return (0);
 }
@@ -93,17 +103,19 @@ int		builtin_cd(t_group *grp, t_parse *parse)
 
 	opt = 0;
 	ft_bzero(buf, 1024);
+	path = NULL;
 	if (parse->cmdsplit[1] == NULL)
 		path = return_home(grp, NULL);
 	else if ((parse->cmdsplit[1][0] != '-' && parse->cmdsplit[2] &&
 		parse->cmdsplit[3]) || (parse->cmdsplit[1][0] == '-' &&
 		parse->cmdsplit[2] && parse->cmdsplit[3] && parse->cmdsplit[4]))
-	{
 		error_cmd("Too many arguments", "cd", 1);
-		path = NULL;
-	}
+	else if ((parse->cmdsplit[1][0] == '-' && ft_strlen(parse->cmdsplit[1]) != 2))
+		error_cmd("Too many options", "cd", 1);
 	else if (parse->cmdsplit[1][0] == '-' && parse->cmdsplit[1][1] == false)
 		update_path_cd(&path, parse, grp, 1);
+	else if (parse->cmdsplit[1][0] == '-' && parse->cmdsplit[1][1] == 'h')// && ft_strlen(parse->cmdsplit[1]) == 2)
+		cd_display_help();
 	else
 		cd_helper(grp, parse, &path, &opt);
 	if (!path)

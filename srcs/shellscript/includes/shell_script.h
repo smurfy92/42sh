@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 20:29:28 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 07:05:10 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/10 04:43:27 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,13 @@ typedef struct		s_com
 # define DIF_S				60
 # define DIF_B				62
 
+typedef struct		s_fold
+{
+	DIR				*dir;
+	char			*tp;
+	char			*dirname;
+}					t_fold;
+
 /*
 **	LOOPS struct
 */
@@ -107,6 +114,7 @@ typedef struct		s_loop
 	int				type;
 	// char			*text;
 	t_com			*comp;
+	t_fold			*f_loop;
 	t_action		*acts;
 }					t_loop;
 
@@ -171,6 +179,8 @@ typedef struct		s_script
 # define E_INVALID_OP		9
 # define E_INVALID_LOOP		10
 # define E_WRONG_FILE		11
+# define E_INVALID_LOOP_FOLDER	12
+
 /*
 **	script_free.c
 */

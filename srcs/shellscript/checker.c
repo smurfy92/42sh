@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/05 01:32:48 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 06:40:33 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/10 04:32:21 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ static int			loop_checker(char **clean, int *i, t_script *script,
 		buff = ft_strtrim(clean[*i]);
 		buff = ft_strjoin_nf(buff, str, 1);
 		*line = ft_strjoin_nf(*line, buff, 1);
-		if (ft_strncmp(buff, "while ", 6) == 0)
+		if (ft_strncmp(buff, "while ", 6) == 0 || ft_strncmp(buff, "for ", 4) == 0)
 			last++;
 		if (ft_strncmp(buff, "done", 4) == 0 && last == 1)
 		{
@@ -131,6 +131,13 @@ int					line_checker(char **clean, int *i, t_script *script, t_action **begin)
 	{
 		if (!(script->errnb = loop_checker(clean, i, script, &line)))
 			add_to_action(new_loop(line, script), script, LOOP_T, begin);
+	}
+	else if (ft_strncmp(line, "for ", 4) == 0)
+	{
+		if (!(script->errnb = loop_checker(clean, i, script, &line)))
+		{
+			add_to_action(new_loop(line, script), script, LOOP_T, begin);
+		}
 	}
 	else if (ft_strchr(line, '=') && !is_important_space(line))
 		script->errnb = equal_checker(line, script, begin);
