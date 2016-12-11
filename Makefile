@@ -57,6 +57,7 @@ SRC += srcs/builtins/cd_lib2.c
 SRC += srcs/builtins/echo.c
 SRC += srcs/builtins/echo_lib.c
 SRC += srcs/builtins/history.c
+SRC += srcs/builtins/builtins_set_unset.c
 
 #env
 SRC	+= srcs/env/env.c
@@ -133,7 +134,8 @@ INC += -I srcs/shellscript/includes/
 INC += -I ./includes/
 
 OBJ = $(SRC:.c=.o)
-FLAG = -Wall -Werror -Wextra
+FLAG = -Wall -Werror -Wextra 
+#-fsanitize=address
 CG = \033[92m
 CY =  \033[93m
 CE = \033[0m
