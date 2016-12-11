@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 20:34:46 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 06:41:21 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/11 16:38:54 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ int		init_shellscript(int ac, char **av, t_group *grp)
 			if (!script->errnb)
 			{
 				ft_pre_parse(grp);
-				if (LEN(TERM(cmd_line)) > 0)
-					ft_add_history(grp, TERM(cmd_line));
+				// if (LEN(TERM(cmd_line)) > 0)
+				// 	ft_add_history(grp, TERM(cmd_line));
 				if (grp->err_parse == false && TERM(cmd_line))
 				{
 					grp->allcmd = ft_strsplitquote(TERM(cmd_line), ';');
