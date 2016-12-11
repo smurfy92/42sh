@@ -6,12 +6,11 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/05 01:32:48 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/10 04:32:21 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/11 19:01:27 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
-
 
 /*
 **	envoie l'assignation a son action_maker
@@ -45,7 +44,7 @@ static int			cmd_checker(char *line, t_script *script, t_action **begin)
 }
 
 /*
-**	checke validite dune condition et bufferise 
+**	checke validite dune condition et bufferise
 **	toute la condition avant de l'envoyer a l'action maker
 */
 
@@ -67,10 +66,6 @@ static int			cond_checker(char **clean, int *i,
 		*line = ft_strjoin_nf(*line, buff, 1);
 		last = (ft_strncmp(buff, "if ", 3) == 0) ? last + 1 : last;
 		last = (ft_strncmp(buff, "fi", 2) == 0) ? last - 1 : last;
-		// if (ft_strncmp(buff, "if ", 3) == 0)
-		// 	last++;
-		// else if (ft_strncmp(buff, "fi", 2) == 0)
-		// 	last--;
 		if (ft_strncmp(buff, "fi", 2) == 0 && last == 0)
 		{
 			ft_strdel(&buff);
@@ -98,15 +93,14 @@ static int			loop_checker(char **clean, int *i, t_script *script,
 		buff = ft_strtrim(clean[*i]);
 		buff = ft_strjoin_nf(buff, str, 1);
 		*line = ft_strjoin_nf(*line, buff, 1);
-		if (ft_strncmp(buff, "while ", 6) == 0 || ft_strncmp(buff, "for ", 4) == 0)
+		if (!ft_strncmp(buff, "while ", 6) || !ft_strncmp(buff, "for ", 4))
 			last++;
 		if (ft_strncmp(buff, "done", 4) == 0 && last == 1)
 		{
 			ft_strdel(&buff);
 			return (0);
 		}
-		else if (ft_strncmp(buff, "done", 4) == 0)
-			last--;
+		last = (ft_strncmp(buff, "done", 4) == 0) ? last - 1 : last;
 		ft_strdel(&buff);
 		(*i)++;
 	}
@@ -117,7 +111,8 @@ static int			loop_checker(char **clean, int *i, t_script *script,
 **	decide du bon handler a appele a la lecture dune ligne du script
 */
 
-int					line_checker(char **clean, int *i, t_script *script, t_action **begin)
+int					line_checker(char **clean, int *i, t_script *script,
+	t_action **begin)
 {
 	char	*line;
 
@@ -135,9 +130,7 @@ int					line_checker(char **clean, int *i, t_script *script, t_action **begin)
 	else if (ft_strncmp(line, "for ", 4) == 0)
 	{
 		if (!(script->errnb = loop_checker(clean, i, script, &line)))
-		{
 			add_to_action(new_loop(line, script), script, LOOP_T, begin);
-		}
 	}
 	else if (ft_strchr(line, '=') && !is_important_space(line))
 		script->errnb = equal_checker(line, script, begin);

@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 20:29:28 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/10 04:43:27 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/11 19:14:27 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,12 +238,35 @@ t_com				*new_comparaison(char *comp, t_script *script);
 
 int					main_checker(char **check);
 int					is_important_space(char *line);
+int					assignation_checker(char *line);
 
+/*
+**	check_lib2.c
+*/
+
+int					if_cond_checker(char *tmp, int i, char **check);
+int					elif_cond_checker(char *tmp, int i, char **check);
+int					else_cond_checker(char *tmp, int i, char **check);
+int					while_loop_checker(char *tmp, int i, char **check);
+int					ass_check(char *tmp);
+
+/*
+**	check_lib3.c
+*/
+
+int					clean_checker(char **tmp, int errnb, int line);
+int					update_last_ckecker(char **last, char *to_check);
+int					check_good_closure(char **check, int i);
+int					check_comp_line(char *line);
 /*
 **	action_reader.c
 */
 
-void				action_reader(t_script *script, t_action *begin);
+void				assignation_handler(t_assign *assign, t_script *script);
+int					loop_handler(t_loop *current, t_script *script);
+void				condition_handler(t_cond *curr, t_script *script);
+void				line_handler(t_line *cmd, t_script *script, t_group *grp);
+int					run_loop_dir(t_loop *current, t_script *script);
 
 /*
 **	assignator.c
@@ -261,7 +284,7 @@ void				error_handler(t_script *script);
 **	var_list.c
 */
 
-void				add_to_list(t_script *script, t_assign *assign);
+int				add_to_list(t_script *script, t_assign *assign);
 t_var				*check_if_var_exists(char *name, t_script *script);
 t_var				*new_var(int type, void *data, char *name);
 void				ft_strreplace(char **line, char *old, char *new);
@@ -289,14 +312,18 @@ t_script			*new_script(void);
 **	action_list.c
 */
 
+void				action_reader(t_script *script, t_action *begin);
 void				add_to_action(void *action, t_script *script,  int type, t_action **begin);
-void				add_to_action_cond(void *action, t_cond *cond, int type);
 
 /*
 **	assign.c
 */
 
+void				ft_my_trim(char **to_trim);
+int					check_op(char *value);
 t_assign			*new_assignation(char *name, char *value);
+int					check_if_path(char *value);
+int					type_guesser(char *value);
 
 /*
 **	var_replacer.c

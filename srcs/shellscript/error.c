@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/28 02:06:06 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/10 06:14:51 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/11 19:04:23 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void		error_handler_next(t_script *script)
 		ft_putendl_fd("Unknown error", 2);
 }
 
-void	error_handler(t_script *script)
+void			error_handler(t_script *script)
 {
 	if (script->errnb == E_TOO_EQU)
 		ft_putendl_fd("Too many '=' on a single line, limited to one", 2);
@@ -37,7 +37,7 @@ void	error_handler(t_script *script)
 	else if (script->errnb == E_INCOMPLETE_COND)
 		ft_putendl_fd("Invalid condition syntax", 2);
 	else if (script->errnb == E_STARTED_COND)
-		ft_putendl_fd("Condition starting whereas previous hasn't been closed", 2);
+		ft_putendl_fd("Condition hasn't been closed", 2);
 	else if (script->errnb == E_MULTI_COMP)
 		ft_putendl_fd("Cannot make multiple comparaisons", 2);
 	else if (script->errnb == E_INCOMPLETE_COMP)
@@ -46,7 +46,6 @@ void	error_handler(t_script *script)
 		ft_putendl_fd("Invalid operation", 2);
 	else
 		error_handler_next(script);
-	// get_grp()->fail = true;
 	free_script(&script);
 	ft_exit(get_grp(), 1);
 }

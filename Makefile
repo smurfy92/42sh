@@ -28,6 +28,8 @@ SRC	+= srcs/shellscript/loop_list.c
 SRC	+= srcs/shellscript/script_free.c
 SRC	+= srcs/shellscript/script_lib.c
 SRC	+= srcs/shellscript/check_lib.c
+SRC	+= srcs/shellscript/check_lib2.c
+SRC	+= srcs/shellscript/check_lib3.c
 SRC	+= srcs/shellscript/script_free2.c
 
 #exec

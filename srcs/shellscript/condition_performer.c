@@ -6,12 +6,11 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/05 01:30:50 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 05:11:55 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/11 19:04:59 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
-
 
 static t_var	*get_comp_var(char *value, int idx)
 {
@@ -93,4 +92,3 @@ int				perform_condition(t_cond *current, t_script *script)
 		error_handler(script);
 	return (ret);
 }
-

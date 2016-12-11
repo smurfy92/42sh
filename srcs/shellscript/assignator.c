@@ -6,82 +6,17 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 23:53:50 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/10 08:10:18 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/11 17:34:56 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
-#include <errno.h>
-
-void				ft_my_trim(char **to_trim)
-{
-	char	*tmp;
-
-	tmp = ft_strtrim(*to_trim);
-	ft_strdel(to_trim);
-	*to_trim = tmp;
-}
-
-/*
-**	handler de l'assignation d'une variable, traite la chaine de caractere
-**	de lassignation pour attribuer un type et une value a la var
-*/
-
-/*
-**	deduit le type lors d'une assignation
-*/
-
-static int			type_guesser(char *value)
-{
-	int		i;
-
-	i = 0;
-	while (value[i])
-	{
-		if (!ft_isdigit(value[i]))
-			return (STR_T);
-		i++;
-	}
-	return (NUMBER_T);
-}
-
-static int			check_if_path(char *value)
-{
-	struct stat		buf;
-
-	if (stat(value, &buf) < 0)
-		return (1);
-	return (0);
-}
-
-/*
-**	make sure only one operation per assignation
-*/
-
-static int			check_op(char *value)
-{
-	int		ret;
-	char	*tmp;
-
-	ret = 0;
-	if ((tmp = ft_strchr(value, '+')))
-		(*(tmp + 1) && ft_strchr(tmp + 1, '+')) ? ret += 2 : ret++;
-	if ((tmp = ft_strchr(value, '/')))
-		(*(tmp + 1) && ft_strchr(tmp + 1, '/')) ? ret += 2 : ret++;
-	if ((tmp = ft_strchr(value, '*')))
-		(*(tmp + 1) && ft_strchr(tmp + 1, '*')) ? ret += 2 : ret++;
-	if ((tmp = ft_strchr(value, '-')))
-		(*(tmp + 1) && ft_strchr(tmp + 1, '-')) ? ret += 2 : ret++;
-	if ((tmp = ft_strchr(value, '%')))
-		(*(tmp + 1) && ft_strchr(tmp + 1, '%')) ? ret += 2 : ret++;
-	return (ret);
-}
 
 /*
 **	handler de l'assignation simple
 */
 
-static void	*simple_assignator(char *value, int *type)
+static void		*simple_assignator(char *value, int *type)
 {
 	int		*ret;
 
@@ -93,7 +28,7 @@ static void	*simple_assignator(char *value, int *type)
 	return ((void *)ret);
 }
 
-static void	*handler_numb_op(char **clean, char op, int *type)
+static void		*handler_numb_op(char **clean, char op, int *type)
 {
 	char	*ret;
 	void	*r_ret;
@@ -101,38 +36,24 @@ static void	*handler_numb_op(char **clean, char op, int *type)
 	*type = NUMBER_T;
 	ret = NULL;
 	r_ret = NULL;
+	if (op == '/' && ft_atoi(clean[1]) == 0)
+		return (NULL);
 	if (op == '+')
-	{
 		ret = ft_itoa(ft_atoi(clean[0]) + ft_atoi(clean[1]));
-		r_ret = simple_assignator(ret, type);
-	}
 	if (op == '-')
-	{
 		ret = ft_itoa(ft_atoi(clean[0]) - ft_atoi(clean[1]));
-		r_ret = simple_assignator(ret, type);
-	}
 	if (op == '*')
-	{
 		ret = ft_itoa(ft_atoi(clean[0]) * ft_atoi(clean[1]));
-		r_ret = simple_assignator(ret, type);
-	}
 	if (op == '/')
-	{
-		if (ft_atoi(clean[1]) == 0)
-			return (NULL);
 		ret = ft_itoa(ft_atoi(clean[0]) / ft_atoi(clean[1]));
-		r_ret = simple_assignator(ret, type);
-	}
 	if (op == '%')
-	{
 		ret = ft_itoa(ft_atoi(clean[0]) % ft_atoi(clean[1]));
-		r_ret = simple_assignator(ret, type);
-	}
+	r_ret = simple_assignator(ret, type);
 	ft_strdel(&ret);
 	return (r_ret);
 }
 
-static void	*handler_str_conc(char **clean, int *type)
+static void		*handler_str_conc(char **clean, int *type)
 {
 	char	*ret;
 
@@ -141,7 +62,7 @@ static void	*handler_str_conc(char **clean, int *type)
 	return ((void *)ret);
 }
 
-static void	*handler_op(char *value, int *type, char op)
+static void		*handler_op(char *value, int *type, char op)
 {
 	char		**clean;
 	int			types[2];
@@ -170,13 +91,11 @@ static void	*handler_op(char *value, int *type, char op)
 	return (ret);
 }
 
-
-
 /*
 **	handler de l'assignation
 */
 
-void	*assignator(t_assign *assign, int *type)
+void			*assignator(t_assign *assign, int *type)
 {
 	if (!assign->value)
 		return (NULL);
@@ -194,7 +113,6 @@ void	*assignator(t_assign *assign, int *type)
 			return (handler_op(assign->value, type, '/'));
 		else
 			return (simple_assignator(assign->value, type));
-		// return ((check_if_path(assign->value)) ? handler_op(assign->value, type, '/') : simple_assignator(assign->value, type));
 	}
 	else if (ft_strchr(assign->value, '%'))
 		return (handler_op(assign->value, type, '%'));
