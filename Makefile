@@ -14,7 +14,6 @@ SRC	+= srcs/shellscript/checker.c
 SRC	+= srcs/shellscript/assign.c
 SRC	+= srcs/shellscript/action_list.c
 SRC	+= srcs/shellscript/script_list.c
-SRC	+= srcs/shellscript/debug.c
 SRC	+= srcs/shellscript/action_reader.c
 SRC	+= srcs/shellscript/var_list.c
 SRC	+= srcs/shellscript/assignator.c
