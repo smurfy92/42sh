@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/08 18:39:35 by victordanain      #+#    #+#             */
-/*   Updated: 2016/11/27 23:39:33 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/11 16:31:13 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
-
-void		help_shlvl(t_group *grp)
-{
-	insert_env(grp, "SHLVL=1");
-}
 
 void		shlvl(t_group *grp)
 {
@@ -60,10 +55,8 @@ void		path_help(t_group *grp)
 		line[ret] = '\0';
 		while (line[++i])
 		{
-			if (line[i] == '\n' && line[i + 1] == '\0')
-				line[i] = '\0';
 			if (line[i] == '\n')
-				line[i] = ':';
+				line[i] = (line[i + 1] == '\0') ? '\0' : ':';
 		}
 	}
 	ft_strcat(path, "PATH=");
@@ -80,7 +73,6 @@ void		under_helper(t_group *grp)
 
 	ft_bzero(buff, 1025);
 	getcwd(buff, 1024);
-
 	if (buff[LEN(buff) - 1] != '/')
 		ft_strcat(buff, "/");
 	path = ft_strjoin(buff, grp->program_name);

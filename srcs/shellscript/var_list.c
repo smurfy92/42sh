@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 23:43:44 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/10 08:12:24 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/11 15:42:09 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,9 @@ t_var		*new_var(int type, void *data, char *name)
 	new->next = NULL;
 	new->type = type;
 	if (type == STR_T)
-	{
 		new->str = ft_strdup((char *)data);
-	}
 	else if (type == NUMBER_T)
-	{
 		new->nb = (int *)data;
-	}
 	return (new);
 }
 
