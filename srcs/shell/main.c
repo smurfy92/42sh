@@ -60,8 +60,6 @@ int			main(int argc, char **argv, char **env)
 	if (argc >= 2)
 		init_shellscript(argc, argv, grp);
 	while (42)
-	{
 		proccess(grp);
-	}
 	return (0);
 }

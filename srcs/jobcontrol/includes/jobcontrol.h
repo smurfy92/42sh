@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 23:25:11 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/10 05:01:13 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/11 05:04:40 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_jobs
 	char			*cmd;
 	char			*parent_cmd;
 	char			*status;
+	struct termios	tmodes;
 	struct s_jobs	*next_pipe;
 	struct s_jobs	*next;
 }				t_jobs;

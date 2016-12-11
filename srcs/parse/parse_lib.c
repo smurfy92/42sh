@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 23:37:23 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/10 06:10:31 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/11 05:59:03 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,9 @@ char		*replace_bquote(t_group *grp, t_parse *parse)
 	{
 		line = ft_charjoin(line, ' ');
 		bquote_result = JOINF(bquote_result, line, 3);
+		ft_putendl_fd("here", 2); // reste bloquê ici sur `ls -R /`
 	}
+	close(fd);
 	bquote_result[LEN(bquote_result) - 1] = '\0';
 	return (bquote_result);
 }

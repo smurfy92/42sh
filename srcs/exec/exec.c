@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 21:15:46 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/10 08:32:04 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/11 05:58:31 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /* todo:
 		- all redir
-		- checker bquotes
+		- checker bquotes -> good 42sh sexecute et envois tout le reste en params
 */
 
 void		launch_exec(t_group *grp, t_parse *parse, char *andorcmd, int fg)
@@ -32,32 +32,32 @@ void		launch_exec(t_group *grp, t_parse *parse, char *andorcmd, int fg)
 	while (tmp)
 	{
 		is_built = is_builtins(tmp->cmdsplit);
-		if (!tmp->fail && (!is_built || tmp->next || tmp->fd > -1))
+		if (!tmp->fail && (!fg || !is_built || tmp->next || tmp->fd > -1))
 		{
 			pipe(tabl);
 			grp->father = fork();
 			grp->father < 0 ? ft_exit(grp, 999) : 0;
 			if (grp->father == 0)
 			{
+				close(tabl[0]);
 				init_shell_job(parent ? parent->pid : 0, fg);
 				if (tmp->next && tmp->fd == -1)
-				{
-					close(tabl[0]);
 					ft_fork_pipe(grp, tmp, tabl[1]);
-				}
 				else
 				{
-					close(tabl[0]);
 					close(tabl[1]);
 					exec_child(grp, tmp);
 				}
 			}
 			else
 			{
-				jobs = control_jobs(&parent, grp, tmp, andorcmd);
-				jobs->fdin = grp->pipefd_in;
-				jobs->fg = fg;
-				setpgid (jobs->pid, parent->pid);
+				if (grp->is_interact == true)
+				{
+					jobs = control_jobs(&parent, grp, tmp, andorcmd);
+					jobs->fdin = grp->pipefd_in;
+					jobs->fg = fg;
+					setpgid (jobs->pid, parent->pid);
+				}
 				if (tmp->next)
 					grp->pipefd_in = tabl[0];
 				else
@@ -77,7 +77,7 @@ void		launch_exec(t_group *grp, t_parse *parse, char *andorcmd, int fg)
 	}
 	parent && !fg ? display_jobs(parent, 1, 1) : 0;
 	if (grp->is_interact == false)
-		waitpid(grp->father, NULL, 0);
+		waitpid(grp->father, NULL, WUNTRACED);
 	else if (fg && parent)
 		put_in_fg(grp, parent);
 	else if (parent)
@@ -111,10 +111,8 @@ void		andor_exec(t_group *grp, t_andor *andor)
 	tmp = andor;
 	while (tmp)
 	{
-		reset_shell();
 		if (create_fd(tmp->parselst))
 			launch_exec(grp, tmp->parselst, tmp->cmd, (tmp->type == 3) ? 0 : 1);
-		restore_shell();
 		if ((tmp->type == 1 && grp->exit != 0) ||
 			(tmp->type == 2 && grp->exit == 0))
 			break ;

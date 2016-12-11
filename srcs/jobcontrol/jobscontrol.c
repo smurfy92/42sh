@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 20:37:49 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/10 08:24:34 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/11 05:30:55 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,7 @@ t_jobs		*get_jobs_pid(int pid)
 	jobs = grp->jobs;
 	while (jobs)
 	{
-		if (jobs && jobs->pid == pid)
-			return (jobs);
-		pipe = jobs->next_pipe;
+		pipe = jobs;
 		while (pipe)
 		{
 			if (pipe && pipe->pid == pid)

@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 23:37:23 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/10 07:28:08 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/11 05:59:05 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		prepare_bquotes(t_group*grp, t_parse *parse, int *fd, char **cmdsplit)
 {
-	cmdsplit[0] = ft_getenv(grp, "_"); // rajouter a l'env -i "_" !
+	cmdsplit[0] = ft_getenv(grp, "_");
 	cmdsplit[1] = NULL;
 	fd[0] = open("/tmp/.to_shell", O_WRONLY | O_CREAT | O_TRUNC,
 	S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
@@ -35,7 +35,6 @@ void		exec_bquotes(t_group *grp, t_parse *parse)
 
 	prepare_bquotes(grp, parse, fd, cmdsplit);
 	pid = fork();
-	grp->program_pid = pid;
 	pid < 0 ? ft_exit(grp, 999) : 0;
 	if (pid == 0)
 	{
@@ -46,10 +45,9 @@ void		exec_bquotes(t_group *grp, t_parse *parse)
 		ft_freestrtab(&env);
 		ft_exit(grp, 0);
 	}
-	waitpid(pid, &ret, 0);
+	waitpid(pid, &ret, WUNTRACED);
 	close(fd[0]);
 	close(fd[1]);
-	grp->program_pid = getpid();
 }
 
 void		dispatch_fdout()

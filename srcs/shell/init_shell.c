@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 20:04:13 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/10 08:34:22 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/11 04:49:56 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int			set_for_jobs(int terminal)
 int			reset_shell(void)
 {
 	t_group	*grp;
-	//printf("RESET_SHELL\n");
 	grp = get_grp();
 	if (tcsetattr(0, 0, &(grp->cpy_term)) == -1)
 		return (-1);
@@ -46,7 +45,6 @@ void		restore_shell()
 {
 	t_group	*grp;
 
-	//printf("RESTORE_SHELL\n");
 	grp = get_grp();
 	tcsetattr (STDIN_FILENO, 0, &grp->curr_term);
 }
@@ -78,8 +76,6 @@ int			init_shell(void)
 	t_group		*grp;
 	char		*name;
 
-	//printf("INITSHELL\n");
-
 	grp = get_grp();
 	if ((name = getenv("TERM")) == NULL)
 		name = ft_strdup("xterm-256color");
@@ -89,7 +85,7 @@ int			init_shell(void)
 		ft_strdel(&name);
 	if (tcgetattr(STDIN_FILENO, &grp->curr_term) == -1)
 	{
-		printf("HERE\n");
+		ft_putendl("could not get termcaps's attributes");
 		return ((grp->quit = true));
 	}
 	grp->cpy_term = grp->curr_term;
