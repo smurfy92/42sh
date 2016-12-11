@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/09 06:11:06 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/11 16:40:41 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void		proccess(t_group *grp)
 	get_cmd(grp, 0);
 	TERM(other_read) = false;
 	ft_pre_parse(grp);
-	if (LEN(TERM(cmd_line)) > 0)
+	if (LEN(TERM(cmd_line)) > 0 && grp->is_interact != false)
 		ft_add_history(grp, TERM(cmd_line));
 	if (grp->err_parse == false && TERM(cmd_line))
 	{

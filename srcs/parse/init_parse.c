@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_parse.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 15:59:55 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/12/08 07:40:46 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/11 16:45:02 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,13 @@ static int		ft_parse(t_group *grp, t_andor *andor)
 	return (0);
 }
 
+static void		exit_andor_handler(t_group *grp)
+{
+	grp->fail = 1;
+	error_cmd("Invalid null command near", "&& / ||", 1);
+	return ;
+}
+
 /*
 ** spliting on allcmd nodes and creating andor nodes
 */
@@ -107,12 +114,7 @@ void			ft_init_parse(t_group *grp)
 		while (tmp2)
 		{
 			if (allow == false && tmp2->cmd[0] == '\0' && !grp->fail)
-			{
-				grp->fail = 1;
-				error_cmd(
-				"Invalid null command near", "&& / ||", 1);
-				return ;
-			}
+				return (exit_andor_handler(grp));
 			if (ft_parse(grp, tmp2) < 0)
 				return ;
 			allow = (tmp2->type == 3) ? true : false;

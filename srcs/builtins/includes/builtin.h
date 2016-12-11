@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:50:41 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/22 20:56:29 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/11 16:10:50 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ int		builtin_echo(t_group *grp, t_parse *parse);
 int		is_builtins(char **cmd);
 
 /*
+**	buitlins_set_unset.c
+*/
+
+int		builtin_setenv(t_group *grp, t_parse *parse);
+int		builtin_unsetenv(t_group *grp, t_parse *parse);
+/*
 **	cd_lib.c
 */
 
@@ -34,6 +40,7 @@ void	update_pwd(t_group *grp, char *pth, int opt, char *curr_dir);
 void	cderr_pwd(t_group *grp, char **path, struct stat s_buf, int opt);
 char	*starting_replace(char *path, char *replace, char *by);
 char	*replace_in_path(t_group *grp, t_parse *parse, int nb);
+void	cd_display_help(void);
 
 /*
 **	history.c

@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/28 03:52:23 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/10 06:12:52 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/11 19:17:30 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int		len_to_space(char *str)
 	return (i);
 }
 
-void		ft_strreplace(char **line, char *old, char *new)
+void			ft_strreplace(char **line, char *old, char *new)
 {
 	char	*tmp;
 	char	*new_line;
@@ -43,7 +43,7 @@ void		ft_strreplace(char **line, char *old, char *new)
 	ft_strdel(&new_line);
 }
 
-static void	replace_at(char **line, int i, t_script *script)
+static void		replace_at(char **line, int i, t_script *script)
 {
 	int		len;
 	char	*old;
@@ -54,7 +54,8 @@ static void	replace_at(char **line, int i, t_script *script)
 	tmp = *line;
 	len = len_to_space(&tmp[i]);
 	old = ft_strsub(&tmp[i], 0, len);
-	if (!(var = check_if_var_exists(old, script)) && !(ft_getenv(get_grp(), old)))
+	if (!(var = check_if_var_exists(old, script)) &&
+		!(ft_getenv(get_grp(), old)))
 	{
 		script->errnb = E_UNKNOWN_VAR;
 		ft_strdel(&old);
@@ -71,14 +72,15 @@ static void	replace_at(char **line, int i, t_script *script)
 	ft_strdel(&new);
 }
 
-void		var_replacer(t_script *script, char **line)
+void			var_replacer(t_script *script, char **line)
 {
 	int		i;
 
 	i = 0;
 	while ((*line)[i])
 	{
-		if ((*line)[i] == '$' && (*line)[i + 1] != '\0' && (*line)[i + 1] != ' ' && (*line)[i + 1] != '$')
+		if ((*line)[i] == '$' && (*line)[i + 1] != '\0' &&
+			(*line)[i + 1] != ' ' && (*line)[i + 1] != '$')
 		{
 			replace_at(line, i + 1, script);
 		}

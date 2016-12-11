@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_lib.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 23:37:23 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/10 06:10:31 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/11 16:46:06 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,31 +67,6 @@ void		ft_create_redirections(t_parse *parse)
 	if (parse->dbred)
 		parse->fd = open(parse->dbred, O_WRONLY | O_CREAT |
 		O_APPEND, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
-}
-
-/*
-** replacing tilde in parse cmd
-*/
-
-void		ft_replace_tilde(t_group *grp, t_parse *parse, int i)
-{
-	char	*path;
-	char	*tmp;
-
-	path = ft_getenv(grp, "HOME");
-	if (path == NULL)
-		ft_putendl_fd("Your stupid theres no home", 2);
-	tmp = SDUP(&parse->cmd[i + 1]);
-	parse->cmd[i] = '\0';
-	if (parse->cmd[i + 1])
-	{
-		parse->cmd = ft_strjoin_nf(parse->cmd, path, 1);
-		parse->cmd = ft_strjoin_nf(parse->cmd, tmp, 1);
-	}
-	else
-		parse->cmd = ft_strjoin_nf(parse->cmd, path, 1);
-	REMOVE(&tmp);
-	grp->minus = 1;
 }
 
 /*

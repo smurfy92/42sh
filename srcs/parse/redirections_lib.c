@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_lib.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/12 17:24:49 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/12/10 06:08:14 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/11 16:48:00 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,12 @@ static void		ft_del_red_from_cmd(t_parse *parse, int end, int start)
 ** else returning null and printing error
 */
 
-char			*get_redirection(t_group *grp, t_parse *parse, int i, int start)
+char			*get_redirection(t_group *grp, t_parse *parse, int i,
+	int start)
 {
 	int		end;
 	char	*tmp;
 
-	if (grp)
-	{}
 	while (parse->cmd[i] && parse->cmd[i] == ' ')
 		i++;
 	end = i;
@@ -89,7 +88,7 @@ int				check_rights(t_parse *parse, char **file, int i)
 {
 	if (i == 0 && access(*file, F_OK) == 0 && access(*file, W_OK) < 0)
 	{
-		error_cmd("permission denied: ", *file,  1);
+		error_cmd("permission denied: ", *file, 1);
 		parse->fail = 1;
 		REMOVE(file);
 		return (1);

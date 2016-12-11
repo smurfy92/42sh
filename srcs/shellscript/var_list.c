@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 23:43:44 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/10 08:12:24 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/11 19:16:23 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 **	renvoie une struct fraiche pour une nouvelle variable
 */
 
-t_var		*new_var(int type, void *data, char *name)
+t_var				*new_var(int type, void *data, char *name)
 {
 	t_var	*new;
 
@@ -31,13 +31,9 @@ t_var		*new_var(int type, void *data, char *name)
 	new->next = NULL;
 	new->type = type;
 	if (type == STR_T)
-	{
 		new->str = ft_strdup((char *)data);
-	}
 	else if (type == NUMBER_T)
-	{
 		new->nb = (int *)data;
-	}
 	return (new);
 }
 
@@ -45,7 +41,7 @@ t_var		*new_var(int type, void *data, char *name)
 **	checke si une variable existe deja a ce nom
 */
 
-t_var		*check_if_var_exists(char *name, t_script *script)
+t_var				*check_if_var_exists(char *name, t_script *script)
 {
 	t_var	*tmp;
 
@@ -83,10 +79,10 @@ static int			update_var(t_var *var, void *value, int type)
 }
 
 /*
-**	rajoute ou modifie une variable de la liste 
+**	rajoute ou modifie une variable de la liste
 */
 
-void		add_to_list(t_script *script, t_assign *assign)
+int					add_to_list(t_script *script, t_assign *assign)
 {
 	t_var	*new;
 	t_var	*tmp;
@@ -95,34 +91,22 @@ void		add_to_list(t_script *script, t_assign *assign)
 
 	tmp = script->vars;
 	if (ft_strchr(assign->name, ' '))
-	{
-		script->errnb = E_INSTANT;
-		return ;
-	}
+		return (script->errnb = E_INSTANT);
 	if ((new = check_if_var_exists(assign->name, script)))
 	{
 		if (!(value = assignator(assign, &type)))
-		{
-			script->errnb = E_INSTANT;
-			return ;
-		}
+			return (script->errnb = E_INSTANT);
 		if ((script->errnb = update_var(new, value, type)))
-		{
-			return ;
-		}
+			return (script->errnb);
 	}
 	else
 	{
 		if (!(value = assignator(assign, &type)))
-		{
-			script->errnb = E_INSTANT;
-			return ;
-		}
+			return (script->errnb = E_INSTANT);
 		while (tmp && tmp->next)
 			tmp = tmp->next;
-		if (tmp)
-			tmp->next = new_var(type, value, assign->name);
-		else
-			script->vars = new_var(type, value, assign->name);
+		(tmp) ? (tmp->next = new_var(type, value, assign->name)) :
+			(script->vars = new_var(type, value, assign->name));
 	}
+	return (0);
 }

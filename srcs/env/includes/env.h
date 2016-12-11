@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 16:54:18 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/24 20:11:59 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/11 16:22:28 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define ENV_H
 
 typedef int				t_bool;
+
+# define CMP(x, y)			ft_strcmp(x, y)
 
 typedef struct			s_envlst
 {
