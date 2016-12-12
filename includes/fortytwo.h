@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 15:42:31 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/12/10 04:44:05 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/12 05:03:55 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # include "parse.h"
 # include "comp.h"
 # include "shell.h"
+# include "jobcontrol.h"
 # include "env.h"
 # include "builtin.h"
 # include "exec.h"
@@ -40,7 +41,6 @@
 # include "free.h"
 # include "debug.h"
 # include "errors.h"
-# include "jobcontrol.h"
 # include "shell_script.h"
 # include <string.h>
 # define KEY(a, b, c, d) ((d << 24) + (c << 16) + (b << 8) + a)

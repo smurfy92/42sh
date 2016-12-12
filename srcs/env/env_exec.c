@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 16:48:03 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/23 19:46:32 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/12 07:42:08 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,47 +18,66 @@
 **	to check if we need to exec builtin
 */
 
-void		create_exec_env(t_group *grp, char **cmd_split)
+void	exec_builtins(t_group *grp, t_parse *parse)
 {
-	int		fd;
+	ENV(fg) = 0;
+	ENV(pgid) = NULL;
+	free_env_tmp(grp);
+	builtins(grp, parse);
+}
+
+static void		exec_env(t_group *grp, t_parse *parse)
+{
+	int		ret;
 	char	*path;
 	char	**env;
 
-	if (CMD(file) && (fd = open(CMD(file), O_RDONLY)))
-		dup2(fd, STDIN_FILENO);
-	if (CMD(fd) > 0)
-		dup2(CMD(fd), STDOUT_FILENO);
-	ft_dup_redirection(grp->allcmd->andor->parselst);
+	dup2(grp->pipefd_in, STDIN_FILENO);
 	if (ENV(path_tmp) != NULL)
 	{
 		root_hfree(&grp->root);
 		hash_init(&grp->root, grp, ENV(path_tmp));
 	}
-	path = get_path(cmd_split[0], grp->root);
-	if (check_cmd(&path, cmd_split[0]) == 0 && path)
+	ret = is_builtins(parse->cmdsplit);
+	path = get_path(parse->cmdsplit[0], grp->root);
+	if (ret == 0 && check_cmd(&path, parse->cmdsplit[0]) == 0 && path)
 	{
-		env = list_to_tab(ENV(lst_tmp));
-		execve(path, cmd_split, env);
+		env = list_to_tab(ENV(lst));
+		execve(path, parse->cmdsplit, env);
+		ft_freestrtab(&env);
 	}
-	exit(EXIT_FAILURE);
+	else if (ret == 0)
+		ft_exit(grp, EXIT_FAILURE);
+	else if (ret == 1)
+		exec_builtins(grp, parse)
+	ft_exit(grp, grp->exit);
 }
 
 void		init_exec_env(t_group *grp)
 {
-	char	**cmd_split;
-	pid_t	pid;
-	int		ret;
+	t_parse	*parse;
 
-	cmd_split = ft_strsplit(ENV(cmd), ' ');
-	pid = fork();
-	grp->program_pid = pid;
-	pid == -1 ? exit(270) : 0;
-	if (pid == 0)
-		create_exec_env(grp, cmd_split);
-	waitpid(pid, &ret, 0);
-	grp->program_pid = getpid();
-	error_process_check(ret);
-	if (ret > 0)
-		grp->exit = 1;
-	ft_freestrtab(&cmd_split);
+	parse = (t_parse*)malloc(sizeof(t_parse));
+	parse->cmd = ft_strtrim(ENV(cmd));
+	parse->cmdsplit = ft_spacesplit(ENV(cmd));
+	parse->heredoc = 0;
+	parse->errnb = 0;
+	parse->fd = -1;
+	parse->fail = 0;
+	parse->dbred = NULL;
+	parse->sgred = NULL;
+	parse->file = NULL;
+	parse->redfd = NULL;
+	parse->closefd = NULL;
+	parse->bquotes = NULL;
+	parse->next = NULL;
+	if (grp->father != 0)
+	{
+		grp->father = fork();
+		grp->father == -1 ? exit(999) : 0;
+		if (grp->father == 0)
+			init_shell_job(ENV(pgid) ? ENV(pgid)->pid : 0, ENV(fg));
+	}
+	if (grp->father == 0)
+		exec_env(grp, parse);
 }

@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 20:40:36 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/11 05:59:19 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/12 07:06:26 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		ft_sigcont(t_jobs *jobs)
 	{
 		if (pipe->terminate == SIGNSTOP)
 		{
-			tcsetattr(STDIN_FILENO, 0, &pipe->tmodes);
+			//tcsetattr(STDIN_FILENO, 0, &pipe->tmodes);
 			if (kill (pipe->pid, SIGCONT) < 0)
 				perror ("kill (SIGCONT)");
 		}
@@ -52,6 +52,7 @@ int		check_jobs_stopped(t_group *grp, t_jobs *jobs)
 
 void	put_in_fg(t_group *grp, t_jobs *pgid)
 {
+	pgid->fg = true;
 	reset_shell();
 	tcsetpgrp(STDIN_FILENO, pgid->pid);
 	ft_sigcont(pgid);
@@ -62,13 +63,13 @@ void	put_in_fg(t_group *grp, t_jobs *pgid)
 	}
 	tcsetpgrp(STDIN_FILENO, grp->program_pid);
 	restore_shell();
+	pgid->fg = false;
 }
 
 int		builtin_fg(t_group *grp, int idx)
 {
 	t_jobs	*curr;
 
-	idx == 0 ? (idx = -1) : 0;
 	curr = get_jobs_idx(grp, idx);
 	if (curr != NULL)
 		put_in_fg(grp, curr);
@@ -79,7 +80,6 @@ int	builtin_bg(t_group *grp, int idx)
 {
 	t_jobs *curr;
 
-	idx == 0 ? (idx = -1) : 0;
 	curr = get_jobs_idx(grp, idx);
 	if (curr)
 		ft_sigcont(curr);

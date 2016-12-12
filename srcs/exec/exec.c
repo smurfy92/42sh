@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 21:15:46 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/11 05:58:31 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/12 07:18:15 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,10 @@ void		launch_exec(t_group *grp, t_parse *parse, char *andorcmd, int fg)
 			}
 			else
 			{
+				jobs = control_jobs(&parent, grp, tmp->cmd, andorcmd);
+				jobs->fdin = grp->pipefd_in;
 				if (grp->is_interact == true)
-				{
-					jobs = control_jobs(&parent, grp, tmp, andorcmd);
-					jobs->fdin = grp->pipefd_in;
-					jobs->fg = fg;
 					setpgid (jobs->pid, parent->pid);
-				}
 				if (tmp->next)
 					grp->pipefd_in = tabl[0];
 				else
@@ -70,8 +67,16 @@ void		launch_exec(t_group *grp, t_parse *parse, char *andorcmd, int fg)
 		}
 		else if (is_built && tmp->fd < 0)
 		{
-			parent ? close(grp->pipefd_in) : 0;
+			ENV(pgid) = parent;
+			ENV(fg) = fg;
+			grp->father = 42;
 			builtins(grp, tmp);
+			jobs = control_jobs(&parent, grp, tmp->cmd, andorcmd);
+			jobs->fdin = grp->pipefd_in;
+			if (grp->father != 42 && grp->is_interact == true)
+				setpgid(jobs->pid, parent->pid);
+			else if (grp->father == getpid())
+				change_state(jobs, 1);
 		}
 		tmp = tmp->next;
 	}

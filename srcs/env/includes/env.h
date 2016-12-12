@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 16:54:18 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/24 20:11:59 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/12 07:07:17 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef struct			s_env
 	int					start_varenv;
 	int					end_varenv;
 	char				*cmd;
+	t_jobs				*pgid;
+	int					fg;
 	char				*path_tmp;
 }						t_env;
 

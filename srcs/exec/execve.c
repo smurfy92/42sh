@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 23:37:23 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/11 05:59:05 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/12 07:41:42 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,6 @@ void		exec_bquotes(t_group *grp, t_parse *parse)
 	close(fd[1]);
 }
 
-void		dispatch_fdout()
-{
-
-}
-
 void		exec_child(t_group *grp, t_parse *parse)
 {
 	int		fd;
@@ -67,7 +62,6 @@ void		exec_child(t_group *grp, t_parse *parse)
 		dup2(fd, STDIN_FILENO);
 	if (parse->fd > 0)
 		dup2(parse->fd, STDOUT_FILENO);
-	dispatch_fdout();
 	ft_dup_redirection(parse);
 	ret = is_builtins(parse->cmdsplit);
 	path = get_path(parse->cmdsplit[0], grp->root);

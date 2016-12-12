@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/30 14:50:41 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/10 07:19:27 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/12 03:04:56 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,9 +123,9 @@ int	builtin_next(t_group *grp, t_parse *parse, char **cmd)
 	else if (ft_strcmp(cmd[0], "jobs") == 0)
 		ret = builtin_jobs(grp, cmd);
 	else if (ft_strcmp(cmd[0], "fg") == 0)
-		ret = builtin_fg(grp, (cmd[1] != NULL ? ft_atoi(cmd[1]) : 0));
+		ret = builtin_fg(grp, (cmd[1] != NULL ? ft_atoi(cmd[1]) : -1));
 	else if (ft_strcmp(cmd[0], "bg") == 0)
-		ret = builtin_bg(grp, (cmd[1] != NULL ? ft_atoi(cmd[1]) : 0));
+		ret = builtin_bg(grp, (cmd[1] != NULL ? ft_atoi(cmd[1]) : -1));
 	return (ret);
 }
 
