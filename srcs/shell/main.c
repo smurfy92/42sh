@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/11 16:40:41 by vdanain          ###   ########.fr       */
+/*   Created: 2016/12/12 10:26:28 by jmontija          #+#    #+#             */
+/*   Updated: 2016/12/12 10:26:46 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,6 @@ int			main(int argc, char **argv, char **env)
 	if (argc >= 2)
 		init_shellscript(argc, argv, grp);
 	while (42)
-	{
 		proccess(grp);
-	}
 	return (0);
 }

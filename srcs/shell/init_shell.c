@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 20:04:13 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/10 08:34:22 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/12 07:04:15 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,41 +35,41 @@ int			set_for_jobs(int terminal)
 int			reset_shell(void)
 {
 	t_group	*grp;
-	//printf("RESET_SHELL\n");
 	grp = get_grp();
 	if (tcsetattr(0, 0, &(grp->cpy_term)) == -1)
 		return (-1);
 	return (0);
 }
 
-void		restore_shell()
+void		restore_shell(void)
 {
 	t_group	*grp;
 
-	//printf("RESTORE_SHELL\n");
 	grp = get_grp();
 	tcsetattr (STDIN_FILENO, 0, &grp->curr_term);
 }
 
 void		init_shell_job(int pgid, int fg)
 {
-	int	pid;
-	int	is_interact;
+	int		pid;
+	t_group	*grp;
 
-	is_interact = isatty (STDIN_FILENO);
-	if (is_interact)
+	grp = get_grp();
+	if (grp->is_interact == true)
 	{		
 		pid = getpid();
 		pgid == 0 ? (pgid = pid) : 0;
 		setpgid (pid, pgid);
 		fg ? tcsetpgrp (STDIN_FILENO, pgid) : 0;
-		signal (SIGINT, SIG_DFL);
-		signal (SIGQUIT, SIG_DFL);
-		signal (SIGTSTP, SIG_DFL);
-		signal (SIGCONT, SIG_DFL);
-		signal (SIGTTIN, SIG_DFL);
-		signal (SIGTTOU, SIG_DFL);
-		signal (SIGCHLD, SIG_DFL);
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		signal(SIGTSTP, SIG_DFL);
+		signal(SIGCONT, SIG_DFL);
+		signal(SIGTTIN, SIG_DFL);
+		signal(SIGTTOU, SIG_DFL);
+		signal(SIGCHLD, SIG_DFL);
+		signal(SIGPIPE, SIG_DFL);
+		signal(SIGWINCH, SIG_DFL);
 	}
 }
 
@@ -77,8 +77,6 @@ int			init_shell(void)
 {
 	t_group		*grp;
 	char		*name;
-
-	//printf("INITSHELL\n");
 
 	grp = get_grp();
 	if ((name = getenv("TERM")) == NULL)
@@ -89,7 +87,7 @@ int			init_shell(void)
 		ft_strdel(&name);
 	if (tcgetattr(STDIN_FILENO, &grp->curr_term) == -1)
 	{
-		printf("HERE\n");
+		ft_putendl("could not get termcaps's attributes");
 		return ((grp->quit = true));
 	}
 	grp->cpy_term = grp->curr_term;

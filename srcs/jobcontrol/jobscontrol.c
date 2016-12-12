@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 20:37:49 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/10 08:24:34 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/12 07:06:59 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void		display_jobs(t_jobs *jobs, int n, int parent)
 		ft_putchar_fd('\n', 1);
 }
 
-t_jobs		*control_jobs(t_jobs **parent, t_group *grp, t_parse *parse, char *andorcmd)
+t_jobs		*control_jobs(t_jobs **parent, t_group *grp, char *cmd, char *andorcmd)
 {
 	static t_jobs	*jobs = NULL;
 	t_jobs			*new;
@@ -40,12 +40,12 @@ t_jobs		*control_jobs(t_jobs **parent, t_group *grp, t_parse *parse, char *andor
 	new->enabled = true;
 	if (*parent == NULL)
 	{
-		jobs = create_jobs(grp, new, parse->cmd, grp->father);
+		jobs = create_jobs(grp, new, cmd, grp->father);
 		jobs->parent_cmd = SDUP(andorcmd);
 		*parent = jobs;
 	}
 	else
-		jobs = create_pipe_jobs(new, jobs, parse->cmd, grp->father);
+		jobs = create_pipe_jobs(new, jobs, cmd, grp->father);
 	return (jobs);
 }
 
@@ -53,18 +53,26 @@ t_jobs		*get_jobs_idx(t_group *grp, int idx)
 {
 	t_jobs	*jobs;
 	t_jobs	*curr;
+	t_jobs	*last;
 
 	curr = NULL;
+	last = NULL;
 	jobs = grp->jobs;
 	while (jobs)
 	{
-		curr = jobs;
+		last = jobs;
 		if (jobs && jobs->idx == idx)
+		{
+			curr = jobs;
 			break;
+		}
 		jobs = jobs->next;
 	}
-	if (curr == NULL)
+	if (idx == -1 && last)
+		curr = last;
+	else if (curr == NULL)
 	{
+		idx == -1 ? (idx = 0) : 0;
 		error_cmd("could not found jobs", ft_itoa(idx), 1);
 		return (NULL);
 	}
@@ -81,9 +89,7 @@ t_jobs		*get_jobs_pid(int pid)
 	jobs = grp->jobs;
 	while (jobs)
 	{
-		if (jobs && jobs->pid == pid)
-			return (jobs);
-		pipe = jobs->next_pipe;
+		pipe = jobs;
 		while (pipe)
 		{
 			if (pipe && pipe->pid == pid)

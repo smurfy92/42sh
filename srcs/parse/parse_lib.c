@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_lib.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/25 23:37:23 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/11 16:46:06 by vdanain          ###   ########.fr       */
+/*   Created: 2016/12/12 10:26:28 by jmontija          #+#    #+#             */
+/*   Updated: 2016/12/12 10:27:04 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,9 @@ char		*replace_bquote(t_group *grp, t_parse *parse)
 	{
 		line = ft_charjoin(line, ' ');
 		bquote_result = JOINF(bquote_result, line, 3);
+		//ft_putendl_fd("here", 2); // reste bloquê ici sur `ls -R /`
 	}
+	close(fd);
 	bquote_result[LEN(bquote_result) - 1] = '\0';
 	return (bquote_result);
 }

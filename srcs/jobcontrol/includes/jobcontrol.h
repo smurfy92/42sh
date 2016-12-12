@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 23:25:11 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/10 05:01:13 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/12 05:03:36 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_jobs
 	char			*cmd;
 	char			*parent_cmd;
 	char			*status;
+	struct termios	tmodes;
 	struct s_jobs	*next_pipe;
 	struct s_jobs	*next;
 }				t_jobs;
@@ -51,7 +52,7 @@ int			check_group_status(t_jobs *pgid, int free);
 **	jobscreate.c
 */
 
-t_jobs		*control_jobs(t_jobs **parent, t_group *grp, t_parse *parse, char *andorcmd);
+t_jobs		*control_jobs(t_jobs **parent, t_group *grp, char *cmd, char *andorcmd);
 t_jobs		*create_jobs(t_group *grp, t_jobs *new, char *cmd, int pid);
 t_jobs		*create_pipe_jobs(t_jobs *new, t_jobs *jobs, char *cmd, int pid);
 t_jobs		*get_jobs_idx(t_group *grp, int val);

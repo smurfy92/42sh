@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 00:13:31 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/10 08:15:37 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/12 07:06:29 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,20 @@
 char	*update_status(int sig, int code)
 {
 	char	*status;
-	// a mettre en minuscule
+
 	status = NULL;
 	sig == SIGPIPE ? (status = SDUP("broken pipe")) : 0;
 	sig == SIGINT ? (status = SDUP("interrupt")) : 0;
 	sig == SIGKILL ? (status = SDUP("killed")) : 0;
 	sig == SIGTERM ? (status = SDUP("terminated")) : 0;
-	sig == SIGBUS ? (status = SDUP("BUS ERROR")) : 0;
-	sig == SIGABRT ? (status = SDUP("ABORT")) : 0;
-	sig == SIGSEGV ? (status = SDUP("SEGMENTATION FAULT")) : 0;
+	sig == SIGBUS ? (status = SDUP("bus error")) : 0;
+	sig == SIGABRT ? (status = SDUP("abort")) : 0;
+	sig == SIGSEGV ? (status = SDUP("segmentation fault")) : 0;
 	sig == SIGNCONT ? (status = SDUP("continued")) : 0;
 	sig == SIGNSTOP ? (status = SDUP(JOINF("suspended: ", ft_itoa(WSTOPSIG(code)), 2))) : 0;
-	sig == CLD_EXITED ? (status = SDUP("exited")) : 0;
+	sig == CLD_EXITED ? (status = SDUP(JOINF("exited: ", ft_itoa(WEXITSTATUS(code)), 2))) : 0;
 	sig == 0 ? (status = SDUP(JOINF("done: ", ft_itoa(code), 2))) : 0;
-	status == NULL ? (status = SDUP("UNKNOWN STATUS: TERMINATED")) : 0;
+	status == NULL ? (status = SDUP("UNKNOWN STATUS: terminated")) : 0;
 	return (status);
 }
 
@@ -43,8 +43,11 @@ void	change_state(t_jobs *jobs, int code)
 	jobs->terminate = code;
 	jobs->status = update_status(code, jobs->code);
 	jobs->enabled = (code != SIGNCONT) ? false : true;
+	// if (grp->is_interact && jobs->fg && code == SIGNSTOP)
+	// 	tcgetattr(STDIN_FILENO, &jobs->tmodes);
 	if (jobs->enabled == false && code != SIGNSTOP && jobs->fdin > 2)
-		close(jobs->fdin);
+		if (close(jobs->fdin) < 0)
+			perror("closed");
 	if (code > 1 && jobs->parent_cmd != NULL)
 		display_jobs(jobs, 1, 1);
 	else if (code > 1 && tcgetpgrp(STDIN_FILENO) == grp->program_pid)
@@ -53,8 +56,7 @@ void	change_state(t_jobs *jobs, int code)
 
 void	analyse_ret(t_jobs *jobs, int ret, int code)
 {
-	if (jobs->enabled == true || jobs->terminate == SIGNSTOP)
-	{
+	// if (jobs->enabled == true || jobs->terminate == SIGNSTOP)
 		jobs->code = code;
 		if (ret == jobs->pid && WIFCONTINUED(code))
 			change_state(jobs, SIGNCONT);
@@ -66,9 +68,6 @@ void	analyse_ret(t_jobs *jobs, int ret, int code)
 			change_state(jobs, code);
 		else if (ret == jobs->pid)
 			change_state(jobs, 0);
-		else if (ret == -1 && jobs->terminate == -1)
-			change_state(jobs, code);
-	}
 }
 
 int		check_group_status(t_jobs *pgid, int free)
@@ -99,13 +98,12 @@ void	jobs_status(t_group *grp)
 	jobs = grp->jobs;
 	while (jobs)
 	{
-		ret = waitpid(jobs->pid, &code, WNOHANG | WUNTRACED | WCONTINUED);
-		analyse_ret(jobs, ret, code);
-		pipe = jobs->next_pipe;
+		pipe = jobs;
 		while (pipe)
 		{
 			ret = waitpid(pipe->pid, &code, WNOHANG | WUNTRACED | WCONTINUED);
-			analyse_ret(pipe, ret, code);
+			if (ret > 0)
+				analyse_ret(pipe, ret, code);
 			pipe = pipe->next_pipe;
 		}
 		jobs = jobs->next;

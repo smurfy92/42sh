@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 20:40:36 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/10 08:23:59 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/12 07:06:26 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,12 @@ int		ft_sigcont(t_jobs *jobs)
 {
 	t_jobs	*pipe;
 
-	if (jobs->terminate == SIGNSTOP)
-	{
-		if (kill (jobs->pid, SIGCONT) < 0)
-			perror ("kill (SIGCONT)");
-	}
-	pipe = jobs->next_pipe;
+	pipe = jobs;
 	while (pipe)
 	{
 		if (pipe->terminate == SIGNSTOP)
 		{
+			//tcsetattr(STDIN_FILENO, 0, &pipe->tmodes);
 			if (kill (pipe->pid, SIGCONT) < 0)
 				perror ("kill (SIGCONT)");
 		}
@@ -41,10 +37,8 @@ int		check_jobs_stopped(t_group *grp, t_jobs *jobs)
 
 	if (jobs == NULL)
 		return (true);
-	if (jobs->enabled == true)
-		return (false);
 	last = jobs;
-	pipe = jobs->next_pipe;
+	pipe = jobs;
 	while (pipe)
 	{
 		if (pipe->enabled == true)
@@ -52,12 +46,14 @@ int		check_jobs_stopped(t_group *grp, t_jobs *jobs)
 		last = pipe;
 		pipe = pipe->next_pipe;
 	}
-	grp->exit = (last->code > 0 && last->terminate != SIGNSTOP) ? 1 : 0; 
+	grp->exit = (last->code > 0 && last->terminate != SIGNSTOP) ? 1 : 0;
 	return (true);
 }
 
 void	put_in_fg(t_group *grp, t_jobs *pgid)
 {
+	pgid->fg = true;
+	reset_shell();
 	tcsetpgrp(STDIN_FILENO, pgid->pid);
 	ft_sigcont(pgid);
 	while (42)
@@ -66,13 +62,14 @@ void	put_in_fg(t_group *grp, t_jobs *pgid)
 			break ;
 	}
 	tcsetpgrp(STDIN_FILENO, grp->program_pid);
+	restore_shell();
+	pgid->fg = false;
 }
 
 int		builtin_fg(t_group *grp, int idx)
 {
 	t_jobs	*curr;
 
-	idx == 0 ? (idx = -1) : 0;
 	curr = get_jobs_idx(grp, idx);
 	if (curr != NULL)
 		put_in_fg(grp, curr);
@@ -83,7 +80,6 @@ int	builtin_bg(t_group *grp, int idx)
 {
 	t_jobs *curr;
 
-	idx == 0 ? (idx = -1) : 0;
 	curr = get_jobs_idx(grp, idx);
 	if (curr)
 		ft_sigcont(curr);

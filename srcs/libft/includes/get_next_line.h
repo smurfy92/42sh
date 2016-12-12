@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtranchi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/27 13:06:08 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/02/10 00:03:33 by jtranchi         ###   ########.fr       */
+/*   Updated: 2016/12/12 01:18:04 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <fcntl.h>
 # include "libft.h"
 
-# define BUFF_SIZE 10
+# define BUFF_SIZE 4096
 
 typedef int	t_bool;
 
