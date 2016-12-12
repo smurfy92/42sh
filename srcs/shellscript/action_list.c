@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/05 01:19:24 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 05:09:00 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/11 16:53:10 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,27 @@ void			add_to_action(void *action, t_script *script,
 		*begin = new;
 	else
 		tmp->next = new;
+}
+
+/*
+**	reader des actions => appelle le correct handler.
+*/
+
+void			action_reader(t_script *script, t_action *begin)
+{
+	t_action	*tmp;
+
+	tmp = begin;
+	while (tmp)
+	{
+		if (tmp->type == ASSIGN_T)
+			assignation_handler((t_assign *)tmp->action, script);
+		else if (tmp->type == LINE_T)
+			line_handler(tmp->action, script, get_grp());
+		else if (tmp->type == COND_T)
+			condition_handler(tmp->action, script);
+		else if (tmp->type == LOOP_T)
+			loop_handler(tmp->action, script);
+		tmp = tmp->next;
+	}
 }

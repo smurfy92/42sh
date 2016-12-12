@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/29 18:49:38 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/12/09 04:15:16 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/11 16:42:09 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ void		ft_add_history(t_group *grp, char *cmd)
 {
 	int			fd;
 	t_history	*tmp;
-	if (grp->is_interact == false)
-		return ;
+
 	fd = open("/tmp/.42sh_history", O_WRONLY | O_APPEND | O_CREAT,
 	S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
 	ft_putendl_fd(cmd, fd);
@@ -72,7 +71,6 @@ void		ft_history_next(t_group *grp)
 		return ;
 	if (TERM(cmd_line))
 		remove_line(grp);
-	//sleep(1);
 	if (grp->history->next)
 	{
 		grp->history = grp->history->next;

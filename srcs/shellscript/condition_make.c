@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/04 22:46:53 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/09 05:11:33 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/11 19:03:28 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 static int		end_of_condition(char *line)
 {
 	char	*tmp;
+
 	tmp = ft_strtrim(line);
 	if (ft_strncmp(line, "else", 4) == 0)
 	{
@@ -72,7 +73,7 @@ static int		cond_maker(char **clean, int i, t_script *script,
 
 static	int		is_begin_cond(char *line)
 {
-	if (ft_strncmp(line, "if ", 3)== 0 ||
+	if (ft_strncmp(line, "if ", 3) == 0 ||
 		ft_strncmp(line, "elif", 4) == 0 ||
 		ft_strncmp(line, "else", 4) == 0)
 		return (1);
@@ -83,7 +84,7 @@ static void		handle_end_of_cond(char *line, t_action **begin,
 	t_cond **lead, t_script *script)
 {
 	if (ft_strlen(line) != 2)
-			script->errnb = E_INCOMPLETE_COND;
+		script->errnb = E_INCOMPLETE_COND;
 	new_cond(line, script, lead);
 	add_to_action(*lead, script, COND_T, begin);
 }

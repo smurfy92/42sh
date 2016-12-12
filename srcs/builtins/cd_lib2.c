@@ -6,13 +6,13 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 20:48:45 by vdanain           #+#    #+#             */
-/*   Updated: 2016/11/22 20:59:52 by vdanain          ###   ########.fr       */
+/*   Updated: 2016/12/11 16:07:16 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-void	cderr_pwd(t_group *grp, char **path, struct stat s_buf, int opt)
+void		cderr_pwd(t_group *grp, char **path, struct stat s_buf, int opt)
 {
 	mode_t		val;
 	char		buf[1024];
@@ -31,7 +31,7 @@ void	cderr_pwd(t_group *grp, char **path, struct stat s_buf, int opt)
 	ft_strdel(path);
 }
 
-char	*starting_replace(char *path, char *replace, char *by)
+char		*starting_replace(char *path, char *replace, char *by)
 {
 	char	buff[2048];
 	char	tmp[2048];
@@ -46,7 +46,7 @@ char	*starting_replace(char *path, char *replace, char *by)
 	return (ft_strdup(buff));
 }
 
-char	*replace_in_path(t_group *grp, t_parse *parse, int nb)
+char		*replace_in_path(t_group *grp, t_parse *parse, int nb)
 {
 	char	*tmp;
 	char	buf[1024 + 1];
@@ -60,4 +60,15 @@ char	*replace_in_path(t_group *grp, t_parse *parse, int nb)
 	}
 	tmp = starting_replace(tmp, parse->cmdsplit[nb], parse->cmdsplit[nb + 1]);
 	return (tmp);
+}
+
+void		cd_display_help(void)
+{
+	ft_putendl("usage: cd [ -L | -P | -h ] [ dirname ]");
+	ft_putendl("cd is used to change the working directory.");
+	ft_putstr("If 2 arguments are given to cd, the first ocurrence i");
+	ft_putendl("PWD will be replaced by the second argument.");
+	ft_putendl("-P : change directory using the physical path");
+	ft_putendl("-L : change directory using the logical path");
+	ft_putendl("-h : display help");
 }

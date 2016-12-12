@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 14:51:15 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/12/09 02:34:24 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/11 16:34:03 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void		remove_hdoc(t_group *grp)
 {
 	char	*file;
-	
+
 	while (grp->hdcount > 0)
 	{
 		file = JOINF("/private/tmp/hdoc_", ft_itoa(grp->hdcount), 2);

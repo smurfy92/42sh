@@ -14,7 +14,6 @@ SRC	+= srcs/shellscript/checker.c
 SRC	+= srcs/shellscript/assign.c
 SRC	+= srcs/shellscript/action_list.c
 SRC	+= srcs/shellscript/script_list.c
-SRC	+= srcs/shellscript/debug.c
 SRC	+= srcs/shellscript/action_reader.c
 SRC	+= srcs/shellscript/var_list.c
 SRC	+= srcs/shellscript/assignator.c
@@ -28,6 +27,8 @@ SRC	+= srcs/shellscript/loop_list.c
 SRC	+= srcs/shellscript/script_free.c
 SRC	+= srcs/shellscript/script_lib.c
 SRC	+= srcs/shellscript/check_lib.c
+SRC	+= srcs/shellscript/check_lib2.c
+SRC	+= srcs/shellscript/check_lib3.c
 SRC	+= srcs/shellscript/script_free2.c
 
 #exec
@@ -57,6 +58,7 @@ SRC += srcs/builtins/cd_lib2.c
 SRC += srcs/builtins/echo.c
 SRC += srcs/builtins/echo_lib.c
 SRC += srcs/builtins/history.c
+SRC += srcs/builtins/builtins_set_unset.c
 
 #env
 SRC	+= srcs/env/env.c
@@ -133,7 +135,8 @@ INC += -I srcs/shellscript/includes/
 INC += -I ./includes/
 
 OBJ = $(SRC:.c=.o)
-FLAG = -Wall -Werror -Wextra
+FLAG = -Wall -Werror -Wextra 
+#-fsanitize=address
 CG = \033[92m
 CY =  \033[93m
 CE = \033[0m

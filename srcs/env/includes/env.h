@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/30 16:54:18 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/12 07:07:17 by jmontija         ###   ########.fr       */
+/*   Created: 2016/12/12 10:26:29 by jmontija          #+#    #+#             */
+/*   Updated: 2016/12/12 10:27:27 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define ENV_H
 
 typedef int				t_bool;
+
+# define CMP(x, y)			ft_strcmp(x, y)
 
 typedef struct			s_envlst
 {

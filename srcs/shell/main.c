@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/12 03:52:12 by jmontija         ###   ########.fr       */
+/*   Created: 2016/12/12 10:26:28 by jmontija          #+#    #+#             */
+/*   Updated: 2016/12/12 10:26:46 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void		proccess(t_group *grp)
 	get_cmd(grp, 0);
 	TERM(other_read) = false;
 	ft_pre_parse(grp);
-	if (LEN(TERM(cmd_line)) > 0)
+	if (LEN(TERM(cmd_line)) > 0 && grp->is_interact != false)
 		ft_add_history(grp, TERM(cmd_line));
 	if (grp->err_parse == false && TERM(cmd_line))
 	{
