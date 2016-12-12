@@ -6,24 +6,80 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 21:15:46 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/12 07:18:15 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/12 10:18:28 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-/* todo:
-		- all redir
-		- checker bquotes -> good 42sh sexecute et envois tout le reste en params
-*/
+void		control_process(t_jobs **parent, t_parse *tmp, int *tabl, char *andorcmd)
+{
+	t_jobs	*jobs;
+	t_group	*grp;
+
+	grp = get_grp();
+	jobs = control_jobs(parent, grp, tmp->cmd, andorcmd);
+	jobs->fdin = grp->pipefd_in;
+	if (grp->is_interact == true)
+		setpgid (jobs->pid, (*parent)->pid);
+	if (tmp->next)
+		grp->pipefd_in = tabl[0];
+	else
+	{
+		close(tabl[0]);
+		grp->pipefd_in = STDIN_FILENO;
+	}
+	close(tabl[1]);
+}
+
+void		generate_process(t_jobs **parent, t_parse *tmp, char *andorcmd, int fg)
+{
+	int		tabl[2];
+	t_group	*grp;
+
+	pipe(tabl);
+	grp = get_grp();
+	grp->father = fork();
+	grp->father < 0 ? ft_exit(grp, 999) : 0;
+	if (grp->father == 0)
+	{
+		close(tabl[0]);
+		init_shell_job(*parent ? (*parent)->pid : 0, fg);
+		if (tmp->next && tmp->fd == -1)
+			ft_fork_pipe(grp, tmp, tabl[1]);
+		else
+		{
+			close(tabl[1]);
+			exec_child(grp, tmp);
+		}
+	}
+	else
+		control_process(parent, tmp, tabl, andorcmd);
+}
+
+void		generate_builtin(t_jobs **parent, t_parse *tmp, char *andorcmd, int fg)
+{
+	t_group	*grp;
+	t_jobs	*jobs;
+
+	grp = get_grp();
+	grp->father = 42;
+	ENV(fg) = fg;
+	ENV(pgid) = *parent;
+	builtins(grp, tmp);
+	jobs = control_jobs(parent, grp, tmp->cmd, andorcmd);
+	jobs->fdin = grp->pipefd_in;
+	if (grp->father != 42 && grp->is_interact == true)
+		setpgid(jobs->pid, (*parent)->pid);
+	else if (grp->father == 42)
+		change_state(jobs, 1);
+}
 
 void		launch_exec(t_group *grp, t_parse *parse, char *andorcmd, int fg)
 {
-	int		tabl[2];
-	int		is_built;
 	t_parse	*tmp;
-	t_jobs	*jobs;
 	t_jobs	*parent;
+	int		is_built;
 
 	tmp = parse;
 	parent = NULL;
@@ -33,51 +89,9 @@ void		launch_exec(t_group *grp, t_parse *parse, char *andorcmd, int fg)
 	{
 		is_built = is_builtins(tmp->cmdsplit);
 		if (!tmp->fail && (!fg || !is_built || tmp->next || tmp->fd > -1))
-		{
-			pipe(tabl);
-			grp->father = fork();
-			grp->father < 0 ? ft_exit(grp, 999) : 0;
-			if (grp->father == 0)
-			{
-				close(tabl[0]);
-				init_shell_job(parent ? parent->pid : 0, fg);
-				if (tmp->next && tmp->fd == -1)
-					ft_fork_pipe(grp, tmp, tabl[1]);
-				else
-				{
-					close(tabl[1]);
-					exec_child(grp, tmp);
-				}
-			}
-			else
-			{
-				jobs = control_jobs(&parent, grp, tmp->cmd, andorcmd);
-				jobs->fdin = grp->pipefd_in;
-				if (grp->is_interact == true)
-					setpgid (jobs->pid, parent->pid);
-				if (tmp->next)
-					grp->pipefd_in = tabl[0];
-				else
-				{
-					close(tabl[0]);
-					grp->pipefd_in = STDIN_FILENO;
-				}
-				close(tabl[1]);
-			}
-		}
+			generate_process(&parent, tmp, andorcmd, fg);
 		else if (is_built && tmp->fd < 0)
-		{
-			ENV(pgid) = parent;
-			ENV(fg) = fg;
-			grp->father = 42;
-			builtins(grp, tmp);
-			jobs = control_jobs(&parent, grp, tmp->cmd, andorcmd);
-			jobs->fdin = grp->pipefd_in;
-			if (grp->father != 42 && grp->is_interact == true)
-				setpgid(jobs->pid, parent->pid);
-			else if (grp->father == getpid())
-				change_state(jobs, 1);
-		}
+			generate_builtin(&parent, tmp, andorcmd, fg);
 		tmp = tmp->next;
 	}
 	parent && !fg ? display_jobs(parent, 1, 1) : 0;
