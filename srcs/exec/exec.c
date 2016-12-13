@@ -85,9 +85,9 @@ void		init_exec(t_group *grp)
 	tmp = grp->allcmd;
 	if (!grp->fail)
 	{
-		grp->exit = 0;
 		while (tmp)
 		{
+			grp->exit = 0;
 			andor_exec(grp, tmp->andor);
 			tmp = tmp->next;
 		}
