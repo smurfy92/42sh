@@ -32,7 +32,7 @@ int			key_selection_next(t_group *grp, char *order, int key)
 	else if (key == ARROW_L || key == ARROW_R ||
 		key == ARROW_U || key == ARROW_D)
 		handling_arrow(grp, key);
-	else if (ft_is_printable(order) || key == STAB)
+	else if (ft_is_printable(order))
 		print_cmd(grp, order);
 	else
 		return (0);
