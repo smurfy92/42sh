@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 20:37:49 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/13 10:20:50 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/13 15:54:20 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_jobs		*get_jobs_idx(t_group *grp, int idx)
 	if (curr == NULL)
 	{
 		idx == -1 ? (idx = 0) : 0;
-		error_cmd("could not found jobs", ft_itoa(idx), 1);
+		error_cmd("could not found jobs", "42sh", 1);
 		return (NULL);
 	}
 	return (curr);
