@@ -6,26 +6,26 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 23:37:23 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/13 13:56:00 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/13 15:36:19 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-void		prepare_bquotes(t_group *grp, t_parse *parse, int *fd, char **split)
+void		prepare_bquotes(t_group *grp, char *bquote, int *fd, char **split)
 {
 	split[0] = ft_getenv(grp, "_");
 	split[1] = NULL;
 	fd[0] = open("/tmp/.to_shell", O_WRONLY | O_CREAT | O_TRUNC,
 	S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
-	ft_putstr_fd(parse->bquotes, fd[0]);
+	ft_putstr_fd(bquote, fd[0]);
 	close(fd[0]);
 	fd[0] = open("/tmp/.to_shell", O_RDONLY);
 	fd[1] = open("/tmp/.fromshell", O_WRONLY | O_CREAT | O_TRUNC,
 	S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
 }
 
-void		exec_bquotes(t_group *grp, t_parse *parse)
+void		exec_bquotes(t_group *grp, char *bquote)
 {
 	pid_t	pid;
 	int		fd[2];
@@ -33,7 +33,7 @@ void		exec_bquotes(t_group *grp, t_parse *parse)
 	char	**env;
 	char	*cmdsplit[2];
 
-	prepare_bquotes(grp, parse, fd, cmdsplit);
+	prepare_bquotes(grp, bquote, fd, cmdsplit);
 	pid = fork();
 	pid < 0 ? ft_exit(grp, 999) : 0;
 	if (pid == 0)
