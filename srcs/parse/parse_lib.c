@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 10:26:28 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/13 15:49:51 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/13 16:28:18 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void		ft_replace_bquote(t_group *grp, t_parse *parse, int i)
 	bquote = replace_bquote(grp, tmp);
 	REMOVE(&tmp);
 	begin = JOINF(SUB(parse->cmd, 0, start - 1), bquote, 3);
-	(parse->cmd) ? REMOVE(&parse->cmd): 0;
+	(parse->cmd) ? REMOVE(&parse->cmd) : 0;
 	parse->cmd = JOINF(begin, SUB(parse->cmd, start + end + 1,
 	LEN(parse->cmd)), 2);
 	REMOVE(&begin);
