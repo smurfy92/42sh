@@ -35,6 +35,8 @@ void		ft_adddoubleredirection(t_group *grp, t_parse *parse, int i)
 {
 	if (parse->dbred)
 		REMOVE(&parse->dbred);
+	if (parse->sgred)
+		REMOVE(&parse->sgred);
 	parse->dbred = get_redirection(grp, parse, i, i - 2);
 }
 
@@ -48,5 +50,7 @@ void		ft_addredirection(t_group *grp, t_parse *parse, int i)
 {
 	if (parse->sgred)
 		REMOVE(&parse->sgred);
+	if (parse->dbred)
+		REMOVE(&parse->dbred);
 	parse->sgred = get_redirection(grp, parse, i, i - 1);
 }
