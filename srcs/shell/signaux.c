@@ -43,10 +43,12 @@ void	handler_ctrl_c(int sig)
 	ioctl(0, TIOCSTI, "\n");
 }
 
-void	handler_sigcont(void)
+void	handler_sigcont(int sig)
 {
 	t_group	*grp;
 
+	if (sig)
+		;
 	grp = get_grp();
 	ft_putendl_fd("42sh: exited", 2);
 	ft_exit(grp, 0);

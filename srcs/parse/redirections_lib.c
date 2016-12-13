@@ -62,14 +62,15 @@ int				check_stat(t_parse *parse, char **file)
 {
 	struct stat		buf;
 	char			*tmp;
+	int				ret;
 
 	tmp = NULL;
 	tmp = getwd(tmp);
 	tmp = ft_strjoin_nf(tmp, "/", 1);
 	tmp = ft_strjoin_nf(tmp, *file, 1);
-	stat(tmp, &buf);
+	ret = stat(tmp, &buf);
 	REMOVE(&tmp);
-	if (S_ISDIR(buf.st_mode))
+	if (ret == 0 && S_ISDIR(buf.st_mode))
 	{
 		error_cmd("is a directory: ", *file, 1);
 		REMOVE(file);

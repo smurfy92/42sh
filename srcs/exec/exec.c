@@ -72,8 +72,8 @@ void		andor_exec(t_group *grp, t_andor *andor)
 	{
 		if (create_fd(tmp->parselst))
 			launch_exec(grp, tmp->parselst, tmp->cmd, (tmp->type == 3) ? 0 : 1);
-		if ((tmp->type == 1 && grp->exit != 0) ||
-			(tmp->type == 2 && grp->exit == 0))
+		if (grp && tmp && ((tmp->type == 1 && grp->exit != 0) ||
+					(tmp->type == 2 && grp->exit == 0)))
 			break ;
 		if (tmp->next)
 			grp->exit = 0;

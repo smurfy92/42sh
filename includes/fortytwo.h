@@ -38,7 +38,6 @@
 # include "termcaps.h"
 # include "history.h"
 # include "free.h"
-# include "debug.h"
 # include "errors.h"
 # include "shell_script.h"
 # include <string.h>
