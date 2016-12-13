@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 00:13:31 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/13 10:14:31 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/13 11:24:39 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ char	*update_status(int sig, int code)
 	sig == SIGSEGV ? (status = SDUP("segmentation fault")) : 0;
 	sig == SIGNCONT ? (status = SDUP("continued")) : 0;
 	if (sig == SIGNSTOP)
-		status = SDUP(JOINF("suspended: ", ft_itoa(WSTOPSIG(code)), 2));
+		status = JOINF("suspended: ", ft_itoa(WSTOPSIG(code)), 2);
 	if (sig == CLD_EXITED)
-		status = SDUP(JOINF("exited: ", ft_itoa(WEXITSTATUS(code)), 2));
+		status = JOINF("exited: ", ft_itoa(WEXITSTATUS(code)), 2);
 	sig == 0 ? (status = SDUP(JOINF("done: ", ft_itoa(code), 2))) : 0;
 	status == NULL ? (status = SDUP("UNKNOWN STATUS: terminated")) : 0;
 	return (status);
