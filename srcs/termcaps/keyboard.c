@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/13 14:20:06 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/13 15:36:34 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,6 @@
 
 int			key_selection_next(t_group *grp, char *order, int key)
 {
-	if (key == STAB)
-	{
-		order[0] = 9;
-		order[1] = 0;
-		order[2] = 0;
-		order[3] = 0;
-	}
 	if (key == HOME)
 		ft_go_home(grp);
 	else if (key == END)

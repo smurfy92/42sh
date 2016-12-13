@@ -1,4 +1,4 @@
- /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 21:15:46 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/13 11:30:14 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/13 15:42:36 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,7 @@ void		launch_exec(t_group *grp, t_parse *parse, char *andorcmd, int fg)
 	else if (fg && parent)
 		put_in_fg(grp, parent);
 	else if (parent)
-	{
 		sleep(1);
-		ft_putchar('\n');
-	}
 }
 
 int			create_fd(t_parse *parse)

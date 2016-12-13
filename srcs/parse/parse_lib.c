@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 10:26:28 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/12 10:27:04 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/13 15:46:12 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,14 @@ void		ft_create_redirections(t_parse *parse)
 ** replacing backquotes in parse cmd
 */
 
-char		*replace_bquote(t_group *grp, t_parse *parse)
+char		*replace_bquote(t_group *grp, char *bquote)
 {
 	int		fd;
 	char	*bquote_result;
 	char	*line;
 
 	line = NULL;
-	exec_bquotes(grp, parse);
+	exec_bquotes(grp, bquote);
 	fd = open("/tmp/.fromshell", O_RDONLY);
 	bquote_result = NEW(0);
 	while (get_next_line(fd, &line) > 0)
@@ -99,6 +99,7 @@ void		ft_replace_bquote(t_group *grp, t_parse *parse, int i)
 	int		end;
 	char	*bquote;
 	char	*begin;
+	char	*tmp;
 
 	start = i + 1;
 	i = start;
@@ -109,11 +110,13 @@ void		ft_replace_bquote(t_group *grp, t_parse *parse, int i)
 		i++;
 	}
 	bquote = SUB(parse->cmd, start, end);
-	parse->bquotes = SDUP(bquote);
+	tmp = SDUP(bquote);
 	REMOVE(&bquote);
-	bquote = replace_bquote(grp, parse);
+	bquote = replace_bquote(grp, tmp);
+	REMOVE(&tmp);
 	begin = JOINF(SUB(parse->cmd, 0, start - 1), bquote, 3);
 	parse->cmd = JOINF(begin, SUB(parse->cmd, start + end + 1,
 	LEN(parse->cmd)), 2);
+	REMOVE(&begin);
 	check_parentheses(0);
 }
