@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/07 00:53:40 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/13 11:32:25 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/13 16:01:08 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,11 @@ static int		analyse_opt(t_group *grp, char *arg, int *options, char *envopt)
 	while (++i < LEN(arg))
 	{
 		if (isvalid_opt(grp, arg[i], options, envopt) < 0)
+		{
+			free(envopt);
+			error_cmd("jobs", "bad options", 1);
 			return (-1);
+		}
 	}
 	return (1);
 }
@@ -80,16 +84,13 @@ int				jobs_opt(t_group *grp, char **cmd, int *options)
 		if (cmd[i][0] == '-')
 		{
 			if (analyse_opt(grp, cmd[i], options, envopt) < 0)
-			{
-				REMOVE(&envopt);
-				error_cmd("jobs", "bad options", 1);
 				return (-1);
-			}
 		}
 		else
 		{
 			jobs = get_jobs_idx(grp, ft_atoi(cmd[i]));
-			jobs ? display_jobs(jobs, 1, 1) : 0;
+			jobs ? display_jobs(jobs, 0, 1) : 0;
+			jobs ? display_jobs_pipe(jobs, options) : 0;
 			is_jobs = true;
 		}
 	}
