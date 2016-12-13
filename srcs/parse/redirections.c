@@ -56,7 +56,7 @@ void			ft_parse_redirections(t_group *grp, t_parse *parse)
 
 	i = 0;
 	(inquote = false) ? check_parentheses(0) : check_parentheses(0);
-	while (parse->cmd[i])
+	while (parse->cmd && parse->cmd[i])
 	{
 		grp->minus = 0;
 		ret = check_parentheses(parse->cmd[i]);

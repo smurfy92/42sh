@@ -63,7 +63,11 @@ void		ft_replace_tilde(t_group *grp, t_parse *parse, int i)
 
 	path = ft_getenv(grp, "HOME");
 	if (path == NULL)
+	{
 		error_cmd("env", "no home", 1);
+		grp->fail = 1;
+		return ;
+	}
 	tmp = SDUP(&parse->cmd[i + 1]);
 	parse->cmd[i] = '\0';
 	if (parse->cmd[i + 1])
