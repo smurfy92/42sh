@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/23 22:45:03 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/12 00:48:45 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/13 10:33:04 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,70 @@ void		ft_dup_redirection(t_parse *parse)
 		}
 		free(tmp);
 	}
+}
+
+void		control_process(t_jobs **parent, t_parse *tmp,
+								int *tabl, char *andorcmd)
+{
+	t_jobs	*jobs;
+	t_group	*grp;
+
+	grp = get_grp();
+	jobs = control_jobs(parent, grp, tmp->cmd, andorcmd);
+	jobs->fdin = grp->pipefd_in;
+	if (grp->is_interact == true)
+		setpgid(jobs->pid, (*parent)->pid);
+	if (tmp->next)
+		grp->pipefd_in = tabl[0];
+	else
+	{
+		close(tabl[0]);
+		grp->pipefd_in = STDIN_FILENO;
+	}
+	close(tabl[1]);
+}
+
+void		generate_process(t_jobs **parent, t_parse *tmp,
+									char *andorcmd, int fg)
+{
+	int		tabl[2];
+	t_group	*grp;
+
+	pipe(tabl);
+	grp = get_grp();
+	grp->father = fork();
+	grp->father < 0 ? ft_exit(grp, 999) : 0;
+	if (grp->father == 0)
+	{
+		close(tabl[0]);
+		init_shell_job(*parent ? (*parent)->pid : 0, fg);
+		if (tmp->next && tmp->fd == -1)
+			ft_fork_pipe(grp, tmp, tabl[1]);
+		else
+		{
+			close(tabl[1]);
+			exec_child(grp, tmp);
+		}
+	}
+	else
+		control_process(parent, tmp, tabl, andorcmd);
+}
+
+void		generate_builtin(t_jobs **parent, t_parse *tmp,
+									char *andorcmd, int fg)
+{
+	t_group	*grp;
+	t_jobs	*jobs;
+
+	grp = get_grp();
+	grp->father = 42;
+	ENV(fg) = fg;
+	ENV(pgid) = *parent;
+	builtins(grp, tmp);
+	jobs = control_jobs(parent, grp, tmp->cmd, andorcmd);
+	jobs->fdin = grp->pipefd_in;
+	if (grp->father != 42 && grp->is_interact == true)
+		setpgid(jobs->pid, (*parent)->pid);
+	else if (grp->father == 42)
+		change_state(jobs, 1);
 }

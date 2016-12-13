@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 20:37:49 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/12 07:06:59 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/13 10:20:50 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 void		display_jobs(t_jobs *jobs, int n, int parent)
 {
-	if (jobs == NULL)
+	t_group	*grp;
+
+	grp = get_grp();
+	if (jobs == NULL || grp->is_interact == false)
 		return ;
 	!jobs->idx ? ft_putstr_fd("  ", 1) : 0;
 	ft_putstr_fd("[", 1);
@@ -29,7 +32,7 @@ void		display_jobs(t_jobs *jobs, int n, int parent)
 		ft_putchar_fd('\n', 1);
 }
 
-t_jobs		*control_jobs(t_jobs **parent, t_group *grp, char *cmd, char *andorcmd)
+t_jobs		*control_jobs(t_jobs **parent, t_group *grp, char *cmd, char *pcmd)
 {
 	static t_jobs	*jobs = NULL;
 	t_jobs			*new;
@@ -41,7 +44,7 @@ t_jobs		*control_jobs(t_jobs **parent, t_group *grp, char *cmd, char *andorcmd)
 	if (*parent == NULL)
 	{
 		jobs = create_jobs(grp, new, cmd, grp->father);
-		jobs->parent_cmd = SDUP(andorcmd);
+		jobs->parent_cmd = SDUP(pcmd);
 		*parent = jobs;
 	}
 	else
@@ -64,13 +67,12 @@ t_jobs		*get_jobs_idx(t_group *grp, int idx)
 		if (jobs && jobs->idx == idx)
 		{
 			curr = jobs;
-			break;
+			break ;
 		}
 		jobs = jobs->next;
 	}
-	if (idx == -1 && last)
-		curr = last;
-	else if (curr == NULL)
+	(idx == -1 && last) ? (curr = last) : 0;
+	if (curr == NULL)
 	{
 		idx == -1 ? (idx = 0) : 0;
 		error_cmd("could not found jobs", ft_itoa(idx), 1);

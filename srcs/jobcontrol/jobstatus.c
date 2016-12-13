@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 00:13:31 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/12 07:06:29 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/13 10:14:31 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ char	*update_status(int sig, int code)
 	sig == SIGABRT ? (status = SDUP("abort")) : 0;
 	sig == SIGSEGV ? (status = SDUP("segmentation fault")) : 0;
 	sig == SIGNCONT ? (status = SDUP("continued")) : 0;
-	sig == SIGNSTOP ? (status = SDUP(JOINF("suspended: ", ft_itoa(WSTOPSIG(code)), 2))) : 0;
-	sig == CLD_EXITED ? (status = SDUP(JOINF("exited: ", ft_itoa(WEXITSTATUS(code)), 2))) : 0;
+	if (sig == SIGNSTOP)
+		status = SDUP(JOINF("suspended: ", ft_itoa(WSTOPSIG(code)), 2));
+	if (sig == CLD_EXITED)
+		status = SDUP(JOINF("exited: ", ft_itoa(WEXITSTATUS(code)), 2));
 	sig == 0 ? (status = SDUP(JOINF("done: ", ft_itoa(code), 2))) : 0;
 	status == NULL ? (status = SDUP("UNKNOWN STATUS: terminated")) : 0;
 	return (status);
@@ -43,8 +45,6 @@ void	change_state(t_jobs *jobs, int code)
 	jobs->terminate = code;
 	jobs->status = update_status(code, jobs->code);
 	jobs->enabled = (code != SIGNCONT) ? false : true;
-	// if (grp->is_interact && jobs->fg && code == SIGNSTOP)
-	// 	tcgetattr(STDIN_FILENO, &jobs->tmodes);
 	if (jobs->enabled == false && code != SIGNSTOP && jobs->fdin > 2)
 		if (close(jobs->fdin) < 0)
 			perror("closed");
@@ -56,18 +56,18 @@ void	change_state(t_jobs *jobs, int code)
 
 void	analyse_ret(t_jobs *jobs, int ret, int code)
 {
-	// if (jobs->enabled == true || jobs->terminate == SIGNSTOP)
+	if (jobs->enabled == true || jobs->terminate == SIGNSTOP)
 		jobs->code = code;
-		if (ret == jobs->pid && WIFCONTINUED(code))
-			change_state(jobs, SIGNCONT);
-		else if (ret == jobs->pid && WIFSTOPPED(code))
-			change_state(jobs, SIGNSTOP);
-		else if (ret == jobs->pid && WIFEXITED(code))
-			change_state(jobs, CLD_EXITED);
-		else if (ret == jobs->pid && code < 35)
-			change_state(jobs, code);
-		else if (ret == jobs->pid)
-			change_state(jobs, 0);
+	if (ret == jobs->pid && WIFCONTINUED(code))
+		change_state(jobs, SIGNCONT);
+	else if (ret == jobs->pid && WIFSTOPPED(code))
+		change_state(jobs, SIGNSTOP);
+	else if (ret == jobs->pid && WIFEXITED(code))
+		change_state(jobs, CLD_EXITED);
+	else if (ret == jobs->pid && code < 35)
+		change_state(jobs, code);
+	else if (ret == jobs->pid)
+		change_state(jobs, 0);
 }
 
 int		check_group_status(t_jobs *pgid, int free)

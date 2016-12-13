@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 20:40:36 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/12 07:06:26 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/13 10:09:32 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@ int		ft_sigcont(t_jobs *jobs)
 	{
 		if (pipe->terminate == SIGNSTOP)
 		{
-			//tcsetattr(STDIN_FILENO, 0, &pipe->tmodes);
-			if (kill (pipe->pid, SIGCONT) < 0)
-				perror ("kill (SIGCONT)");
+			if (kill(pipe->pid, SIGCONT) < 0)
+				error_cmd("kill failed", "SIGCONT", 0);
 		}
 		pipe = pipe->next_pipe;
 	}
@@ -76,7 +75,7 @@ int		builtin_fg(t_group *grp, int idx)
 	return (1);
 }
 
-int	builtin_bg(t_group *grp, int idx)
+int		builtin_bg(t_group *grp, int idx)
 {
 	t_jobs *curr;
 
