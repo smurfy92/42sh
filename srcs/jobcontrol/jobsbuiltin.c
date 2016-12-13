@@ -6,53 +6,52 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/07 00:53:40 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/12 07:07:13 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/13 10:30:01 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-static int		isvalid_opt(t_group *grp, char opt, int *options, char *env_options)
+static int		isvalid_opt(t_group *grp, char opt, int *options, char *envopt)
 {
 	size_t	i;
 
 	i = -1;
-	while (grp && ++i < LEN(env_options))
+	while (grp && ++i < LEN(envopt))
 	{
-		if (opt == env_options[i])
+		if (opt == envopt[i])
 		{
-			opt == '-' ? (options[0] = true) : 0 ;
-			opt == 'l' ? (options[1] = true) : 0 ;
-			opt == 'p' ? (options[2] = true) : 0 ;
+			opt == '-' ? (options[0] = true) : 0;
+			opt == 'l' ? (options[1] = true) : 0;
+			opt == 'p' ? (options[2] = true) : 0;
 			return (1);
 		}
 	}
 	return (-1);
 }
 
-static int		analyse_opt(t_group *grp, char *arg, int *options, char *env_options)
+static int		analyse_opt(t_group *grp, char *arg, int *options, char *envopt)
 {
 	size_t	i;
 
 	i = 0;
 	if (arg[1] == '\0')
-		isvalid_opt(grp, '-', options, env_options);
+		isvalid_opt(grp, '-', options, envopt);
 	while (++i < LEN(arg))
 	{
-		if (isvalid_opt(grp, arg[i], options, env_options) < 0)
+		if (isvalid_opt(grp, arg[i], options, envopt) < 0)
 			return (-1);
 	}
 	return (1);
 }
 
-
-void	display_jobs_pipe(t_jobs *jobs, int *options)
-{	
+void			display_jobs_pipe(t_jobs *jobs, int *options)
+{
 	t_jobs	*pipe;
 
 	ft_putchar('\n');
 	pipe = jobs->next_pipe;
-	while(options[1] && pipe)
+	while (options[1] && pipe)
 	{
 		if (options[2])
 		{
@@ -66,23 +65,23 @@ void	display_jobs_pipe(t_jobs *jobs, int *options)
 	}
 }
 
-int		jobs_opt(t_group *grp, char **cmd, int *options)
+int				jobs_opt(t_group *grp, char **cmd, int *options)
 {
 	int		i;
 	int		is_jobs;
-	char	*env_options;
+	char	*envopt;
 	t_jobs	*jobs;
 
 	i = 0;
-	env_options = SDUP("-lp");
+	envopt = SDUP("-lp");
 	is_jobs = false;
 	while (cmd && cmd[++i])
 	{
 		if (cmd[i][0] == '-')
 		{
-			if (analyse_opt(grp, cmd[i], options, env_options) < 0)
+			if (analyse_opt(grp, cmd[i], options, envopt) < 0)
 			{
-				REMOVE(&env_options);
+				REMOVE(&envopt);
 				error_cmd("jobs", "bad options", 1);
 				return (-1);
 			}
@@ -90,16 +89,15 @@ int		jobs_opt(t_group *grp, char **cmd, int *options)
 		else
 		{
 			jobs = get_jobs_idx(grp, ft_atoi(cmd[i]));
-			if (jobs)
-				display_jobs(jobs, 1, 1);
+			jobs ? display_jobs(jobs, 1, 1) : 0;
 			is_jobs = true;
 		}
 	}
-	REMOVE(&env_options);
+	REMOVE(&envopt);
 	return (is_jobs ? -1 : 0);
 }
 
-int	builtin_jobs(t_group *grp, char **cmd)
+int				builtin_jobs(t_group *grp, char **cmd)
 {
 	t_jobs	*tmp;
 	int		options[3];
@@ -114,7 +112,7 @@ int	builtin_jobs(t_group *grp, char **cmd)
 	{
 		if (options[2])
 			ft_putnbr(tmp->pid);
-		else if (options [1])
+		else if (options[1])
 			display_jobs(tmp, 0, 0);
 		else
 			display_jobs(tmp, 0, 1);

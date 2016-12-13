@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 03:04:04 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/12 01:46:46 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/13 10:50:00 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ void	handler_ctrl_c(int sig)
 {
 	t_group	*grp;
 
-	if (sig)
-		;
 	grp = get_grp();
 	if (sig && grp->comp)
 		comp_free(grp, &grp->comp);
@@ -45,6 +43,15 @@ void	handler_ctrl_c(int sig)
 	ioctl(0, TIOCSTI, "\n");
 }
 
+void	handler_sigcont()
+{
+	t_group	*grp;
+
+	grp = get_grp();
+	ft_putendl_fd("42sh: exited", 2);
+	ft_exit(grp, 0);
+}
+
 void	sig_handler(void)
 {
 	signal(SIGINT, handler_ctrl_c);
@@ -53,4 +60,5 @@ void	sig_handler(void)
 	signal(SIGTTIN, SIG_IGN);
 	signal(SIGTTOU, SIG_IGN);
 	signal(SIGWINCH, handler_win);
+	signal(SIGCONT, handler_sigcont);
 }

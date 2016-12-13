@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/03 23:41:24 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/12 07:07:04 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/13 10:24:39 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void		remove_jobs(int pgid)
 	{
 		next = jobs->next;
 		if (pgid == jobs->pid)
-		{	
+		{
 			if (prev)
 				prev->next = next;
 			else if (prev == NULL && next != NULL)
@@ -89,7 +89,7 @@ t_jobs		*create_jobs(t_group *grp, t_jobs *new, char *cmd, int pid)
 		new->idx = tmp->idx + 1;
 		tmp->next = new;
 	}
-	return(new);
+	return (new);
 }
 
 t_jobs		*create_pipe_jobs(t_jobs *new, t_jobs *jobs, char *cmd, int pid)
@@ -103,5 +103,5 @@ t_jobs		*create_pipe_jobs(t_jobs *new, t_jobs *jobs, char *cmd, int pid)
 	new->fg = false;
 	new->code = 0;
 	jobs->next_pipe = new;
-	return(new);
+	return (new);
 }

@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 10:26:28 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/12 10:26:46 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/13 09:45:36 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,14 @@ int			main(int argc, char **argv, char **env)
 		init_shell();
 	}
 	else
+	{	
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGTSTP, SIG_IGN);
+		signal(SIGTTIN, SIG_IGN);
+		signal(SIGTTOU, SIG_IGN);
 		grp->quit = true;
+	}
 	init_env(grp, env);
 	if (argc >= 2)
 		init_shellscript(argc, argv, grp);
