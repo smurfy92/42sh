@@ -29,7 +29,7 @@ int		ft_get_last_eol(t_group *grp)
 
 	i = TERM(curs_pos);
 	y = 0;
-	while (TERM(cmd_line)[--i] && TERM(cmd_line)[i] != '\n')
+	while (--i > 0 && TERM(cmd_line)[i] && TERM(cmd_line)[i] != '\n')
 		y++;
 	return (y);
 }

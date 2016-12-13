@@ -75,7 +75,7 @@ int			prepare_heredoc(t_group *grp, t_parse *tmp3)
 		while (hdoc[++i])
 			if ((ret = heredoc(grp, file, hdoc[i])) < 0)
 				break ;
-		if (tmp3->file == NULL && ret != -1)
+		if (tmp3 && tmp3->file == NULL && ret != -1)
 			tmp3->file = SDUP(file);
 		REMOVE(&file);
 		ft_freestrtab(&hdoc);
