@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 20:25:26 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/12/09 00:54:25 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/13 17:51:21 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ void			prompt(void)
 		}
 		ft_putstr_fd(":(", 2);
 		prompt_path(grp);
-		ft_putstr_fd(") > \033[0m", 2);
-		grp->prompt_size += 6;
+		(!grp->exit) ? ft_putstr_fd(")😂 > \033[0m", 2) :
+		ft_putstr_fd(")😱 > \033[0m", 2);
+		grp->prompt_size += 7;
 	}
 }
