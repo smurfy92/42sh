@@ -62,6 +62,7 @@ void	print_cmd(t_group *grp, char *order)
 
 	i = -1;
 	ft_get_cmd(grp, order);
+
 	if (TERM(curs_pos) < TERM(cmd_size))
 	{
 		i = TERM(curs_pos) - 1;
