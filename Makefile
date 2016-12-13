@@ -132,7 +132,7 @@ INC += -I srcs/shellscript/includes/
 INC += -I ./includes/
 
 OBJ = $(SRC:.c=.o)
-FLAG = -Wall -Werror -Wextra
+FLAG = -Wall -Werror -Wextra -g
 #-fsanitize=address
 CG = \033[92m
 CY =  \033[93m
