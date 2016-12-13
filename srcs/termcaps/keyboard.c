@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/13 13:55:52 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/13 14:20:06 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void		get_cmd(t_group *grp, int fd)
 	char	order[BUF_SIZE + 1];
 
 	ret_q = 0;
-	if (grp->quit == true)
+	if (grp->is_interact == false)
 		return (read_fd_in(grp));
 	ft_bzero(order, BUF_SIZE + 1);
 	grp->err_parse = 0;

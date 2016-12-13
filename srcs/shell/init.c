@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/28 15:17:06 by jtranchi          #+#    #+#             */
-/*   Updated: 2016/12/12 07:04:17 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/13 14:18:10 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ t_group			*set_grp(t_group *grp)
 	set_grpenv(grp);
 	grp->prompt_size = 6;
 	grp->exit = 0;
-	grp->quit = false;
 	grp->err_parse = false;
 	grp->hdcount = 0;
 	grp->allcmd = NULL;
@@ -59,7 +58,6 @@ t_group			*set_grp(t_group *grp)
 	grp->program_pid = -1;
 	grp->jobs = NULL;
 	grp->pipefd_in = STDIN_FILENO;
-	grp->waitstatus = 1;
 	ft_get_history(grp);
 	init_term(grp);
 	grp->root = NULL;

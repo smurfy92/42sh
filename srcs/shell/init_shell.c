@@ -89,7 +89,7 @@ int			init_shell(void)
 	if (tcgetattr(STDIN_FILENO, &grp->curr_term) == -1)
 	{
 		ft_putendl("could not get termcaps's attributes");
-		return ((grp->quit = true));
+		return (1);
 	}
 	grp->cpy_term = grp->curr_term;
 	grp->curr_term.c_lflag = grp->curr_term.c_lflag & (~ICANON & ~ECHO);
