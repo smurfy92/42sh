@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_quotes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/19 03:11:24 by jmontija          #+#    #+#             */
-/*   Updated: 2016/11/22 04:36:45 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/13 18:50:36 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,12 @@ int		malloc_free(int **quotes, char c)
 	int	i;
 
 	i = -1;
+	if (c == -4)
+	{
+		free(*quotes);
+		*quotes = NULL;
+		return (-1);
+	}
 	if (*quotes == NULL)
 	{
 		*quotes = (int *)malloc(sizeof(int) * 6);
