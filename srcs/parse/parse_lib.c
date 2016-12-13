@@ -115,6 +115,7 @@ void		ft_replace_bquote(t_group *grp, t_parse *parse, int i)
 	bquote = replace_bquote(grp, tmp);
 	REMOVE(&tmp);
 	begin = JOINF(SUB(parse->cmd, 0, start - 1), bquote, 3);
+	(parse->cmd) ? REMOVE(&parse->cmd): 0;
 	parse->cmd = JOINF(begin, SUB(parse->cmd, start + end + 1,
 	LEN(parse->cmd)), 2);
 	REMOVE(&begin);
