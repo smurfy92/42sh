@@ -55,7 +55,7 @@ int			main(int argc, char **argv, char **env)
 		init_shell();
 	}
 	else
-	{	
+	{
 		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGTSTP, SIG_IGN);
@@ -64,8 +64,7 @@ int			main(int argc, char **argv, char **env)
 		grp->quit = true;
 	}
 	init_env(grp, env);
-	if (argc >= 2)
-		init_shellscript(argc, argv, grp);
+	(argc >= 2) ? init_shellscript(argc, argv, grp) : 0;
 	while (42)
 		proccess(grp);
 	return (0);

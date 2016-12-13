@@ -21,7 +21,6 @@
 # include <grp.h>
 # include <termios.h>
 # include <signal.h>
-//# include <errno.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <sys/ioctl.h>
@@ -43,6 +42,7 @@
 # include "errors.h"
 # include "shell_script.h"
 # include <string.h>
+
 # define KEY(a, b, c, d) ((d << 24) + (c << 16) + (b << 8) + a)
 # define NEW(x)			(ft_strnew(x))
 # define LEN(x)			(ft_strlen(x))

@@ -94,7 +94,7 @@ int				builtin_history(t_group *grp, t_parse *parse)
 		if (grp->history->i > 16)
 			ft_display_history(ft_history_get_by_id(grp, grp->history->i - 16));
 		else
-			ft_display_history(ft_history_get_first(grp));//else pour quel if ??
+			ft_display_history(ft_history_get_first(grp));
 	}
 	else if (ft_strcmp(cmdsplit[1], "-h") == 0)
 		history_display_help();
