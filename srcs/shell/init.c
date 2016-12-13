@@ -12,7 +12,7 @@
 
 #include "fortytwo.h"
 
-void		init_term(t_group *grp)
+void			init_term(t_group *grp)
 {
 	struct winsize	w;
 
@@ -30,9 +30,8 @@ void		init_term(t_group *grp)
 	grp->term->window->heigth = w.ws_row;
 }
 
-t_group		*set_grp(t_group *grp)
+static	void	set_grpenv(t_group *grp)
 {
-	grp = (t_group*)ft_memalloc(sizeof(t_group));
 	grp->env = (t_env *)malloc(sizeof(t_env));
 	grp->env->lst = NULL;
 	grp->env->lst_tmp = NULL;
@@ -43,6 +42,12 @@ t_group		*set_grp(t_group *grp)
 	grp->env->path_tmp = NULL;
 	grp->env->pgid = NULL;
 	grp->env->fg = false;
+}
+
+t_group			*set_grp(t_group *grp)
+{
+	grp = (t_group*)ft_memalloc(sizeof(t_group));
+	set_grpenv(grp);
 	grp->prompt_size = 6;
 	grp->exit = 0;
 	grp->quit = false;
@@ -61,7 +66,7 @@ t_group		*set_grp(t_group *grp)
 	return (grp);
 }
 
-t_group		*get_grp(void)
+t_group			*get_grp(void)
 {
 	static t_group *grp = NULL;
 

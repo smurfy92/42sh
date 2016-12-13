@@ -87,7 +87,6 @@ char		*replace_bquote(t_group *grp, t_parse *parse)
 	{
 		line = ft_charjoin(line, ' ');
 		bquote_result = JOINF(bquote_result, line, 3);
-		//ft_putendl_fd("here", 2); // reste bloquê ici sur `ls -R /`
 	}
 	close(fd);
 	bquote_result[LEN(bquote_result) - 1] = '\0';

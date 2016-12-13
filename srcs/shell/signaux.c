@@ -43,7 +43,7 @@ void	handler_ctrl_c(int sig)
 	ioctl(0, TIOCSTI, "\n");
 }
 
-void	handler_sigcont()
+void	handler_sigcont(void)
 {
 	t_group	*grp;
 

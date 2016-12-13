@@ -18,7 +18,7 @@
 **	to check if we need to exec builtin
 */
 
-void	exec_builtins(t_group *grp, t_parse *parse)
+void			exec_builtins(t_group *grp, t_parse *parse)
 {
 	ENV(fg) = 0;
 	ENV(pgid) = NULL;
@@ -53,7 +53,7 @@ static void		exec_env(t_group *grp, t_parse *parse)
 	ft_exit(grp, grp->exit);
 }
 
-void		init_exec_env(t_group *grp)
+void			init_exec_env(t_group *grp)
 {
 	t_parse	*parse;
 

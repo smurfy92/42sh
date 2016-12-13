@@ -103,9 +103,6 @@ SRC += srcs/free_mem/exit.c
 SRC	+= srcs/free_mem/free.c
 SRC	+= srcs/free_mem/free2.c
 
-#debug
-SRC	+= srcs/debug/debug.c
-
 #auto_comp
 SRC	+= srcs/auto_comp/comp_init.c
 SRC += srcs/auto_comp/comp_list.c
@@ -135,7 +132,7 @@ INC += -I srcs/shellscript/includes/
 INC += -I ./includes/
 
 OBJ = $(SRC:.c=.o)
-FLAG = -Wall -Werror -Wextra 
+FLAG = -Wall -Werror -Wextra
 #-fsanitize=address
 CG = \033[92m
 CY =  \033[93m

@@ -47,11 +47,9 @@ void			prompt(void)
 	grp->prompt_size = 0;
 	if (grp->quit == false)
 	{
-		jobs_status(grp); // not necessary but protection
-		if (!grp->exit)
-			ft_putstr_fd("\033[92m", 2);
-		else
-			ft_putstr_fd("\033[91m", 2);
+		jobs_status(grp);
+		(!grp->exit) ? ft_putstr_fd("\033[92m", 2) :
+		ft_putstr_fd("\033[91m", 2);
 		if (ft_getenv(grp, "LOGNAME") != NULL)
 		{
 			ft_putstr_fd(ft_getenv(grp, "LOGNAME"), 2);

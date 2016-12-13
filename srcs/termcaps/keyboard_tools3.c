@@ -56,7 +56,6 @@ void	remove_line(t_group *grp)
 	ft_go_end(grp);
 	while (TERM(curs_pos) > 0)
 		handling_backspace(grp);
-
 }
 
 void	reset_edl(t_group *grp)

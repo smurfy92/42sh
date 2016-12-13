@@ -39,20 +39,6 @@ int			key_selection_next(t_group *grp, char *order, int key)
 	return (1);
 }
 
-void		ft_puttab(t_group *grp)
-{
-	char *tmp;
-	char *ch;
-
-	ch = ft_strnew(1);
-	ch[0] = '\t';
-	tmp = SDUP(&TERM(cmd_line)[TERM(curs_pos)]);
-	TERM(cmd_line)[TERM(curs_pos)] = '\0';
-	TERM(cmd_line) = JOINF(TERM(cmd_line), ch, 3);
-	TERM(cmd_line) = JOINF(TERM(cmd_line), tmp, 3);
-
-}
-
 int			key_selection(t_group *grp, char *order)
 {
 	int	key;

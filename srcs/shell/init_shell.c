@@ -14,27 +14,27 @@
 
 int			set_for_jobs(int terminal)
 {
-	pid_t 		shell_pgid;
+	pid_t	shell_pgid;
 
-	printf("terminal %d shell_pgid stopped: %d\n", tcgetpgrp(terminal), getpgrp ());
-	while (tcgetpgrp(terminal) != (shell_pgid = getpgrp ()))
-	{
-		kill (-shell_pgid, SIGTTIN);
-	}
+	printf("terminal %d shell_pgid stopped: %d\n", tcgetpgrp(terminal),
+	getpgrp());
+	while (tcgetpgrp(terminal) != (shell_pgid = getpgrp()))
+		kill(-shell_pgid, SIGTTIN);
 	sig_handler();
 	shell_pgid = getpid();
-	if (setpgid (shell_pgid, shell_pgid) < 0)
+	if (setpgid(shell_pgid, shell_pgid) < 0)
 	{
-		perror ("Couldn't put the shell in its own process group");
-		exit (1);
+		perror("Couldn't put the shell in its own process group");
+		exit(1);
 	}
-	tcsetpgrp (terminal, shell_pgid);
+	tcsetpgrp(terminal, shell_pgid);
 	return (0);
 }
 
 int			reset_shell(void)
 {
 	t_group	*grp;
+
 	grp = get_grp();
 	if (tcsetattr(0, 0, &(grp->cpy_term)) == -1)
 		return (-1);
@@ -46,7 +46,7 @@ void		restore_shell(void)
 	t_group	*grp;
 
 	grp = get_grp();
-	tcsetattr (STDIN_FILENO, 0, &grp->curr_term);
+	tcsetattr(STDIN_FILENO, 0, &grp->curr_term);
 }
 
 void		init_shell_job(int pgid, int fg)
@@ -56,11 +56,11 @@ void		init_shell_job(int pgid, int fg)
 
 	grp = get_grp();
 	if (grp->is_interact == true)
-	{		
+	{
 		pid = getpid();
 		pgid == 0 ? (pgid = pid) : 0;
-		setpgid (pid, pgid);
-		fg ? tcsetpgrp (STDIN_FILENO, pgid) : 0;
+		setpgid(pid, pgid);
+		fg ? tcsetpgrp(STDIN_FILENO, pgid) : 0;
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		signal(SIGTSTP, SIG_DFL);
