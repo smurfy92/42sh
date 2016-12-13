@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/24 23:25:11 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/13 10:35:10 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/13 16:31:30 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,11 @@ void				put_in_fg(t_group *grp, t_jobs *curr);
 */
 
 int					builtin_jobs(t_group *grp, char **cmd);
+
+/*
+**	jobsbuiltin_lib.c
+*/
+
+void				display_pgid(t_jobs *jobs, int *options);
 
 #endif

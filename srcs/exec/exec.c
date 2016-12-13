@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 21:15:46 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/13 15:42:36 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/13 16:17:05 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,9 @@ void		init_exec(t_group *grp)
 	tmp = grp->allcmd;
 	if (!grp->fail)
 	{
-		grp->exit = 0;
 		while (tmp)
 		{
+			grp->exit = 0;
 			andor_exec(grp, tmp->andor);
 			tmp = tmp->next;
 		}

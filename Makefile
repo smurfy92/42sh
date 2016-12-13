@@ -39,9 +39,10 @@ SRC	+= srcs/exec/execve.c
 #jobcontrol
 SRC	+= srcs/jobcontrol/jobscreate.c
 SRC	+= srcs/jobcontrol/jobscontrol.c
-SRC	+= srcs/jobcontrol/jobsbuiltin.c
 SRC	+= srcs/jobcontrol/jobsbuiltins.c
 SRC	+= srcs/jobcontrol/jobstatus.c
+SRC	+= srcs/jobcontrol/jobsbuiltin.c
+SRC	+= srcs/jobcontrol/jobsbuiltin_lib.c
 
 #hash
 SRC += srcs/hash/hash_use.c

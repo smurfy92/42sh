@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/07 00:53:40 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/13 16:01:08 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/13 16:32:14 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,26 +49,6 @@ static int		analyse_opt(t_group *grp, char *arg, int *options, char *envopt)
 	return (1);
 }
 
-void			display_jobs_pipe(t_jobs *jobs, int *options)
-{
-	t_jobs	*pipe;
-
-	ft_putchar('\n');
-	pipe = jobs->next_pipe;
-	while (options[1] && pipe)
-	{
-		if (options[2])
-		{
-			ft_putstr("  ");
-			ft_putnbr(pipe->pid);
-			ft_putchar('\n');
-		}
-		else
-			display_jobs(pipe, 1, 0);
-		pipe = pipe->next_pipe;
-	}
-}
-
 int				jobs_opt(t_group *grp, char **cmd, int *options)
 {
 	int		i;
@@ -89,8 +69,7 @@ int				jobs_opt(t_group *grp, char **cmd, int *options)
 		else
 		{
 			jobs = get_jobs_idx(grp, ft_atoi(cmd[i]));
-			jobs ? display_jobs(jobs, 0, 1) : 0;
-			jobs ? display_jobs_pipe(jobs, options) : 0;
+			jobs ? display_pgid(jobs, options) : 0;
 			is_jobs = true;
 		}
 	}
@@ -100,7 +79,7 @@ int				jobs_opt(t_group *grp, char **cmd, int *options)
 
 int				builtin_jobs(t_group *grp, char **cmd)
 {
-	t_jobs	*tmp;
+	t_jobs	*jobs;
 	int		options[3];
 
 	options[0] = false;
@@ -108,18 +87,11 @@ int				builtin_jobs(t_group *grp, char **cmd)
 	options[2] = false;
 	if (jobs_opt(grp, cmd, options) < 0)
 		return (1);
-	tmp = grp->jobs;
-	while (tmp)
+	jobs = grp->jobs;
+	while (jobs)
 	{
-		if (options[2])
-			ft_putnbr(tmp->pid);
-		else if (options[1])
-			display_jobs(tmp, 0, 0);
-		else
-			display_jobs(tmp, 0, 1);
-		display_jobs_pipe(tmp, options);
-		check_group_status(tmp, 1);
-		tmp = tmp->next;
+		display_pgid(jobs, options);
+		jobs = jobs->next;
 	}
 	return (1);
 }
