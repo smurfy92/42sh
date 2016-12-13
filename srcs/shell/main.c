@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 10:26:28 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/13 11:37:01 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/13 13:55:53 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ void		proccess(t_group *grp)
 		free(grp->allcmd);
 	}
 	ft_strdel(&TERM(cmd_line));
-	if (grp->quit == true)
-		ft_exit(grp, grp->exit);
 	grp->hdcount = 0;
 }
 

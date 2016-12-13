@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/13 11:38:28 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/13 13:55:52 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,19 @@ int			key_selection(t_group *grp, char *order)
 
 void		read_fd_in(t_group *grp)
 {
-	char *order;
+	int		ret;
+	char	*order;
 
 	TERM(cmd_line) = NEW(0);
 	order = NEW(0);
-	while (get_next_line(0, &order) > 0)
+	while ((ret = get_next_line(0, &order)) > 0)
 	{
 		TERM(cmd_line) = JOINF(TERM(cmd_line), order, 1);
+		break ;
 	}
 	REMOVE(&order);
+	if (ret <= 0)
+		ft_exit(grp, 0);
 }
 
 static void	get_cmd_help(t_group *grp, int ret_q)
