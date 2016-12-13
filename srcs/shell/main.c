@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 10:26:28 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/13 13:55:53 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/13 14:12:23 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ void		proccess(t_group *grp)
 		ft_free_parse(grp);
 		free(grp->allcmd);
 	}
-	ft_strdel(&TERM(cmd_line));
-	grp->hdcount = 0;
+	REMOVE(&TERM(cmd_line));
 }
 
 int			main(int argc, char **argv, char **env)
@@ -59,7 +58,6 @@ int			main(int argc, char **argv, char **env)
 		signal(SIGTSTP, SIG_IGN);
 		signal(SIGTTIN, SIG_IGN);
 		signal(SIGTTOU, SIG_IGN);
-		grp->quit = true;
 	}
 	init_env(grp, env);
 	(argc >= 2) ? init_shellscript(argc, argv, grp) : 0;

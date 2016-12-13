@@ -45,7 +45,7 @@ void			prompt(void)
 
 	grp = get_grp();
 	grp->prompt_size = 0;
-	if (grp->quit == false)
+	if (grp->is_interact == true)
 	{
 		jobs_status(grp);
 		(!grp->exit) ? ft_putstr_fd("\033[92m", 2) :
