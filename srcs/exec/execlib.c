@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/23 22:45:03 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/14 16:31:00 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/14 19:22:25 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void		generate_builtin(t_jobs **parent, t_parse *tmp,
 	if (grp->father != 42 && grp->is_interact == true)
 		setpgid(jobs->pid, (*parent)->pid);
 	else if (grp->father == 42)
-		change_state(jobs, 1);
+		change_state(jobs, -2);
 }
 
 void		ft_dup_redirection(t_parse *parse)

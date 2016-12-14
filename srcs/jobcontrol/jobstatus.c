@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 00:13:31 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/13 21:19:09 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/14 19:29:43 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ char	*update_status(int sig, int code)
 	if (sig == CLD_EXITED)
 		status = JOINF("exited: ", ft_itoa(WEXITSTATUS(code)), 2);
 	sig == 0 ? (status = SDUP(JOINF("done: ", ft_itoa(code), 2))) : 0;
+	sig == -2 ? (status = SDUP("terminated: builtin")) : 0;
 	status == NULL ? (status = SDUP("UNKNOWN STATUS: terminated")) : 0;
 	return (status);
 }
@@ -46,12 +47,15 @@ void	change_state(t_jobs *jobs, int code)
 	jobs->status = update_status(code, jobs->code);
 	jobs->enabled = (code != SIGNCONT) ? false : true;
 	if (jobs->enabled == false && code != SIGNSTOP && jobs->fdin > 2)
+	{
 		if (close(jobs->fdin) < 0)
-			perror("closed");
-	if (code > 1 && jobs->parent_cmd != NULL)
-		display_jobs(jobs, 1, 1);
-	else if (code > 1 && tcgetpgrp(STDIN_FILENO) == grp->program_pid)
+			error_cmd("failed", "closed", 1);
+	}
+	if ( code >= 0 && (code == SIGNSTOP || code == SIGNCONT ||
+		tcgetpgrp(STDIN_FILENO) == getpgrp()))
 		display_jobs(jobs, 1, 0);
+	else if (code > 1 && jobs->fg == true && code != SIGPIPE)
+		ft_putchar_fd('\n', 2);
 }
 
 void	analyse_ret(t_jobs *jobs, int ret, int code)

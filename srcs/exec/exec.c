@@ -6,11 +6,23 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 21:15:46 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/13 20:41:37 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/14 19:29:46 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
+
+void		is_fg(t_jobs *pgid, int fg)
+{
+	t_jobs	*pipe;
+
+	pipe = pgid;
+	while (pipe)
+	{
+		pipe->fg = fg;
+		pipe = pipe->next_pipe;
+	}
+}
 
 void		launch_exec(t_group *grp, t_parse *parse, char *andorcmd, int fg)
 {
@@ -29,6 +41,7 @@ void		launch_exec(t_group *grp, t_parse *parse, char *andorcmd, int fg)
 			generate_process(&parent, tmp, andorcmd, fg);
 		else if (is_built && tmp->fd < 0)
 			generate_builtin(&parent, tmp, andorcmd, fg);
+		is_fg(parent, fg);
 		tmp = tmp->next;
 	}
 	parent && !fg ? display_jobs(parent, 1, 1) : 0;

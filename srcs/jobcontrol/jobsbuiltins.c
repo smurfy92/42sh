@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 20:40:36 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/14 16:24:19 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/14 19:29:38 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ int		check_jobs_stopped(t_group *grp, t_jobs *jobs)
 
 void	put_in_fg(t_group *grp, t_jobs *pgid)
 {
-	// int	shell_pgid;
-	pgid->fg = true;
 	reset_shell();
 	tcsetpgrp(STDIN_FILENO, pgid->pid);
 	ft_sigcont(pgid);
@@ -61,9 +59,9 @@ void	put_in_fg(t_group *grp, t_jobs *pgid)
 		if (check_group_status(pgid, 0) < 0 || check_jobs_stopped(grp, pgid))
 			break ;
 	}
+	check_group_status(pgid, 1);
 	tcsetpgrp(STDIN_FILENO, grp->program_pid);
 	restore_shell();
-	pgid->fg = false;
 }
 
 int		builtin_fg(t_group *grp, int idx)
