@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/23 22:45:03 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/13 17:50:32 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/14 16:31:00 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,11 @@ int			check_cmd(char **path, char *cmd)
 	mode_t		val;
 	int			ret;
 
-	if (*path == NULL &&
-		ft_strncmp(cmd, "./", 2) == 0 && ft_strlen(cmd) > 2)
+	if (*path == NULL && ((ft_strncmp(cmd, "/", 1) == 0 &&
+		ft_strlen(cmd) > 1) || (ft_strncmp(cmd, "./", 2) == 0 && ft_strlen(cmd) > 2)))
+	{
 		*path = SDUP(cmd);
+	}
 	ret = lstat(*path, &s_buf);
 	val = (s_buf.st_mode & ~S_IFMT);
 	if (ret != 0)

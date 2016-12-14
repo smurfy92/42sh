@@ -33,4 +33,5 @@ void		free_history(t_group *grp);
 void		free_term(t_group *grp);
 void		free_env_tmp(t_group *grp);
 void		remove_hdoc(t_group *grp);
+void		free_allandor(t_andor **andor);
 #endif

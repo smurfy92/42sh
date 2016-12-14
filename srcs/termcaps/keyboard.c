@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 20:56:16 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/13 15:36:34 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/14 16:31:04 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,5 +110,7 @@ void		get_cmd(t_group *grp, int fd)
 			break ;
 		ft_bzero(order, BUF_SIZE + 1);
 	}
+	if (ret <= 0)
+		ft_exit(grp, 0);
 	get_cmd_help(grp, ret_q);
 }
