@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 20:40:36 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/13 10:09:32 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/14 16:24:19 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int		check_jobs_stopped(t_group *grp, t_jobs *jobs)
 
 void	put_in_fg(t_group *grp, t_jobs *pgid)
 {
+	// int	shell_pgid;
 	pgid->fg = true;
 	reset_shell();
 	tcsetpgrp(STDIN_FILENO, pgid->pid);

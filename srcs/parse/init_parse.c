@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 10:26:29 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/12 10:27:13 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/14 16:38:37 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ static int		ft_parse(t_group *grp, t_andor *andor)
 		if (tabl->cmd[0] == '\0' && !grp->fail)
 		{
 			grp->fail = 1;
+			free_allandor(&tabl);
 			error_cmd("Invalid null command near", "|", 1);
 			return (-1);
 		}
