@@ -17,18 +17,21 @@ void		cderr_pwd(t_group *grp, char **path, struct stat s_buf, int opt)
 	mode_t		val;
 	char		buf[1024];
 	char		*curr_dir;
+	char		bf[1024];
 
 	curr_dir = RPW(grp, buf);
+	ft_bzero(bf, 1024);
 	val = (s_buf.st_mode & ~S_IFMT);
-	if (!(*path) || access((*path), F_OK) != 0)
-		error_cmd("unknown directory", (*path), 1);
-	else if (!S_ISDIR(s_buf.st_mode) && !S_ISLNK(s_buf.st_mode))
-		error_cmd("this is not a directory", (*path), 1);
-	else if (!(val & S_IXUSR))
-		error_cmd("Permission denied", (*path), 1);
-	else if (chdir((*path)) == 0)
-		update_pwd(grp, (*path), opt, curr_dir);
+	ft_strcpy(bf, *path);
 	ft_strdel(path);
+	if (!ft_strlen(bf) || access(bf, F_OK) != 0)
+		error_cmd("unknown directory", bf, 1);
+	else if (!S_ISDIR(s_buf.st_mode) && !S_ISLNK(s_buf.st_mode))
+		error_cmd("this is not a directory", bf, 1);
+	else if (!(val & S_IXUSR))
+		error_cmd("Permission denied", bf, 1);
+	else if (chdir(bf) == 0)
+		update_pwd(grp, bf, opt, curr_dir);
 }
 
 char		*starting_replace(char *path, char *replace, char *by)
