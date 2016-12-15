@@ -67,7 +67,10 @@ int			create_fd(t_parse *parse)
 		if (tmp->dbred && check_rights(tmp, &tmp->dbred, 0))
 			return (0);
 		if (tmp->sgred || tmp->dbred)
+		{
+			(parse->fd != -1) ? close(parse->fd) : 0;
 			ft_create_redirections(tmp);
+		}
 		tmp = tmp->next;
 	}
 	return (1);

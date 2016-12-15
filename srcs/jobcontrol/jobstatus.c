@@ -46,9 +46,9 @@ void	change_state(t_jobs *jobs, int code)
 	jobs->terminate = code;
 	jobs->status = update_status(code, jobs->code);
 	jobs->enabled = (code != SIGNCONT) ? false : true;
-	if (jobs->enabled == false && code != SIGNSTOP && jobs->fdin > 2)
+	if (jobs->enabled == false && code != SIGNSTOP)
 	{
-		if (close(jobs->fdin) < 0)
+		if (jobs->fdin > 2 && close(jobs->fdin) < 0)
 			error_cmd("failed", "closed", 1);
 	}
 	if ( code >= 0 && (code == SIGNSTOP || code == SIGNCONT ||
