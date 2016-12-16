@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/25 20:04:13 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/13 13:55:50 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/14 19:40:16 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,7 @@ int			set_for_jobs(int terminal)
 	sig_handler();
 	shell_pgid = getpid();
 	if (setpgid(shell_pgid, shell_pgid) < 0)
-	{
-		perror("Couldn't put the shell in its own process group");
 		exit(1);
-	}
 	tcsetpgrp(terminal, shell_pgid);
 	return (0);
 }
