@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 21:15:46 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/14 19:29:46 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/12/16 14:48:09 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +79,17 @@ int			create_fd(t_parse *parse)
 void		andor_exec(t_group *grp, t_andor *andor)
 {
 	t_andor *tmp;
+	int		ret;
+	int		prev_type;
 
 	tmp = andor;
+	prev_type = 0;
 	while (tmp)
 	{
-		if (create_fd(tmp->parselst))
+		ret = create_fd(tmp->parselst);
+		if (ret && ((!grp->exit && prev_type == 1) || (grp->exit && prev_type == 2) || (prev_type == 0 && !grp->exit)))
 			launch_exec(grp, tmp->parselst, tmp->cmd, (tmp->type == 3) ? 0 : 1);
-		if (grp && tmp && ((tmp->type == 1 && grp->exit != 0) ||
-					(tmp->type == 2 && grp->exit == 0)))
-			break ;
-		if (tmp->next)
-			grp->exit = 0;
+		prev_type = tmp->type;
 		tmp = tmp->next;
 	}
 }
@@ -101,9 +101,9 @@ void		init_exec(t_group *grp)
 	tmp = grp->allcmd;
 	if (!grp->fail)
 	{
+		grp->exit = 0;
 		while (tmp)
 		{
-			grp->exit = 0;
 			andor_exec(grp, tmp->andor);
 			tmp = tmp->next;
 		}
