@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 22:44:21 by vdanain           #+#    #+#             */
-/*   Updated: 2016/11/22 11:32:10 by vdanain          ###   ########.fr       */
+/*   Updated: 2017/01/17 14:03:25 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ char		*join_path(t_group *grp, char *path)
 	if (tmp[ft_strlen(tmp) - 1] != '/')
 		tmp = JOINF(tmp, "/", 1);
 	result = JOIN(tmp, path);
+	ft_strdel(&tmp);
 	return (result);
 }
 
