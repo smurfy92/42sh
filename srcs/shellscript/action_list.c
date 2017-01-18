@@ -61,3 +61,27 @@ void			action_reader(t_script *script, t_action *begin)
 		tmp = tmp->next;
 	}
 }
+
+/*
+**	plus de place ds checklib -> s'occupe de gestion erreur calc
+*/
+
+int				calc_checker(char *line)
+{
+	size_t		i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '+' || line[i] == '-' || line[i] == '%'
+			|| line[i] == '*' || line[i] == '/')
+		{
+			if (i > 0 && line[i - 1] == ' ')
+				return (E_INVALID_OP);
+			if (i < ft_strlen(line) - 1 && line[i + 1] == ' ')
+				return (E_INVALID_OP);
+		}
+		i++;
+	}
+	return (0);
+}

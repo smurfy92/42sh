@@ -86,16 +86,24 @@ int			run_loop_dir(t_loop *current, t_script *script)
 int			loop_handler(t_loop *current, t_script *script)
 {
 	int	ret;
+	int cnt;
 
+	cnt = 0;
 	ret = 1;
 	if (current->type == LOOP_W)
 	{
-		while ((ret = comp_analyzer(current->comp)) == 0)
+		while ((ret = comp_analyzer(current->comp)) == 0 && cnt < 100)
 		{
 			action_reader(script, current->acts);
+			cnt++;
 		}
 		if (ret > 0)
 			error_handler(script);
+		if (cnt == 100)
+		{
+			script->errnb = E_INFINITE_LOOP;
+			error_handler(script);
+		}
 	}
 	else if (current->type == LOOP_F)
 		run_loop_dir(current, script);

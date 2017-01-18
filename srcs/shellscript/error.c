@@ -20,6 +20,8 @@ static void		error_handler_next(t_script *script)
 		ft_putendl_fd("Can't open input file", 2);
 	else if (script->errnb == E_INVALID_LOOP_FOLDER)
 		ft_putendl_fd("Problem opening the folder", 2);
+	else if (script->errnb == E_INFINITE_LOOP)
+		ft_putendl_fd("Loop seems to be infinite, aborting", 2);
 	else
 		ft_putendl_fd("Unknown error", 2);
 }

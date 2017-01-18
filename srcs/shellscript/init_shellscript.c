@@ -42,7 +42,8 @@ static char		*get_text_script(t_script *script)
 	char	*tmp;
 
 	buffer = ft_strdup("");
-	while (get_next_line(script->rd_fd, &line))
+	line = NULL;
+	while (get_next_line(script->rd_fd, &line) && ft_strlen(line))
 	{
 		tmp = ft_strtrim(line);
 		buffer = ft_strjoin_nf(buffer, ";", 1);
@@ -57,10 +58,12 @@ static int		fill_action_list(char *buffer, t_script *script)
 {
 	char	**clean_s;
 	int		i;
+	int		ret;
 
 	i = 0;
+	ret = 0;
 	clean_s = ft_strsplit(buffer, ';');
-	if (main_checker(clean_s) == 0)
+	if ((ret = main_checker(clean_s)) == 0)
 	{
 		while (clean_s[i])
 		{
@@ -69,10 +72,12 @@ static int		fill_action_list(char *buffer, t_script *script)
 				break ;
 			i++;
 		}
+		ft_freestrtab(&clean_s);
 		return (script->errnb);
 	}
-	else
-		return (1);
+	ft_freestrtab(&clean_s);
+	script->errnb = ret;
+	return (1);
 }
 
 static int		script_exec(t_script *script, t_group *grp)
@@ -109,7 +114,7 @@ int				init_shellscript(int ac, char **av, t_group *grp)
 	if (ac >= 2)
 	{
 		add_var_args(av, script, ac);
-		if (((script->rd_fd = open(av[1], O_RDONLY)) < 0) &&
+		if (((ci(av[1])) || ((script->rd_fd = open(av[1], O_RDONLY)) < 0)) &&
 			(script->errnb = E_WRONG_FILE))
 			error_handler(script);
 		buffer = get_text_script(script);

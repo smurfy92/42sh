@@ -174,6 +174,7 @@ typedef struct					s_script
 # define E_INVALID_LOOP			10
 # define E_WRONG_FILE			11
 # define E_INVALID_LOOP_FOLDER	12
+# define E_INFINITE_LOOP		13
 
 /*
 **	script_free.c
@@ -259,7 +260,6 @@ int								check_comp_line(char *line);
 /*
 **	action_reader.c
 */
-
 void							assignation_handler(t_assign *a, t_script *s);
 int								loop_handler(t_loop *current, t_script *s);
 void							condition_handler(t_cond *curr, t_script *s);
@@ -293,6 +293,7 @@ void							ft_strreplace(char **line, char *o, char *n);
 */
 
 void							str_join_init(char *str);
+int								ci(char *file_name);
 
 /*
 **	checker.c
@@ -311,7 +312,7 @@ t_script						*new_script(void);
 /*
 **	action_list.c
 */
-
+int								calc_checker(char *line);
 void							action_reader(t_script *script, t_action *b);
 void							add_to_action(void *action, t_script *script,
 	int type, t_action **begin);

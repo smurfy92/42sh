@@ -114,6 +114,8 @@ int				main_checker(char **check)
 	{
 		if ((ret = check_helper(check, &if_cnt, i)))
 			return (ret);
+		if ((ret = calc_checker(check[i])))
+			return (ret);
 		i++;
 	}
 	if (if_cnt != 0)
