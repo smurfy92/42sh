@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   jobstatus.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/27 00:13:31 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/14 19:29:43 by jmontija         ###   ########.fr       */
+/*   Updated: 2017/01/19 14:15:46 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	change_state(t_jobs *jobs, int code)
 		if (jobs->fdin > 2 && close(jobs->fdin) < 0)
 			error_cmd("failed", "closed", 1);
 	}
-	if ( code >= 0 && (code == SIGNSTOP || code == SIGNCONT ||
+	if (code >= 0 && (code == SIGNSTOP || code == SIGNCONT ||
 		tcgetpgrp(STDIN_FILENO) == getpgrp()))
 		display_jobs(jobs, 1, 0);
 	else if (code > 1 && jobs->fg == true && code != SIGPIPE)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execlib.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/23 22:45:03 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/14 19:22:25 by jmontija         ###   ########.fr       */
+/*   Updated: 2017/01/19 14:12:33 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int			check_cmd(char **path, char *cmd)
 	int			ret;
 
 	if (*path == NULL && ((ft_strncmp(cmd, "/", 1) == 0 &&
-		ft_strlen(cmd) > 1) || (ft_strncmp(cmd, "./", 2) == 0 && ft_strlen(cmd) > 2)))
+		LEN(cmd) > 1) || (ft_strncmp(cmd, "./", 2) == 0 && LEN(cmd) > 2)))
 	{
 		*path = SDUP(cmd);
 	}

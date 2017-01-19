@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 21:15:46 by jmontija          #+#    #+#             */
-/*   Updated: 2016/12/16 14:48:09 by jmontija         ###   ########.fr       */
+/*   Updated: 2017/01/19 14:12:14 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,12 @@ void		andor_exec(t_group *grp, t_andor *andor)
 	while (tmp)
 	{
 		ret = create_fd(tmp->parselst);
-		if (ret && ((!grp->exit && prev_type == 1) || (grp->exit && prev_type == 2) || (prev_type == 0 && !grp->exit)))
+		if (ret && ((!grp->exit && prev_type == 1) ||
+			(grp->exit && prev_type == 2) ||
+			(prev_type == 0 && !grp->exit)))
+		{
 			launch_exec(grp, tmp->parselst, tmp->cmd, (tmp->type == 3) ? 0 : 1);
+		}
 		prev_type = tmp->type;
 		tmp = tmp->next;
 	}
