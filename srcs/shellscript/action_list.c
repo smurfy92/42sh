@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/05 01:19:24 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/11 16:53:10 by vdanain          ###   ########.fr       */
+/*   Updated: 2017/01/19 14:53:16 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ int				calc_checker(char *line)
 	size_t		i;
 
 	i = 0;
+	if (!ft_strchr(line, '='))
+		return (0);
 	while (line[i])
 	{
 		if (line[i] == '+' || line[i] == '-' || line[i] == '%'
