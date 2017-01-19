@@ -6,7 +6,7 @@
 /*   By: vdanain <vdanain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/08 02:53:38 by vdanain           #+#    #+#             */
-/*   Updated: 2016/12/11 18:52:51 by vdanain          ###   ########.fr       */
+/*   Updated: 2017/01/19 15:19:31 by vdanain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int				assignation_checker(char *line)
 	if (ret == 0 && (ft_strchr(clean[1], ' ') && (clean[1][0] != '"'
 		|| LAST(clean[1]) != '"')))
 		ret = 1;
+	ft_freestrtab(&clean);
 	return (ret);
 }
 
